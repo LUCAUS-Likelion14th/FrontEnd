@@ -76,14 +76,18 @@
 
 ```bash
 src/
- ┣ api/             # API 인스턴스 및 호출 함수 (Axios 등)
- ┣ assets/          # 정적 파일 (Images, SVG, Icons)
- ┣ components/      # 재사용 가능한 UI 컴포넌트 (Button, Input 등)
- ┣ constants/       # 공통 상수 (API URL, 에러 메시지, 환경 변수)
- ┣ hooks/           # 커스텀 훅 (useAuth, useFetch 등)
- ┣ layouts/         # 페이지 공통 레이아웃 (Header, Footer 포함)
- ┣ pages/           # 라우팅 단위 페이지 컴포넌트
- ┣ routes/          # React Router 설정 및 경로 정의
- ┣ styles/          # Tailwind 설정 및 글로벌 CSS
- ┣ utils/           # 유틸리티 함수 (날짜 포맷팅, 데이터 가공)
- ┗ App.jsx          # 메인 엔트리 및 Provider 설정
+ ┣ app/               # Next.js App Router (라우팅 단위)
+ │  ┣ (home)/         # Route Group 예시
+ │  ┣ layout.tsx      # 루트 레이아웃
+ │  ┗ page.tsx        # 루트 페이지
+ ┣ components/        # 재사용 가능한 UI 컴포넌트
+ │  ┣ ui/             # 공통 기본 컴포넌트 (Button, Input 등)
+ │  ┗ layouts/        # Header, Footer 등 레이아웃 컴포넌트
+ ┣ api/               # API 호출 함수
+ ┣ assets/            # SVG, 아이콘 컴포넌트 (코드로 쓰는 것들)
+ ┣ constants/         # 공통 상수
+ ┣ hooks/             # 커스텀 훅
+ ┣ styles/            # 글로벌 CSS, Tailwind 설정
+ ┗ utils/             # 유틸리티 함수
+
+public/               # 정적 파일 (이미지, 폰트 등) ← Next.js 기본
