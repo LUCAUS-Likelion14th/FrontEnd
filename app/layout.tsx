@@ -2,6 +2,7 @@
 import BottomNav from "@/components/layouts/BottomNav";
 import "./globals.css"
 import Footer from "@/components/layouts/Footer";
+import Header from "@/components/layouts/Header";
 
 export default function RootLayout({
   children,
@@ -11,6 +12,7 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
+        <Header />
         <main className="pb-20">{children}</main>
         <Footer />
         <BottomNav />
