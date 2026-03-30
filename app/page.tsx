@@ -4,8 +4,10 @@ import StampShortcutButton from "@/components/home/StampShortcutButton";
 export default function Home() {
   return (
     <main className="p-4">
-      <NoticeBanner />
-      <StampShortcutButton />
+      <div className="flex flex-col gap-2">
+        <NoticeBanner />
+        <StampShortcutButton />
+      </div>
     </main>
   );
 }
