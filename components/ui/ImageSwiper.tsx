@@ -39,12 +39,22 @@ export default function NoticeSwiper() {
       <Swiper
         modules={[Autoplay]}
         spaceBetween={GAP}
-        slidesPerView={1.2}
+        slidesPerView={1.2} // 모바일 기본
         centeredSlides
         loop
         autoplay={{ delay: AUTO_SLIDE_INTERVAL, disableOnInteraction: false }}
         onSwiper={setSwiperRef}
         onRealIndexChange={(swiper) => setCurrent(swiper.realIndex)}
+        breakpoints = {{
+          640: {
+            slidesPerView: 2.2,
+            spaceBetween: 16,
+          },
+          1024: {
+            slidesPerView: 3,
+            spaceBetween: 20,
+          }
+        }}
       >
         {NOTICE_IMAGES.map((item) => (
           <SwiperSlide key={item.id}>
@@ -72,7 +82,7 @@ export default function NoticeSwiper() {
             onClick={() => swiperRef?.slideToLoop(i)}
             aria-label={`${i + 1}번 공지로 이동`}
             className={`rounded-full transition-all duration-300 ${
-              i === current ? "w-5 h-2 bg-[#0055FF]" : "w-2 h-2 bg-[#0055FF]/20"
+              i === current ? "w-5 h-2 bg-primary" : "w-2 h-2 bg-primary/20"
             }`}
           />
         ))}
