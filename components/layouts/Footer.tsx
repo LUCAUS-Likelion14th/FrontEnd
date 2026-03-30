@@ -13,20 +13,19 @@ const NAV_ITEMS: NavItem[] = [
   {
     label: "멋쟁이사자처럼 중앙대",
     href: "https://www.instagram.com/likelion_cau/",
-    icon: <BsInstagram className="w-6 h-6" aria-hidden="true"/>,
+    icon: <BsInstagram className="w-6 h-6" aria-hidden="true" />,
   },
   {
     label: "축제기획단",
     href: "https://www.instagram.com/",
-    icon: <BsInstagram className="w-6 h-6" aria-hidden="true"/>,
+    icon: <BsInstagram className="w-6 h-6" aria-hidden="true" />,
   },
 ];
 
-export default function Footer() { 
+export default function Footer() {
   return (
     /* pb 값 조정하기 */
     <footer className="border-t border-white/10 pb-25 text-center">
-      
       <ul className="flex justify-center gap-4 mb-4 list-none p-0 m-0">
         {NAV_ITEMS.map((item) => (
           <li key={item.href}>
@@ -43,13 +42,9 @@ export default function Footer() {
         ))}
       </ul>
       <address className="flex flex-col gap-1 not-italic">
-        <p className="text-[14px]">
-          LIKELION CAU X 축제기획단
-        </p>
+        <p className="text-[14px]">LIKELION CAU X 축제기획단</p>
 
-        <small className="text-[10px]">
-          Copyright © 2026 Likelion CAU
-        </small>
+        <small className="text-[10px]">Copyright © 2026 Likelion CAU</small>
       </address>
     </footer>
   );
