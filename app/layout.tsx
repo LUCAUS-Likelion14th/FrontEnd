@@ -13,7 +13,7 @@ export default function RootLayout({
     <html lang="ko">
       <body>
         <Header />
-        <main className="pb-20">{children}</main>
+        <main className="min-h-screen">{children}</main>
         <Footer />
         <BottomNav />
       </body>
