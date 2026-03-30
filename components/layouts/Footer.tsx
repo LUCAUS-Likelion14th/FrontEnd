@@ -24,7 +24,8 @@ const NAV_ITEMS: NavItem[] = [
 
 export default function Footer() { 
   return (
-    <footer className="border-t border-white/10 px-5 py-8 text-center">
+    /* pb 값 조정하기 */
+    <footer className="border-t border-white/10 pb-25 text-center">
       
       <ul className="flex justify-center gap-4 mb-4 list-none p-0 m-0">
         {NAV_ITEMS.map((item) => (
