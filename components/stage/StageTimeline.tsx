@@ -21,7 +21,10 @@ export default function StageTimeline({ data, activeId }: Props) {
   };
 
   return (
-    <div className="flex justify-between border border-text-sub rounded-[10px] px-3 py-3.5">
+    <div
+      className="flex justify-between min-h-101 border border-text-sub rounded-[10px] px-3 py-3.5
+    overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+    >
       <section className="flex flex-col items-start">
         {data.map((item, index) => {
           const isLast = index === data.length - 1;
@@ -47,7 +50,6 @@ export default function StageTimeline({ data, activeId }: Props) {
                   }`}
                 />
 
-                {/* ✅ 마지막이면 선 없음 */}
                 {!isLast && <div className="h-21.75 w-px bg-text-sub" />}
               </div>
             </div>
