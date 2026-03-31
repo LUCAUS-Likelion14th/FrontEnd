@@ -1,17 +1,17 @@
 import Image from "next/image";
 import Link from "next/link";
 
-type StageCardProps = {
+type TimelineCardProps = {
   image: string;
   description: string;
   artist: string;
 };
 
-export default function StageCard({
+export default function TimelineCard({
   image,
   description,
   artist,
-}: StageCardProps) {
+}: TimelineCardProps) {
   return (
     <Link href="">
       <article className="flex gap-4.75 w-full min-w-59.75 p-2.5 border rounded-[10px] bg-white cursor-pointer">
