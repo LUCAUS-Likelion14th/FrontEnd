@@ -12,7 +12,7 @@ export default function LinkButton({
   return (
     <Link
       href={href}
-      className={`block w-full p-[10px] rounded-[10px] bg-[#0055FF] text-white text-[16px] text-center ${className ?? ""}`}
+      className={`block w-full p-[10px] rounded-[10px] bg-primary text-white text-[16px] text-center ${className ?? ""}`}
     >
       {children}
     </Link>
