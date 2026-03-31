@@ -28,7 +28,7 @@ export default function StageTimeline({ data, activeId }: Props) {
             <div
               className={`text-[14px] leading-3.5 ${
                 item.id === activeId
-                  ? "text-[#05F] font-semibold"
+                  ? "text-primary font-semibold"
                   : "text-text-sub"
               }`}
             >
@@ -39,7 +39,7 @@ export default function StageTimeline({ data, activeId }: Props) {
               <div
                 className={`rounded-full ${
                   item.id === activeId
-                    ? "w-3 h-3 bg-[#05F] border-2"
+                    ? "w-3 h-3 bg-primary border-2"
                     : "w-2 h-2 bg-white border border-text-sub"
                 }`}
               />
@@ -49,7 +49,7 @@ export default function StageTimeline({ data, activeId }: Props) {
         ))}
       </section>
 
-      <section className="flex flex-col">
+      <section className="flex flex-col gap-5">
         {data.map((item) => (
           <TimelineCard
             key={item.id}
