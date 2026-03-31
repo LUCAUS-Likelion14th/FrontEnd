@@ -23,30 +23,36 @@ export default function StageTimeline({ data, activeId }: Props) {
   return (
     <div className="flex justify-between border border-text-sub rounded-[10px] px-3 py-3.5">
       <section className="flex flex-col items-start">
-        {data.map((item) => (
-          <div key={item.id} className="flex items-start mt-1.75 gap-3">
-            <div
-              className={`text-[14px] leading-3.5 ${
-                item.id === activeId
-                  ? "text-primary font-semibold"
-                  : "text-text-sub"
-              }`}
-            >
-              {formatTime(item.start)} - {formatTime(item.end)}
-            </div>
+        {data.map((item, index) => {
+          const isLast = index === data.length - 1;
 
-            <div className="flex flex-col items-center mt-0.75 gap-2.5">
+          return (
+            <div key={item.id} className="flex items-start mt-1.75 gap-3">
               <div
-                className={`rounded-full ${
+                className={`text-[14px] leading-3.5 ${
                   item.id === activeId
-                    ? "w-3 h-3 bg-primary border-2"
-                    : "w-2 h-2 bg-white border border-text-sub"
+                    ? "text-primary font-semibold"
+                    : "text-text-sub"
                 }`}
-              />
-              <div className="h-21.75 w-px bg-text-sub" />
+              >
+                {formatTime(item.start)} - {formatTime(item.end)}
+              </div>
+
+              <div className="flex flex-col items-center mt-0.75 gap-2.5">
+                <div
+                  className={`rounded-full ${
+                    item.id === activeId
+                      ? "w-3 h-3 bg-primary border-2"
+                      : "w-2 h-2 bg-white border border-text-sub"
+                  }`}
+                />
+
+                {/* ✅ 마지막이면 선 없음 */}
+                {!isLast && <div className="h-21.75 w-px bg-text-sub" />}
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </section>
 
       <section className="flex flex-col gap-5">
