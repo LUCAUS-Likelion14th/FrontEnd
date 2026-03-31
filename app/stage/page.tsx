@@ -135,7 +135,7 @@ export default function StagePage() {
             {currentCategory.description}
           </p>
         </div>
-        <div>
+        <div className="flex gap-4 overflow-x whitespace-nowrap">
           {filteredData.map((item) => (
             <ArtistButton
               key={item.id}
