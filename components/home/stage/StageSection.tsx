@@ -1,5 +1,5 @@
-import StageCard from "@/components/stage/StageCard";
-import SectionHeader from "../ui/SectionHeader";
+import StageCard from "@/components/home/stage/StageCard";
+import SectionHeader from "../../ui/SectionHeader";
 
 const MOCK_STAGE = {
   imageUrl: "/img.png",

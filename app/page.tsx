@@ -1,9 +1,9 @@
 import NoticeBanner from "@/components/home/NoticeBanner";
 import StampShortcutButton from "@/components/home/StampShortcutButton";
 import ImageSwiper from "@/components/ui/ImageSwiper";
-import StageSection from "@/components/stage/StageSection";
-import BoothSection from "@/components/booth/BoothSection";
-import FoodSection from "@/components/food/FoodSection";
+import StageSection from "@/components/home/stage/StageSection";
+import BoothSection from "@/components/home/BoothSection";
+import FoodSection from "@/components/home/FoodSection";
 
 export default function Home() {
   return (

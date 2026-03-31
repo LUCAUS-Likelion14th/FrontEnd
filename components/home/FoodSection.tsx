@@ -4,25 +4,25 @@ import SectionHeader from "@/components/ui/SectionHeader";
 const MOCK_FOOD = [
   {
     imageUrl: "/img.png",
-    href: "/booth/1",
-    location: "후문 #1",
-    name: "부스 이름",
+    href: "/food-truck/1",
+    location: "메인메뉴",
+    name: "푸드트럭 이름",
     likes: 23,
     liked: true,
   },
   {
     imageUrl: "/img.png",
-    href: "/booth/2",
-    location: "후문 #2",
-    name: "부스 이름",
+    href: "/food-truck/2",
+    location: "메인메뉴",
+    name: "푸드트럭 이름",
     likes: 10,
     liked: false,
   },
   {
     imageUrl: "/img.png",
-    href: "/booth/3",
-    location: "후문 #3",
-    name: "부스 이름",
+    href: "/food-truck/3",
+    location: "메인메뉴",
+    name: "푸드트럭 이름",
     likes: 5,
     liked: false,
   },
@@ -34,8 +34,8 @@ export default function FoodSection() {
       <SectionHeader
         icon="🎪"
         title="HOT FOOD"
-        description="현 시간 가장 핫한 부스!"
-        href="/booth"
+        description="303관 지하 1층에서 음식을 무뎌보자~~^^"
+        href="/food-truck"
       />
       <div className="flex flex-col gap-2">
         {MOCK_FOOD.map((item) => (
