@@ -18,7 +18,7 @@ export default function TimelineCard({
     <Link href="">
       <article
         className={`flex gap-4.75 w-full min-w-59.75 p-2.5 rounded-[10px] cursor-pointer ${
-          isActive ? "border-2 border-[#05F]" : "border border-text-sub2"
+          isActive ? "border-2 border-primary" : "border border-text-sub2"
         }`}
       >
         <div className="rounded-lg overflow-hidden">
@@ -34,14 +34,14 @@ export default function TimelineCard({
         <div className="flex flex-col gap-3">
           <p
             className={`text-1 font-normal leading-3.5 ${
-              isActive ? "text-[#05F]" : "text-black"
+              isActive ? "text-primary" : "text-black"
             }`}
           >
             {description}
           </p>
           <p
             className={`text-[20px] font-semibold leading-[1.2] ${
-              isActive ? "text-[#05F]" : "text-black"
+              isActive ? "text-primary" : "text-black"
             }`}
           >
             {artist}
