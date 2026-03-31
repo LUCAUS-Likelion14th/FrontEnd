@@ -43,8 +43,8 @@ const STAGE_DATA = [
     category: "학생 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
-    start: "2026-03-31T13:30:00",
-    end: "2026-03-31T15:00:00",
+    start: "2026-05-21T13:30:00",
+    end: "2026-05-21T15:00:00",
   },
   {
     id: 2,
@@ -53,8 +53,8 @@ const STAGE_DATA = [
     category: "청룡가요제",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
-    start: "2026-03-31T15:00:00",
-    end: "2026-03-31T16:00:00",
+    start: "2026-05-21T15:00:00",
+    end: "2026-05-21T16:00:00",
   },
   {
     id: 3,
@@ -63,26 +63,30 @@ const STAGE_DATA = [
     category: "아티스트 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
-    start: "2026-03-31T16:00:00",
-    end: "2026-03-31T18:00:00",
+    start: "2026-05-22T16:00:00",
+    end: "2026-05-22T18:00:00",
   },
   {
     id: 4,
     description: "공연4",
     artist: "BlackPink",
-    category: "무대기획전",
+    category: "아티스트 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
-    start: "2026-03-31T18:00:00",
-    end: "2026-03-31T20:00:00",
+    start: "2026-05-22T18:00:00",
+    end: "2026-05-22T20:00:00",
   },
 ];
 
 export default function StagePage() {
+  const [selectedDate, setSelectedDate] = useState("2026-05-21");
   const [selected, setSelected] = useState<CategoryType>("학생 공연");
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  const filteredData = STAGE_DATA.filter((item) => item.category === selected);
+  const filteredData = STAGE_DATA.filter((item) => {
+    const itemDate = item.start.split("T")[0];
+    return item.category === selected && itemDate === selectedDate;
+  });
 
   const currentCategory = CATEGORY_INFO[selected];
 
@@ -119,6 +123,8 @@ export default function StagePage() {
           categories={CATEGORY}
           selected={selected}
           onSelect={setSelected}
+          selectedDate={selectedDate}
+          onSelectDate={setSelectedDate}
         />
       </section>
 
