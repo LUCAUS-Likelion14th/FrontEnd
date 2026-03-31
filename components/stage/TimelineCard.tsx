@@ -5,16 +5,22 @@ type TimelineCardProps = {
   image: string;
   description: string;
   artist: string;
+  isActive?: boolean;
 };
 
 export default function TimelineCard({
   image,
   description,
   artist,
+  isActive,
 }: TimelineCardProps) {
   return (
     <Link href="">
-      <article className="flex gap-4.75 w-full min-w-59.75 p-2.5 border rounded-[10px] bg-white cursor-pointer">
+      <article
+        className={`flex gap-4.75 w-full min-w-59.75 p-2.5 rounded-[10px] cursor-pointer ${
+          isActive ? "border-2 border-[#05F]" : "border border-text-sub2"
+        }`}
+      >
         <div className="rounded-lg overflow-hidden">
           <Image
             src={image}
@@ -26,8 +32,20 @@ export default function TimelineCard({
         </div>
 
         <div className="flex flex-col gap-3">
-          <p className="text-1 font-normal leading-3.5">{description}</p>
-          <p className="text-[20px] font-semibold leading-[1.2]">{artist}</p>
+          <p
+            className={`text-1 font-normal leading-3.5 ${
+              isActive ? "text-[#05F]" : "text-black"
+            }`}
+          >
+            {description}
+          </p>
+          <p
+            className={`text-[20px] font-semibold leading-[1.2] ${
+              isActive ? "text-[#05F]" : "text-black"
+            }`}
+          >
+            {artist}
+          </p>
         </div>
       </article>
     </Link>
