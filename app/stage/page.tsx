@@ -3,9 +3,37 @@
 import ArtistButton from "@/components/stage/ArtistButton";
 import Category from "@/components/stage/Category";
 import StageTimeline from "@/components/stage/StageTimeline";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
-const CATEGORY = ["학생 공연", "청룡가요제", "아티스트 공연", "무대기획전"];
+type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
+
+const CATEGORY: CategoryType[] = [
+  "학생 공연",
+  "청룡가요제",
+  "아티스트 공연",
+  "무대기획전",
+];
+const CATEGORY_INFO: Record<
+  CategoryType,
+  { title: string; description: string }
+> = {
+  "학생 공연": {
+    title: "학생 공연 라인업",
+    description: "학생들이 직접 만드는 공연 어쩌구 저쩌구",
+  },
+  청룡가요제: {
+    title: "청룡가요제",
+    description: "숨겨진 노래 고수들을 만나요~!",
+  },
+  "아티스트 공연": {
+    title: "아티스트 공연",
+    description: "아티스트 공연 어쩌구 저쩌구",
+  },
+  무대기획전: {
+    title: "무대기획전",
+    description: "무대기획전 어쩌구 저쩌구",
+  },
+};
 
 const STAGE_DATA = [
   {
@@ -15,6 +43,8 @@ const STAGE_DATA = [
     category: "학생 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
+    start: "2026-03-31T13:30:00",
+    end: "2026-03-31T15:00:00",
   },
   {
     id: 2,
@@ -23,6 +53,8 @@ const STAGE_DATA = [
     category: "청룡가요제",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
+    start: "2026-03-31T15:00:00",
+    end: "2026-03-31T16:00:00",
   },
   {
     id: 3,
@@ -31,6 +63,8 @@ const STAGE_DATA = [
     category: "아티스트 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
+    start: "2026-03-31T16:00:00",
+    end: "2026-03-31T18:00:00",
   },
   {
     id: 4,
@@ -39,13 +73,43 @@ const STAGE_DATA = [
     category: "무대기획전",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
+    start: "2026-03-31T18:00:00",
+    end: "2026-03-31T20:00:00",
   },
 ];
 
 export default function StagePage() {
-  const [selected, setSelected] = useState("학생 공연");
+  const [selected, setSelected] = useState<CategoryType>("학생 공연");
+  const [currentTime, setCurrentTime] = useState(new Date());
 
   const filteredData = STAGE_DATA.filter((item) => item.category === selected);
+
+  const currentCategory = CATEGORY_INFO[selected];
+
+  const activeId = filteredData.find((item) => {
+    const start = new Date(item.start);
+    const end = new Date(item.end);
+    return currentTime >= start && currentTime < end;
+  })?.id;
+
+  useEffect(() => {
+    const now = new Date();
+    const times = filteredData.flatMap((item) => [
+      new Date(item.start),
+      new Date(item.end),
+    ]);
+
+    const futureTimes = times.filter((time) => time > now);
+    if (futureTimes.length === 0) return;
+
+    const nextTime = new Date(Math.min(...futureTimes.map((t) => t.getTime())));
+
+    const timeout = setTimeout(() => {
+      setCurrentTime(new Date());
+    }, nextTime.getTime() - now.getTime());
+
+    return () => clearTimeout(timeout);
+  }, [filteredData]);
 
   return (
     <main className="px-4">
@@ -60,9 +124,9 @@ export default function StagePage() {
 
       <section className="mb-17">
         <div className="flex flex-col gap-0.5">
-          <h2 className="text-[24px] font-semibold">공연 라인업</h2>
-          <p className="text-base font-normal">
-            학생들이 직접 만드는 공연 어쩌구 저쩌구
+          <h2 className="text-[24px] font-semibold">{currentCategory.title}</h2>
+          <p className="text-base font-normal text-text-sub">
+            {currentCategory.description}
           </p>
         </div>
         <div>
@@ -85,14 +149,7 @@ export default function StagePage() {
         </div>
 
         <div>
-          <StageTimeline
-            data={filteredData.map((item) => ({
-              id: item.id,
-              image: item.stageImage,
-              description: item.description,
-              artist: item.artist,
-            }))}
-          />
+          <StageTimeline data={filteredData} activeId={activeId} />
         </div>
       </section>
 
