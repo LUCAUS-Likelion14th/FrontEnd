@@ -1,9 +1,11 @@
 "use client";
 
+type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
+
 type CategoryProps = {
-  categories: string[];
-  selected: string;
-  onSelect: (value: string) => void;
+  categories: CategoryType[];
+  selected: CategoryType;
+  onSelect: (value: CategoryType) => void;
 };
 
 export default function Category({
