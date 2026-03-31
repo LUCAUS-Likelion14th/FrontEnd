@@ -44,6 +44,8 @@ export default function Category({
           </button>
         </div>
 
+        <div className="absolute bottom-0 w-full h-0.5 bg-text-sub2" />
+
         <div
           className="absolute bottom-0 h-0.5 bg-primary transition-all duration-300"
           style={{
