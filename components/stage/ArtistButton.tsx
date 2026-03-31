@@ -15,7 +15,7 @@ export default function ArtistButton({
     <div className="flex flex-col items-center gap-1">
       <button
         onClick={onClick}
-        className="w-19.5 h-19.5 rounded-full overflow-hidden"
+        className="w-19.5 h-19.5 rounded-full overflow-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         <Image
           src={image}

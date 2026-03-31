@@ -59,7 +59,7 @@ export default function Category({
       </section>
 
       {/* 공연 카테고리 선택 */}
-      <section className="flex gap-2.5 overflow-x-auto whitespace-nowrap">
+      <section className="flex gap-2.5 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
         {categories.map((item) => (
           <button
             key={item}
