@@ -19,6 +19,7 @@ export default function Category({
 }: CategoryProps) {
   return (
     <div>
+      {/* 날짜 선택 */}
       <section className="relative mb-4">
         <div className="flex mx-[57.5px] justify-between">
           <button
@@ -44,8 +45,10 @@ export default function Category({
           </button>
         </div>
 
+        {/* 회색 바 (비활성화 상태) */}
         <div className="absolute bottom-0 w-full h-0.5 bg-text-sub2" />
 
+        {/* 파란색 바 (활성화 상태) */}
         <div
           className="absolute bottom-0 h-0.5 bg-primary transition-all duration-300"
           style={{
@@ -55,12 +58,13 @@ export default function Category({
         />
       </section>
 
-      <section className="flex gap-2.5">
+      {/* 공연 카테고리 선택 */}
+      <section className="flex gap-2.5 overflow-x-auto whitespace-nowrap">
         {categories.map((item) => (
           <button
             key={item}
             onClick={() => onSelect(item)}
-            className={`p-2.5 rounded-md text-base leading-4.5 ${
+            className={`p-2.5 rounded-md leading-4.5 shrink-0 ${
               selected === item
                 ? "bg-primary text-white"
                 : "bg-[#DADADA] text-black"
