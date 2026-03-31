@@ -17,7 +17,7 @@ export default function TimelineCard({
   return (
     <Link href="">
       <article
-        className={`flex gap-4.75 w-full min-w-59.75 p-2.5 rounded-[10px] cursor-pointer ${
+        className={`flex items-center gap-4.75 w-full min-w-59.75 min-h-24 p-2.5 rounded-[10px] cursor-pointer ${
           isActive ? "border-2 border-primary" : "border border-text-sub2"
         }`}
       >
