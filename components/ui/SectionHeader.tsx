@@ -10,12 +10,17 @@ type SectionHeaderProps = {
 
 export default function SectionHeader({ icon, title, description, href }: SectionHeaderProps) {
   return (
-    <Link href={href} className="flex flex-col gap-[2px]">
-      <div className="flex items-center justify-between">
-        <h2 className="font-bold text-2xl">{icon} {title}</h2>
-        <FiChevronRight size={20} className="text-[#727272]" />
-      </div>
-      <p className="text-base text-text-sub">{description}</p>
-    </Link>
+    <header className="flex gap-2">
+      <span className="text-2xl" aria-hidden="true">
+        {icon}
+      </span>
+      <Link href={href} className="flex flex-col gap-[2px] w-full">
+        <div className="flex items-center justify-between">
+          <h2 className="font-bold text-2xl">{title}</h2>
+          <FiChevronRight size={20} className="text-[#727272]" aria-hidden="true" />
+        </div>
+        <p className="text-base text-text-sub">{description}</p>
+      </Link>
+    </header>
   );
 }

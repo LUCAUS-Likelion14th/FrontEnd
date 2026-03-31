@@ -11,8 +11,8 @@ type StageCardProps = {
 
 export default function StageCard({ imageUrl, href, location, name, time }: StageCardProps) {
   return (
-    <Link href={href}>
-      <article className="flex items-center gap-[13px] w-full p-2.5 rounded-[10px] bg-white border border-text-sub2">
+    <Link href={href} className="ml-[30px]">
+      <article className="flex items-center gap-[13px] w-full p-2.5 rounded-[10px] p bg-white border border-text-sub2">
         
         <Image
           src={imageUrl}
