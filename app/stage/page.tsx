@@ -146,6 +146,7 @@ export default function StagePage() {
           {filteredData.map((item) => (
             <ArtistButton
               key={item.id}
+              id={item.id}
               image={item.artistLogo}
               artist={item.artist}
             />

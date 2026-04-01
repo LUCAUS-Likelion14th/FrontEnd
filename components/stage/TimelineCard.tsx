@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 
 type TimelineCardProps = {
+  id: number;
   image: string;
   description: string;
   artist: string;
@@ -9,13 +10,14 @@ type TimelineCardProps = {
 };
 
 export default function TimelineCard({
+  id,
   image,
   description,
   artist,
   isActive,
 }: TimelineCardProps) {
   return (
-    <Link href="">
+    <Link href={`/stage/${id}`}>
       <article
         className={`flex items-center gap-4.75 w-full min-w-59.75 min-h-24 p-2.5 rounded-[10px] cursor-pointer ${
           isActive ? "border-2 border-primary" : "border border-text-sub2"

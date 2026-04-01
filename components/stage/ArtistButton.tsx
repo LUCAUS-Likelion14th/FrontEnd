@@ -1,31 +1,27 @@
 import Image from "next/image";
+import Link from "next/link";
 
 type ArtistButtonProps = {
+  id: number;
   image: string;
   artist: string;
-  onClick?: () => void;
 };
 
-export default function ArtistButton({
-  image,
-  artist,
-  onClick,
-}: ArtistButtonProps) {
+export default function ArtistButton({ id, image, artist }: ArtistButtonProps) {
   return (
-    <div className="flex flex-col items-center gap-1">
-      <button
-        onClick={onClick}
-        className="w-19.5 h-19.5 rounded-full overflow-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
-      >
-        <Image
-          src={image}
-          alt={`${artist} 사진`}
-          width={78}
-          height={78}
-          className="object-cover"
-        />
-      </button>
-      <p className="text-[14px]">{artist}</p>
-    </div>
+    <Link href={`/stage/${id}`}>
+      <div className="flex flex-col items-center gap-1 cursor-pointer">
+        <div className="w-19.5 h-19.5 rounded-full overflow-hidden [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+          <Image
+            src={image}
+            alt={`${artist} 사진`}
+            width={78}
+            height={78}
+            className="object-cover"
+          />
+        </div>
+        <p className="text-[14px]">{artist}</p>
+      </div>
+    </Link>
   );
 }

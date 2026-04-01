@@ -90,6 +90,7 @@ export default function StageTimeline({ data, activeId }: Props) {
         {data.map((item) => (
           <TimelineCard
             key={item.id}
+            id={item.id}
             image={item.stageImage}
             description={item.description}
             artist={item.artist}
