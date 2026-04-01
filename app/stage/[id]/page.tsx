@@ -6,17 +6,19 @@ import { AiOutlineYoutube } from "react-icons/ai";
 import { AiOutlineInstagram } from "react-icons/ai";
 import { useRouter } from "next/navigation";
 import { STAGE_DATA } from "@/data/stageData";
+import { use } from "react";
 
 type DetailProps = {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 };
 
 export default function StageDetailPage({ params }: DetailProps) {
   const router = useRouter();
 
-  const id = Number(params.id);
+  const resolvedParams = use(params);
+  const id = Number(resolvedParams.id);
 
   const stage = STAGE_DATA.find((item) => item.id === id);
 
