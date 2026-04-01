@@ -3,6 +3,7 @@
 import ArtistButton from "@/components/stage/ArtistButton";
 import Category from "@/components/stage/Category";
 import StageTimeline from "@/components/stage/StageTimeline";
+import { STAGE_DATA } from "@/data/stageData";
 import { useEffect, useState } from "react";
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
@@ -34,49 +35,6 @@ const CATEGORY_INFO: Record<
     description: "무대기획전 어쩌구 저쩌구",
   },
 };
-
-const STAGE_DATA = [
-  {
-    id: 1,
-    description: "공연1",
-    artist: "NCT",
-    category: "학생 공연",
-    artistLogo: "/logo.png",
-    stageImage: "/logo.png",
-    start: "2026-05-21T09:30:00",
-    end: "2026-05-21T11:00:00",
-  },
-  {
-    id: 2,
-    description: "공연2",
-    artist: "DAY6",
-    category: "청룡가요제",
-    artistLogo: "/logo.png",
-    stageImage: "/logo.png",
-    start: "2026-05-21T15:00:00",
-    end: "2026-05-21T16:00:00",
-  },
-  {
-    id: 3,
-    description: "공연3",
-    artist: "NewJeans",
-    category: "아티스트 공연",
-    artistLogo: "/logo.png",
-    stageImage: "/logo.png",
-    start: "2026-05-22T10:00:00",
-    end: "2026-05-22T10:51:00",
-  },
-  {
-    id: 4,
-    description: "공연4",
-    artist: "BlackPink",
-    category: "아티스트 공연",
-    artistLogo: "/logo.png",
-    stageImage: "/logo.png",
-    start: "2026-05-22T10:52:00",
-    end: "2026-05-22T20:00:00",
-  },
-];
 
 export default function StagePage() {
   const [selectedDate, setSelectedDate] = useState("2026-05-21");
@@ -120,7 +78,7 @@ export default function StagePage() {
     }, nextTime.getTime() - now.getTime());
 
     return () => clearTimeout(timeout);
-  }, [filteredData]);
+  }, [selected, filteredData]);
 
   return (
     <main className="px-4">
