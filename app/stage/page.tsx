@@ -43,8 +43,8 @@ const STAGE_DATA = [
     category: "학생 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
-    start: "2026-05-21T13:30:00",
-    end: "2026-05-21T15:00:00",
+    start: "2026-05-21T09:30:00",
+    end: "2026-05-21T11:00:00",
   },
   {
     id: 2,
@@ -63,8 +63,8 @@ const STAGE_DATA = [
     category: "아티스트 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
-    start: "2026-05-22T16:00:00",
-    end: "2026-05-22T18:00:00",
+    start: "2026-05-22T10:00:00",
+    end: "2026-05-22T10:51:00",
   },
   {
     id: 4,
@@ -73,7 +73,7 @@ const STAGE_DATA = [
     category: "아티스트 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
-    start: "2026-05-22T18:00:00",
+    start: "2026-05-22T10:52:00",
     end: "2026-05-22T20:00:00",
   },
 ];
@@ -93,7 +93,14 @@ export default function StagePage() {
   const activeId = filteredData.find((item) => {
     const start = new Date(item.start);
     const end = new Date(item.end);
-    return currentTime >= start && currentTime < end;
+
+    // 타임라인 활성화 테스트용
+    const nowTime = currentTime.getHours() * 60 + currentTime.getMinutes();
+    const startTime = start.getHours() * 60 + start.getMinutes();
+    const endTime = end.getHours() * 60 + end.getMinutes();
+
+    return nowTime >= startTime && nowTime < endTime;
+    // return currentTime >= start && currentTime < end;
   })?.id;
 
   useEffect(() => {
