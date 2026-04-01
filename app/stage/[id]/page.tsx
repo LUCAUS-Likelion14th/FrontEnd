@@ -44,7 +44,7 @@ export default function StageDetailPage({ params }: DetailProps) {
         <h1 className="text-[24px] font-semibold">공연 정보</h1>
       </div>
 
-      <section className="mb-6.25">
+      <section className="flex justify-center mb-6.25">
         <Image
           src={stage.stageImage}
           alt={`${stage.artist} 사진`}
