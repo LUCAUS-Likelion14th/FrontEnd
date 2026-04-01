@@ -21,10 +21,10 @@ export default function Category({
     <div>
       {/* 날짜 선택 */}
       <section className="relative mb-4">
-        <div className="flex mx-[57.5px] justify-between">
+        <div className="flex">
           <button
             onClick={() => onSelectDate("2026-05-21")}
-            className={`pb-2 ${
+            className={`w-1/2 text-center pb-2 ${
               selectedDate === "2026-05-21"
                 ? "text-black font-semibold"
                 : "text-text-sub"
@@ -35,7 +35,7 @@ export default function Category({
 
           <button
             onClick={() => onSelectDate("2026-05-22")}
-            className={`pb-2 ${
+            className={`w-1/2 text-center pb-2 ${
               selectedDate === "2026-05-22"
                 ? "text-black font-semibold"
                 : "text-text-sub"
