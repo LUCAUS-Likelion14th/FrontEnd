@@ -15,7 +15,7 @@ type ListCardProps = {
 
 export default function ListCard({ imageUrl, href, location, name, likes, liked, department }: ListCardProps) {
   return (
-    <Link href={href}>
+    <Link href={href} className="ml-[30px]">
       <article className="flex items-center gap-[13px] w-full p-2.5 rounded-[10px] bg-white border border-text-sub2">
 
         <Image
@@ -27,7 +27,6 @@ export default function ListCard({ imageUrl, href, location, name, likes, liked,
         />
 
         <div className="flex flex-1 min-w-0">
-          {/* 여기 피그마 ui대로 구조 수정: 아이콘 따로, 위치, 이름+소속으로 */}
           <div className="flex flex-col gap-3 flex-1 min-w-0">
             <span className="text-base">{location}</span>
             <strong className="text-xl font-bold truncate">{name}</strong>

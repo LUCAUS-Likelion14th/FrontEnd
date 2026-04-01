@@ -1,4 +1,4 @@
-import TimelineCard from "./TimelineCard";
+import TimelineCard from "../stage/TimelineCard";
 
 type Props = {
   data: {
