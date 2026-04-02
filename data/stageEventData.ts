@@ -12,7 +12,7 @@ export const STAGE_EVENT_DATA = [
     stageImage: "/logo.png",
     description: "무대기획전 설명",
     artist: "무대기획전",
-    start: "2026-05-21T20:00:00",
-    end: "2026-05-21T22:00:00",
+    start: "2026-05-22T20:00:00",
+    end: "2026-05-22T22:00:00",
   },
 ];

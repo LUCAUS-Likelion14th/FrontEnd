@@ -44,14 +44,27 @@ export default function StagePage() {
   const [selected, setSelected] = useState<CategoryType>("학생 공연");
   const [currentTime, setCurrentTime] = useState(new Date());
 
+  // 아티스트 버튼용 필터링 (카테고리 + 날짜)
   const filteredData = STAGE_DATA.filter((item) => {
     const itemDate = item.start.split("T")[0];
     return item.category === selected && itemDate === selectedDate;
   });
 
+  // 타임라인용 필터링 (날짜)
+  const timelineData = STAGE_DATA.filter((item) => {
+    const itemDate = item.start.split("T")[0];
+    return itemDate === selectedDate;
+  });
+
+  // 무대기획전 카드용 필터링 (날짜)
+  const filteredEventData = STAGE_EVENT_DATA.filter((item) => {
+    const itemDate = item.start.split("T")[0];
+    return itemDate === selectedDate;
+  });
+
   const currentCategory = CATEGORY_INFO[selected];
 
-  const activeId = filteredData.find((item) => {
+  const activeId = timelineData.find((item) => {
     const start = new Date(item.start);
     const end = new Date(item.end);
 
@@ -64,9 +77,10 @@ export default function StagePage() {
     // return currentTime >= start && currentTime < end;
   })?.id;
 
+  // 타임라인 시간 업데이트
   useEffect(() => {
     const now = new Date();
-    const times = filteredData.flatMap((item) => [
+    const times = timelineData.flatMap((item) => [
       new Date(item.start),
       new Date(item.end),
     ]);
@@ -81,7 +95,7 @@ export default function StagePage() {
     }, nextTime.getTime() - now.getTime());
 
     return () => clearTimeout(timeout);
-  }, [selected, filteredData]);
+  }, [selected, timelineData]);
 
   return (
     <main className="px-4">
@@ -109,7 +123,7 @@ export default function StagePage() {
 
         {selected === "무대기획전" ? (
           <div>
-            {STAGE_EVENT_DATA.map((item) => (
+            {filteredEventData.map((item) => (
               <StageEventSection key={item.id} {...item} />
             ))}
           </div>
@@ -128,11 +142,7 @@ export default function StagePage() {
         </div>
 
         <div>
-          {selected === "무대기획전" ? (
-            <StageTimeline data={STAGE_EVENT_DATA} />
-          ) : (
-            <StageTimeline data={filteredData} activeId={activeId} />
-          )}
+          <StageTimeline data={timelineData} activeId={activeId} />
         </div>
       </section>
 
