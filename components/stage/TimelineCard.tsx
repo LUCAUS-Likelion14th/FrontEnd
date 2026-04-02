@@ -33,7 +33,7 @@ export default function TimelineCard({
           />
         </div>
 
-        <div className="flex flex-col gap-3">
+        <div className="flex flex-col max-w-30 gap-3">
           <p
             className={`text-1 font-normal leading-3.5 ${
               isActive ? "text-primary" : "text-black"
@@ -42,7 +42,7 @@ export default function TimelineCard({
             {category}
           </p>
           <p
-            className={`text-[20px] font-semibold leading-[1.2] ${
+            className={`text-[20px] font-semibold leading-6 ${
               isActive ? "text-primary" : "text-black"
             }`}
           >
