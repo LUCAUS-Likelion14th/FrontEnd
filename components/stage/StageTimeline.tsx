@@ -28,10 +28,10 @@ export default function StageTimeline({ data, activeId }: Props) {
         const isLast = index === data.length - 1;
 
         return (
-          <div key={item.id} className="flex w-full min-h-[120px] items-start">
+          <div key={item.id} className="flex w-full min-h-30 items-start">
             {/* [1] 시간 영역: 원의 중심(24px)에 맞추기 위해 mt 조정 */}
             <div
-              className={`mt-[21px] text-[14px] leading-none min-w-21 shrink-0 ${
+              className={`mt-5.25 text-[14px] leading-none min-w-21 shrink-0 ${
                 isActive ? "text-primary font-semibold" : "text-text-sub"
               }`}
             >
@@ -74,7 +74,7 @@ export default function StageTimeline({ data, activeId }: Props) {
             </div>
 
             {/* [3] 카드 영역 */}
-            <div className="flex-1 pt-[14px] pr-3 pl-1">
+            <div className="flex-1 py-3.5 pl-1">
               <TimelineCard
                 id={item.id}
                 image={item.stageImage}
