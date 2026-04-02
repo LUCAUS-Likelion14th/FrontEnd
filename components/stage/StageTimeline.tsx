@@ -29,6 +29,7 @@ export default function StageTimeline({ data, activeId }: Props) {
       {/* 타임라인 */}
       <section className="flex flex-col">
         {data.map((item, index) => {
+          const isActive = item.id === activeId;
           const isFirst = index === 0;
           const isLast = index === data.length - 1;
 
@@ -38,9 +39,7 @@ export default function StageTimeline({ data, activeId }: Props) {
               {/* 시간 텍스트 */}
               <div
                 className={`py-5.25 text-[14px] leading-3.5 ${
-                  item.id === activeId
-                    ? "text-primary font-semibold"
-                    : "text-text-sub"
+                  isActive ? "text-primary font-semibold" : "text-text-sub"
                 }`}
               >
                 {formatTime(item.start)} - {formatTime(item.end)}
@@ -50,7 +49,7 @@ export default function StageTimeline({ data, activeId }: Props) {
               <div className="flex flex-col items-center w-9">
                 {/* 원 */}
                 <div className="flex items-center justify-center">
-                  {item.id === activeId ? (
+                  {isActive ? (
                     <div className="relative flex items-center justify-center">
                       {/* 활성화 시 바깥 원 */}
                       <div
@@ -87,16 +86,20 @@ export default function StageTimeline({ data, activeId }: Props) {
 
       {/* 타임라인 카드 */}
       <section className="flex flex-col py-3.5 gap-5">
-        {data.map((item) => (
-          <TimelineCard
-            key={item.id}
-            id={item.id}
-            image={item.stageImage}
-            description={item.description}
-            artist={item.artist}
-            isActive={item.id === activeId}
-          />
-        ))}
+        {data.map((item) => {
+          const isActive = item.id === activeId;
+
+          return (
+            <TimelineCard
+              key={item.id}
+              id={item.id}
+              image={item.stageImage}
+              description={item.description}
+              artist={item.artist}
+              isActive={isActive}
+            />
+          );
+        })}
       </section>
     </div>
   );
