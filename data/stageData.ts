@@ -1,6 +1,5 @@
 export type StageType = {
   id: number;
-  description: string;
   artist: string;
   category: string;
   artistLogo: string;
@@ -14,7 +13,6 @@ export type StageType = {
 export const STAGE_DATA: StageType[] = [
   {
     id: 1,
-    description: "공연1",
     artist: "NCT",
     category: "학생 공연",
     artistLogo: "/logo.png",
@@ -26,7 +24,6 @@ export const STAGE_DATA: StageType[] = [
   },
   {
     id: 2,
-    description: "공연2",
     artist: "DAY6",
     category: "청룡가요제",
     artistLogo: "/logo.png",
@@ -36,7 +33,6 @@ export const STAGE_DATA: StageType[] = [
   },
   {
     id: 3,
-    description: "공연3",
     artist: "NewJeans",
     category: "아티스트 공연",
     artistLogo: "/logo.png",
@@ -46,12 +42,20 @@ export const STAGE_DATA: StageType[] = [
   },
   {
     id: 4,
-    description: "공연4",
     artist: "BlackPink",
     category: "아티스트 공연",
     artistLogo: "/logo.png",
     stageImage: "/logo.png",
     start: "2026-05-22T10:52:00",
-    end: "2026-05-22T20:00:00",
+    end: "2026-05-22T15:00:00",
+  },
+  {
+    id: 5,
+    artist: "BigBang",
+    category: "아티스트 공연",
+    artistLogo: "/logo.png",
+    stageImage: "/logo.png",
+    start: "2026-05-22T15:00:00",
+    end: "2026-05-22T18:00:00",
   },
 ];

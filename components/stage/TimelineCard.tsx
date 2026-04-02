@@ -4,7 +4,7 @@ import Link from "next/link";
 type TimelineCardProps = {
   id: number;
   image: string;
-  description: string;
+  category: string;
   artist: string;
   isActive?: boolean;
 };
@@ -12,7 +12,7 @@ type TimelineCardProps = {
 export default function TimelineCard({
   id,
   image,
-  description,
+  category,
   artist,
   isActive,
 }: TimelineCardProps) {
@@ -39,7 +39,7 @@ export default function TimelineCard({
               isActive ? "text-primary" : "text-black"
             }`}
           >
-            {description}
+            {category}
           </p>
           <p
             className={`text-[20px] font-semibold leading-[1.2] ${
