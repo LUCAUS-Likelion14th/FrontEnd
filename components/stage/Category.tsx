@@ -19,7 +19,7 @@ export default function Category({
 }: CategoryProps) {
   return (
     <div>
-      {/* 날짜 선택 */}
+      {/* 날짜 선택 탭 */}
       <section className="relative mb-4">
         <div className="flex">
           <button

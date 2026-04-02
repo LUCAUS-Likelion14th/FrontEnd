@@ -35,6 +35,7 @@ export default function StageDetailPage({ params }: DetailProps) {
 
   return (
     <main className="px-4">
+      {/* 헤더 영역 */}
       <div className="flex items-center gap-1 mb-5">
         <FiChevronLeft
           size={24}
@@ -44,6 +45,7 @@ export default function StageDetailPage({ params }: DetailProps) {
         <h1 className="text-[24px] font-semibold">공연 정보</h1>
       </div>
 
+      {/* 이미지 영역 */}
       <section className="flex justify-center mb-6.25">
         <Image
           src={stage.stageImage}
@@ -54,6 +56,7 @@ export default function StageDetailPage({ params }: DetailProps) {
         />
       </section>
 
+      {/* 공연 상세정보 영역 */}
       <section className="mb-12">
         <div className="flex justify-between pb-[16.5px] mb-6 border-b">
           <h2 className="text-[24px] font-semibold">{stage.artist}</h2>

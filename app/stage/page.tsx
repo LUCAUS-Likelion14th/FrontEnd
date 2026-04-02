@@ -14,6 +14,7 @@ const CATEGORY: CategoryType[] = [
   "아티스트 공연",
   "무대기획전",
 ];
+
 const CATEGORY_INFO: Record<
   CategoryType,
   { title: string; description: string }
@@ -83,6 +84,8 @@ export default function StagePage() {
   return (
     <main className="px-4">
       <h1 className="text-[24px] font-semibold mb-3">공연 정보</h1>
+
+      {/* 날짜 & 공연 카테고리 설정 */}
       <section className="mb-12">
         <Category
           categories={CATEGORY}
@@ -93,6 +96,7 @@ export default function StagePage() {
         />
       </section>
 
+      {/* 아티스트 버튼 */}
       <section className="mb-17">
         <div className="flex flex-col gap-0.5 mb-4">
           <h2 className="text-[24px] font-semibold">{currentCategory.title}</h2>
@@ -112,6 +116,7 @@ export default function StagePage() {
         </div>
       </section>
 
+      {/* 타임라인 */}
       <section className="flex flex-col gap-4 mb-3">
         <div className="flex justify-between items-center">
           <h2 className="text-[24px] font-semibold">본무대 타임라인</h2>
