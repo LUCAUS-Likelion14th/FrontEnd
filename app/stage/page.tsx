@@ -100,7 +100,7 @@ export default function StagePage() {
   }, [selected, timelineData]);
 
   return (
-    <main className="px-4 pb-25">
+    <main className="px-4 pt-2.5 pb-25">
       <h1 className="text-[24px] font-semibold mb-3">공연 정보</h1>
 
       {/* 날짜 & 공연 카테고리 설정 */}

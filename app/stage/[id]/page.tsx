@@ -34,7 +34,7 @@ export default function StageDetailPage({ params }: DetailProps) {
   };
 
   return (
-    <main className="px-4 pb-25">
+    <main className="px-4 py-2.5 pb-25">
       {/* 헤더 영역 */}
       <div className="flex items-center gap-1 mb-5">
         <FiChevronLeft
