@@ -1,6 +1,7 @@
 import DetailHero from "@/components/detail/DetailHero"
 import DetailInfo from "@/components/detail/DetailInfo"
 import FoodTruckTitle from "@/components/detail/FoodTruckTitle"
+import MenuDetail from "@/components/detail/MenuDetail"
 import { FoodTruckDetail } from "@/types/foodtruck"
 
 export default async function FoodTruckDetailPage({ params }: { params: { id: string } }) {
@@ -20,9 +21,11 @@ export default async function FoodTruckDetailPage({ params }: { params: { id: st
       "목요일 10:00 - 17:00",
     ],
     food_menu: [
-      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/image.png" },
-      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/image.png" },
-      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/image.png" },
+      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/img.png", menu_info: "메뉴설명설명설명메뉴설명ㅇ메뉴메뉴메뉴메뉴설명설명"},
+      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/img.png", menu_info: "메뉴설명설명설명메뉴설명ㅇ메뉴메뉴메뉴메뉴설명설명"},
+      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/img.png", menu_info: "메뉴설명설명설명메뉴설명ㅇ메뉴메뉴메뉴메뉴설명설명"},
+      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/img.png", menu_info: "메뉴설명설명설명메뉴설명ㅇ메뉴메뉴메뉴메뉴설명설명"},
+      { menu_name: "메뉴 이름", menu_price: "2,900원", menu_image: "/img.png", menu_info: "메뉴설명설명설명메뉴설명ㅇ메뉴메뉴메뉴메뉴설명설명"},
     ],
   }
 
@@ -37,6 +40,8 @@ export default async function FoodTruckDetailPage({ params }: { params: { id: st
             info={foodTruck.food_info}
         />
         <DetailInfo location={foodTruck.location} date={foodTruck.date} />
+
+        <MenuDetail menuList={foodTruck.food_menu} />
       </div>
     </main>
   )

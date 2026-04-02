@@ -2,6 +2,7 @@ export type MenuItem = {
   menu_name: string
   menu_price: string
   menu_image: string
+  menu_info: string
 }
 
 export type FoodTruckDetail = {
