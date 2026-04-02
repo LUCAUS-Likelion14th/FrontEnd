@@ -21,7 +21,7 @@ export default function StageTimeline({ data, activeId }: Props) {
   };
 
   return (
-    <div className="flex flex-col min-h-101 border border-text-sub rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex flex-col max-h-101 border border-text-sub rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item, index) => {
         const isActive = item.id === activeId;
         const isFirst = index === 0;
