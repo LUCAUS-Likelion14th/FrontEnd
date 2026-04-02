@@ -51,10 +51,12 @@ export default function StagePage() {
   });
 
   // 타임라인용 필터링 (날짜)
-  const timelineData = STAGE_DATA.filter((item) => {
-    const itemDate = item.start.split("T")[0];
-    return itemDate === selectedDate;
-  });
+  const timelineData = [...STAGE_DATA, ...STAGE_EVENT_DATA]
+    .filter((item) => {
+      const itemDate = item.start.split("T")[0];
+      return itemDate === selectedDate;
+    })
+    .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 
   // 무대기획전 카드용 필터링 (날짜)
   const filteredEventData = STAGE_EVENT_DATA.filter((item) => {
