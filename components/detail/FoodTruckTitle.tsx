@@ -34,7 +34,7 @@ export default function FoodTruckTitle({ name, isLiked, likeCount, info }: Props
           <span className="text-sm text-text-sub">{count}</span>
         </div>
       </div>
-      <p className="max-h-19 text-base text-text-sub">{info}</p>
+      <p className="min-h-19 text-base text-text-sub pb-6">{info}</p>
     </div>
   )
 }

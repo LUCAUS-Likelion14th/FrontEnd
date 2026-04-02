@@ -1,5 +1,6 @@
 import BoothTitle from "@/components/detail/BoothTitle"
 import DetailHero from "@/components/detail/DetailHero"
+import DetailInfo from "@/components/detail/DetailInfo"
 
 type Props = {
   params: { id: string }
@@ -30,11 +31,12 @@ export default async function BoothDetailPage({ params }: Props) {
     <main>
       <DetailHero title="부스 정보" imageUrl={booth.booth_image} />
       <div className="flex flex-col px-4">
-      <BoothTitle
-        name={booth.booth_name}
-        categories={booth.booth_category}
-        info={booth.booth_info}
-      />
+        <BoothTitle
+            name={booth.booth_name}
+            categories={booth.booth_category}
+            info={booth.booth_info}
+        />
+        <DetailInfo location={booth.location} date={booth.date} />
 
       </div>
 
