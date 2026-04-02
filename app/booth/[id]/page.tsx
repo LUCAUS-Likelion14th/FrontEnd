@@ -1,6 +1,8 @@
 import BoothTitle from "@/components/detail/BoothTitle"
+import DetailAction from "@/components/detail/DetailAction"
 import DetailHero from "@/components/detail/DetailHero"
 import DetailInfo from "@/components/detail/DetailInfo"
+import Image from "next/image"
 
 type Props = {
   params: { id: string }
@@ -36,7 +38,24 @@ export default async function BoothDetailPage({ params }: Props) {
             categories={booth.booth_category}
             info={booth.booth_info}
         />
-        <DetailInfo location={booth.location} date={booth.date} />
+
+        <DetailAction
+            ownerInsta={booth.owner_insta} 
+            likeCount={booth.like_count} 
+        />
+
+        <DetailInfo location={booth.location} date={booth.date} hasBorder={false}/>
+
+        <div className="mt-4 mb-10.5">
+            <div className="relative w-full h-60">
+                <Image
+                    src={booth.location_image}
+                    alt={booth.location}
+                    fill
+                    className="object-cover rounded-[10px]"
+                />
+            </div>
+        </div>
 
       </div>
 

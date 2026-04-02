@@ -39,7 +39,7 @@ export default async function FoodTruckDetailPage({ params }: { params: { id: st
             likeCount={foodTruck.like_count}
             info={foodTruck.food_info}
         />
-        <DetailInfo location={foodTruck.location} date={foodTruck.date} />
+        <DetailInfo location={foodTruck.location} date={foodTruck.date}/>
 
         <MenuDetail menuList={foodTruck.food_menu} />
       </div>
