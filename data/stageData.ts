@@ -58,4 +58,22 @@ export const STAGE_DATA: StageType[] = [
     start: "2026-05-22T15:00:00",
     end: "2026-05-22T18:00:00",
   },
+  {
+    id: 106,
+    artist: "카더가든",
+    category: "청룡가요제",
+    artistLogo: "/logo.png",
+    stageImage: "/logo.png",
+    start: "2026-05-22T18:00:00",
+    end: "2026-05-22T20:00:00",
+  },
+  {
+    id: 107,
+    artist: "잔나비",
+    category: "청룡가요제",
+    artistLogo: "/logo.png",
+    stageImage: "/logo.png",
+    start: "2026-05-22T20:00:00",
+    end: "2026-05-22T22:00:00",
+  },
 ];
