@@ -1,10 +1,12 @@
 "use client";
 
-import ArtistButton from "@/components/stage/ArtistButton";
 import Category from "@/components/stage/Category";
+import StageEventSection from "@/components/stage/StageEventSection";
+import ArtistSection from "@/components/stage/ArtistSection";
 import StageTimeline from "@/components/stage/StageTimeline";
 import { STAGE_DATA } from "@/data/stageData";
 import { useEffect, useState } from "react";
+import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
 
@@ -96,7 +98,7 @@ export default function StagePage() {
         />
       </section>
 
-      {/* 아티스트 버튼 */}
+      {/* 아티스트 버튼 or 무대기획전 */}
       <section className="mb-17">
         <div className="flex flex-col gap-0.5 mb-4">
           <h2 className="text-[24px] font-semibold">{currentCategory.title}</h2>
@@ -104,16 +106,16 @@ export default function StagePage() {
             {currentCategory.description}
           </p>
         </div>
-        <div className="flex gap-4 overflow-x whitespace-nowrap">
-          {filteredData.map((item) => (
-            <ArtistButton
-              key={item.id}
-              id={item.id}
-              image={item.artistLogo}
-              artist={item.artist}
-            />
-          ))}
-        </div>
+
+        {selected === "무대기획전" ? (
+          <div>
+            {STAGE_EVENT_DATA.map((item) => (
+              <StageEventSection key={item.id} {...item} />
+            ))}
+          </div>
+        ) : (
+          <ArtistSection data={filteredData} />
+        )}
       </section>
 
       {/* 타임라인 */}
