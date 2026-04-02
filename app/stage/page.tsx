@@ -128,7 +128,11 @@ export default function StagePage() {
         </div>
 
         <div>
-          <StageTimeline data={filteredData} activeId={activeId} />
+          {selected === "무대기획전" ? (
+            <StageTimeline data={STAGE_EVENT_DATA} />
+          ) : (
+            <StageTimeline data={filteredData} activeId={activeId} />
+          )}
         </div>
       </section>
 
