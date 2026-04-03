@@ -2,7 +2,7 @@
 
 import Image from "next/image"
 import { useRouter } from "next/navigation"
-import { BiX } from "react-icons/bi";
+import { useEffect, useRef, useState } from "react"
 
 type Props = {
   isOpen: boolean
@@ -11,28 +11,76 @@ type Props = {
 
 export default function LoginBottomSheet({ isOpen, onClose }: Props) {
   const router = useRouter()
+  const sheetRef = useRef<HTMLDivElement>(null)
+
+  const [dragY, setDragY] = useState(0)
+  const [isDragging, setIsDragging] = useState(false)
+
+  // 초기 터치 위치
+  const startY = useRef(0)
+
+  // 드래그
+  const handleTouchStart = (e: React.TouchEvent) => {
+    startY.current = e.touches[0].clientY
+    setIsDragging(true)
+  }
+
+  const handleTouchMove = (e: React.TouchEvent) => {
+    if (!isDragging) return
+
+    const currentY = e.touches[0].clientY
+    const diff = currentY - startY.current
+
+    if (diff > 0) {
+      setDragY(diff)
+    }
+  }
+
+  const handleTouchEnd = () => {
+    setIsDragging(false)
+
+    if (dragY > 100) {
+      onClose()
+    } else {
+      setDragY(0)
+    }
+  }
+
+  useEffect(() => {
+    if (isOpen) {
+      setDragY(0)
+    }
+  }, [isOpen])
+
 
   if (!isOpen) return null
 
   return (
     <>
-      {/* 배경 오버레이 */}
       <div
         className="fixed inset-0 bg-black/40 z-40"
         onClick={onClose}
       />
 
-      {/* 바텀시트 */}
-      <div className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[20px] z-50 px-5 pt-6 pb-10">
-        {/* 헤더 */}
-        <div className="flex items-center justify-between mb-6">
-          <span className="text-xl font-semibold">로그인 후 축제를 더 편하게 즐기세요</span>
-          <button onClick={onClose}>
-            <BiX size={30}/>
-          </button>
+      <div
+        ref={sheetRef}
+        className="fixed bottom-0 left-0 right-0 bg-white rounded-t-[20px] z-50 px-5 pt-3 pb-10 transition-transform duration-800"
+        style={{
+          transform: `translateY(${dragY}px)`
+        }}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
+      >
+
+        <div className="w-full flex justify-center mb-4">
+          <div className="w-12 h-1.5 bg-gray-300 rounded-full" />
         </div>
 
-        {/* 마스코트 이미지 */}
+        <div className="text-center mb-6">
+          <span className="text-xl font-semibold">로그인 후 축제를 더 편하게 즐기세요</span>
+        </div>
+
         <div className="flex justify-center">
           <Image src="/login-puang.png" alt="푸앙이 이미지" width={160} height={160} />
         </div>
