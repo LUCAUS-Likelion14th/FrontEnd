@@ -4,7 +4,7 @@ import SectionHeader from "@/components/ui/SectionHeader";
 const MOCK_FOOD = [
   {
     imageUrl: "/img.png",
-    href: "/food-truck/1",
+    href: "/foodtruck/1",
     location: "메인메뉴",
     name: "푸드트럭 이름",
     likes: 23,
@@ -12,7 +12,7 @@ const MOCK_FOOD = [
   },
   {
     imageUrl: "/img.png",
-    href: "/food-truck/2",
+    href: "/foodtruck/2",
     location: "메인메뉴",
     name: "푸드트럭 이름",
     likes: 10,
@@ -20,7 +20,7 @@ const MOCK_FOOD = [
   },
   {
     imageUrl: "/img.png",
-    href: "/food-truck/3",
+    href: "/foodtruck/3",
     location: "메인메뉴",
     name: "푸드트럭 이름",
     likes: 5,

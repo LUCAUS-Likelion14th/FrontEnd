@@ -13,8 +13,8 @@ export default function DetailHero({ title, imageUrl }: Props) {
   const router = useRouter()
 
   return (
-    <div className="flex flex-col gap-2.5">
-      <div className="flex gap-1 px-4">
+    <div className="flex flex-col">
+      <div className="flex gap-1 px-4 py-2.5">
         <button onClick={() => router.back()}>
           <FiChevronLeft size={24} className="block"/>
         </button>
