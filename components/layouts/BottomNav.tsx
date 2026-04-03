@@ -24,7 +24,7 @@ export default function BottomNav() {
   return (
     <nav 
       aria-label="하단 메뉴"
-      className="fixed bottom-0 left-0 w-full bg-white z-50">
+      className="fixed bottom-0 left-0 w-full bg-white z-10">
       <ul 
         className="flex justify-around items-center my-2">
         {NAV_ITEMS.map((item) => {
