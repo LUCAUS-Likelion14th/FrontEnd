@@ -14,7 +14,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: "홈", href: "/", icon: "/icons/nav-home.png" },
   { label: "공연", href: "/stage", icon: "/icons/nav-stage.png" },
   { label: "부스", href: "/booth", icon: "/icons/nav-booth.png" },
-  { label: "푸드", href: "/food-truck", icon: "/icons/nav-food.png" },
+  { label: "푸드", href: "/foodtruck", icon: "/icons/nav-food.png" },
   { label: "안내", href: "/info", icon: "/icons/nav-info.png" },
 ];
 

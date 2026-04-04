@@ -35,7 +35,7 @@ export default function FoodSection() {
         icon="🎪"
         title="HOT FOOD"
         description="303관 지하 1층에서 음식을 무뎌보자~~^^"
-        href="/food-truck"
+        href="/foodtruck"
       />
       <div className="flex flex-col gap-2">
         {MOCK_FOOD.map((item) => (
