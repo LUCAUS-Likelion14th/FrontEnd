@@ -4,6 +4,7 @@ import ImageSwiper from "@/components/ui/ImageSwiper";
 import StageSection from "@/components/home/stage/StageSection";
 import BoothSection from "@/components/home/BoothSection";
 import FoodSection from "@/components/home/FoodSection";
+import Footer from "@/components/layouts/Footer";
 
 export default function Home() {
   return (
@@ -21,6 +22,8 @@ export default function Home() {
         <BoothSection />
         <FoodSection />
       </section>
+
+      <Footer />
 
     </main>
   );
