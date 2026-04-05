@@ -1,6 +1,5 @@
-
 import BottomNav from "@/components/layouts/BottomNav";
-import "./globals.css"
+import "./globals.css";
 import Header from "@/components/layouts/Header";
 
 export default function RootLayout({

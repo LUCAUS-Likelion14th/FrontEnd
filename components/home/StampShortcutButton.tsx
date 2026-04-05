@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -20,7 +20,10 @@ export default function StampShortcutButton() {
 
   return (
     <div>
-      <button onClick={handleClick} className="block w-full p-[10px] rounded-[10px] bg-primary text-white text-[16px] text-center">
+      <button
+        onClick={handleClick}
+        className="block w-full p-[10px] rounded-[10px] bg-primary text-white text-[16px] text-center"
+      >
         도장판 바로가기
       </button>
 
