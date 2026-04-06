@@ -9,7 +9,7 @@ type Props = {
   onSelectDate: (date: string) => void;
 };
 
-export default function BoothDateFilter({ selectedDate, onSelectDate }: Props) {
+export default function DateFilter({ selectedDate, onSelectDate }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
