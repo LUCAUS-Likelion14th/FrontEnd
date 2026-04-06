@@ -96,7 +96,7 @@ export default function LikesPage() {
                 </Link>
                 ))
             : mockFoodtrucks.map((truck) => (
-                <Link href={`/foodtrucks/${truck.food_id}`} key={truck.food_id} className="block">
+                <Link href={`/foodtruck/${truck.food_id}`} key={truck.food_id} className="block">
                     <article className="relative w-full h-34.25 rounded-[10px] overflow-hidden bg-[#D9D9D9]">
                     <Image src={truck.image} alt={truck.food_name} fill className="object-cover" />
 
