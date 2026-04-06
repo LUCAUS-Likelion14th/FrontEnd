@@ -4,11 +4,13 @@ import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
 import NoticeItem from "@/components/info/NoticeItem";
 import { notices } from "@/data/notice";
-import usePagination from "@/hooks/usePagination";
+import { useState } from "react";
 
 const ITEMS_PER_PAGE = 10;
 
 export default function NoticePage() {
+  const [currentPage, setCurrentPage] = useState(1);
+
   const sortedNotices = [...notices].sort((a, b) => {
     if (a.category === "important" && b.category !== "important") return -1;
     if (a.category !== "important" && b.category === "important") return 1;
@@ -16,9 +18,11 @@ export default function NoticePage() {
     return new Date(b.date).getTime() - new Date(a.date).getTime();
   });
 
-  const { page, setPage, totalPages, currentData } = usePagination(
-    sortedNotices,
-    ITEMS_PER_PAGE,
+  const totalPages = Math.ceil(sortedNotices.length / ITEMS_PER_PAGE);
+  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
+  const currentData = sortedNotices.slice(
+    startIndex,
+    startIndex + ITEMS_PER_PAGE,
   );
 
   return (
@@ -40,7 +44,11 @@ export default function NoticePage() {
         ))}
       </section>
 
-      <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      <Pagination
+        page={currentPage}
+        totalPages={totalPages}
+        onChange={setCurrentPage}
+      />
     </main>
   );
 }

@@ -8,6 +8,7 @@ import BoothCard from "@/components/booth/BoothCard";
 import BoothPagination from "@/components/booth/BoothPagination";
 import { BOOTH_DATA, BoothLocation, BoothCategory } from "@/data/boothData";
 import DateFilter from "@/components/common/DateFilter";
+import Pagination from "@/components/common/Pagination";
 
 const PAGE_SIZE = 8;
 
@@ -159,10 +160,10 @@ export default function BoothPage() {
         )}
 
         {/* 페이지네이션 */}
-        <BoothPagination
-          currentPage={currentPage}
+        <Pagination
+          page={currentPage}
           totalPages={totalPages}
-          onPageChange={setCurrentPage}
+          onChange={setCurrentPage}
         />
       </section>
     </main>

@@ -15,9 +15,17 @@ export default function Pagination({
   totalPages,
   onChange,
 }: PaginationProps) {
+  if (totalPages <= 1) return null;
+
   const currentGroup = Math.ceil(page / PAGE_GROUP_SIZE);
   const startPage = (currentGroup - 1) * PAGE_GROUP_SIZE + 1;
   const endPage = Math.min(startPage + PAGE_GROUP_SIZE - 1, totalPages);
+
+  const pages = Array.from(
+    { length: endPage - startPage + 1 },
+    (_, i) => startPage + i,
+  );
+
   return (
     <div className="flex justify-center gap-2 mt-6">
       <button
@@ -27,10 +35,7 @@ export default function Pagination({
         <FiChevronLeft size={24} className="text-[#A1ABBC]" />
       </button>
 
-      {Array.from(
-        { length: endPage - startPage + 1 },
-        (_, i) => startPage + i,
-      ).map((pageNum) => (
+      {pages.map((pageNum) => (
         <button
           key={pageNum}
           onClick={() => onChange(pageNum)}

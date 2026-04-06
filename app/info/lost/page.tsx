@@ -5,7 +5,6 @@ import Pagination from "@/components/common/Pagination";
 import LostItemCard from "@/components/info/LostItemCard";
 import LostTypeFilter from "@/components/info/LostTypeFilter";
 import { lostItems } from "@/data/lostItemData";
-import usePagination from "@/hooks/usePagination";
 import { useState } from "react";
 import DateFilter from "@/components/common/DateFilter";
 
@@ -14,6 +13,7 @@ const ITEMS_PER_PAGE = 6;
 export default function LostPage() {
   const [selectedDate, setSelectedDate] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
+  const [currentPage, setCurrentPage] = useState(1);
 
   const filteredItems = lostItems
     .filter((item) =>
@@ -23,10 +23,21 @@ export default function LostPage() {
       selectedType === "all" ? true : item.type === selectedType,
     );
 
-  const { page, setPage, totalPages, currentData } = usePagination(
-    filteredItems,
-    ITEMS_PER_PAGE,
+  const totalPages = Math.ceil(filteredItems.length / ITEMS_PER_PAGE);
+  const currentData = filteredItems.slice(
+    (currentPage - 1) * ITEMS_PER_PAGE,
+    currentPage * ITEMS_PER_PAGE,
   );
+
+  const handleDateChange = (date: string) => {
+    setSelectedDate(date);
+    setCurrentPage(1);
+  };
+
+  const handleTypeChange = (type: string) => {
+    setSelectedType(type);
+    setCurrentPage(1);
+  };
 
   return (
     <main className="px-4 pt-2.5 pb-25">
@@ -44,11 +55,11 @@ export default function LostPage() {
       <div className="flex gap-4 mb-7">
         <DateFilter
           selectedDate={selectedDate}
-          onSelectDate={setSelectedDate}
+          onSelectDate={handleDateChange}
         />
         <LostTypeFilter
           selectedType={selectedType}
-          onSelectType={setSelectedType}
+          onSelectType={handleTypeChange}
         />
       </div>
 
@@ -58,7 +69,11 @@ export default function LostPage() {
         ))}
       </div>
 
-      <Pagination page={page} totalPages={totalPages} onChange={setPage} />
+      <Pagination
+        page={currentPage}
+        totalPages={totalPages}
+        onChange={setCurrentPage}
+      />
     </main>
   );
 }
