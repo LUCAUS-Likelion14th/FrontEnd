@@ -1,24 +1,22 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import BoothDateFilter from "@/components/booth/BoothDateFilter";
+import BoothDateFilter from "@/components/common/DateFilter";
 import BoothLocationFilter from "@/components/booth/BoothLocationFilter";
 import BoothCategoryFilter from "@/components/booth/BoothCategoryFilter";
 import BoothSearchBar from "@/components/booth/BoothSearchBar";
 import BoothCard from "@/components/booth/BoothCard";
 import BoothPagination from "@/components/booth/BoothPagination";
-import {
-  BOOTH_DATA,
-  BoothLocation,
-  BoothCategory,
-} from "@/data/boothData";
+import { BOOTH_DATA, BoothLocation, BoothCategory } from "@/data/boothData";
 
 const PAGE_SIZE = 8;
 
 export default function BoothPage() {
   const [selectedDate, setSelectedDate] = useState("2026-05-21");
-  const [selectedLocation, setSelectedLocation] = useState<BoothLocation | null>(null);
-  const [selectedCategory, setSelectedCategory] = useState<BoothCategory>("전체");
+  const [selectedLocation, setSelectedLocation] =
+    useState<BoothLocation | null>(null);
+  const [selectedCategory, setSelectedCategory] =
+    useState<BoothCategory>("전체");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -26,7 +24,8 @@ export default function BoothPage() {
   const filteredBooths = useMemo(() => {
     return BOOTH_DATA.filter((booth) => {
       // 날짜 필터
-      if (selectedDate !== "all" && !booth.date.includes(selectedDate)) return false;
+      if (selectedDate !== "all" && !booth.date.includes(selectedDate))
+        return false;
 
       // 장소 필터
       if (selectedLocation) {
@@ -35,7 +34,8 @@ export default function BoothPage() {
           "후문 일대": "후문",
           대운동장: "대운동장",
         };
-        if (!booth.location.includes(locationMap[selectedLocation])) return false;
+        if (!booth.location.includes(locationMap[selectedLocation]))
+          return false;
       }
 
       // 카테고리 필터
@@ -62,7 +62,7 @@ export default function BoothPage() {
   const totalPages = Math.max(1, Math.ceil(filteredBooths.length / PAGE_SIZE));
   const pagedBooths = filteredBooths.slice(
     (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
+    currentPage * PAGE_SIZE,
   );
 
   // 필터 변경 시 페이지 리셋

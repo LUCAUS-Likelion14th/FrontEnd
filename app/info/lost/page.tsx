@@ -1,6 +1,6 @@
 "use client";
 
-import BoothDateFilter from "@/components/booth/BoothDateFilter";
+import BoothDateFilter from "@/components/common/DateFilter";
 import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
 import LostItemCard from "@/components/info/LostItemCard";
