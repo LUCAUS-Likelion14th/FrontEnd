@@ -59,4 +59,28 @@ export const lostItems: LostItem[] = [
     date: "2026-05-21 10:05",
     type: "etc",
   },
+  {
+    id: 6,
+    name: "우산",
+    image: "/img.png",
+    location: "빼빼로 광장",
+    date: "2026-05-22 10:05",
+    type: "umbrella",
+  },
+  {
+    id: 7,
+    name: "귀걸이",
+    image: "/img.png",
+    location: "102관 앞",
+    date: "2026-05-21 10:05",
+    type: "etc",
+  },
+  {
+    id: 8,
+    name: "가방",
+    image: "/img.png",
+    location: "도서관 입구",
+    date: "2026-05-21 10:05",
+    type: "etc",
+  },
 ];
