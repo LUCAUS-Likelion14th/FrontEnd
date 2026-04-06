@@ -9,8 +9,15 @@ import usePagination from "@/hooks/usePagination";
 const ITEMS_PER_PAGE = 10;
 
 export default function NoticePage() {
+  const sortedNotices = [...notices].sort((a, b) => {
+    if (a.category === "important" && b.category !== "important") return -1;
+    if (a.category !== "important" && b.category === "important") return 1;
+
+    return new Date(b.date).getTime() - new Date(a.date).getTime();
+  });
+
   const { page, setPage, totalPages, currentData } = usePagination(
-    notices,
+    sortedNotices,
     ITEMS_PER_PAGE,
   );
 
