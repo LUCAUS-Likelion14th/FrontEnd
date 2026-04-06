@@ -1,52 +1,7 @@
 "use client";
 
+import { LostItem } from "@/data/lostItemData";
 import Image from "next/image";
-
-export type LostItem = {
-  id: number;
-  name: string;
-  image: string;
-  location: string;
-  date: string;
-};
-
-export const lostItems: LostItem[] = [
-  {
-    id: 1,
-    name: "검은색 지갑",
-    image: "/img.png",
-    location: "중앙 무대",
-    date: "2026-05-18 13:20",
-  },
-  {
-    id: 2,
-    name: "에어팟 프로",
-    image: "/img.png",
-    location: "푸드트럭 존",
-    date: "2026-05-18 15:10",
-  },
-  {
-    id: 3,
-    name: "아이폰 13",
-    image: "/img.png",
-    location: "학생회관 앞",
-    date: "2026-05-19 11:45",
-  },
-  {
-    id: 4,
-    name: "파란색 파우치",
-    image: "/img.png",
-    location: "부스 A구역",
-    date: "2026-05-20 16:30",
-  },
-  {
-    id: 5,
-    name: "신분증 (학생증)",
-    image: "/img.png",
-    location: "도서관 입구",
-    date: "2026-05-21 10:05",
-  },
-];
 
 type Props = {
   item: LostItem;

@@ -3,7 +3,9 @@
 import BoothDateFilter from "@/components/booth/BoothDateFilter";
 import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
-import LostItemCard, { lostItems } from "@/components/info/LostItemCard";
+import LostItemCard from "@/components/info/LostItemCard";
+import LostTypeFilter from "@/components/info/LostTypeFilter";
+import { lostItems } from "@/data/lostItemData";
 import usePagination from "@/hooks/usePagination";
 import { useState } from "react";
 
@@ -11,11 +13,15 @@ const ITEMS_PER_PAGE = 10;
 
 export default function LostPage() {
   const [selectedDate, setSelectedDate] = useState("all");
+  const [selectedType, setSelectedType] = useState("all");
 
-  const filteredItems =
-    selectedDate === "all"
-      ? lostItems
-      : lostItems.filter((item) => item.date.startsWith(selectedDate));
+  const filteredItems = lostItems
+    .filter((item) =>
+      selectedDate === "all" ? true : item.date.startsWith(selectedDate),
+    )
+    .filter((item) =>
+      selectedType === "all" ? true : item.type === selectedType,
+    );
 
   const { page, setPage, totalPages, currentData } = usePagination(
     filteredItems,
@@ -35,10 +41,14 @@ export default function LostPage() {
         </p>
       </div>
 
-      <div className="mb-7">
+      <div className="flex gap-4 mb-7">
         <BoothDateFilter
           selectedDate={selectedDate}
           onSelectDate={setSelectedDate}
+        />
+        <LostTypeFilter
+          selectedType={selectedType}
+          onSelectType={setSelectedType}
         />
       </div>
 
