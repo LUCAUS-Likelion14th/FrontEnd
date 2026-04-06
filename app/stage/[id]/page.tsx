@@ -1,26 +1,18 @@
-"use client";
-
 import Image from "next/image";
-import { FiChevronLeft } from "react-icons/fi";
 import { AiOutlineYoutube } from "react-icons/ai";
 import { AiOutlineInstagram } from "react-icons/ai";
-import { useRouter } from "next/navigation";
 import { STAGE_DATA } from "@/data/stageData";
-import { use } from "react";
+import BackButton from "@/components/common/BackButton";
 
-type DetailProps = {
-  params: Promise<{
-    id: string;
-  }>;
-};
+export default async function StageDetailPage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params;
+  const stageId = Number(id);
 
-export default function StageDetailPage({ params }: DetailProps) {
-  const router = useRouter();
-
-  const resolvedParams = use(params);
-  const id = Number(resolvedParams.id);
-
-  const stage = STAGE_DATA.find((item) => item.id === id);
+  const stage = STAGE_DATA.find((item) => item.id === stageId);
 
   if (!stage) {
     return <div className="p-4">공연 정보를 찾을 수 없습니다.</div>;
@@ -37,11 +29,7 @@ export default function StageDetailPage({ params }: DetailProps) {
     <main className="px-4 py-2.5 pb-25">
       {/* 헤더 영역 */}
       <div className="flex items-center gap-1 mb-5">
-        <FiChevronLeft
-          size={24}
-          className="cursor-pointer"
-          onClick={() => router.back()}
-        />
+        <BackButton />
         <h1 className="text-[24px] font-semibold">공연 정보</h1>
       </div>
 
