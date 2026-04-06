@@ -9,7 +9,7 @@ import usePagination from "@/hooks/usePagination";
 import { useState } from "react";
 import DateFilter from "@/components/common/DateFilter";
 
-const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 6;
 
 export default function LostPage() {
   const [selectedDate, setSelectedDate] = useState("all");
