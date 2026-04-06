@@ -1,6 +1,5 @@
 "use client";
 
-import BoothDateFilter from "@/components/common/DateFilter";
 import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
 import LostItemCard from "@/components/info/LostItemCard";
@@ -8,6 +7,7 @@ import LostTypeFilter from "@/components/info/LostTypeFilter";
 import { lostItems } from "@/data/lostItemData";
 import usePagination from "@/hooks/usePagination";
 import { useState } from "react";
+import DateFilter from "@/components/common/DateFilter";
 
 const ITEMS_PER_PAGE = 10;
 
@@ -42,7 +42,7 @@ export default function LostPage() {
       </div>
 
       <div className="flex gap-4 mb-7">
-        <BoothDateFilter
+        <DateFilter
           selectedDate={selectedDate}
           onSelectDate={setSelectedDate}
         />

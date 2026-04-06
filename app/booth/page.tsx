@@ -1,13 +1,13 @@
 "use client";
 
 import { useState, useMemo } from "react";
-import BoothDateFilter from "@/components/common/DateFilter";
 import BoothLocationFilter from "@/components/booth/BoothLocationFilter";
 import BoothCategoryFilter from "@/components/booth/BoothCategoryFilter";
 import BoothSearchBar from "@/components/booth/BoothSearchBar";
 import BoothCard from "@/components/booth/BoothCard";
 import BoothPagination from "@/components/booth/BoothPagination";
 import { BOOTH_DATA, BoothLocation, BoothCategory } from "@/data/boothData";
+import DateFilter from "@/components/common/DateFilter";
 
 const PAGE_SIZE = 8;
 
@@ -92,7 +92,7 @@ export default function BoothPage() {
       <section className="flex flex-col gap-[17px] mb-12">
         {/* 날짜 + 장소 필터 */}
         <div className="flex flex-col gap-2.5">
-          <BoothDateFilter
+          <DateFilter
             selectedDate={selectedDate}
             onSelectDate={handleDateChange}
           />
