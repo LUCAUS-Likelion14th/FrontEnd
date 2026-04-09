@@ -27,7 +27,7 @@ export default function Pagination({
   );
 
   return (
-    <div className="flex justify-center gap-2 mt-6">
+    <div className="fixed bottom-23 left-0 right-0 w-full flex justify-center gap-2 mt-6">
       <button
         onClick={() => onChange(Math.max(page - 1, 1))}
         disabled={page === 1}
@@ -39,7 +39,7 @@ export default function Pagination({
         <button
           key={pageNum}
           onClick={() => onChange(pageNum)}
-          className={`w-7 h-7 flex justify-center items-center rounded-full ${
+          className={`w-7 h-7 flex justify-center items-center rounded-full  ${
             page === pageNum ? "bg-primary text-white" : "text-[#A1ABBC]"
           }`}
         >
