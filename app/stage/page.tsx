@@ -45,6 +45,14 @@ export default function StagePage() {
   const [stage, setStage] = useState<Stage[]>([]);
   const [timeTable, setTimeTable] = useState<TimeTable[]>([]);
 
+  const parsedTimeline = timeTable.map((item) => ({
+    id: item.stage_id,
+    start: item.start_at,
+    end: item.end_at,
+    title: item.performer,
+    category: item.category,
+  }));
+
   useEffect(() => {
     async function fetchData() {
       const [stageData, timeTableData] = await Promise.all([
@@ -62,17 +70,13 @@ export default function StagePage() {
   const [currentTime, setCurrentTime] = useState(new Date());
 
   // 아티스트 버튼용 필터링 (카테고리 + 날짜)
-  const filteredData = STAGE_DATA.filter((item) => {
-    const itemDate = item.start.split("T")[0];
-    return item.category === selected && itemDate === selectedDate;
+  const filteredData = parsedTimeline.filter((item) => {
+    return item.category === selected && item.start.startsWith(selectedDate);
   });
 
   // 타임라인용 필터링 (날짜)
-  const timelineData = [...STAGE_DATA, ...STAGE_EVENT_DATA]
-    .filter((item) => {
-      const itemDate = item.start.split("T")[0];
-      return itemDate === selectedDate;
-    })
+  const timelineData = parsedTimeline
+    .filter((item) => item.start.startsWith(selectedDate))
     .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
 
   // 무대기획전 카드용 필터링 (날짜)
