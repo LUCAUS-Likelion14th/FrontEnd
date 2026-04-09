@@ -9,8 +9,7 @@ interface Menu {
 
 export default function MenuDetail({ menuList }: { menuList: Menu[] }) {
   return (
-    // margin-bottom 값 수정필요
-    <div className="mt-6 mb-25"> 
+    <div className="mt-6"> 
       <div className="flex flex-col gap-10">
         {menuList.map((menu, index) => (
           <div key={index} className="flex justify-between">
