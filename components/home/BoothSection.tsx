@@ -1,37 +1,12 @@
 import ListCard from "@/components/ui/ListCard";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { TopBooth } from "@/types/home";
 
-const MOCK_BOOTH = [
-  {
-    imageUrl: "/img.png",
-    href: "/booth/1",
-    location: "해방광장 #1",
-    name: "부스 이름",
-    likes: 23,
-    liked: true,
-    department: "소속",
-  },
-  {
-    imageUrl: "/img.png",
-    href: "/booth/2",
-    location: "해방광장 #2",
-    name: "부스 이름",
-    likes: 10,
-    liked: false,
-    department: "소속",
-  },
-  {
-    imageUrl: "/img.png",
-    href: "/booth/3",
-    location: "해방광장 #3",
-    name: "부스 이름",
-    likes: 5,
-    liked: false,
-    department: "소속",
-  },
-];
+interface Props {
+  booths: TopBooth[]
+}
 
-export default function BoothSection() {
+export default function BoothSection({ booths }: Props) {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
@@ -41,8 +16,17 @@ export default function BoothSection() {
         href="/booth"
       />
       <div className="flex flex-col gap-2">
-        {MOCK_BOOTH.map((item) => (
-          <ListCard key={item.href} {...item} />
+        {booths.map((booth) => (
+          <ListCard
+            key={booth.booth_id}
+            imageUrl={booth.booth_image}
+            href={`/booth/${booth.booth_id}`}
+            location={booth.location}
+            name={booth.booth_name}
+            likes={booth.like_count}
+            liked={booth.is_liked}
+            department={booth.owner}
+          />
         ))}
       </div>
     </section>
