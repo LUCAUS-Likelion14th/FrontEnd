@@ -1,34 +1,12 @@
 import ListCard from "@/components/ui/ListCard";
 import SectionHeader from "@/components/ui/SectionHeader";
+import type { HotFood } from "@/types/home";
 
-const MOCK_FOOD = [
-  {
-    imageUrl: "/img.png",
-    href: "/foodtruck/1",
-    location: "메인메뉴",
-    name: "푸드트럭 이름",
-    likes: 23,
-    liked: true,
-  },
-  {
-    imageUrl: "/img.png",
-    href: "/foodtruck/2",
-    location: "메인메뉴",
-    name: "푸드트럭 이름",
-    likes: 10,
-    liked: false,
-  },
-  {
-    imageUrl: "/img.png",
-    href: "/foodtruck/3",
-    location: "메인메뉴",
-    name: "푸드트럭 이름",
-    likes: 5,
-    liked: false,
-  },
-];
+interface Props {
+  foods: HotFood[]
+}
 
-export default function FoodSection() {
+export default function FoodSection({ foods }: Props) {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
@@ -38,8 +16,16 @@ export default function FoodSection() {
         href="/foodtruck"
       />
       <div className="flex flex-col gap-2">
-        {MOCK_FOOD.map((item) => (
-          <ListCard key={item.href} {...item} />
+        {foods.map((food) => (
+          <ListCard
+            key={food.id}
+            imageUrl={food.image}
+            href={`/foodtruck/${food.id}`}
+            location={food.bestMenu}
+            name={food.name}
+            likes={food.likeCount}
+            liked={food.liked}
+          />
         ))}
       </div>
     </section>
