@@ -7,6 +7,8 @@ import StageTimeline from "@/components/stage/StageTimeline";
 import { STAGE_DATA } from "@/data/stageData";
 import { useEffect, useState } from "react";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
+import { stageApi } from "@/lib/api/stageApi";
+import { Stage, TimeTable } from "@/types/stage";
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
 
@@ -40,6 +42,21 @@ const CATEGORY_INFO: Record<
 };
 
 export default function StagePage() {
+  const [stage, setStage] = useState<Stage[]>([]);
+  const [timeTable, setTimeTable] = useState<TimeTable[]>([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const [stageData, timeTableData] = await Promise.all([
+        stageApi.getStage().catch(() => []),
+        stageApi.getTimeTable().catch(() => []),
+      ]);
+      setStage(stageData);
+      setTimeTable(timeTableData);
+    }
+    fetchData();
+  }, []);
+
   const [selectedDate, setSelectedDate] = useState("2026-05-21");
   const [selected, setSelected] = useState<CategoryType>("학생 공연");
   const [currentTime, setCurrentTime] = useState(new Date());
