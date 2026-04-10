@@ -5,7 +5,7 @@ import StageEventSection from "@/components/stage/StageEventSection";
 import ArtistSection from "@/components/stage/ArtistSection";
 import StageTimeline from "@/components/stage/StageTimeline";
 import { STAGE_DATA } from "@/data/stageData";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 import { stageApi } from "@/lib/api/stageApi";
 import { Stage, TimeTable } from "@/types/stage";
@@ -18,6 +18,12 @@ const CATEGORY: CategoryType[] = [
   "아티스트 공연",
   "무대기획전",
 ];
+
+const CATEGORY_MAP: Record<Exclude<CategoryType, "무대기획전">, string> = {
+  "학생 공연": "STUDENT_PERFORMANCE",
+  청룡가요제: "CHEONGRYONG_FESTIVAL",
+  "아티스트 공연": "ARTIST_PERFORMANCE",
+};
 
 const CATEGORY_INFO: Record<
   CategoryType,
@@ -42,42 +48,41 @@ const CATEGORY_INFO: Record<
 };
 
 export default function StagePage() {
-  const [stage, setStage] = useState<Stage[]>([]);
-  const [timeTable, setTimeTable] = useState<TimeTable[]>([]);
-
-  const parsedTimeline = timeTable.map((item) => ({
-    id: item.stage_id,
-    start: item.start_at,
-    end: item.end_at,
-    title: item.performer,
-    category: item.category,
-  }));
-
-  useEffect(() => {
-    async function fetchData() {
-      const [stageData, timeTableData] = await Promise.all([
-        stageApi.getStage().catch(() => []),
-        stageApi.getTimeTable().catch(() => []),
-      ]);
-      setStage(stageData);
-      setTimeTable(timeTableData);
-    }
-    fetchData();
-  }, []);
-
   const [selectedDate, setSelectedDate] = useState("2026-05-21");
   const [selected, setSelected] = useState<CategoryType>("학생 공연");
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // 아티스트 버튼용 필터링 (카테고리 + 날짜)
-  const filteredData = parsedTimeline.filter((item) => {
-    return item.category === selected && item.start.startsWith(selectedDate);
-  });
+  const [stage, setStage] = useState<Stage[]>([]);
+  const [timeTable, setTimeTable] = useState<TimeTable[]>([]);
 
-  // 타임라인용 필터링 (날짜)
-  const timelineData = parsedTimeline
-    .filter((item) => item.start.startsWith(selectedDate))
-    .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const timeLineData = await stageApi.getTimeTable(selectedDate);
+        setTimeTable(timeLineData);
+
+        if (selected !== "무대기획전") {
+          const stageData = await stageApi.getStage(
+            selectedDate,
+            CATEGORY_MAP[selected as keyof typeof CATEGORY_MAP],
+          );
+          setStage(stageData);
+        }
+      } catch (error) {
+        console.error("데이터 로드 실패", error);
+        setStage([]);
+        setTimeTable([]);
+      }
+    }
+    fetchData();
+  }, [selectedDate, selected]);
+
+  // 타임라인용 필터링 및 정렬
+  const timelineData = useMemo(() => {
+    return [...timeTable].sort(
+      (a, b) => new Date(a.start_at).getTime() - new Date(b.start_at).getTime(),
+    );
+  }, [timeTable]);
 
   // 무대기획전 카드용 필터링 (날짜)
   const filteredEventData = STAGE_EVENT_DATA.filter((item) => {
@@ -87,25 +92,25 @@ export default function StagePage() {
 
   const currentCategory = CATEGORY_INFO[selected];
 
-  const activeId = timelineData.find((item) => {
-    const start = new Date(item.start);
-    const end = new Date(item.end);
-
-    // 타임라인 활성화 테스트용
+  const activeId = useMemo(() => {
     const nowTime = currentTime.getHours() * 60 + currentTime.getMinutes();
-    const startTime = start.getHours() * 60 + start.getMinutes();
-    const endTime = end.getHours() * 60 + end.getMinutes();
 
-    return nowTime >= startTime && nowTime < endTime;
-    // return currentTime >= start && currentTime < end;
-  })?.id;
+    return timelineData.find((item) => {
+      const start = new Date(item.start_at);
+      const end = new Date(item.end_at);
+      const startTime = start.getHours() * 60 + start.getMinutes();
+      const endTime = end.getHours() * 60 + end.getMinutes();
+
+      return nowTime >= startTime && nowTime < endTime;
+    })?.stage_id;
+  }, [timelineData, currentTime]);
 
   // 타임라인 시간 업데이트
   useEffect(() => {
     const now = new Date();
     const times = timelineData.flatMap((item) => [
-      new Date(item.start),
-      new Date(item.end),
+      new Date(item.start_at),
+      new Date(item.end_at),
     ]);
 
     const futureTimes = times.filter((time) => time > now);
@@ -151,7 +156,7 @@ export default function StagePage() {
             ))}
           </div>
         ) : (
-          <ArtistSection data={filteredData} />
+          <ArtistSection data={stage} />
         )}
       </section>
 
