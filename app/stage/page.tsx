@@ -4,7 +4,6 @@ import Category from "@/components/stage/Category";
 import StageEventSection from "@/components/stage/StageEventSection";
 import ArtistSection from "@/components/stage/ArtistSection";
 import StageTimeline from "@/components/stage/StageTimeline";
-import { STAGE_DATA } from "@/data/stageData";
 import { useEffect, useMemo, useState } from "react";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 import { stageApi } from "@/lib/api/stageApi";
