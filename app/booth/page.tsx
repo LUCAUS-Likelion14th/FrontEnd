@@ -86,9 +86,6 @@ export default function BoothPage() {
 
   return (
     <main className="px-4 pt-2.5 pb-25">
-      {/* 제목 */}
-      <h1 className="text-[24px] font-semibold mb-4">부스 정보</h1>
-
       {/* 필터 영역 */}
       <section className="flex flex-col gap-[17px] mb-12">
         {/* 날짜 + 장소 필터 */}

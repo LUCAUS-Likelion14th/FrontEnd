@@ -126,8 +126,6 @@ export default function StagePage() {
 
   return (
     <main className="px-4 pt-2.5 pb-25">
-      <h1 className="text-[24px] font-semibold mb-3">공연 정보</h1>
-
       {/* 날짜 & 공연 카테고리 설정 */}
       <section className="mb-12">
         <Category
