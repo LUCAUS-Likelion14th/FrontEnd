@@ -48,12 +48,7 @@ export default function NoticePage() {
             <NoticeItem
               key={notice.id}
               id={notice.id}
-              category={
-                notice.category.toLowerCase() as
-                  | "important"
-                  | "notice"
-                  | "event"
-              }
+              category={notice.important ? "important" : "notice"}
               title={notice.title}
               date={notice.createdAt.split("T")[0].replace(/-/g, ".")}
             />
