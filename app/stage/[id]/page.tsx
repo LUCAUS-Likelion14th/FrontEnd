@@ -47,7 +47,7 @@ export default async function StageDetailPage({
 
       {/* 공연 상세정보 영역 */}
       <section className="mb-12">
-        <div className="flex justify-between pb-[16.5px] mb-6 border-b">
+        <div className="flex justify-between pb-[16.5px] mb-6 border-b border-text-sub2">
           <h2 className="text-[24px] font-semibold">{stage.performer}</h2>
           <div className="flex gap-2">
             {stage.youtube && (
