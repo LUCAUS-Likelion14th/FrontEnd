@@ -1,6 +1,6 @@
 "use client";
 
-import { LostItem } from "@/data/lostItemData";
+import { LostItem } from "@/types/lost";
 import Image from "next/image";
 
 type Props = {
@@ -30,7 +30,7 @@ export default function LostItemCard({ item }: Props) {
 
           <div className="flex justify-between text-[14px] text-[#8F99AA]">
             <span>{formatDate(item.date)}</span>
-            <span>{item.location}</span>
+            <span>{item.find_location}</span>
           </div>
         </div>
       </div>
