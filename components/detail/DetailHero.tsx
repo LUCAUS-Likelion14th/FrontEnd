@@ -1,22 +1,22 @@
-"use client" 
+"use client";
 
-import Image from "next/image"
-import { useRouter } from "next/navigation" 
-import { FiChevronLeft } from "react-icons/fi"
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { FiChevronLeft } from "react-icons/fi";
 
 type Props = {
-  title: '부스 정보' | '푸드트럭 정보'
-  imageUrl?: string
-}
+  title: "부스 정보" | "푸드트럭 정보";
+  imageUrl?: string;
+};
 
 export default function DetailHero({ title, imageUrl }: Props) {
-  const router = useRouter()
+  const router = useRouter();
 
   return (
     <div className="flex flex-col">
-      <div className="flex gap-1 px-4 py-2.5">
+      <div className="flex gap-1 px-4 pt-5 pb-2.5">
         <button onClick={() => router.back()}>
-          <FiChevronLeft size={24} className="block"/>
+          <FiChevronLeft size={24} className="block" />
         </button>
         <span className="text-2xl font-semibold">{title}</span>
       </div>
@@ -27,5 +27,5 @@ export default function DetailHero({ title, imageUrl }: Props) {
         )}
       </div>
     </div>
-  )
+  );
 }

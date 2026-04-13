@@ -1,6 +1,7 @@
 "use client";
 
 import { BsGeoFill } from "react-icons/bs";
+import { BsGeo } from "react-icons/bs";
 import { BOOTH_LOCATIONS, BoothLocation } from "@/data/boothData";
 
 type Props = {
@@ -13,9 +14,12 @@ export default function BoothLocationFilter({
   onSelectLocation,
 }: Props) {
   return (
-    <div className="flex items-center gap-2.5">
+    <div className="flex items-center gap-2.5 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {BOOTH_LOCATIONS.map((loc) => {
         const isActive = selectedLocation === loc;
+
+        const Icon = isActive ? BsGeoFill : BsGeo;
+
         return (
           <button
             key={loc}
@@ -23,10 +27,10 @@ export default function BoothLocationFilter({
             className={`flex items-center gap-2 px-2.5 h-10 rounded-[6px] transition-colors ${
               isActive
                 ? "bg-primary text-white"
-                : "bg-[#DADADA] text-black"
+                : "border border-text-sub text-text-sub"
             }`}
           >
-            <BsGeoFill size={20} className={isActive ? "text-white" : ""} />
+            <Icon size={20} />
             <span className="text-base whitespace-nowrap">{loc}</span>
           </button>
         );
