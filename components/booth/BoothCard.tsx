@@ -28,7 +28,7 @@ export default function BoothCard({ booth }: Props) {
         {/* 카드 정보 오버레이 */}
         <div className="absolute bottom-[9px] left-[7px] right-[7px] flex items-end justify-between">
           {/* 부스 정보 */}
-          <div className="flex flex-col gap-1">
+          <div className="flex flex-col gap-0.5">
             <span className="text-base font-semibold leading-tight line-clamp-1">
               {booth.booth_name}
             </span>
