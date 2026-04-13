@@ -166,7 +166,7 @@ export default function LikesPage() {
       </div>
 
       {/* 스크롤 영역 - 헤더 높이만큼 padding 줘서 안 겹치게 */}
-      <div className="pt-32 px-4 pb-24">
+      <div className="pt-32 px-4 pb-12">
         <div className="grid grid-cols-2 gap-4">
           {tab === "booth"
             ? mockBooths.map((booth) => (

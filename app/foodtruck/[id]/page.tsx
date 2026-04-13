@@ -59,7 +59,7 @@ export default async function FoodTruckDetailPage({
   };
 
   return (
-    <main className="pb-25">
+    <main className="pb-12">
       <DetailHero title="푸드트럭 정보" imageUrl={foodTruck.image} />
       <div className="flex flex-col px-4 gap-10">
         <FoodTruckTitle
