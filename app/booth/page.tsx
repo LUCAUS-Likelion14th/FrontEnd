@@ -85,9 +85,9 @@ export default function BoothPage() {
   };
 
   return (
-    <main className="px-4 pt-2.5 pb-25">
+    <main className="px-4 pt-5 pb-25">
       {/* 필터 영역 */}
-      <section className="flex flex-col gap-[17px] mb-12">
+      <section className="flex flex-col gap-[17px] mb-14">
         {/* 날짜 + 장소 필터 */}
         <div className="flex flex-col gap-2.5">
           <DateFilter
@@ -105,7 +105,7 @@ export default function BoothPage() {
         {selectedLocation === "대운동장" ? (
           <>
             {/* 대운동장: 지도 플레이스홀더 + 도장판 바로 가기 */}
-            <div className="relative w-full h-[200px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
+            <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
               <span className="text-text-sub text-base">지도</span>
             </div>
             <button className="w-full py-3 bg-primary text-white text-base font-semibold rounded-[10px]">
@@ -114,9 +114,9 @@ export default function BoothPage() {
           </>
         ) : (
           /* 기본: 지도 플레이스홀더 */
-          <div className="relative w-full h-[200px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
+          <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
             <span className="text-text-sub text-base">지도</span>
-            <div className="absolute right-4 top-4 flex flex-col gap-2">
+            <div className="absolute right-4 bottom-5 flex flex-col gap-2">
               <button className="w-7 h-7 bg-white rounded-full shadow flex items-center justify-center text-lg leading-none">
                 +
               </button>
@@ -129,12 +129,12 @@ export default function BoothPage() {
       </section>
 
       {/* 검색 + 카테고리 + 카드 목록 */}
-      <section className="flex flex-col gap-5">
+      <section className="flex flex-col">
         {/* 대운동장이 아닐 때만 검색바 / 카테고리 표시 */}
         {selectedLocation !== "대운동장" && (
           <>
             <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-            <div className="overflow-x-auto">
+            <div className="pt-3 pb-5 overflow-x-auto">
               <BoothCategoryFilter
                 selectedCategory={selectedCategory}
                 onSelectCategory={handleCategoryChange}

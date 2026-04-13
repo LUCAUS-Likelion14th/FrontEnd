@@ -9,8 +9,7 @@ type Props = {
 
 export default function BoothSearchBar({ value, onChange }: Props) {
   return (
-    <div className="flex items-center gap-2.5 w-full px-4 py-1.5 border border-text-sub rounded-[18px]">
-      <FiSearch size={18} className="text-text-sub shrink-0" />
+    <div className="flex items-center w-full px-4 py-1.5 border border-text-sub rounded-[18px]">
       <input
         type="text"
         value={value}
@@ -18,6 +17,8 @@ export default function BoothSearchBar({ value, onChange }: Props) {
         placeholder="부스 이름 검색"
         className="flex-1 text-base outline-none bg-transparent placeholder:text-text-sub"
       />
+
+      <FiSearch size={24} className="text-text-sub shrink-0" />
     </div>
   );
 }

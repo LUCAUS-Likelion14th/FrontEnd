@@ -3,14 +3,13 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import type { HotFood } from "@/types/home";
 
 interface Props {
-  foods: HotFood[]
+  foods: HotFood[];
 }
 
 export default function FoodSection({ foods }: Props) {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
-        icon="🎪"
         title="HOT FOOD"
         description="303관 지하 1층에서 음식을 무뎌보자~~^^"
         href="/foodtruck"

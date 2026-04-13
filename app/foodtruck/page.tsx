@@ -36,9 +36,9 @@ export default function FoodTruckPage() {
   };
 
   return (
-    <main className="px-4 pt-2.5 pb-25">
+    <main className="px-4 pt-5 pb-25">
       {/* 필터 영역 */}
-      <section className="flex flex-col gap-[17px] mb-12">
+      <section className="flex flex-col gap-5 pb-10 border-b border-b-text-sub2 mb-5">
         {/* 날짜 필터 */}
         <div className="flex flex-col gap-2.5">
           <div className="w-fit">
@@ -50,22 +50,13 @@ export default function FoodTruckPage() {
         </div>
 
         {/* 지도 플레이스홀더 */}
-        <div className="relative w-full h-[200px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
+        <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
           <span className="text-text-sub text-base">지도</span>
-          {/* 확대/축소 버튼 */}
-          <div className="absolute right-4 top-4 flex flex-col gap-2">
-            <button className="w-7 h-7 bg-white rounded-full shadow flex items-center justify-center text-lg leading-none">
-              +
-            </button>
-            <button className="w-7 h-7 bg-white rounded-full shadow flex items-center justify-center text-lg leading-none">
-              −
-            </button>
-          </div>
         </div>
       </section>
 
       {/* 카드 목록 */}
-      <section className="flex flex-col gap-5">
+      <section className="flex flex-col">
         {/* 푸드트럭 카드 그리드 */}
         {pagedTrucks.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">

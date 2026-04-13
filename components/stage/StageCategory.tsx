@@ -10,7 +10,7 @@ type CategoryProps = {
   onSelectDate: (date: string) => void;
 };
 
-export default function Category({
+export default function StageCategory({
   categories,
   selected,
   onSelect,
@@ -20,28 +20,28 @@ export default function Category({
   return (
     <div>
       {/* 날짜 선택 탭 */}
-      <section className="relative mb-4">
-        <div className="flex">
+      <section className="relative mb-3.5">
+        <div className="flex pb-2">
           <button
             onClick={() => onSelectDate("2026-05-21")}
-            className={`w-1/2 text-center pb-2 ${
+            className={`w-1/2 text-center ${
               selectedDate === "2026-05-21"
                 ? "text-black font-semibold"
                 : "text-text-sub"
             }`}
           >
-            5월 21일
+            21일
           </button>
 
           <button
             onClick={() => onSelectDate("2026-05-22")}
-            className={`w-1/2 text-center pb-2 ${
+            className={`w-1/2 text-center ${
               selectedDate === "2026-05-22"
                 ? "text-black font-semibold"
                 : "text-text-sub"
             }`}
           >
-            5월 22일
+            22일
           </button>
         </div>
 
@@ -67,7 +67,7 @@ export default function Category({
             className={`p-2.5 rounded-md leading-4.5 shrink-0 ${
               selected === item
                 ? "bg-primary text-white"
-                : "bg-[#DADADA] text-black"
+                : "bg-white text-[#8D97A7] border border-[#8D97A7]"
             }`}
           >
             {item}
