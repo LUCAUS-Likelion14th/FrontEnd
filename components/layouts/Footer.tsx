@@ -11,12 +11,12 @@ type NavItem = {
 
 const NAV_ITEMS: NavItem[] = [
   {
-    label: "멋쟁이사자처럼 중앙대",
+    label: "@likelion_cau",
     href: "https://www.instagram.com/likelion_cau/",
     icon: <BsInstagram className="w-6 h-6" aria-hidden="true" />,
   },
   {
-    label: "축제기획단",
+    label: "@cau.festival",
     href: "https://www.instagram.com/",
     icon: <BsInstagram className="w-6 h-6" aria-hidden="true" />,
   },
@@ -25,8 +25,14 @@ const NAV_ITEMS: NavItem[] = [
 export default function Footer() {
   return (
     /* pb 값 조정하기 */
-    <footer className="border-t border-white/10 pb-25 text-center">
-      <ul className="flex justify-center gap-4 mb-4 list-none p-0 m-0">
+    <footer className="flex flex-col gap-4 bg-[#B6C2D4] px-8 py-4 text-center">
+      <address className="flex flex-col gap-1 not-italic">
+        <p className="text-[14px]">LIKELION CAU X 축제기획단</p>
+
+        <small className="text-[10px]">Copyright © 2026 Likelion CAU</small>
+      </address>
+
+      <ul className="flex justify-center gap-22 list-none p-0 m-0">
         {NAV_ITEMS.map((item) => (
           <li key={item.href}>
             <Link
@@ -36,16 +42,11 @@ export default function Footer() {
               className="flex flex-col justify-center items-center gap-2 cursor-pointer"
             >
               {item.icon}
-              <span>{item.label}</span>
+              <span className="text-[14px]">{item.label}</span>
             </Link>
           </li>
         ))}
       </ul>
-      <address className="flex flex-col gap-1 not-italic">
-        <p className="text-[14px]">LIKELION CAU X 축제기획단</p>
-
-        <small className="text-[10px]">Copyright © 2026 Likelion CAU</small>
-      </address>
     </footer>
   );
 }
