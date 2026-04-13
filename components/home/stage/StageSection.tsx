@@ -3,14 +3,13 @@ import SectionHeader from "../../ui/SectionHeader";
 import type { LiveStage } from "@/types/home";
 
 interface Props {
-  stages: LiveStage[]
+  stages: LiveStage[];
 }
 
 export default function StageSection({ stages }: Props) {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
-        icon="🎪"
         title="LIVE STAGE"
         description="현재 잔디광장에서 공연 중인 무대는?"
         href="/stage"
