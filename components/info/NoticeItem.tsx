@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 
 interface NoticeItemProps {
   id: number;
-  category: "important" | "notice" | "event";
+  category: "important" | "notice";
   title: string;
   date: string;
 }

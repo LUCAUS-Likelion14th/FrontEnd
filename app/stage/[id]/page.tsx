@@ -47,7 +47,7 @@ export default async function StageDetailPage({
 
       {/* 공연 상세정보 영역 */}
       <section className="mb-12">
-        <div className="flex justify-between pb-[16.5px] mb-6 border-b">
+        <div className="flex justify-between pb-[16.5px] mb-6 border-b border-text-sub2">
           <h2 className="text-[24px] font-semibold">{stage.performer}</h2>
           <div className="flex gap-2">
             {stage.youtube && (
@@ -69,14 +69,12 @@ export default async function StageDetailPage({
 
         <div className="flex flex-col gap-6">
           <div className="flex justify-between items-center">
-            <h3 className="text-[20px] font-semibold text-text-sub">
-              공연 일정
-            </h3>
-            <p>{stage.time}</p>
+            <h3 className="text-base font-semibold text-text-sub">공연 일정</h3>
+            <p className="text-base text-right">{stage.time}</p>
           </div>
           <div className="flex justify-between">
-            <h3 className="text-[20px] font-semibold text-text-sub">공연 곡</h3>
-            <div className="flex flex-col text-right">
+            <h3 className="text-base font-semibold text-text-sub">공연 곡</h3>
+            <div className="flex flex-col text-base text-right">
               {stage.songs && stage.songs.length > 0 ? (
                 stage.songs
                   .sort((a, b) => a.play_order - b.play_order)
@@ -87,8 +85,10 @@ export default async function StageDetailPage({
             </div>
           </div>
           <div className="flex justify-between">
-            <h3 className="text-[20px] font-semibold text-text-sub">소개글</h3>
-            <p className="text-right whitespace-pre-line">{stage.stage_info}</p>
+            <h3 className="text-base font-semibold text-text-sub">소개글</h3>
+            <p className="text-base text-right whitespace-pre-line">
+              {stage.stage_info}
+            </p>
           </div>
         </div>
       </section>

@@ -3,14 +3,13 @@ import SectionHeader from "@/components/ui/SectionHeader";
 import type { TopBooth } from "@/types/home";
 
 interface Props {
-  booths: TopBooth[]
+  booths: TopBooth[];
 }
 
 export default function BoothSection({ booths }: Props) {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
-        icon="🎪"
         title="TOP BOOTH"
         description="현 시간 가장 핫한 부스!"
         href="/booth"
