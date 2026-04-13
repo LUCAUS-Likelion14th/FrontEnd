@@ -3,27 +3,35 @@
 import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
 import NoticeItem from "@/components/info/NoticeItem";
-import { notices } from "@/data/notice";
-import { useState } from "react";
-
-const ITEMS_PER_PAGE = 10;
+import { noticeApi } from "@/lib/api/noticeApi";
+import { Notice } from "@/types/notice";
+import { useEffect, useState } from "react";
 
 export default function NoticePage() {
   const [currentPage, setCurrentPage] = useState(1);
+  const [noticeData, setNoticeData] = useState<Notice[]>([]);
+  const [totalPages, setTotalPages] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
-  const sortedNotices = [...notices].sort((a, b) => {
-    if (a.category === "important" && b.category !== "important") return -1;
-    if (a.category !== "important" && b.category === "important") return 1;
-
-    return new Date(b.date).getTime() - new Date(a.date).getTime();
-  });
-
-  const totalPages = Math.ceil(sortedNotices.length / ITEMS_PER_PAGE);
-  const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
-  const currentData = sortedNotices.slice(
-    startIndex,
-    startIndex + ITEMS_PER_PAGE,
-  );
+  useEffect(() => {
+    async function fetchNotices() {
+      setIsLoading(true);
+      try {
+        const response = await noticeApi.getNotices({
+          page: currentPage - 1,
+          size: 10,
+          sort: ["important,desc", "createdAt,desc"],
+        });
+        setNoticeData(response.content);
+        setTotalPages(response.totalPages);
+      } catch (error) {
+        console.error("공지사항 로드 실패: ", error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchNotices();
+  }, [currentPage]);
 
   return (
     <main className="px-4 pt-2.5 pb-25">
@@ -33,22 +41,30 @@ export default function NoticePage() {
       </div>
 
       <section className="border-t border-[#DCE2E9]">
-        {currentData.map((notice) => (
-          <NoticeItem
-            key={notice.id}
-            id={notice.id}
-            category={notice.category}
-            title={notice.title}
-            date={notice.date}
-          />
-        ))}
+        {isLoading ? (
+          <div>로딩 중...</div>
+        ) : noticeData.length > 0 ? (
+          noticeData.map((notice) => (
+            <NoticeItem
+              key={notice.id}
+              id={notice.id}
+              category={notice.important ? "important" : "notice"}
+              title={notice.title}
+              date={notice.createdAt.split("T")[0].replace(/-/g, ".")}
+            />
+          ))
+        ) : (
+          <div>공지사항이 없습니다.</div>
+        )}
       </section>
 
-      <Pagination
-        page={currentPage}
-        totalPages={totalPages}
-        onChange={setCurrentPage}
-      />
+      {totalPages > 0 && (
+        <Pagination
+          page={currentPage}
+          totalPages={totalPages}
+          onChange={setCurrentPage}
+        />
+      )}
     </main>
   );
 }

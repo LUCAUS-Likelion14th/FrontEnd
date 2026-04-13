@@ -4,9 +4,10 @@ import Category from "@/components/stage/Category";
 import StageEventSection from "@/components/stage/StageEventSection";
 import ArtistSection from "@/components/stage/ArtistSection";
 import StageTimeline from "@/components/stage/StageTimeline";
-import { STAGE_DATA } from "@/data/stageData";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
+import { stageApi } from "@/lib/api/stageApi";
+import { Stage, TimeTable } from "@/types/stage";
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
 
@@ -16,6 +17,12 @@ const CATEGORY: CategoryType[] = [
   "아티스트 공연",
   "무대기획전",
 ];
+
+const CATEGORY_MAP: Record<Exclude<CategoryType, "무대기획전">, string> = {
+  "학생 공연": "STUDENT_PERFORMANCE",
+  청룡가요제: "CHEONGRYONG_FESTIVAL",
+  "아티스트 공연": "ARTIST_PERFORMANCE",
+};
 
 const CATEGORY_INFO: Record<
   CategoryType,
@@ -44,19 +51,37 @@ export default function StagePage() {
   const [selected, setSelected] = useState<CategoryType>("학생 공연");
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  // 아티스트 버튼용 필터링 (카테고리 + 날짜)
-  const filteredData = STAGE_DATA.filter((item) => {
-    const itemDate = item.start.split("T")[0];
-    return item.category === selected && itemDate === selectedDate;
-  });
+  const [stage, setStage] = useState<Stage[]>([]);
+  const [timeTable, setTimeTable] = useState<TimeTable[]>([]);
 
-  // 타임라인용 필터링 (날짜)
-  const timelineData = [...STAGE_DATA, ...STAGE_EVENT_DATA]
-    .filter((item) => {
-      const itemDate = item.start.split("T")[0];
-      return itemDate === selectedDate;
-    })
-    .sort((a, b) => new Date(a.start).getTime() - new Date(b.start).getTime());
+  useEffect(() => {
+    async function fetchData() {
+      try {
+        const timeLineData = await stageApi.getTimeTable(selectedDate);
+        setTimeTable(timeLineData);
+
+        if (selected !== "무대기획전") {
+          const stageData = await stageApi.getStage(
+            selectedDate,
+            CATEGORY_MAP[selected as keyof typeof CATEGORY_MAP],
+          );
+          setStage(stageData);
+        }
+      } catch (error) {
+        console.error("데이터 로드 실패", error);
+        setStage([]);
+        setTimeTable([]);
+      }
+    }
+    fetchData();
+  }, [selectedDate, selected]);
+
+  // 타임라인용 필터링 및 정렬
+  const timelineData = useMemo(() => {
+    return [...timeTable].sort(
+      (a, b) => new Date(a.start_at).getTime() - new Date(b.start_at).getTime(),
+    );
+  }, [timeTable]);
 
   // 무대기획전 카드용 필터링 (날짜)
   const filteredEventData = STAGE_EVENT_DATA.filter((item) => {
@@ -66,25 +91,25 @@ export default function StagePage() {
 
   const currentCategory = CATEGORY_INFO[selected];
 
-  const activeId = timelineData.find((item) => {
-    const start = new Date(item.start);
-    const end = new Date(item.end);
-
-    // 타임라인 활성화 테스트용
+  const activeId = useMemo(() => {
     const nowTime = currentTime.getHours() * 60 + currentTime.getMinutes();
-    const startTime = start.getHours() * 60 + start.getMinutes();
-    const endTime = end.getHours() * 60 + end.getMinutes();
 
-    return nowTime >= startTime && nowTime < endTime;
-    // return currentTime >= start && currentTime < end;
-  })?.id;
+    return timelineData.find((item) => {
+      const start = new Date(item.start_at);
+      const end = new Date(item.end_at);
+      const startTime = start.getHours() * 60 + start.getMinutes();
+      const endTime = end.getHours() * 60 + end.getMinutes();
+
+      return nowTime >= startTime && nowTime < endTime;
+    })?.stage_id;
+  }, [timelineData, currentTime]);
 
   // 타임라인 시간 업데이트
   useEffect(() => {
     const now = new Date();
     const times = timelineData.flatMap((item) => [
-      new Date(item.start),
-      new Date(item.end),
+      new Date(item.start_at),
+      new Date(item.end_at),
     ]);
 
     const futureTimes = times.filter((time) => time > now);
@@ -101,8 +126,6 @@ export default function StagePage() {
 
   return (
     <main className="px-4 pt-2.5 pb-25">
-      <h1 className="text-[24px] font-semibold mb-3">공연 정보</h1>
-
       {/* 날짜 & 공연 카테고리 설정 */}
       <section className="mb-12">
         <Category
@@ -130,7 +153,7 @@ export default function StagePage() {
             ))}
           </div>
         ) : (
-          <ArtistSection data={filteredData} />
+          <ArtistSection data={stage} />
         )}
       </section>
 
@@ -138,7 +161,7 @@ export default function StagePage() {
       <section className="flex flex-col gap-4 mb-3">
         <div className="flex justify-between items-center">
           <h2 className="text-[24px] font-semibold">본무대 타임라인</h2>
-          <button className="px-[37.5px] py-2.5 bg-[#05F] text-base leading-4.5 text-white rounded-lg">
+          <button className="px-[37.5px] py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg">
             본무대 FAQ
           </button>
         </div>
@@ -148,7 +171,7 @@ export default function StagePage() {
         </div>
       </section>
 
-      <small className="block text-xs font-light text-center">
+      <small className="block text-xs font-light text-[#888888] text-center">
         *주최 측의 사정에 따라 일정이 변경될 수 있습니다
       </small>
     </main>

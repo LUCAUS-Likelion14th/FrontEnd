@@ -37,11 +37,6 @@ export default function FoodTruckPage() {
 
   return (
     <main className="px-4 pt-2.5 pb-25">
-      {/* 제목 */}
-      <h1 className="text-[24px] font-semibold mb-4 text-[#2B3037]">
-        푸드트럭 정보
-      </h1>
-
       {/* 필터 영역 */}
       <section className="flex flex-col gap-[17px] mb-12">
         {/* 날짜 필터 */}

@@ -1,18 +1,12 @@
+import { TimeTable } from "@/types/stage";
 import TimelineCard from "../stage/TimelineCard";
 
-type Props = {
-  data: {
-    id: number;
-    stageImage: string;
-    category: string;
-    artist: string;
-    start: string;
-    end: string;
-  }[];
+type StageTimelineProps = {
+  data: TimeTable[];
   activeId?: number;
 };
 
-export default function StageTimeline({ data, activeId }: Props) {
+export default function StageTimeline({ data, activeId }: StageTimelineProps) {
   const formatTime = (time: string) => {
     const date = new Date(time);
     const hours = date.getHours().toString().padStart(2, "0");
@@ -21,21 +15,21 @@ export default function StageTimeline({ data, activeId }: Props) {
   };
 
   return (
-    <div className="flex flex-col max-h-101 border border-text-sub rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="flex flex-col max-h-101 border border-text-sub2 rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item, index) => {
-        const isActive = item.id === activeId;
+        const isActive = item.stage_id === activeId;
         const isFirst = index === 0;
         const isLast = index === data.length - 1;
 
         return (
-          <div key={item.id} className="flex w-full min-h-30 items-start">
+          <div key={item.stage_id} className="flex w-full min-h-30 items-start">
             {/* [1] 시간 영역: 원의 중심(24px)에 맞추기 위해 mt 조정 */}
             <div
               className={`mt-5.25 text-[14px] leading-none min-w-21 shrink-0 ${
                 isActive ? "text-primary font-semibold" : "text-text-sub"
               }`}
             >
-              {formatTime(item.start)} - {formatTime(item.end)}
+              {formatTime(item.start_at)} - {formatTime(item.end_at)}
             </div>
 
             {/* [2] 타임라인 축 (원 + 선) */}
@@ -76,10 +70,10 @@ export default function StageTimeline({ data, activeId }: Props) {
             {/* [3] 카드 영역 */}
             <div className="flex-1 py-3.5 pl-1">
               <TimelineCard
-                id={item.id}
-                image={item.stageImage}
+                id={item.stage_id}
+                image={item.performer_logo}
                 category={item.category}
-                artist={item.artist}
+                artist={item.performer}
                 isActive={isActive}
               />
             </div>

@@ -3,8 +3,6 @@ import InfoCard from "@/components/info/InfoCard";
 export default function InfoPage() {
   return (
     <main className="px-4 pt-2.5 pb-25">
-      <h1 className="text-[24px] font-semibold mb-5">안내</h1>
-
       <section className="flex flex-col gap-3">
         <InfoCard
           imageUrl="/img.png"
