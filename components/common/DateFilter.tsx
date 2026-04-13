@@ -2,19 +2,19 @@
 
 import { useState, useRef, useEffect } from "react";
 import { FiCalendar, FiChevronDown } from "react-icons/fi";
-import { FOODTRUCK_DATES } from "@/data/foodtruckData";
+import { BOOTH_DATES } from "@/data/boothData";
 
 type Props = {
   selectedDate: string;
   onSelectDate: (date: string) => void;
 };
 
-export default function FoodTruckDateFilter({ selectedDate, onSelectDate }: Props) {
+export default function DateFilter({ selectedDate, onSelectDate }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const currentLabel =
-    FOODTRUCK_DATES.find((d) => d.value === selectedDate)?.label ?? "";
+    BOOTH_DATES.find((d) => d.value === selectedDate)?.label ?? "";
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -39,7 +39,7 @@ export default function FoodTruckDateFilter({ selectedDate, onSelectDate }: Prop
 
       {isOpen && (
         <ul className="absolute top-12 left-0 z-20 bg-white border border-[#DCE2E9] rounded-[6px] shadow-md overflow-hidden">
-          {FOODTRUCK_DATES.map((d) => (
+          {BOOTH_DATES.map((d) => (
             <li key={d.value}>
               <button
                 onClick={() => {

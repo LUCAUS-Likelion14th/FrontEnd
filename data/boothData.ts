@@ -1,13 +1,23 @@
 import { BoothDetail } from "@/types/booth";
 
-export const BOOTH_LOCATIONS = ["해방광장 일대", "후문 일대", "대운동장"] as const;
+export const BOOTH_LOCATIONS = [
+  "해방광장 일대",
+  "후문 일대",
+  "대운동장",
+] as const;
 export type BoothLocation = (typeof BOOTH_LOCATIONS)[number];
 
-export const BOOTH_CATEGORIES = ["전체", "게임", "소개팅", "음식", "굿즈"] as const;
+export const BOOTH_CATEGORIES = [
+  "전체",
+  "게임",
+  "소개팅",
+  "음식",
+  "굿즈",
+] as const;
 export type BoothCategory = (typeof BOOTH_CATEGORIES)[number];
 
 export const BOOTH_DATES = [
-  { value: "all", label: "전체 날짜" },
+  { value: "all", label: "날짜" },
   { value: "2026-05-18", label: "5월 18일 (월)" },
   { value: "2026-05-19", label: "5월 19일 (화)" },
   { value: "2026-05-20", label: "5월 20일 (수)" },
