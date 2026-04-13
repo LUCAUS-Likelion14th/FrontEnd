@@ -73,7 +73,7 @@ export default function MyPage() {
   const data = mockData;
 
   return (
-    <main className="flex flex-col gap-4">
+    <main className="flex flex-col gap-4 pb-25">
       {!isLoggedIn ? (
         <div className="flex flex-col gap-8">
           {/* 비로그인 상태일 때 */}
