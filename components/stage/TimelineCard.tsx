@@ -36,7 +36,7 @@ export default function TimelineCard({
         <div className="flex flex-col max-w-30 gap-3">
           <p
             className={`text-1 font-normal leading-3.5 ${
-              isActive ? "text-primary" : "text-black"
+              isActive ? "text-primary" : "text-text-sub"
             }`}
           >
             {category}

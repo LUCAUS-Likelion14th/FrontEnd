@@ -1,20 +1,21 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import { FiCalendar, FiChevronDown } from "react-icons/fi";
-import { BOOTH_DATES } from "@/data/boothData";
+import { FiChevronDown } from "react-icons/fi";
+import { FiList } from "react-icons/fi";
+import { LOST_ITEM_TYPES } from "@/data/lostItemData";
 
 type Props = {
-  selectedDate: string;
-  onSelectDate: (date: string) => void;
+  selectedType: string;
+  onSelectType: (type: string) => void;
 };
 
-export default function BoothDateFilter({ selectedDate, onSelectDate }: Props) {
+export default function LostTypeFilter({ selectedType, onSelectType }: Props) {
   const [isOpen, setIsOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
   const currentLabel =
-    BOOTH_DATES.find((d) => d.value === selectedDate)?.label ?? "";
+    LOST_ITEM_TYPES.find((t) => t.value === selectedType)?.label ?? "";
 
   useEffect(() => {
     function handleClickOutside(e: MouseEvent) {
@@ -32,25 +33,25 @@ export default function BoothDateFilter({ selectedDate, onSelectDate }: Props) {
         onClick={() => setIsOpen((prev) => !prev)}
         className="flex items-center gap-1 px-2.5 h-10 bg-[#DADADA] rounded-[6px]"
       >
-        <FiCalendar size={18} />
+        <FiList size={18} />
         <span className="text-base">{currentLabel}</span>
         <FiChevronDown size={18} />
       </button>
 
       {isOpen && (
-        <ul className="absolute top-12 left-0 z-20 bg-white border border-[#DCE2E9] rounded-[6px] shadow-md overflow-hidden">
-          {BOOTH_DATES.map((d) => (
-            <li key={d.value}>
+        <ul className="absolute top-12 left-0 z-20 bg-white border border-[#DCE2E9] rounded-[6px] shadow-md w-max">
+          {LOST_ITEM_TYPES.map((t) => (
+            <li key={t.value}>
               <button
                 onClick={() => {
-                  onSelectDate(d.value);
+                  onSelectType(t.value);
                   setIsOpen(false);
                 }}
-                className={`w-full text-left px-4 py-2.5 text-base whitespace-nowrap hover:bg-gray-50 ${
-                  selectedDate === d.value ? "text-primary font-semibold" : ""
+                className={`w-full text-left px-4 py-2.5 ${
+                  selectedType === t.value ? "text-primary font-semibold" : ""
                 }`}
               >
-                {d.label}
+                {t.label}
               </button>
             </li>
           ))}

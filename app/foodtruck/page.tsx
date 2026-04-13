@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import FoodTruckDateFilter from "@/components/foodtruck/FoodTruckDateFilter";
 import FoodTruckCard from "@/components/foodtruck/FoodTruckCard";
 import BoothPagination from "@/components/booth/BoothPagination"; // 부스 페이지네이션 재사용
 import { FOODTRUCK_DATA } from "@/data/foodtruckData";
+import DateFilter from "@/components/common/DateFilter";
 
 const PAGE_SIZE = 8;
 
@@ -16,7 +16,8 @@ export default function FoodTruckPage() {
   const filteredTrucks = useMemo(() => {
     return FOODTRUCK_DATA.filter((truck) => {
       // "all"이 선택된 경우 모든 날짜 표시, 특정 날짜 선택 시 해당 날짜 포함 여부 확인
-      if (selectedDate !== "all" && !truck.date.includes(selectedDate)) return false;
+      if (selectedDate !== "all" && !truck.date.includes(selectedDate))
+        return false;
       return true;
     });
   }, [selectedDate]);
@@ -25,7 +26,7 @@ export default function FoodTruckPage() {
   const totalPages = Math.max(1, Math.ceil(filteredTrucks.length / PAGE_SIZE));
   const pagedTrucks = filteredTrucks.slice(
     (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
+    currentPage * PAGE_SIZE,
   );
 
   // 필터 변경 핸들러
@@ -36,18 +37,15 @@ export default function FoodTruckPage() {
 
   return (
     <main className="px-4 pt-2.5 pb-25">
-      {/* 제목 */}
-      <h1 className="text-[24px] font-semibold mb-4 text-[#2B3037]">푸드트럭 정보</h1>
-
       {/* 필터 영역 */}
       <section className="flex flex-col gap-[17px] mb-12">
         {/* 날짜 필터 */}
         <div className="flex flex-col gap-2.5">
           <div className="w-fit">
-              <FoodTruckDateFilter
-                selectedDate={selectedDate}
-                onSelectDate={handleDateChange}
-              />
+            <DateFilter
+              selectedDate={selectedDate}
+              onSelectDate={handleDateChange}
+            />
           </div>
         </div>
 
