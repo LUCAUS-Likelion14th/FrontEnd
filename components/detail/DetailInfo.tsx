@@ -11,7 +11,7 @@ export default function DetailInfo({
 }: Props) {
   return (
     <div
-      className={`flex gap-13 text-base ${hasBorder ? "border-y border-text-sub" : ""}`}
+      className={`flex gap-13 text-base ${hasBorder ? "border-y border-y-text-sub2 py-6" : ""}`}
     >
       <div className="flex flex-col gap-5 text-text-sub font-semibold shrink-0">
         <span>위치</span>
