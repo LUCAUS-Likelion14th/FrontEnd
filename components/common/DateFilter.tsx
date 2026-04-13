@@ -30,30 +30,44 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-1 px-2.5 h-10 bg-[#DADADA] rounded-[6px]"
+        className="flex items-center gap-3.5 px-2.5 h-10 rounded-[6px] border border-primary"
       >
-        <FiCalendar size={18} />
-        <span className="text-base">{currentLabel}</span>
-        <FiChevronDown size={18} />
+        <FiCalendar size={18} className="text-primary" />
+        <div className="flex gap-3 items-center">
+          <span className="text-base">{currentLabel}</span>
+          <FiChevronDown size={18} className="text-primary" />
+        </div>
       </button>
 
       {isOpen && (
-        <ul className="absolute top-12 left-0 z-20 bg-white border border-[#DCE2E9] rounded-[6px] shadow-md overflow-hidden">
-          {BOOTH_DATES.map((d) => (
-            <li key={d.value}>
-              <button
-                onClick={() => {
-                  onSelectDate(d.value);
-                  setIsOpen(false);
-                }}
-                className={`w-full text-left px-4 py-2.5 text-base whitespace-nowrap hover:bg-gray-50 ${
-                  selectedDate === d.value ? "text-primary font-semibold" : ""
-                }`}
+        <ul className="absolute top-12 left-0 z-20 bg-white border border-text-sub rounded-[6px] shadow-md overflow-hidden">
+          {BOOTH_DATES.map((d) => {
+            const isAllDate = d.value === "all"; // 전체날짜 여부 확인
+
+            return (
+              <li
+                key={d.value}
+                className="border-b border-b-text-sub last:border-none"
               >
-                {d.label}
-              </button>
-            </li>
-          ))}
+                <button
+                  onClick={() => {
+                    onSelectDate(d.value);
+                    setIsOpen(false);
+                  }}
+                  className={`flex items-center justify-between w-full text-left px-2.5 h-10 text-base whitespace-nowrap hover:bg-gray-50 ${
+                    selectedDate === d.value ? "bg-text-sub2" : ""
+                  }`}
+                >
+                  <FiCalendar size={18} className="text-text-sub shrink-0" />
+
+                  {/* 전체날짜일 때만 px-15(3.75rem), 아니면 기존 px-5 적용 */}
+                  <span className={`${isAllDate ? "px-[15px]" : "px-5"}`}>
+                    {d.label}
+                  </span>
+                </button>
+              </li>
+            );
+          })}
         </ul>
       )}
     </div>
