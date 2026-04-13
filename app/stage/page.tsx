@@ -1,6 +1,5 @@
 "use client";
 
-import Category from "@/components/stage/Category";
 import StageEventSection from "@/components/stage/StageEventSection";
 import ArtistSection from "@/components/stage/ArtistSection";
 import StageTimeline from "@/components/stage/StageTimeline";
@@ -8,6 +7,7 @@ import { useEffect, useMemo, useState } from "react";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 import { stageApi } from "@/lib/api/stageApi";
 import { Stage, TimeTable } from "@/types/stage";
+import StageCategory from "@/components/stage/StageCategory";
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
 
@@ -125,10 +125,10 @@ export default function StagePage() {
   }, [selected, timelineData]);
 
   return (
-    <main className="px-4 pt-2.5 pb-25">
+    <main className="px-4 pt-5 pb-25">
       {/* 날짜 & 공연 카테고리 설정 */}
-      <section className="mb-12">
-        <Category
+      <section className="mb-15">
+        <StageCategory
           categories={CATEGORY}
           selected={selected}
           onSelect={setSelected}
