@@ -47,6 +47,16 @@ const NAV_ITEMS: NavItem[] = [
 export default function BottomNav() {
   const pathname = usePathname();
 
+  const shouldHide = [
+    pathname.startsWith("/stage/"),
+    pathname.startsWith("/booth/"),
+    pathname.startsWith("/foodtruck/"),
+    pathname.startsWith("/info/notice/"),
+    pathname === "/mypage/likes",
+  ].some(Boolean);
+
+  if (shouldHide) return null;
+
   return (
     <nav
       aria-label="하단 메뉴"
