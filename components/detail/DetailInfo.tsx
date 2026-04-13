@@ -1,12 +1,18 @@
 type Props = {
-  location: string
-  date: string[]
-  hasBorder?: boolean
-}
+  location: string;
+  date: string[];
+  hasBorder?: boolean;
+};
 
-export default function DetailInfo({ location, date, hasBorder = true }: Props) {
+export default function DetailInfo({
+  location,
+  date,
+  hasBorder = true,
+}: Props) {
   return (
-    <div className={`flex gap-13 py-6 text-base ${hasBorder ? 'border-y border-text-sub' : ''}`}>
+    <div
+      className={`flex gap-13 text-base ${hasBorder ? "border-y border-text-sub" : ""}`}
+    >
       <div className="flex flex-col gap-5 text-text-sub font-semibold shrink-0">
         <span>위치</span>
         <span>운영시간</span>
@@ -20,5 +26,5 @@ export default function DetailInfo({ location, date, hasBorder = true }: Props) 
         </div>
       </div>
     </div>
-  )
+  );
 }
