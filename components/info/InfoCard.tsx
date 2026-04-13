@@ -1,7 +1,7 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { FiChevronRight } from "react-icons/fi";
 
 interface InfoCardProps {
@@ -11,12 +11,10 @@ interface InfoCardProps {
 }
 
 export default function InfoCard({ imageUrl, title, link }: InfoCardProps) {
-  const router = useRouter();
-
   return (
-    <div
-      onClick={() => router.push(link)}
-      className="flex flex-row items-center justify-between px-5 py-3 bg-[#F3F3F3] rounded-[10px]"
+    <Link
+      href={link}
+      className="flex flex-row items-center justify-between px-5 py-3 bg-[#F3F3F3] rounded-[10px] cursor-pointer"
     >
       <div className="flex flex-row items-center gap-8">
         <Image
@@ -29,6 +27,6 @@ export default function InfoCard({ imageUrl, title, link }: InfoCardProps) {
         <h2 className="text-[20px] font-semibold">{title}</h2>
       </div>
       <FiChevronRight size={24} className="cursor-pointer" />
-    </div>
+    </Link>
   );
 }

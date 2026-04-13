@@ -29,7 +29,7 @@ const booth = {
 
 export default async function BoothDetailPage({ params }: Props) {
   return (
-    <main className="pb-25">
+    <main className="pb-12">
       <DetailHero title="부스 정보" imageUrl={booth.booth_image} />
       <div className="flex flex-col px-4 gap-8">
         <BoothTitle
