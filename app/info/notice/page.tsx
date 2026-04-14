@@ -34,13 +34,13 @@ export default function NoticePage() {
   }, [currentPage]);
 
   return (
-    <main className="px-4 pt-2.5 pb-25">
-      <div className="flex items-center gap-1 mb-4">
+    <main className="px-4 pt-5 pb-25">
+      <div className="flex items-center gap-1 mb-5">
         <BackButton />
-        <h1 className="text-[24px] font-semibold">축제기획단 공지</h1>
+        <h1 className="text-[20px] font-semibold">축제기획단 공지</h1>
       </div>
 
-      <section className="border-t border-[#DCE2E9]">
+      <section className="border-t border-text-sub2">
         {isLoading ? (
           <div>로딩 중...</div>
         ) : noticeData.length > 0 ? (
