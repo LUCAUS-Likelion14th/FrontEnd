@@ -14,14 +14,14 @@ export default function InfoCard({ imageUrl, title, link }: InfoCardProps) {
   return (
     <Link
       href={link}
-      className="flex flex-row items-center justify-between px-5 py-3 bg-[#F3F3F3] rounded-[10px] cursor-pointer"
+      className="flex flex-row items-center justify-between px-5 py-3 bg-[rgba(6,56,125,0.10)] rounded-[10px] cursor-pointer"
     >
       <div className="flex flex-row items-center gap-8">
         <Image
           src={imageUrl}
           alt={title}
-          width={85}
-          height={85}
+          width={65}
+          height={65}
           className="rounded-lg"
         />
         <h2 className="text-[20px] font-semibold">{title}</h2>

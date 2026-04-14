@@ -8,6 +8,7 @@ import { useEffect, useState } from "react";
 import DateFilter from "@/components/common/DateFilter";
 import { lostApi } from "@/lib/api/lostApi";
 import { LostItem } from "@/types/lost";
+import Image from "next/image";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -52,19 +53,25 @@ export default function LostPage() {
   };
 
   return (
-    <main className="px-4 pt-2.5 pb-25">
-      <div className="flex items-center gap-1 mb-4">
+    <main className="px-4 pt-5 pb-25">
+      <div className="flex items-center gap-1 mb-5">
         <BackButton />
-        <h1 className="text-[24px] font-semibold">분실물 찾기</h1>
+        <h1 className="text-[20px] font-semibold">분실물 찾기</h1>
       </div>
 
-      <div className="flex justify-center border border-[#A1ABBC] rounded-[10px] py-3.75 mb-4">
-        <p className="text-[14px] line-height-[18px] text-[#A1ABBC]">
-          🔔 매일 축제 STAFF를 통해 접수된 분실물이 업데이트 됩니다.
-        </p>
+      <div className="flex items-center h-12 px-[11.5px] mb-7 border border-primary rounded-[10px] gap-2">
+        <Image
+          src={"/icons/highlight.png"}
+          alt={"하이라이트 아이콘"}
+          width={16}
+          height={16}
+        />
+        <span className="text-[14px] text-primary leading-4.5">
+          매일 축제 STAFF를 통해 접수된 분실물이 업데이트 됩니다.
+        </span>
       </div>
 
-      <div className="flex gap-4 mb-7">
+      <div className="flex gap-4 mb-5">
         <DateFilter
           selectedDate={selectedDate}
           onSelectDate={handleDateChange}

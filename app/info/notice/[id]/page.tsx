@@ -31,21 +31,21 @@ export default async function NoticeDetailPage({
   };
 
   return (
-    <main className="px-4 py-2.5 pb-12">
-      <div className="flex items-center gap-1 mb-4">
+    <main className="px-4 pt-5 pb-12">
+      <div className="flex items-center gap-1 mb-5">
         <BackButton />
-        <h1 className="text-[24px] font-semibold">축제기획단 공지</h1>
+        <h1 className="text-[20px] font-semibold">축제기획단 공지</h1>
       </div>
 
-      <section className="flex flex-col gap-3.75">
-        <div className="flex flex-col gap-3 py-3 border-t border-b border-[#DCE2E9]">
-          <h2 className="text-[16px] font-bold">{notice.title}</h2>
+      <section className="flex flex-col gap-5">
+        <div className="flex flex-col gap-3 py-3 border-t border-b border-text-sub2">
+          <h2 className="text-[20px] font-bold">{notice.title}</h2>
           <p className="text-[14px] text-[#808080]">
             {formatDetailDate(notice.createdAt)}
           </p>
         </div>
 
-        <div className="text-[13px] leading-relaxed whitespace-pre-line">
+        <div className="text-[16px] leading-relaxed whitespace-pre-line">
           {notice.content}
         </div>
       </section>
