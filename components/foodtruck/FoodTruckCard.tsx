@@ -13,6 +13,11 @@ type Props = {
 export default function FoodTruckCard({ truck }: Props) {
   const mainMenu = truck.food_menu[0]?.menu_name ?? "";
 
+  const handleLikeClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
   return (
     <Link href={`/foodtruck/${truck.food_id}`} className="block">
       <article className="relative w-full h-[137px] rounded-[10px] overflow-hidden bg-[#D9D9D9]">
@@ -43,12 +48,17 @@ export default function FoodTruckCard({ truck }: Props) {
           </div>
 
           {/* 좋아요 */}
-          <div className="flex flex-col items-center gap-1 shrink-0">
-            {truck.is_liked ? (
-              <FaHeart size={24} className="text-primary" />
-            ) : (
-              <FiHeart size={24} className="text-text-sub" />
-            )}
+          <div
+            onClick={handleLikeClick}
+            className="flex flex-col items-center gap-1 shrink-0"
+          >
+            <div className="active:scale-110 transition-transform duration-200">
+              {truck.is_liked ? (
+                <FaHeart size={24} className="text-primary" />
+              ) : (
+                <FiHeart size={24} className="text-text-sub" />
+              )}
+            </div>
             <span className="text-sm text-text-sub">{truck.like_count}</span>
           </div>
         </div>
