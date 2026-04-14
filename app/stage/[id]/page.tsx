@@ -31,7 +31,7 @@ export default async function StageDetailPage({
       {/* 헤더 영역 */}
       <div className="flex items-center gap-1 mb-5">
         <BackButton />
-        <h1 className="text-[24px] font-semibold">공연 정보</h1>
+        <h1 className="text-[20px] font-semibold">공연 정보</h1>
       </div>
 
       {/* 이미지 영역 */}

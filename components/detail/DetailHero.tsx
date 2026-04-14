@@ -14,11 +14,11 @@ export default function DetailHero({ title, imageUrl }: Props) {
 
   return (
     <div className="flex flex-col">
-      <div className="flex gap-1 px-4 pt-5 pb-2.5">
+      <div className="flex gap-1 px-4 py-5">
         <button onClick={() => router.back()}>
           <FiChevronLeft size={24} className="block" />
         </button>
-        <span className="text-2xl font-semibold">{title}</span>
+        <span className="text-[20px] font-semibold">{title}</span>
       </div>
 
       <div className="relative w-full aspect-390/264">
