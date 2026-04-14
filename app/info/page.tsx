@@ -18,27 +18,27 @@ export default function InfoPage() {
 
       <section className="flex flex-col gap-3">
         <InfoCard
-          imageUrl="/icons/info-notice.png"
+          imageUrl="/icons/info/info-notice.png"
           title="축제기획단 공지"
           link="info/notice"
         />
         <InfoCard
-          imageUrl="/icons/info-lost.png"
+          imageUrl="/icons/info/info-lost.png"
           title="분실물 안내"
           link="info/lost"
         />
         <InfoCard
-          imageUrl="/icons/info-barrier-free.png"
+          imageUrl="/icons/info/info-barrier-free.png"
           title="배리어프리"
           link="info/barrier-free"
         />
         <InfoCard
-          imageUrl="/icons/info-route.png"
+          imageUrl="/icons/info/info-route.png"
           title="통행 정책"
           link="info/route"
         />
         <InfoCard
-          imageUrl="/icons/info-credit.png"
+          imageUrl="/icons/info/info-credit.png"
           title="크레딧"
           link="info/credit"
         />

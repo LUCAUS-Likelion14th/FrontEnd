@@ -12,27 +12,27 @@ const NAV_ITEMS: NavItem[] = [
   {
     label: "홈",
     href: "/",
-    icon: "/icons/login-nav-home.png",
+    icon: "/icons/login/login-nav-home.png",
   },
   {
     label: "공연",
     href: "/stage",
-    icon: "/icons/login-nav-stage.png",
+    icon: "/icons/login/login-nav-stage.png",
   },
   {
     label: "부스",
     href: "/booth",
-    icon: "/icons/login-nav-booth.png",
+    icon: "/icons/login/login-nav-booth.png",
   },
   {
     label: "푸드",
     href: "/foodtruck",
-    icon: "/icons/login-nav-food.png",
+    icon: "/icons/login/login-nav-food.png",
   },
   {
     label: "안내",
     href: "/info",
-    icon: "/icons/login-nav-info.png",
+    icon: "/icons/login/login-nav-info.png",
   },
 ];
 

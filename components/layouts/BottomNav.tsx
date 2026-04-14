@@ -16,32 +16,32 @@ const NAV_ITEMS: NavItem[] = [
   {
     label: "홈",
     href: "/",
-    icon: "/icons/nav-home.png",
-    activeIcon: "/icons/nav-home-active.png",
+    icon: "/icons/nav/nav-home.png",
+    activeIcon: "/icons/nav/nav-home-active.png",
   },
   {
     label: "공연",
     href: "/stage",
-    icon: "/icons/nav-stage.png",
-    activeIcon: "/icons/nav-stage-active.png",
+    icon: "/icons/nav/nav-stage.png",
+    activeIcon: "/icons/nav/nav-stage-active.png",
   },
   {
     label: "부스",
     href: "/booth",
-    icon: "/icons/nav-booth.png",
-    activeIcon: "/icons/nav-booth-active.png",
+    icon: "/icons/nav/nav-booth.png",
+    activeIcon: "/icons/nav/nav-booth-active.png",
   },
   {
     label: "푸드",
     href: "/foodtruck",
-    icon: "/icons/nav-food.png",
-    activeIcon: "/icons/nav-food-active.png",
+    icon: "/icons/nav/nav-food.png",
+    activeIcon: "/icons/nav/nav-food-active.png",
   },
   {
     label: "안내",
     href: "/info",
-    icon: "/icons/nav-info.png",
-    activeIcon: "/icons/nav-info-active.png",
+    icon: "/icons/nav/nav-info.png",
+    activeIcon: "/icons/nav/nav-info-active.png",
   },
 ];
 
