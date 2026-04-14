@@ -79,7 +79,7 @@ export default function MyPage() {
           {/* 비로그인 상태일 때 */}
           <div
             className="flex items-end justify-end pt-13.5 pb-[15px] px-4 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/login-bg.png')" }}
+            style={{ backgroundImage: "url('/mypage-login-bg.png')" }}
           >
             <div className="flex flex-col items-end gap-2.5">
               <div className="flex flex-col text-base font-medium text-white text-right">
@@ -116,7 +116,7 @@ export default function MyPage() {
           {/* 로그인 상태일 때 */}
           <div
             className="flex items-end justify-end pt-13.5 pb-[15px] px-4 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/login-bg.png')" }}
+            style={{ backgroundImage: "url('/mypage-login-bg.png')" }}
           >
             <div className="flex flex-col items-end gap-3">
               <span className="text-base font-medium text-white text-right">
