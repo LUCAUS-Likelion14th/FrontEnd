@@ -135,7 +135,7 @@ export default function LikesPage() {
           <button onClick={() => router.back()} className="p-0">
             <FiChevronLeft size={24} className="block" />
           </button>
-          <span className="text-2xl font-semibold">내 좋아요</span>
+          <span className="text-[20px] font-semibold">내 좋아요</span>
         </div>
 
         <div className="relative">
