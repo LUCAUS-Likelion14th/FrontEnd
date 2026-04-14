@@ -1,70 +1,48 @@
-"use client";
-
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import Image from "next/image";
-import LoginBottomNav from "./LoginBottomNav";
 
 type NavItem = {
   label: string;
   href: string;
   icon: string;
-  activeIcon: string;
 };
 
 const NAV_ITEMS: NavItem[] = [
   {
     label: "홈",
     href: "/",
-    icon: "/icons/nav-home.png",
-    activeIcon: "/icons/nav-home-active.png",
+    icon: "/icons/login-nav-home.png",
   },
   {
     label: "공연",
     href: "/stage",
-    icon: "/icons/nav-stage.png",
-    activeIcon: "/icons/nav-stage-active.png",
+    icon: "/icons/login-nav-stage.png",
   },
   {
     label: "부스",
     href: "/booth",
-    icon: "/icons/nav-booth.png",
-    activeIcon: "/icons/nav-booth-active.png",
+    icon: "/icons/login-nav-booth.png",
   },
   {
     label: "푸드",
     href: "/foodtruck",
-    icon: "/icons/nav-food.png",
-    activeIcon: "/icons/nav-food-active.png",
+    icon: "/icons/login-nav-food.png",
   },
   {
     label: "안내",
     href: "/info",
-    icon: "/icons/nav-info.png",
-    activeIcon: "/icons/nav-info-active.png",
+    icon: "/icons/login-nav-info.png",
   },
 ];
 
-export default function BottomNav() {
+export default function LoginBottomNav() {
   const pathname = usePathname();
-  const shouldHide = [
-    pathname.startsWith("/stage/"),
-    pathname.startsWith("/booth/"),
-    pathname.startsWith("/foodtruck/"),
-    pathname.startsWith("/info/notice/"),
-    pathname === "/mypage/likes",
-  ].some(Boolean);
-
-  if (shouldHide) return null;
-
-  if (pathname === "/login") {
-    return <LoginBottomNav />;
-  }
 
   return (
     <nav
       aria-label="하단 메뉴"
-      className="fixed bottom-0 left-0 w-full bg-white/35 z-10"
+      className="fixed bottom-0 left-0 w-full bg-white/10 z-10"
     >
       <ul className="flex justify-around items-center my-2">
         {NAV_ITEMS.map((item) => {
@@ -79,7 +57,7 @@ export default function BottomNav() {
                 }`}
               >
                 <Image
-                  src={isActive ? item.activeIcon : item.icon}
+                  src={item.icon}
                   alt={item.label}
                   width={36}
                   height={36}
