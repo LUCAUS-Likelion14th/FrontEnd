@@ -59,7 +59,7 @@ export default function LoginBottomSheet({ isOpen, onClose }: Props) {
 
       <div
         ref={sheetRef}
-        className="fixed bottom-0 left-0 right-0 bg-[rgba(6,56,125,0.25)] rounded-t-[20px] z-50 px-7 pt-5.5 pb-[37px] transition-transform duration-800 backdrop-blur-[2px]"
+        className="fixed bottom-0 left-0 right-0 bg-[rgba(6,56,125,0.25)] rounded-t-[20px] z-50 px-7 pt-5.5 pb-[37px] transition-transform duration-800 backdrop-blur-[3px] border border-white/30 shadow-lg"
         style={{
           transform: `translateY(${dragY}px)`,
         }}
