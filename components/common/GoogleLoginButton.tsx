@@ -9,7 +9,7 @@ export default function GoogleLoginButton() {
   return (
     <button
       onClick={() => router.push("/login")}
-      className="w-full flex items-center justify-center bg-white/20 rounded-[10px] gap-5"
+      className="w-full h-13 flex items-center justify-center bg-white/10 rounded-[10px] gap-5 backdrop-blur-[2px] border border-white/30 shadow-lg transition-all active:scale-[0.98]"
     >
       <Image
         src="/icons/login/google-logo.png"
@@ -17,7 +17,7 @@ export default function GoogleLoginButton() {
         width={24}
         height={24}
       />
-      <span className="text-[20px] font-medium text-white py-3.5">
+      <span className="text-[20px] font-medium text-white">
         Google로 시작하기
       </span>
     </button>
