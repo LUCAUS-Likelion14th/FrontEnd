@@ -64,7 +64,7 @@ export default function BottomNav() {
   return (
     <nav
       aria-label="하단 메뉴"
-      className="fixed bottom-0 left-0 w-full bg-white/35 z-10"
+      className="fixed bottom-0 left-0 w-full bg-white/35 z-10 backdrop-blur-xs"
     >
       <ul className="flex justify-around items-center my-2">
         {NAV_ITEMS.map((item) => {
@@ -75,7 +75,7 @@ export default function BottomNav() {
               <Link
                 href={item.href}
                 className={`flex flex-col items-center text-xs gap-2 cursor-pointer ${
-                  isActive ? "text-[#06387D]" : "text-[#AEB9CD]"
+                  isActive ? "text-[#06387D]" : "text-[#8D97A7]"
                 }`}
               >
                 <Image
