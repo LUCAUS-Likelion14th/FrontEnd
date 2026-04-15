@@ -134,7 +134,7 @@ export default function BoothPage() {
         {selectedLocation !== "대운동장" && (
           <>
             <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-            <div className="pt-3 pb-5 overflow-x-auto">
+            <div className="pt-2.5 pb-5 overflow-x-auto">
               <BoothCategoryFilter
                 selectedCategory={selectedCategory}
                 onSelectCategory={handleCategoryChange}
