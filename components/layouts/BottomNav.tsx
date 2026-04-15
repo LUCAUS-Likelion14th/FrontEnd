@@ -75,7 +75,7 @@ export default function BottomNav() {
               <Link
                 href={item.href}
                 className={`flex flex-col items-center text-xs gap-2 cursor-pointer ${
-                  isActive ? "text-[#06387D]" : "text-[#AEB9CD]"
+                  isActive ? "text-[#06387D]" : "text-[#8D97A7]"
                 }`}
               >
                 <Image
