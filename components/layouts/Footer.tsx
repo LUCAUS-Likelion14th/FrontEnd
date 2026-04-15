@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import Link from "next/link";
 import { BsInstagram } from "react-icons/bs";
 
@@ -25,7 +26,15 @@ const NAV_ITEMS: NavItem[] = [
 export default function Footer() {
   return (
     /* pb 값 조정하기 */
-    <footer className="flex flex-col gap-4 bg-[#B6C2D4] px-8 py-4 text-center">
+    <footer className="relative flex flex-col gap-4 px-8 py-4 text-white text-center overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/footer-bg.png"
+          alt="푸터 배경"
+          fill
+          className="object-cover"
+        />
+      </div>
       <address className="flex flex-col gap-1 not-italic">
         <p className="text-[14px]">LIKELION CAU X 축제기획단</p>
 

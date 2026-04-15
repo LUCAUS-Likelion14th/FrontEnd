@@ -6,34 +6,39 @@ import BoothSection from "@/components/home/BoothSection";
 import FoodSection from "@/components/home/FoodSection";
 import Footer from "@/components/layouts/Footer";
 import { homeApi } from "@/lib/api/home";
+import SplashScreen from "@/components/common/SplashScreen";
 
 export default async function Home() {
   const [topBooths, promotions, liveStages, hotFoods, activeNotices] =
-  await Promise.all([
-    homeApi.getTopBooth().catch(() => []),
-    homeApi.getPromotion().catch(() => []),
-    homeApi.getLiveStage().catch(() => []),
-    homeApi.getHotFood().catch(() => []),
-    homeApi.getActiveNotice().catch(() => []),
-  ])
+    await Promise.all([
+      homeApi.getTopBooth().catch(() => []),
+      homeApi.getPromotion().catch(() => []),
+      homeApi.getLiveStage().catch(() => []),
+      homeApi.getHotFood().catch(() => []),
+      homeApi.getActiveNotice().catch(() => []),
+    ]);
 
   return (
-    <main className="flex flex-col p-4 gap-12">
-      <div className="flex flex-col gap-8">
-        <ImageSwiper promotions={promotions} />
-        <div className="flex flex-col gap-2">
-          <NoticeBanner notices={activeNotices} />
-          <StampShortcutButton />
-        </div>
-      </div>
+    <>
+      <SplashScreen />
 
-      <section className="flex flex-col gap-8">
-        <StageSection stages={liveStages} />
-        <BoothSection booths={topBooths} />
-        <FoodSection foods={hotFoods} />
-      </section>
+      <main className="flex flex-col p-4 gap-12 mb-11">
+        <div className="flex flex-col gap-8">
+          <ImageSwiper promotions={promotions} />
+          <div className="flex flex-col gap-2">
+            <NoticeBanner notices={activeNotices} />
+            <StampShortcutButton />
+          </div>
+        </div>
+
+        <section className="flex flex-col gap-8">
+          <StageSection stages={liveStages} />
+          <BoothSection booths={topBooths} />
+          <FoodSection foods={hotFoods} />
+        </section>
+      </main>
 
       <Footer />
-    </main>
+    </>
   );
 }
