@@ -45,6 +45,15 @@ button {
   }
 }
 
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .animate-marquee {
   animation: marquee 10s linear infinite;
 }

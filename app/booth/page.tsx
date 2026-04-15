@@ -87,7 +87,7 @@ export default function BoothPage() {
   return (
     <main className="px-4 pt-5 pb-25">
       {/* 필터 영역 */}
-      <section className="flex flex-col gap-[17px] mb-14">
+      <section className="flex flex-col gap-[17px] mb-5">
         {/* 날짜 + 장소 필터 */}
         <div className="flex flex-col gap-2.5">
           <DateFilter
@@ -103,7 +103,7 @@ export default function BoothPage() {
         </div>
 
         {selectedLocation === "대운동장" ? (
-          <>
+          <div className="flex flex-col gap-14">
             {/* 대운동장: 지도 플레이스홀더 + 도장판 바로 가기 */}
             <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
               <span className="text-text-sub text-base">지도</span>
@@ -111,7 +111,7 @@ export default function BoothPage() {
             <button className="w-full py-3 bg-primary text-white text-base font-semibold rounded-[10px]">
               도장판 바로 가기
             </button>
-          </>
+          </div>
         ) : (
           /* 기본: 지도 플레이스홀더 */
           <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
@@ -134,7 +134,7 @@ export default function BoothPage() {
         {selectedLocation !== "대운동장" && (
           <>
             <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-            <div className="pt-3 pb-5 overflow-x-auto">
+            <div className="pt-2.5 pb-5 overflow-x-auto">
               <BoothCategoryFilter
                 selectedCategory={selectedCategory}
                 onSelectCategory={handleCategoryChange}
