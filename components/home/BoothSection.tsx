@@ -22,8 +22,8 @@ export default function BoothSection({ booths }: Props) {
             href={`/booth/${booth.booth_id}`}
             location={booth.location}
             name={booth.booth_name}
-            likes={booth.like_count}
-            liked={booth.is_liked}
+            isLiked={booth.is_liked}
+            likeCount={booth.like_count}
             department={booth.owner}
           />
         ))}
