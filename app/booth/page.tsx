@@ -4,11 +4,10 @@ import { useState, useMemo } from "react";
 import BoothLocationFilter from "@/components/booth/BoothLocationFilter";
 import BoothCategoryFilter from "@/components/booth/BoothCategoryFilter";
 import BoothSearchBar from "@/components/booth/BoothSearchBar";
-import BoothCard from "@/components/booth/BoothCard";
-import BoothPagination from "@/components/booth/BoothPagination";
 import { BOOTH_DATA, BoothLocation, BoothCategory } from "@/data/boothData";
 import DateFilter from "@/components/common/DateFilter";
 import Pagination from "@/components/common/Pagination";
+import Card from "@/components/common/Card";
 
 const PAGE_SIZE = 8;
 
@@ -147,7 +146,17 @@ export default function BoothPage() {
         {pagedBooths.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedBooths.map((booth) => (
-              <BoothCard key={booth.booth_id} booth={booth} />
+              <Card
+                key={booth.booth_id}
+                id={booth.booth_id}
+                type="booth"
+                name={booth.booth_name}
+                subText={booth.booth_owner}
+                location={booth.location}
+                image={booth.booth_image}
+                isLiked={booth.is_liked}
+                likeCount={booth.like_count}
+              />
             ))}
           </div>
         ) : (

@@ -1,5 +1,6 @@
-import BackButton from "@/components/common/BackButton";
+import DetailHeader from "@/components/detail/DetailHeader";
 import { noticeApi } from "@/lib/api/noticeApi";
+import { formatDate } from "@/lib/utils/date";
 
 export default async function NoticeDetailPage({
   params,
@@ -19,29 +20,15 @@ export default async function NoticeDetailPage({
 
   if (!notice) return <div>존재하지 않는 공지입니다.</div>;
 
-  const formatDetailDate = (dateStr: string) => {
-    const date = new Date(dateStr);
-    const yyyy = date.getFullYear();
-    const mm = (date.getMonth() + 1).toString().padStart(2, "0");
-    const dd = date.getDate().toString().padStart(2, "0");
-    const hh = date.getHours().toString().padStart(2, "0");
-    const mi = date.getMinutes().toString().padStart(2, "0");
-
-    return `${yyyy}.${mm}.${dd} ${hh}:${mi}`;
-  };
-
   return (
-    <main className="px-4 pt-5 pb-12">
-      <div className="flex items-center gap-1 mb-5">
-        <BackButton />
-        <h1 className="text-[20px] font-semibold">축제기획단 공지</h1>
-      </div>
+    <main className="pb-12">
+      <DetailHeader title="축제기획단 공지" />
 
-      <section className="flex flex-col gap-5">
+      <section className="flex flex-col px-4 gap-5">
         <div className="flex flex-col gap-3 py-3 border-t border-b border-text-sub2">
           <h2 className="text-[20px] font-bold">{notice.title}</h2>
           <p className="text-[14px] text-[#808080]">
-            {formatDetailDate(notice.createdAt)}
+            {formatDate(notice.createdAt, "detail")}
           </p>
         </div>
 

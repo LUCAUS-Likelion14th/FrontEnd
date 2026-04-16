@@ -1,9 +1,10 @@
 "use client";
 
-import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
+import DetailHeader from "@/components/detail/DetailHeader";
 import NoticeItem from "@/components/info/NoticeItem";
 import { noticeApi } from "@/lib/api/noticeApi";
+import { formatDate } from "@/lib/utils/date";
 import { Notice } from "@/types/notice";
 import { useEffect, useState } from "react";
 
@@ -34,37 +35,36 @@ export default function NoticePage() {
   }, [currentPage]);
 
   return (
-    <main className="px-4 pt-5 pb-25">
-      <div className="flex items-center gap-1 mb-5">
-        <BackButton />
-        <h1 className="text-[20px] font-semibold">축제기획단 공지</h1>
-      </div>
+    <main className="pb-25">
+      <DetailHeader title="축제기획단 공지" />
 
-      <section className="border-t border-text-sub2">
-        {isLoading ? (
-          <div>로딩 중...</div>
-        ) : noticeData.length > 0 ? (
-          noticeData.map((notice) => (
-            <NoticeItem
-              key={notice.id}
-              id={notice.id}
-              category={notice.important ? "important" : "notice"}
-              title={notice.title}
-              date={notice.createdAt.split("T")[0].replace(/-/g, ".")}
-            />
-          ))
-        ) : (
-          <div>공지사항이 없습니다.</div>
+      <div className="px-4">
+        <section className="border-t border-text-sub2">
+          {isLoading ? (
+            <div>로딩 중...</div>
+          ) : noticeData.length > 0 ? (
+            noticeData.map((notice) => (
+              <NoticeItem
+                key={notice.id}
+                id={notice.id}
+                category={notice.important ? "important" : "notice"}
+                title={notice.title}
+                date={formatDate(notice.createdAt, "notice")}
+              />
+            ))
+          ) : (
+            <div>공지사항이 없습니다.</div>
+          )}
+        </section>
+
+        {totalPages > 0 && (
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            onChange={setCurrentPage}
+          />
         )}
-      </section>
-
-      {totalPages > 0 && (
-        <Pagination
-          page={currentPage}
-          totalPages={totalPages}
-          onChange={setCurrentPage}
-        />
-      )}
+      </div>
     </main>
   );
 }

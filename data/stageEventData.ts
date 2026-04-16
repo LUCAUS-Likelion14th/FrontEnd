@@ -1,7 +1,7 @@
 export const STAGE_EVENT_DATA = [
   {
     id: 201,
-    stageImage: "/logo.png",
+    stageImage: "/img.png",
     description: "간단한 설명설명설명설명설명",
     artist: "Love CAUtcher",
     category: "무대기획전",
@@ -10,7 +10,7 @@ export const STAGE_EVENT_DATA = [
   },
   {
     id: 202,
-    stageImage: "/logo.png",
+    stageImage: "/img.png",
     description: "무대기획전 설명",
     artist: "무대기획전",
     category: "무대기획전",

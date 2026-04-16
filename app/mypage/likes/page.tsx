@@ -1,12 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
-import { FiChevronLeft, FiHeart } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
-import Image from "next/image";
 import { BoothLikeItem, FoodLikeItem } from "@/types/mylikes";
-import Link from "next/link";
+import DetailHeader from "@/components/detail/DetailHeader";
+import Card from "@/components/common/Card";
 
 const mockBooths: BoothLikeItem[] = [
   {
@@ -43,100 +40,95 @@ const mockBooths: BoothLikeItem[] = [
 
 const mockFoodtrucks: FoodLikeItem[] = [
   {
-    food_id: 1,
+    truck_id: 1,
     location_id: 1,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 5,
   },
   {
-    food_id: 2,
+    truck_id: 2,
     location_id: 1,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 5,
   },
   {
-    food_id: 3,
+    truck_id: 3,
     location_id: 1,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 5,
   },
   {
-    food_id: 4,
+    truck_id: 4,
     location_id: 1,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 5,
   },
   {
-    food_id: 5,
+    truck_id: 5,
     location_id: 2,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 6,
   },
   {
-    food_id: 6,
+    truck_id: 6,
     location_id: 1,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 15,
   },
   {
-    food_id: 7,
+    truck_id: 7,
     location_id: 3,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 5,
   },
   {
-    food_id: 8,
+    truck_id: 8,
     location_id: 1,
-    image: "/img.png",
-    food_name: "푸드트럭 이름",
-    best_food: "대표 메뉴",
-    location: "해방광장",
+    truck_image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    main_menu: "대표 메뉴",
+    truck_location: "해방광장",
     is_liked: true,
     like_count: 35,
   },
 ];
 
 export default function LikesPage() {
-  const router = useRouter();
   const [tab, setTab] = useState<"booth" | "food">("booth");
+
   return (
-    <main>
+    <main className="pb-25">
       {/* 고정 헤더 */}
-      <div className="fixed top-19 left-0 right-0 bg-white z-10 px-4">
-        <div className="flex items-center gap-1 pb-5">
-          <button onClick={() => router.back()} className="p-0">
-            <FiChevronLeft size={24} className="block" />
-          </button>
-          <span className="text-[20px] font-semibold">내 좋아요</span>
-        </div>
+      <div className="fixed top-14 left-0 right-0 bg-white z-10">
+        <DetailHeader title="내 좋아요" />
 
         <div className="relative">
           <div className="flex">
@@ -170,88 +162,30 @@ export default function LikesPage() {
         <div className="grid grid-cols-2 gap-4">
           {tab === "booth"
             ? mockBooths.map((booth) => (
-                <Link
-                  href={`/booth/${booth.booth_id}`}
+                <Card
                   key={booth.booth_id}
-                  className="block"
-                >
-                  <article className="relative w-full h-34.25 rounded-[10px] overflow-hidden">
-                    <Image
-                      src={booth.booth_image}
-                      alt={booth.booth_name}
-                      fill
-                      className="object-cover"
-                    />
-
-                    <div className="absolute bottom-0 left-0 right-0 h-13.75 bg-linear-to-t from-white to-transparent" />
-
-                    <div className="absolute bottom-2.25 left-1.75 right-1.75 flex items-end justify-between">
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-base font-semibold leading-tight line-clamp-1">
-                          {booth.booth_name}
-                        </span>
-                        <span className="text-xs leading-tight">
-                          {booth.booth_owner}
-                        </span>
-                        <span className="text-xs leading-tight">
-                          {booth.booth_location}
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-center gap-1 shrink-0">
-                        {booth.is_liked ? (
-                          <FaHeart size={24} className="text-primary" />
-                        ) : (
-                          <FiHeart size={24} className="text-text-sub" />
-                        )}
-                        <span className="text-sm text-text-sub">
-                          {booth.like_count}
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
+                  id={booth.booth_id}
+                  type="booth"
+                  image={booth.booth_image}
+                  name={booth.booth_name}
+                  subText={booth.booth_owner}
+                  location={booth.booth_location}
+                  isLiked={booth.is_liked}
+                  likeCount={booth.like_count}
+                />
               ))
             : mockFoodtrucks.map((truck) => (
-                <Link
-                  href={`/foodtruck/${truck.food_id}`}
-                  key={truck.food_id}
-                  className="block"
-                >
-                  <article className="relative w-full h-34.25 rounded-[10px] overflow-hidden bg-[#D9D9D9]">
-                    <Image
-                      src={truck.image}
-                      alt={truck.food_name}
-                      fill
-                      className="object-cover"
-                    />
-
-                    <div className="absolute bottom-0 left-0 right-0 h-13.75 bg-linear-to-t from-white to-transparent" />
-
-                    <div className="absolute bottom-2.25 left-1.75 right-1.75 flex items-end justify-between">
-                      <div className="flex flex-col gap-0.5">
-                        <span className="text-base font-semibold leading-tight line-clamp-1">
-                          {truck.food_name}
-                        </span>
-                        <span className="text-xs leading-tight">
-                          {truck.best_food}
-                        </span>
-                        <span className="text-xs leading-tight">
-                          {truck.location}
-                        </span>
-                      </div>
-                      <div className="flex flex-col items-center gap-1 shrink-0">
-                        {truck.is_liked ? (
-                          <FaHeart size={24} className="text-primary" />
-                        ) : (
-                          <FiHeart size={24} className="text-text-sub" />
-                        )}
-                        <span className="text-sm text-text-sub">
-                          {truck.like_count}
-                        </span>
-                      </div>
-                    </div>
-                  </article>
-                </Link>
+                <Card
+                  key={truck.truck_id}
+                  id={truck.truck_id}
+                  type="foodtruck"
+                  image={truck.truck_image}
+                  name={truck.truck_name}
+                  subText={truck.main_menu}
+                  location={truck.truck_location}
+                  isLiked={truck.is_liked}
+                  likeCount={truck.like_count}
+                />
               ))}
         </div>
       </div>
