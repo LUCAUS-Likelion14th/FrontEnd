@@ -1,7 +1,6 @@
 import Image from "next/image";
 import { AiOutlineYoutube } from "react-icons/ai";
 import { AiOutlineInstagram } from "react-icons/ai";
-import BackButton from "@/components/common/BackButton";
 import { stageApi } from "@/lib/api/stageApi";
 import DetailHeader from "@/components/detail/DetailHeader";
 

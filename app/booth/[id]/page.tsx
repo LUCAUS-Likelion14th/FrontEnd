@@ -1,7 +1,6 @@
 import BoothTitle from "@/components/detail/BoothTitle";
 import DetailAction from "@/components/detail/DetailAction";
 import DetailHeader from "@/components/detail/DetailHeader";
-import DetailHero from "@/components/detail/DetailHeader";
 import DetailInfo from "@/components/detail/DetailInfo";
 import Image from "next/image";
 
