@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import FoodTruckCard from "@/components/foodtruck/FoodTruckCard";
 import BoothPagination from "@/components/booth/BoothPagination"; // 부스 페이지네이션 재사용
 import { FOODTRUCK_DATA } from "@/data/foodtruckData";
 import DateFilter from "@/components/common/DateFilter";
+import Card from "@/components/common/Card";
 
 const PAGE_SIZE = 8;
 
@@ -61,7 +61,17 @@ export default function FoodTruckPage() {
         {pagedTrucks.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedTrucks.map((truck) => (
-              <FoodTruckCard key={truck.food_id} truck={truck} />
+              <Card
+                key={truck.truck_id}
+                id={truck.truck_id}
+                type="foodtruck"
+                name={truck.truck_name}
+                subText={truck.main_menu}
+                location={truck.location}
+                image={truck.truck_image}
+                isLiked={truck.is_liked}
+                likeCount={truck.like_count}
+              />
             ))}
           </div>
         ) : (
