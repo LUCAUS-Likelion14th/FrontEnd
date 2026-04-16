@@ -10,12 +10,12 @@ export default async function FoodTruckDetailPage({
   params: { id: string };
 }) {
   const foodTruck: FoodTruckDetail = {
-    food_id: 15,
+    truck_id: 15,
     location_id: 5,
-    food_name: "푸드트럭 이름",
-    image: "/img.png",
+    truck_name: "푸드트럭 이름",
+    truck_image: "/img.png",
     location: "해방광장 4번",
-    food_info:
+    truck_info:
       "설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명설명",
     is_liked: true,
     like_count: 10,
@@ -24,7 +24,7 @@ export default async function FoodTruckDetailPage({
       "수요일 10:00 - 17:00",
       "목요일 10:00 - 17:00",
     ],
-    food_menu: [
+    truck_menu: [
       {
         menu_name: "메뉴 이름",
         menu_price: "2,900원",
@@ -60,17 +60,17 @@ export default async function FoodTruckDetailPage({
 
   return (
     <main className="pb-12">
-      <DetailHero title="푸드트럭 정보" imageUrl={foodTruck.image} />
+      <DetailHero title="푸드트럭 정보" imageUrl={foodTruck.truck_image} />
       <div className="flex flex-col px-4 gap-10">
         <FoodTruckTitle
-          name={foodTruck.food_name}
+          name={foodTruck.truck_name}
           isLiked={foodTruck.is_liked}
           likeCount={foodTruck.like_count}
-          info={foodTruck.food_info}
+          info={foodTruck.truck_info}
         />
         <DetailInfo location={foodTruck.location} date={foodTruck.date} />
 
-        <MenuDetail menuList={foodTruck.food_menu} />
+        <MenuDetail menuList={foodTruck.truck_menu} />
       </div>
     </main>
   );
