@@ -1,5 +1,6 @@
 import { TimeTable } from "@/types/stage";
 import TimelineCard from "../stage/TimelineCard";
+import { formatDate } from "@/lib/utils/date";
 
 type StageTimelineProps = {
   data: TimeTable[];
@@ -7,13 +8,6 @@ type StageTimelineProps = {
 };
 
 export default function StageTimeline({ data, activeId }: StageTimelineProps) {
-  const formatTime = (time: string) => {
-    const date = new Date(time);
-    const hours = date.getHours().toString().padStart(2, "0");
-    const minutes = date.getMinutes().toString().padStart(2, "0");
-    return `${hours}:${minutes}`;
-  };
-
   return (
     <div className="flex flex-col max-h-101 border border-text-sub2 rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item, index) => {
@@ -29,7 +23,8 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
                 isActive ? "text-primary font-semibold" : "text-text-sub"
               }`}
             >
-              {formatTime(item.start_at)} - {formatTime(item.end_at)}
+              {formatDate(item.start_at, "time")} -{" "}
+              {formatDate(item.end_at, "time")}
             </div>
 
             {/* [2] 타임라인 축 (원 + 선) */}
