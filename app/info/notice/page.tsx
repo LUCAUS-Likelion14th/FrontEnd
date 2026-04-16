@@ -4,6 +4,7 @@ import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
 import NoticeItem from "@/components/info/NoticeItem";
 import { noticeApi } from "@/lib/api/noticeApi";
+import { formatDate } from "@/lib/utils/date";
 import { Notice } from "@/types/notice";
 import { useEffect, useState } from "react";
 
@@ -50,7 +51,7 @@ export default function NoticePage() {
               id={notice.id}
               category={notice.important ? "important" : "notice"}
               title={notice.title}
-              date={notice.createdAt.split("T")[0].replace(/-/g, ".")}
+              date={formatDate(notice.createdAt, "notice")}
             />
           ))
         ) : (

@@ -57,3 +57,98 @@ button {
 .animate-marquee {
   animation: marquee 10s linear infinite;
 }
+
+/* 하트 터짐 효과: 8개의 선이 길어졌다가 짧아지며 사라지는 애니메이션 */
+.heart-burst {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+}
+
+.burst-line {
+  position: absolute;
+  width: 4px; /* 선의 두께 */
+  height: 12px; /* 선의 초기 길이 */
+  background-color: #ff5d8f;
+  border-radius: 999px; /* 선의 양 끝을 아주 둥글게 */
+  opacity: 0;
+}
+
+/* 8방향으로 선 배치 (45도씩 회전) */
+.line-0 {
+  transform: rotate(0deg) translateY(-15px);
+}
+.line-1 {
+  transform: rotate(45deg) translateY(-15px);
+}
+.line-2 {
+  transform: rotate(90deg) translateY(-15px);
+}
+.line-3 {
+  transform: rotate(135deg) translateY(-15px);
+}
+.line-4 {
+  transform: rotate(180deg) translateY(-15px);
+}
+.line-5 {
+  transform: rotate(225deg) translateY(-15px);
+}
+.line-6 {
+  transform: rotate(270deg) translateY(-15px);
+}
+.line-7 {
+  transform: rotate(315deg) translateY(-15px);
+}
+
+/* 둥근 선이 길어졌다가 짧아지며 이동하는 애니메이션 */
+@keyframes roundLineBurst {
+  0% {
+    height: 4px; /* 처음엔 점 형태 */
+    transform: rotate(var(--rot)) translateY(-8px);
+    opacity: 1;
+  }
+  40% {
+    height: 10px; /* 빠르게 길어짐 (선 형태) */
+    opacity: 1;
+  }
+  100% {
+    height: 4px; /* 다시 짧아짐 (점 형태) */
+    transform: rotate(var(--rot)) translateY(-25px); /* 밖으로 밀려남 */
+    opacity: 0;
+  }
+}
+
+/* 각 선에 애니메이션 적용 */
+.burst-line {
+  --rot: 0deg; /* 기본값 */
+  animation: roundLineBurst 0.4s ease-out forwards;
+}
+
+/* 각 라인별 회전 각도 변수 할당 */
+.line-0 {
+  --rot: 0deg;
+}
+.line-1 {
+  --rot: 45deg;
+}
+.line-2 {
+  --rot: 90deg;
+}
+.line-3 {
+  --rot: 135deg;
+}
+.line-4 {
+  --rot: 180deg;
+}
+.line-5 {
+  --rot: 225deg;
+}
+.line-6 {
+  --rot: 270deg;
+}
+.line-7 {
+  --rot: 315deg;
+}
