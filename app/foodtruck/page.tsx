@@ -1,10 +1,10 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import BoothPagination from "@/components/booth/BoothPagination"; // 부스 페이지네이션 재사용
 import { FOODTRUCK_DATA } from "@/data/foodtruckData";
 import DateFilter from "@/components/common/DateFilter";
 import Card from "@/components/common/Card";
+import Pagination from "@/components/common/Pagination";
 
 const PAGE_SIZE = 8;
 
@@ -80,11 +80,11 @@ export default function FoodTruckPage() {
           </div>
         )}
 
-        {/* 페이지네이션 (BoothPagination 재사용) */}
-        <BoothPagination
-          currentPage={currentPage}
+        {/* 페이지네이션 */}
+        <Pagination
+          page={currentPage}
           totalPages={totalPages}
-          onPageChange={setCurrentPage}
+          onChange={setCurrentPage}
         />
       </section>
     </main>
