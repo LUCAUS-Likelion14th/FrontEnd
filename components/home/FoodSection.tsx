@@ -22,8 +22,8 @@ export default function FoodSection({ foods }: Props) {
             href={`/foodtruck/${food.id}`}
             location={food.bestMenu}
             name={food.name}
-            likes={food.likeCount}
-            liked={food.liked}
+            isLiked={food.liked}
+            likeCount={food.likeCount}
           />
         ))}
       </div>
