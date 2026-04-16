@@ -1,8 +1,9 @@
-import DetailHero from "@/components/detail/DetailHero";
+import DetailHeader from "@/components/detail/DetailHeader";
 import DetailInfo from "@/components/detail/DetailInfo";
 import FoodTruckTitle from "@/components/detail/FoodTruckTitle";
 import MenuDetail from "@/components/detail/MenuDetail";
 import { FoodTruckDetail } from "@/types/foodtruck";
+import Image from "next/image";
 
 export default async function FoodTruckDetailPage({
   params,
@@ -13,6 +14,7 @@ export default async function FoodTruckDetailPage({
     truck_id: 15,
     location_id: 5,
     truck_name: "푸드트럭 이름",
+    main_menu: "",
     truck_image: "/img.png",
     location: "해방광장 4번",
     truck_info:
@@ -60,7 +62,16 @@ export default async function FoodTruckDetailPage({
 
   return (
     <main className="pb-12">
-      <DetailHero title="푸드트럭 정보" imageUrl={foodTruck.truck_image} />
+      <DetailHeader title="푸드트럭 정보" />
+      <div className="relative w-full aspect-390/264">
+        <Image
+          src="/img.png"
+          alt="푸드트럭 사진"
+          fill
+          className="object-cover"
+        />
+      </div>
+
       <div className="flex flex-col px-4 gap-10">
         <FoodTruckTitle
           name={foodTruck.truck_name}
