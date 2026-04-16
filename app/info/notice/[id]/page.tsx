@@ -1,4 +1,3 @@
-import BackButton from "@/components/common/BackButton";
 import DetailHeader from "@/components/detail/DetailHeader";
 import { noticeApi } from "@/lib/api/noticeApi";
 import { formatDate } from "@/lib/utils/date";

@@ -1,6 +1,5 @@
 "use client";
 
-import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
 import DetailHeader from "@/components/detail/DetailHeader";
 import NoticeItem from "@/components/info/NoticeItem";

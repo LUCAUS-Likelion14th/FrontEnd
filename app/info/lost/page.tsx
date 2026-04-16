@@ -1,6 +1,5 @@
 "use client";
 
-import BackButton from "@/components/common/BackButton";
 import Pagination from "@/components/common/Pagination";
 import LostItemCard from "@/components/info/LostItemCard";
 import LostTypeFilter from "@/components/info/LostTypeFilter";
