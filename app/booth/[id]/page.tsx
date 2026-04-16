@@ -1,6 +1,6 @@
 import BoothTitle from "@/components/detail/BoothTitle";
 import DetailAction from "@/components/detail/DetailAction";
-import DetailHero from "@/components/detail/DetailHero";
+import DetailHeader from "@/components/detail/DetailHeader";
 import DetailInfo from "@/components/detail/DetailInfo";
 import Image from "next/image";
 
@@ -30,7 +30,11 @@ const booth = {
 export default async function BoothDetailPage({ params }: Props) {
   return (
     <main className="pb-12">
-      <DetailHero title="부스 정보" imageUrl={booth.booth_image} />
+      <DetailHeader title="부스 정보" />
+      <div className="relative w-full aspect-390/264">
+        <Image src="/img.png" alt="부스 사진" fill className="object-cover" />
+      </div>
+
       <div className="flex flex-col px-4 gap-8">
         <BoothTitle
           name={booth.booth_name}

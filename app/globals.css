@@ -72,7 +72,7 @@ button {
   position: absolute;
   width: 4px; /* 선의 두께 */
   height: 12px; /* 선의 초기 길이 */
-  background-color: #ff5d8f;
+  background-color: #06387d;
   border-radius: 999px; /* 선의 양 끝을 아주 둥글게 */
   opacity: 0;
 }
