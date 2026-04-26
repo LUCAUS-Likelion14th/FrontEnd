@@ -1,6 +1,7 @@
 "use client";
 
-import { LostItem } from "@/data/lostItemData";
+import { formatDate } from "@/lib/utils/date";
+import { LostItem } from "@/types/lost";
 import Image from "next/image";
 
 type Props = {
@@ -8,13 +9,6 @@ type Props = {
 };
 
 export default function LostItemCard({ item }: Props) {
-  const formatDate = (date: string) => {
-    const d = new Date(date);
-    const month = String(d.getMonth() + 1).padStart(2, "0");
-    const day = String(d.getDate()).padStart(2, "0");
-    return `${month}.${day}`;
-  };
-
   return (
     <article className="relative w-full h-[137px] rounded-[10px] overflow-hidden bg-[#D9D9D9]">
       {/* 이미지 */}
@@ -29,8 +23,8 @@ export default function LostItemCard({ item }: Props) {
           <span className="text-base font-semibold">{item.name}</span>
 
           <div className="flex justify-between text-[14px] text-[#8F99AA]">
-            <span>{formatDate(item.date)}</span>
-            <span>{item.location}</span>
+            <span>{formatDate(item.date, "dot")}</span>
+            <span>{item.find_location}</span>
           </div>
         </div>
       </div>

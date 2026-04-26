@@ -1,3 +1,4 @@
+import { formatDate } from "@/lib/utils/date";
 import Image from "next/image";
 
 type StageEventProps = {
@@ -28,7 +29,7 @@ export default function StageEventSection({
         <h3 className="text-[20px] font-semibold mb-3">{artist}</h3>
         <p className="text-[16px]">{description}</p>
         <time className="text-[16px]">
-          {start} - {end}
+          {formatDate(start, "time")} - {formatDate(end, "time")}
         </time>
       </div>
     </div>

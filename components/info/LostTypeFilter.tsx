@@ -31,27 +31,34 @@ export default function LostTypeFilter({ selectedType, onSelectType }: Props) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-1 px-2.5 h-10 bg-[#DADADA] rounded-[6px]"
+        className="flex items-center gap-3 px-2.5 h-10 rounded-[6px] border border-primary"
       >
-        <FiList size={18} />
-        <span className="text-base">{currentLabel}</span>
-        <FiChevronDown size={18} />
+        <FiList size={18} className="text-primary" />
+        <div className="flex gap-3 items-center">
+          <span className="text-base">{currentLabel}</span>
+          <FiChevronDown size={18} className="text-primary" />
+        </div>
       </button>
 
       {isOpen && (
-        <ul className="absolute top-12 left-0 z-20 bg-white border border-[#DCE2E9] rounded-[6px] shadow-md w-max">
+        <ul className="absolute top-12 left-0 z-20 bg-white border border-text-sub rounded-[6px] shadow-md overflow-hidden">
           {LOST_ITEM_TYPES.map((t) => (
-            <li key={t.value}>
+            <li
+              key={t.value}
+              className="border-b border-b-text-sub last:border-none"
+            >
               <button
                 onClick={() => {
                   onSelectType(t.value);
                   setIsOpen(false);
                 }}
-                className={`w-full text-left px-4 py-2.5 ${
-                  selectedType === t.value ? "text-primary font-semibold" : ""
+                className={`flex items-center gap-3 px-2.5 w-[135px] h-10 text-base whitespace-nowrap hover:bg-gray-50 ${
+                  selectedType === t.value ? "bg-text-sub2" : ""
                 }`}
               >
-                {t.label}
+                <FiList size={18} className="text-text-sub shrink-0" />
+
+                <span>{t.label}</span>
               </button>
             </li>
           ))}

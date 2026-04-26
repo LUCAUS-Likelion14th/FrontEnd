@@ -1,12 +1,12 @@
-import BoothTitle from "@/components/detail/BoothTitle"
-import DetailAction from "@/components/detail/DetailAction"
-import DetailHero from "@/components/detail/DetailHero"
-import DetailInfo from "@/components/detail/DetailInfo"
-import Image from "next/image"
+import BoothTitle from "@/components/detail/BoothTitle";
+import DetailAction from "@/components/detail/DetailAction";
+import DetailHeader from "@/components/detail/DetailHeader";
+import DetailInfo from "@/components/detail/DetailInfo";
+import Image from "next/image";
 
 type Props = {
-  params: { id: string }
-}
+  params: { id: string };
+};
 
 const booth = {
   booth_id: 3,
@@ -25,41 +25,43 @@ const booth = {
     "수요일 : 10:00 - 17:00",
   ],
   location_image: "/img.png",
-}
+};
 
 export default async function BoothDetailPage({ params }: Props) {
-
   return (
-    <main>
-      <DetailHero title="부스 정보" imageUrl={booth.booth_image} />
-      <div className="flex flex-col px-4">
+    <main className="pb-12">
+      <DetailHeader title="부스 정보" />
+      <div className="relative w-full aspect-390/264">
+        <Image src="/img.png" alt="부스 사진" fill className="object-cover" />
+      </div>
+
+      <div className="flex flex-col px-4 gap-8">
         <BoothTitle
-            name={booth.booth_name}
-            categories={booth.booth_category}
-            info={booth.booth_info}
+          name={booth.booth_name}
+          categories={booth.booth_category}
+          info={booth.booth_info}
         />
 
         <DetailAction
-            ownerInsta={booth.owner_insta} 
-            likeCount={booth.like_count} 
+          ownerInsta={booth.owner_insta}
+          likeCount={booth.like_count}
         />
 
-        <DetailInfo location={booth.location} date={booth.date} hasBorder={false}/>
+        <DetailInfo
+          location={booth.location}
+          date={booth.date}
+          hasBorder={false}
+        />
 
-        <div className="mt-4 mb-10.5">
-            <div className="relative w-full h-60">
-                <Image
-                    src={booth.location_image}
-                    alt={booth.location}
-                    fill
-                    className="object-cover rounded-[10px]"
-                />
-            </div>
+        <div className="relative w-full h-60">
+          <Image
+            src={booth.location_image}
+            alt={booth.location}
+            fill
+            className="object-cover rounded-[10px]"
+          />
         </div>
-
       </div>
-
-    
     </main>
-  )
+  );
 }

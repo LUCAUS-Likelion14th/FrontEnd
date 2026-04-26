@@ -4,11 +4,10 @@ import { useState, useMemo } from "react";
 import BoothLocationFilter from "@/components/booth/BoothLocationFilter";
 import BoothCategoryFilter from "@/components/booth/BoothCategoryFilter";
 import BoothSearchBar from "@/components/booth/BoothSearchBar";
-import BoothCard from "@/components/booth/BoothCard";
-import BoothPagination from "@/components/booth/BoothPagination";
 import { BOOTH_DATA, BoothLocation, BoothCategory } from "@/data/boothData";
 import DateFilter from "@/components/common/DateFilter";
 import Pagination from "@/components/common/Pagination";
+import Card from "@/components/common/Card";
 
 const PAGE_SIZE = 8;
 
@@ -85,12 +84,9 @@ export default function BoothPage() {
   };
 
   return (
-    <main className="px-4 pt-2.5 pb-25">
-      {/* 제목 */}
-      <h1 className="text-[24px] font-semibold mb-4">부스 정보</h1>
-
+    <main className="px-4 pt-5 pb-25">
       {/* 필터 영역 */}
-      <section className="flex flex-col gap-[17px] mb-12">
+      <section className="flex flex-col gap-[17px] mb-5">
         {/* 날짜 + 장소 필터 */}
         <div className="flex flex-col gap-2.5">
           <DateFilter
@@ -106,20 +102,20 @@ export default function BoothPage() {
         </div>
 
         {selectedLocation === "대운동장" ? (
-          <>
+          <div className="flex flex-col gap-14">
             {/* 대운동장: 지도 플레이스홀더 + 도장판 바로 가기 */}
-            <div className="relative w-full h-[200px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
+            <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
               <span className="text-text-sub text-base">지도</span>
             </div>
             <button className="w-full py-3 bg-primary text-white text-base font-semibold rounded-[10px]">
               도장판 바로 가기
             </button>
-          </>
+          </div>
         ) : (
           /* 기본: 지도 플레이스홀더 */
-          <div className="relative w-full h-[200px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
+          <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
             <span className="text-text-sub text-base">지도</span>
-            <div className="absolute right-4 top-4 flex flex-col gap-2">
+            <div className="absolute right-4 bottom-5 flex flex-col gap-2">
               <button className="w-7 h-7 bg-white rounded-full shadow flex items-center justify-center text-lg leading-none">
                 +
               </button>
@@ -132,12 +128,12 @@ export default function BoothPage() {
       </section>
 
       {/* 검색 + 카테고리 + 카드 목록 */}
-      <section className="flex flex-col gap-5">
+      <section className="flex flex-col">
         {/* 대운동장이 아닐 때만 검색바 / 카테고리 표시 */}
         {selectedLocation !== "대운동장" && (
           <>
             <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-            <div className="overflow-x-auto">
+            <div className="pt-2.5 pb-5 overflow-x-auto">
               <BoothCategoryFilter
                 selectedCategory={selectedCategory}
                 onSelectCategory={handleCategoryChange}
@@ -150,7 +146,17 @@ export default function BoothPage() {
         {pagedBooths.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedBooths.map((booth) => (
-              <BoothCard key={booth.booth_id} booth={booth} />
+              <Card
+                key={booth.booth_id}
+                id={booth.booth_id}
+                type="booth"
+                name={booth.booth_name}
+                subText={booth.booth_owner}
+                location={booth.location}
+                image={booth.booth_image}
+                isLiked={booth.is_liked}
+                likeCount={booth.like_count}
+              />
             ))}
           </div>
         ) : (

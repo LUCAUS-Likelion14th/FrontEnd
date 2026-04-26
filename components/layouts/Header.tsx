@@ -5,7 +5,16 @@ import Link from "next/link";
 
 export default function Header() {
   return (
-    <header className="fixed top-0 left-0 right-0 flex items-center h-14 px-4 bg-white z-20">
+    <header className="fixed top-0 left-0 right-0 flex items-center h-14 px-4 z-20 overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <Image
+          src="/header-bg.png"
+          alt="헤더 배경"
+          fill
+          priority
+          className="object-cover"
+        />
+      </div>
       <button className="z-10" aria-label="메뉴 열기">
         <Image src="/icons/menu.png" alt="메뉴" width={24} height={24} />
       </button>
