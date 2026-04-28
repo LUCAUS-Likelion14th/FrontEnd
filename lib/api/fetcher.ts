@@ -8,7 +8,6 @@ export async function fetcher<T>(endpoint: string): Promise<T> {
 
   const res = await fetch(url, {
     cache: "no-store",
-    credentials: "include",
   });
 
   const contentType = res.headers.get("content-type");
