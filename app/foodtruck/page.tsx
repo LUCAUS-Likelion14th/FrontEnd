@@ -62,15 +62,15 @@ export default function FoodTruckPage() {
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedTrucks.map((truck) => (
               <Card
-                key={truck.truck_id}
-                id={truck.truck_id}
+                key={truck.id}
+                id={truck.id}
                 type="foodtruck"
-                name={truck.truck_name}
-                subText={truck.main_menu}
+                name={truck.name}
+                subText={truck.bestMenu}
                 location={truck.location}
-                image={truck.truck_image}
-                isLiked={truck.is_liked}
-                likeCount={truck.like_count}
+                image={truck.image}
+                isLiked={truck.liked}
+                likeCount={truck.likeCount}
               />
             ))}
           </div>
