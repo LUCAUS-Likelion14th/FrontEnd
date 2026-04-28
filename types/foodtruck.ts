@@ -1,20 +1,19 @@
 export type MenuItem = {
-  menu_name: string;
-  menu_price: string;
-  menu_image: string;
-  menu_info: string;
+  name: string;
+  price: number;
+  image: string;
 };
 
 export type FoodTruckDetail = {
-  truck_id: number;
-  location_id: number;
-  truck_name: string;
-  main_menu: string;
-  truck_image: string;
-  truck_info: string;
+  id: number;
+  name: string;
+  locationId: number;
   location: string;
-  is_liked: boolean;
-  like_count: number;
+  image: string;
+  bestMenu: string;
+  likeCount: number;
+  liked: boolean;
+  foodTruckInfo: string;
   date: string[];
-  truck_menu: MenuItem[];
+  menu: MenuItem[];
 };
