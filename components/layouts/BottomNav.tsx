@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Image from "next/image";
 import LoginBottomNav from "./LoginBottomNav";
+import { motion } from "framer-motion";
 
 type NavItem = {
   label: string;
@@ -74,16 +75,26 @@ export default function BottomNav() {
             <li key={item.href}>
               <Link
                 href={item.href}
-                className={`flex flex-col items-center text-xs gap-2 cursor-pointer ${
-                  isActive ? "text-[#06387D]" : "text-[#8D97A7]"
+                className={`flex flex-col items-center text-xs gap-2 cursor-pointer transition-colors ${
+                  isActive ? "text-primary" : "text-text-sub"
                 }`}
               >
-                <Image
-                  src={isActive ? item.activeIcon : item.icon}
-                  alt={item.label}
-                  width={36}
-                  height={36}
-                />
+                {isActive && (
+                  <motion.div
+                    layoutId="active-bar"
+                    className="absolute top-0 w-[43px] h-[2px] bg-primary rounded-[5px]"
+                    transition={{ type: "spring", stiffness: 280, damping: 40 }}
+                  />
+                )}
+
+                <div className="relative w-9 h-9 mt-1">
+                  <Image
+                    src={isActive ? item.activeIcon : item.icon}
+                    alt={item.label}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
                 <span>{item.label}</span>
               </Link>
             </li>
