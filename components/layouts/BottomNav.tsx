@@ -83,7 +83,7 @@ export default function BottomNav() {
                   <motion.div
                     layoutId="active-bar"
                     className="absolute top-0 w-[43px] h-[2px] bg-primary rounded-[5px]"
-                    transition={{ type: "spring", stiffness: 280, damping: 40 }}
+                    transition={{ type: "spring", stiffness: 300, damping: 35 }}
                   />
                 )}
 
