@@ -26,7 +26,7 @@ const NAV_ITEMS: NavItem[] = [
 export default function Footer() {
   return (
     /* pb 값 조정하기 */
-    <footer className="relative flex flex-col gap-4 px-8 py-4 text-white text-center overflow-hidden">
+    <footer className="relative flex flex-col gap-4 px-8 py-4 mb-21 text-white text-center overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/footer-bg.png"
