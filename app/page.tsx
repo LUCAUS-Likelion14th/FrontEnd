@@ -5,7 +5,7 @@ import StageSection from "@/components/home/stage/StageSection";
 import BoothSection from "@/components/home/BoothSection";
 import FoodSection from "@/components/home/FoodSection";
 import Footer from "@/components/layouts/Footer";
-import { homeApi } from "@/lib/api/home";
+import { homeApi } from "@/lib/api/homeApi";
 import SplashScreen from "@/components/common/SplashScreen";
 
 export default async function Home() {

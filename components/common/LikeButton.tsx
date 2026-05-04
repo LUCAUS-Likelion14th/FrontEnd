@@ -55,7 +55,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.1, ease: "easeOut" }}
             >
-              <FaHeart size={24} className="text-primary" />
+              <FaHeart size={24} className="text-[#FF0080]" />
             </motion.div>
           ) : (
             <motion.div
