@@ -8,8 +8,8 @@ export default function InfoPage() {
         <Image
           src={"/icons/highlight.png"}
           alt={"하이라이트 아이콘"}
-          width={16}
-          height={16}
+          width={32}
+          height={32}
         />
         <span className="text-[14px] text-primary leading-4.5">
           축제 정보를 한눈에 확인해 보세요!
@@ -18,30 +18,26 @@ export default function InfoPage() {
 
       <section className="flex flex-col gap-3">
         <InfoCard
-          imageUrl="/icons/info/info-notice.png"
+          imageUrl="/notice-bg.png"
           title="축제기획단 공지"
           link="info/notice"
         />
         <InfoCard
-          imageUrl="/icons/info/info-lost.png"
+          imageUrl="/lost-bg.png"
           title="분실물 안내"
           link="info/lost"
         />
         <InfoCard
-          imageUrl="/icons/info/info-barrier-free.png"
+          imageUrl="/barrier-free-bg.png"
           title="배리어프리"
           link="info/barrier-free"
         />
         <InfoCard
-          imageUrl="/icons/info/info-route.png"
+          imageUrl="/route-bg.png"
           title="통행 정책"
           link="info/route"
         />
-        <InfoCard
-          imageUrl="/icons/info/info-credit.png"
-          title="크레딧"
-          link="info/credit"
-        />
+        <InfoCard imageUrl="/credit-bg.png" title="크레딧" link="info/credit" />
       </section>
     </main>
   );

@@ -17,9 +17,10 @@ export default function SectionHeader({
     <header className="flex gap-2">
       <div className="relative w-[25px] h-[25px] shrink-0">
         <Image
-          src="/icons/highlight.png"
-          alt=""
-          fill
+          src={"/icons/highlight.png"}
+          alt={"하이라이트 아이콘"}
+          width={32}
+          height={32}
           className="object-contain"
         />
       </div>

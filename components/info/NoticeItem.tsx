@@ -36,7 +36,7 @@ export default function NoticeItem({
   return (
     <div
       onClick={() => router.push(`/info/notice/${id}`)}
-      className="flex items-center justify-between py-3 border-b border-[#DCE2E9]"
+      className="flex items-center justify-between py-3 border-b border-[#DCE2E9] cursor-pointer"
     >
       <div className="flex items-center gap-4">
         <span
