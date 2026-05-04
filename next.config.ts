@@ -1,10 +1,13 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
   images: {
-    domains: [
-      "lucaus-994851303288-ap-northeast-2-an.s3.ap-northeast-2.amazonaws.com",
+    remotePatterns: [
+      {
+        protocol: "https",
+        hostname:
+          "lucaus-994851303288-ap-northeast-2-an.s3.ap-northeast-2.amazonaws.com",
+      },
     ],
   },
 };

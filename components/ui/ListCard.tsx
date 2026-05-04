@@ -1,7 +1,5 @@
 import Image from "next/image";
 import Link from "next/link";
-import { FiHeart } from "react-icons/fi";
-import { FaHeart } from "react-icons/fa";
 import LikeButton from "../common/LikeButton";
 
 type ListCardProps = {

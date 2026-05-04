@@ -7,8 +7,16 @@ export async function fetcher<T>(endpoint: string): Promise<T> {
   console.log("fetching:", url);
 
   const res = await fetch(url, {
-    cache: "force-cache",
+    cache: "no-store",
   });
+
+  const contentType = res.headers.get("content-type");
+
+ if (!contentType?.includes("application/json")) {
+   const text = await res.text();
+   console.error("Non-JSON response:", text);
+   throw new Error("Invalid response (not JSON)");
+ }
 
   if (!res.ok) {
     throw new Error(`API error: ${res.status} ${endpoint}`);
