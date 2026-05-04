@@ -66,8 +66,8 @@ export default function LoginBottomSheet({ isOpen, onClose }: Props) {
                   <Image
                     src="/icons/highlight-white.png"
                     alt="하이라이트 아이콘"
-                    width={16}
-                    height={16}
+                    width={22}
+                    height={22}
                     className="shrink-0 mt-1"
                   />
                   <span>좋아요 저장하고 나중에 다시 보기</span>
@@ -77,8 +77,8 @@ export default function LoginBottomSheet({ isOpen, onClose }: Props) {
                   <Image
                     src="/icons/highlight-white.png"
                     alt="하이라이트 아이콘"
-                    width={16}
-                    height={16}
+                    width={22}
+                    height={22}
                     className="shrink-0 mt-1"
                   />
                   <span>광장기획전 참여하고 경품 응모하기</span>
