@@ -12,7 +12,7 @@ export default function ArtistSection({ data }: ArtistSectionProps) {
         <ArtistButton
           key={item.stage_id}
           id={item.stage_id}
-          image={item.logo}
+          image={item.logoImage}
           artist={item.performer}
         />
       ))}
