@@ -66,7 +66,7 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
             <div className="flex-1 py-3.5 pl-1">
               <TimelineCard
                 id={item.stage_id}
-                image={item.performer_logo}
+                image={item.logo_image}
                 category={item.category}
                 artist={item.performer}
                 isActive={isActive}

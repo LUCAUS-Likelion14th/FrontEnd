@@ -7,7 +7,7 @@ export interface ApiResponse<T> {
 export interface Stage {
   stage_id: number;
   performer: string;
-  logo: string;
+  logoImage: string;
 }
 
 export interface Song {
@@ -33,7 +33,7 @@ export interface TimeTable {
   end_at: string;
   time: string;
   status: string;
-  performer_logo: string;
+  logo_image: string;
   performer: string;
   category: string;
 }
