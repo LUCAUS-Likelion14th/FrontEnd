@@ -186,7 +186,7 @@ export default function MyPage() {
             <div className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3">
               <div className="flex items-center justify-between mb-9">
                 <span className="text-[20px] font-semibold">도장판</span>
-                <button onClick={() => router.push("/mypage/stamp")}>
+                <button onClick={() => router.push("/stamp")}>
                   <FiChevronRight size={24} className="text-[#727272]" />
                 </button>
               </div>
