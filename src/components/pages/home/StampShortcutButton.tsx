@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import LoginBottomSheet from "../common/LoginBottomSheet";
+import { LoginBottomSheet } from '@/components'
+import Image from "next/image";
 
 export function StampShortcutButton() {
   const [showLogin, setShowLogin] = useState(false);
