@@ -17,16 +17,16 @@ export default async function Home() {
     <>
       <SplashScreen />
 
-      <main className="flex flex-col p-4 gap-12 mb-11">
+      <main className="flex flex-col gap-12 mb-15">
         <div className="flex flex-col gap-8">
           <ImageSwiper promotions={promotions} />
-          <div className="flex flex-col gap-2">
+          <div className="flex flex-col px-4 gap-2">
             <NoticeBanner notices={activeNotices} />
             <StampShortcutButton />
           </div>
         </div>
 
-        <section className="flex flex-col gap-8">
+        <section className="flex flex-col px-4 gap-8">
           <StageSection stages={liveStages} />
           <BoothSection booths={topBooths} />
           <FoodSection foods={hotFoods} />

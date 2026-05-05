@@ -14,7 +14,12 @@ export default async function BoothDetailPage({ params }: Props) {
     <main className="pb-12">
       <DetailHeader title="부스 정보" />
       <div className="relative w-full aspect-390/264">
-        <Image src={booth.booth_image} alt="부스 사진" fill className="object-cover" />
+        <Image
+          src={booth.booth_image}
+          alt={"부스 사진"}
+          fill
+          className="object-cover"
+        />
       </div>
 
       <div className="flex flex-col px-4 gap-8">

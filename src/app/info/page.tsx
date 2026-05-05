@@ -8,8 +8,8 @@ export default function InfoPage() {
         <Image
           src={"/icons/highlight.png"}
           alt={"하이라이트 아이콘"}
-          width={16}
-          height={16}
+          width={32}
+          height={32}
         />
         <span className="text-[14px] text-primary leading-4.5">
           축제 정보를 한눈에 확인해 보세요!
