@@ -16,11 +16,17 @@ interface MypageClientProps {
 export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
   const router = useRouter();
 
-  const stampCount = data.stamp_count ?? 0;
+  const stampCount = 4; // mypage에 stamp 개수 없어서 생기면 연결
   const stampProgress = useMemo(
     () => Math.min((stampCount / TOTAL_STAMPS) * 100, 100),
     [stampCount],
   );
+
+    const handleLogout = () => {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      router.replace("/");
+  };
 
   return (
     <main className="flex flex-col gap-4 pb-25">
@@ -44,20 +50,10 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
           </div>
 
-          <div className="flex flex-col px-4 gap-8">
-            <div className="flex flex-col gap-4 bg-white border border-text-sub2 rounded-[10px] px-4 py-3">
-              <span className="text-[20px] font-semibold">내 좋아요</span>
-              <span className="text-base text-text-sub text-center mt-10 mb-16">
-                로그인 후 확인할 수 있어요.
-              </span>
-            </div>
 
-            <div className="flex flex-col bg-white border border-text-sub2 rounded-[10px] px-4 py-3">
-              <span className="text-[20px] font-semibold">도장판</span>
-              <span className="text-base text-text-sub text-center mt-10 mb-16">
-                로그인 후 확인할 수 있어요.
-              </span>
-            </div>
+          <div className="px-4 flex flex-col gap-8">
+            <EmptyBox title="내 좋아요" />
+            <EmptyBox title="도장판" />
           </div>
         </div>
       ) : (
@@ -70,13 +66,17 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               <span className="text-base font-medium text-white text-right">
                 {data.name}님, 환영합니다!
               </span>
-              <button className="bg-white text-primary text-base font-semibold w-[106px] rounded-[28px] p-2.5">
+              <button 
+                onClick={handleLogout}
+                className="bg-white text-primary text-base font-semibold w-[106px] rounded-[28px] p-2.5"
+              >
                 로그아웃
               </button>
             </div>
           </div>
 
           <div className="flex flex-col px-4 gap-8">
+            {/* 좋아요 */}
             <div className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3">
               <div className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">내 좋아요</span>
@@ -129,6 +129,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               </div>
             </div>
 
+            {/* 도장판 */}
             <div className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3">
               <div className="flex items-center justify-between mb-9">
                 <span className="text-[20px] font-semibold">도장판</span>
@@ -136,9 +137,11 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
                   <FiChevronRight size={24} className="text-[#727272]" />
                 </button>
               </div>
+
               <span className="text-base text-center mb-8">
                 {TOTAL_STAMPS}개 중 {stampCount}개를 모았어요
               </span>
+
               <div className="w-full bg-gray-200 rounded-full h-2 mb-5">
                 <div
                   className="bg-primary h-2 rounded-full"
@@ -153,5 +156,16 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
         </div>
       )}
     </main>
+  );
+}
+
+function EmptyBox({ title }: { title: string }) {
+  return (
+    <div className="bg-white border rounded-[10px] p-4">
+      <span className="font-semibold">{title}</span>
+      <div className="text-center text-gray-400 mt-10 mb-16">
+        로그인 후 확인할 수 있어요.
+      </div>
+    </div>
   );
 }
