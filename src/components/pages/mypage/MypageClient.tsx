@@ -77,12 +77,12 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
           <div className="flex flex-col px-4 gap-8">
             {/* 좋아요 */}
-            <div className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3">
+            <div 
+              onClick={() => router.push("/mypage/likes")}
+              className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer">
               <div className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">내 좋아요</span>
-                <button onClick={() => router.push("/mypage/likes")}>
-                  <FiChevronRight size={24} className="text-[#727272]" />
-                </button>
+                <FiChevronRight size={24} className="text-[#727272]" />
               </div>
               <div className="grid grid-cols-3 gap-2">
                 {data.booth_like_list.map((booth) => (
@@ -130,12 +130,12 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
 
             {/* 도장판 */}
-            <div className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3">
+            <div 
+              onClick={() => router.push("/mypage/stamp")}
+              className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer">
               <div className="flex items-center justify-between mb-9">
                 <span className="text-[20px] font-semibold">도장판</span>
-                <button onClick={() => router.push("/mypage/stamp")}>
-                  <FiChevronRight size={24} className="text-[#727272]" />
-                </button>
+                <FiChevronRight size={24} className="text-[#727272]" />
               </div>
 
               <span className="text-base text-center mb-8">
