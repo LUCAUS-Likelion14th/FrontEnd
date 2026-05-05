@@ -1,10 +1,10 @@
 "use client";
 
-import Image from "next/image";
+import Image, { StaticImageData } from "next/image";
 import Link from "next/link";
 
 interface InfoCardProps {
-  imageUrl: string;
+  imageUrl: StaticImageData;
   title: string;
   link: string;
 }
