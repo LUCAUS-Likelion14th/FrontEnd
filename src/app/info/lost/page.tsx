@@ -1,14 +1,10 @@
 "use client";
 
-import Pagination from "@/components/common/Pagination";
-import LostItemCard from "@/components/info/LostItemCard";
-import LostTypeFilter from "@/components/info/LostTypeFilter";
+import { Pagination, LostItemCard, LostTypeFilter, DetailHeader, DateFilter } from "@/components"
 import { useEffect, useState } from "react";
-import DateFilter from "@/components/common/DateFilter";
 import { lostApi } from "@/lib/api/lostApi";
 import { LostItem } from "@/types/lost";
 import Image from "next/image";
-import DetailHeader from "@/components/detail/DetailHeader";
 
 const ITEMS_PER_PAGE = 6;
 

@@ -1,8 +1,6 @@
 "use client";
 
-import Pagination from "@/components/common/Pagination";
-import DetailHeader from "@/components/detail/DetailHeader";
-import NoticeItem from "@/components/info/NoticeItem";
+import { Pagination, DetailHeader, NoticeItem } from "@/components";
 import { noticeApi } from "@/lib/api/noticeApi";
 import { formatDate } from "@/lib/utils/date";
 import { Notice } from "@/types/notice";
