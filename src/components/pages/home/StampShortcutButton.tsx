@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginBottomSheet } from '@/components'
 import Image from "next/image";
+import { FiChevronRight } from "react-icons/fi";
 
 export function StampShortcutButton() {
   const [showLogin, setShowLogin] = useState(false);
