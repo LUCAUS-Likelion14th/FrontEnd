@@ -1,14 +1,15 @@
 "use client";
 
 import Image from "next/image";
-import { useRouter } from "next/navigation";
 
 export default function GoogleLoginButton() {
-  const router = useRouter();
+  const handleLogin = () => {
+    window.location.href = "https://lucaus.o-r.kr/oauth2/authorization/google";
+  };
 
   return (
     <button
-      onClick={() => router.push("/login")}
+      onClick={handleLogin}
       className="w-full h-13 flex items-center justify-center bg-white/10 rounded-[10px] gap-5 backdrop-blur-[2px] border border-white/30 shadow-lg transition-all active:scale-[0.98]"
     >
       <Image
