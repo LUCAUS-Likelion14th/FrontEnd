@@ -1,3 +1,4 @@
+import { infoBarrierFree, infoCredit, infoLost, infoNotice, infoRoute } from '@/assets/webp/info';
 import { InfoCard } from '@/components';
 import Image from 'next/image';
 
@@ -18,27 +19,27 @@ export default function InfoPage() {
 
       <section className="flex flex-col gap-3">
         <InfoCard
-          imageUrl="/webp/info/info-notice.webp"
+          imageUrl={infoNotice}
           title="축제기획단 공지"
           link="info/notice"
         />
         <InfoCard
-          imageUrl="/webp/info/info-lost.webp"
+          imageUrl={infoLost}
           title="분실물 안내"
           link="info/lost"
         />
         <InfoCard
-          imageUrl="/webp/info/info-barrier-free.webp"
+          imageUrl={infoBarrierFree}
           title="배리어프리"
           link="info/barrier-free"
         />
         <InfoCard
-          imageUrl="/webp/info/info-route.webp"
+          imageUrl={infoRoute}
           title="통행 정책"
           link="info/route"
         />
         <InfoCard
-          imageUrl="/webp/info/info-credit.webp"
+          imageUrl={infoCredit}
           title="크레딧"
           link="info/credit"
         />
