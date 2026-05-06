@@ -2,6 +2,7 @@
 
 import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
+import { LoadingScreen } from "@/components";
 
 export const dynamic = "force-dynamic";
 
@@ -24,12 +25,12 @@ function LoginSuccessContent() {
     router.replace("/");
   }, [searchParams, router]);
 
-  return <div>로그인 처리 중...</div>;
+  return <LoadingScreen />;
 }
 
 export default function LoginSuccessPage() {
   return (
-    <Suspense fallback={<div>로그인 처리 중...</div>}>
+    <Suspense fallback={<LoadingScreen />}>
       <LoginSuccessContent />
     </Suspense>
   );
