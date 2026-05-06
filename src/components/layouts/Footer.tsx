@@ -25,7 +25,6 @@ const NAV_ITEMS: NavItem[] = [
 
 export default function Footer() {
   return (
-    /* pb 값 조정하기 */
     <footer className="relative flex flex-col gap-4 px-8 py-4 mb-21 text-white text-center overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <Image
@@ -36,9 +35,9 @@ export default function Footer() {
         />
       </div>
       <address className="flex flex-col gap-1 not-italic">
-        <p className="text-[14px]">LIKELION CAU X 축제기획단</p>
+        <p className="text-[14px] font-normal">LIKELION CAU × 축제기획단</p>
 
-        <small className="text-[10px]">Copyright © 2026 Likelion CAU</small>
+        <small className="text-[10px] font-light">Copyright © 2026 Likelion CAU</small>
       </address>
 
       <ul className="flex justify-center gap-22 list-none p-0 m-0">
@@ -51,7 +50,7 @@ export default function Footer() {
               className="flex flex-col justify-center items-center gap-2 cursor-pointer"
             >
               {item.icon}
-              <span className="text-[14px]">{item.label}</span>
+              <span className="text-[12px] font-light">{item.label}</span>
             </Link>
           </li>
         ))}
