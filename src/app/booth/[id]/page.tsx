@@ -1,4 +1,4 @@
-import { BoothTitle, DetailAction, DetailHeader, DetailInfo} from "@/components";
+import { BoothTitle, DetailAction, DetailHeader, DetailInfo } from "@/components";
 import { BoothApi } from "@/lib/api/boothApi";
 import Image from "next/image";
 
@@ -30,8 +30,12 @@ export default async function BoothDetailPage({ params }: Props) {
         />
 
         <DetailAction
+          boothId={booth.booth_id}
           ownerInsta={booth.owner_insta}
           likeCount={booth.like_count}
+          isLiked={booth.is_liked}
+          onLike={BoothApi.like}
+          onUnlike={BoothApi.unlike}
         />
 
         <DetailInfo

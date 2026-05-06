@@ -1,3 +1,19 @@
+export type FoodTruck = {
+  id: number;
+  name: string;
+  locationId: number;
+  location: string;
+  image: string;
+  bestMenu: string;
+  likeCount: number;
+  liked: boolean;
+};
+
+export type FoodTruckParams = {
+  locate?: string;
+  date?: string;
+};
+
 export type MenuItem = {
   name: string;
   price: number;

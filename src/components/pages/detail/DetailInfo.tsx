@@ -1,6 +1,6 @@
 type Props = {
   location: string;
-  date: string[];
+  date: (string | null)[];
   hasBorder?: boolean;
 };
 
@@ -20,7 +20,7 @@ export default function DetailInfo({
       <div className="flex flex-col gap-5">
         <span>{location}</span>
         <div className="flex flex-col gap-2">
-          {date.map((d, index) => (
+          {date.filter((d): d is string => d !== null).map((d, index) => (
             <span key={index}>{d}</span>
           ))}
         </div>

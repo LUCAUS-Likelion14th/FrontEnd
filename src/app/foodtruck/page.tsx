@@ -1,43 +1,50 @@
 "use client";
 
-import { useMemo, useState } from "react";
-import { FOODTRUCK_DATA } from "@/data/foodtruckData";
+import { useState, useEffect } from "react";
 import { Card, Pagination, DateFilter } from "@/components";
+import { foodTruckApi } from "@/lib/api/foodTruckApi";
+import type { FoodTruck } from "@/types/foodtruck";
 
 const PAGE_SIZE = 8;
 
 export default function FoodTruckPage() {
   const [selectedDate, setSelectedDate] = useState("2026-05-21");
   const [currentPage, setCurrentPage] = useState(1);
+  const [trucks, setTrucks] = useState<FoodTruck[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  // 필터링 로직: 날짜 필터만 적용 (Figma 디자인 기반)
-  const filteredTrucks = useMemo(() => {
-    return FOODTRUCK_DATA.filter((truck) => {
-      // "all"이 선택된 경우 모든 날짜 표시, 특정 날짜 선택 시 해당 날짜 포함 여부 확인
-      if (selectedDate !== "all" && !truck.date.includes(selectedDate))
-        return false;
-      return true;
-    });
+  useEffect(() => {
+    const fetchTrucks = async () => {
+      setLoading(true);
+      try {
+        const data = await foodTruckApi.getFoodTrucks({
+          date: selectedDate !== "all" ? selectedDate : undefined,
+        });
+        setTrucks(data);
+      } catch {
+        setTrucks([]);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchTrucks();
   }, [selectedDate]);
 
-  // 페이지네이션
-  const totalPages = Math.max(1, Math.ceil(filteredTrucks.length / PAGE_SIZE));
-  const pagedTrucks = filteredTrucks.slice(
+  const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
+  const pagedTrucks = trucks.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE,
   );
 
-  // 필터 변경 핸들러
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
-    setCurrentPage(1); // 필터 변경 시 첫 페이지로 리셋
+    setCurrentPage(1);
   };
 
   return (
     <main className="px-4 pt-5 pb-25">
-      {/* 필터 영역 */}
       <section className="flex flex-col gap-5 pb-10 border-b border-b-text-sub2 mb-5">
-        {/* 날짜 필터 */}
         <div className="flex flex-col gap-2.5">
           <div className="w-fit">
             <DateFilter
@@ -47,16 +54,17 @@ export default function FoodTruckPage() {
           </div>
         </div>
 
-        {/* 지도 플레이스홀더 */}
         <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
           <span className="text-text-sub text-base">지도</span>
         </div>
       </section>
 
-      {/* 카드 목록 */}
       <section className="flex flex-col">
-        {/* 푸드트럭 카드 그리드 */}
-        {pagedTrucks.length > 0 ? (
+        {loading ? (
+          <div className="flex items-center justify-center py-20 text-text-sub text-base">
+            불러오는 중...
+          </div>
+        ) : pagedTrucks.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedTrucks.map((truck) => (
               <Card
@@ -78,7 +86,6 @@ export default function FoodTruckPage() {
           </div>
         )}
 
-        {/* 페이지네이션 */}
         <Pagination
           page={currentPage}
           totalPages={totalPages}

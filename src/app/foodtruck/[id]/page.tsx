@@ -24,10 +24,13 @@ export default async function FoodTruckDetailPage({ params }: Props) {
 
       <div className="flex flex-col px-4 gap-10">
         <FoodTruckTitle
+          foodId={foodTruck.id}
           name={foodTruck.name}
           isLiked={foodTruck.liked}
           likeCount={foodTruck.likeCount}
           info={foodTruck.foodTruckInfo}
+          onLike={foodTruckApi.like}
+          onUnlike={foodTruckApi.unlike}
         />
         <DetailInfo location={foodTruck.location} date={foodTruck.date} />
         <MenuDetail menuList={foodTruck.menu} />
