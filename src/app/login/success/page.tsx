@@ -1,11 +1,11 @@
 "use client";
 
-import { useEffect } from "react";
+import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 export const dynamic = "force-dynamic";
 
-export default function LoginSuccessPage() {
+function LoginSuccessContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -25,4 +25,12 @@ export default function LoginSuccessPage() {
   }, [searchParams, router]);
 
   return <div>로그인 처리 중...</div>;
+}
+
+export default function LoginSuccessPage() {
+  return (
+    <Suspense fallback={<div>로그인 처리 중...</div>}>
+      <LoginSuccessContent />
+    </Suspense>
+  );
 }
