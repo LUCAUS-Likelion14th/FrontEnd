@@ -1,26 +1,50 @@
+"use client";
+
+import { useEffect, useState } from "react";
 import { mypageApi } from "@/lib/api/mypageApi";
-import { MypageClient } from '@/components'
+import { MypageClient } from "@/components";
 import { MyPageData } from "@/types/mypage";
 
-const EMPTY_MYPAGE_DATA: MyPageData = {
-  name: "",
-  like_count: 0,
-  booth_like_list: [],
-  food_truck_like_list: [],
-  stamp_count: 0,
-};
+export default function MyPage() {
+  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const [data, setData] = useState<MyPageData | null>(null);
 
-export default async function MyPage() {
-  const isLoggedIn = true; // TODO: 실제 인증 상태로 변경
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
 
-  let data = EMPTY_MYPAGE_DATA;
-  if (isLoggedIn) {
-    try {
-      data = await mypageApi.getMyPage();
-    } catch (error) {
-      console.error("Failed to fetch mypage:", error);
+    if (!token) {
+      setIsLoggedIn(false);
+      return;
     }
-  }
 
-  return <MypageClient isLoggedIn={isLoggedIn} data={data} />;
+    setIsLoggedIn(true);
+
+    const fetchData = async () => {
+      try {
+        const res = await mypageApi.getMyPage();
+        setData(res);
+      } catch (error) {
+        console.error("Failed to fetch mypage:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
+
+  if (isLoggedIn === null) return null;
+
+  return (
+    <MypageClient
+      isLoggedIn={isLoggedIn}
+      data={
+        data ?? {
+          name: "",
+          like_count: 0,
+          booth_like_list: [],
+          food_truck_like_list: [],
+          stamp_count: 0,
+        }
+      }
+    />
+  );
 }
