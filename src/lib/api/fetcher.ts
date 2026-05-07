@@ -1,25 +1,30 @@
 import { ApiResponse } from "@/types/home";
 
-const BASE_URL =
-  typeof window === "undefined"
-    ? process.env.API_URL
-    : "/api";
+const BASE_URL = typeof window === "undefined" ? process.env.API_URL : "/api";
 
-export async function fetcher<T>(endpoint: string): Promise<T> {
+export async function fetcher<T>(
+  endpoint: string,
+  options?: RequestInit,
+): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   console.log("fetching:", url);
 
   const res = await fetch(url, {
     cache: "no-store",
+    ...options,
+    headers: {
+      "Content-Type": "application/json",
+      ...options?.headers,
+    },
   });
 
   const contentType = res.headers.get("content-type");
 
- if (!contentType?.includes("application/json")) {
-   const text = await res.text();
-   console.error("Non-JSON response:", text);
-   throw new Error("Invalid response (not JSON)");
- }
+  if (!contentType?.includes("application/json")) {
+    const text = await res.text();
+    console.error("Non-JSON response:", text);
+    throw new Error("Invalid response (not JSON)");
+  }
 
   if (!res.ok) {
     throw new Error(`API error: ${res.status} ${endpoint}`);
