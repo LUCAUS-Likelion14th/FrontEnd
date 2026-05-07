@@ -9,12 +9,16 @@ export async function fetcher<T>(
   const url = `${BASE_URL}${endpoint}`;
   console.log("fetching:", url);
 
+  const token =
+    typeof window !== "undefined" ? localStorage.getItem("accessToken") : null;
+
   const res = await fetch(url, {
     cache: "no-store",
-    ...options,
     headers: {
       "Content-Type": "application/json",
-      ...options?.headers,
+      ...(token && {
+        Authorization: `Bearer ${token}`,
+      }),
     },
   });
 
@@ -29,6 +33,7 @@ export async function fetcher<T>(
   if (!res.ok) {
     throw new Error(`API error: ${res.status} ${endpoint}`);
   }
+
   const json: ApiResponse<T> = await res.json();
 
   if (!json.success) {
