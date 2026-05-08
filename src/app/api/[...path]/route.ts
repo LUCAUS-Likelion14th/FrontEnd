@@ -16,12 +16,13 @@ async function proxyRequest(request: NextRequest, path: string[]) {
         ? await request.formData()
         : await request.text();
 
+  const authorization = request.headers.get("authorization");
   const res = await fetch(url, {
     method: request.method,
     cache: "no-store",
     redirect: "manual",
     headers: {
-      Authorization: request.headers.get("authorization") ?? "",
+      ...(authorization && { Authorization: authorization }),
       ...(!isFormData && body !== undefined && { "Content-Type": "application/json" }),
     },
     ...(body !== undefined && { body: body as BodyInit }),
