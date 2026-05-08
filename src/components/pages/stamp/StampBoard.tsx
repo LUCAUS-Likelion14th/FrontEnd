@@ -1,7 +1,7 @@
 import { fetcher } from "@/lib/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import BoothStampModal from "./BoothStampModal";
 
 interface Booth {
@@ -54,12 +54,15 @@ export default function StampBoard() {
       </div>
 
       <div className="flex justify-between relative z-10 px-4 py-5 mb-12">
-        <button className="bg-white border border-text-sub px-[14.5px] py-2.5 text-base text-primary font-medium rounded-lg">
-          {data.name}{" "}
-          <span className="text-[16px] font-medium text-text-sub2">|</span>{" "}
+        <div className="bg-white border border-text-sub px-[14.5px] py-2.5 text-base text-primary font-medium rounded-lg">
+          {data.name}
+          <span className="text-[16px] font-medium text-text-sub2"> | </span>
           {data.student_id}
-        </button>
-        <button className="bg-primary px-[37.5px] py-2.5 text-base text-white font-semibold rounded-lg">
+        </div>
+        <button
+          onClick={() => router.push(`/stamp/prize`)}
+          className="bg-primary px-[37.5px] py-2.5 text-base text-white font-semibold rounded-lg"
+        >
           경품 응모하기
         </button>
       </div>
