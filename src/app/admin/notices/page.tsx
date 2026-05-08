@@ -7,9 +7,7 @@ export default function NoticesAdminPage() {
       <div className="admin-topbar">
         <h1 className="admin-topbar__title">공지사항</h1>
         <div className="admin-topbar__actions">
-          <span style={{ fontSize: 13, color: "#8d97a7" }}>
-            총 공지 관리
-          </span>
+          <span className="admin-topbar__subtitle">총 공지 관리</span>
         </div>
       </div>
 
@@ -25,11 +23,11 @@ export default function NoticesAdminPage() {
               <div className="admin-card__icon-wrapper">
                 <MdNoteAdd />
               </div>
-              <div className="admin-card__label">공지 등록하기</div>
-              <div className="admin-card__description">
-                새로운 공지사항을 작성하고
-                <br />
-                등록합니다
+              <div className="admin-card__body">
+                <div className="admin-card__label">공지 등록하기</div>
+                <div className="admin-card__description">
+                  새로운 공지사항을 작성하고 등록합니다
+                </div>
               </div>
             </Link>
 
@@ -37,11 +35,11 @@ export default function NoticesAdminPage() {
               <div className="admin-card__icon-wrapper">
                 <MdEditNote />
               </div>
-              <div className="admin-card__label">공지 수정하기</div>
-              <div className="admin-card__description">
-                기존 공지사항을 수정하거나
-                <br />
-                삭제합니다
+              <div className="admin-card__body">
+                <div className="admin-card__label">공지 수정하기</div>
+                <div className="admin-card__description">
+                  기존 공지사항을 수정하거나 삭제합니다
+                </div>
               </div>
             </Link>
           </div>

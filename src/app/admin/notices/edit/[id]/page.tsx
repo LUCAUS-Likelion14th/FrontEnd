@@ -80,7 +80,7 @@ export default function NoticeEditDetailPage() {
   if (loading) {
     return (
       <div className="admin-main">
-        <p style={{ color: "#8d97a7", textAlign: "center", padding: "40px 0" }}>불러오는 중...</p>
+        <p className="admin-loading">불러오는 중...</p>
       </div>
     );
   }

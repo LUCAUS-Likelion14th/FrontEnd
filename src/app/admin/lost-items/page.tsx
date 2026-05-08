@@ -7,9 +7,7 @@ export default function LostItemsAdminPage() {
       <div className="admin-topbar">
         <h1 className="admin-topbar__title">분실물</h1>
         <div className="admin-topbar__actions">
-          <span style={{ fontSize: 13, color: "#8d97a7" }}>
-            분실물 관리
-          </span>
+          <span className="admin-topbar__subtitle">분실물 관리</span>
         </div>
       </div>
 
@@ -25,11 +23,11 @@ export default function LostItemsAdminPage() {
               <div className="admin-card__icon-wrapper">
                 <MdAddCircleOutline />
               </div>
-              <div className="admin-card__label">분실물 등록하기</div>
-              <div className="admin-card__description">
-                새로운 분실물을 접수하고
-                <br />
-                등록합니다
+              <div className="admin-card__body">
+                <div className="admin-card__label">분실물 등록하기</div>
+                <div className="admin-card__description">
+                  새로운 분실물을 접수하고 등록합니다
+                </div>
               </div>
             </Link>
 
@@ -37,11 +35,11 @@ export default function LostItemsAdminPage() {
               <div className="admin-card__icon-wrapper">
                 <MdEditNote />
               </div>
-              <div className="admin-card__label">분실물 수정하기</div>
-              <div className="admin-card__description">
-                등록된 분실물 정보를 수정하거나
-                <br />
-                상태를 변경합니다
+              <div className="admin-card__body">
+                <div className="admin-card__label">분실물 수정하기</div>
+                <div className="admin-card__description">
+                  등록된 분실물 정보를 수정하거나 상태를 변경합니다
+                </div>
               </div>
             </Link>
           </div>

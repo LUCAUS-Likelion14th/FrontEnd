@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { IconType } from "react-icons";
 import { MdHome, MdCampaign, MdSearchOff } from "react-icons/md";
@@ -28,7 +29,7 @@ export default function AdminSidebar() {
   return (
     <aside className="admin-sidebar">
       <div className="admin-sidebar__header">
-        <div className="admin-sidebar__logo">LUCAUS</div>
+        <Image src="/lucaus-logo.png" alt="LUCAUS" width={180} height={24} />
         <span className="admin-sidebar__subtitle">관리자</span>
       </div>
 

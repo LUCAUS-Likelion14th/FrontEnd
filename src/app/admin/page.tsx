@@ -20,11 +20,11 @@ export default function AdminHomePage() {
               <div className="admin-card__icon-wrapper">
                 <MdImage />
               </div>
-              <div className="admin-card__label">배너 등록/수정</div>
-              <div className="admin-card__description">
-                메인 페이지에 표시되는 배너 이미지를
-                <br />
-                등록하거나 수정합니다
+              <div className="admin-card__body">
+                <div className="admin-card__label">배너 등록/수정</div>
+                <div className="admin-card__description">
+                  메인 페이지에 표시되는 배너 이미지를 등록하거나 수정합니다
+                </div>
               </div>
             </Link>
 
@@ -32,39 +32,11 @@ export default function AdminHomePage() {
               <div className="admin-card__icon-wrapper">
                 <MdNotificationsActive />
               </div>
-              <div className="admin-card__label">메인 공지 설정</div>
-              <div className="admin-card__description">
-                메인 페이지 상단에 표시되는
-                <br />
-                공지사항을 설정합니다
-              </div>
-            </Link>
-          </div>
-        </div>
-
-        <div className="admin-section">
-          <div className="admin-section__header">
-            <h2 className="admin-section__title">빠른 바로가기</h2>
-          </div>
-
-          <div className="admin-cards">
-            <Link href="/admin/notices" className="admin-card">
-              <div className="admin-card__icon-wrapper">
-                <MdArticle />
-              </div>
-              <div className="admin-card__label">공지사항 관리</div>
-              <div className="admin-card__description">
-                축제 공지사항을 작성하고 관리합니다
-              </div>
-            </Link>
-
-            <Link href="/admin/lost-items" className="admin-card">
-              <div className="admin-card__icon-wrapper">
-                <MdSearchOff />
-              </div>
-              <div className="admin-card__label">분실물 관리</div>
-              <div className="admin-card__description">
-                분실물을 등록하고 관리합니다
+              <div className="admin-card__body">
+                <div className="admin-card__label">메인 공지 설정</div>
+                <div className="admin-card__description">
+                  메인 페이지 상단에 표시되는 공지사항을 설정합니다
+                </div>
               </div>
             </Link>
           </div>
