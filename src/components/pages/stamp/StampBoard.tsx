@@ -1,7 +1,8 @@
 import { fetcher } from "@/lib/api/fetcher";
 import Image from "next/image";
-import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { useCallback, useEffect, useState } from "react";
+import BoothStampModal from "./BoothStampModal";
 
 interface Booth {
   booth_id: number;
@@ -19,11 +20,13 @@ interface StampData {
 
 export default function StampBoard() {
   const [data, setData] = useState<StampData | null>(null);
+  const [selectedBooth, setSelectedBooth] = useState<Booth | null>(null);
+  const [refreshKey, setRefreshKey] = useState(0);
+  const router = useRouter();
 
   useEffect(() => {
     const loadData = async () => {
       try {
-        // GET /stamp API 하나로 모든 정보를 가져옵니다.
         const res = await fetcher<StampData>("/stamp");
         setData(res);
       } catch (error) {
@@ -31,7 +34,7 @@ export default function StampBoard() {
       }
     };
     loadData();
-  }, []);
+  }, [refreshKey]);
 
   if (!data)
     return <div className="text-white text-center pt-20">로딩 중...</div>;
@@ -87,16 +90,16 @@ export default function StampBoard() {
         </span>
       </div>
 
-      {/* ⭐ 부스 도장 리스트 영역 */}
       <section className="grid grid-cols-3 gap-y-8 px-6 pb-20 relative z-10">
         {data.booths.map((booth) => (
-          <Link
+          <div
             key={booth.booth_id}
-            href={`/booth/${booth.booth_id}`}
             className="flex flex-col items-center gap-2"
           >
-            <div className="relative w-[80px] h-[80px] flex justify-center items-center">
-              {/* 도장 상태에 따라 이미지 교체 */}
+            <div
+              onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
+              className="relative w-[80px] h-[80px] flex justify-center items-center"
+            >
               <Image
                 src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
                 alt={booth.name}
@@ -104,13 +107,27 @@ export default function StampBoard() {
                 height={80}
               />
             </div>
-            {/* 부스 이름 캡션 */}
-            <span className="text-text-sub text-[14px] font-medium text-center text-decoration-line: underline break-keep">
+
+            <span
+              onClick={() => router.push(`/booth/${booth.booth_id}`)}
+              className="text-text-sub text-[14px] font-medium text-center text-decoration-line: underline break-keep"
+            >
               {booth.name}
             </span>
-          </Link>
+          </div>
         ))}
       </section>
+
+      {selectedBooth && (
+        <BoothStampModal
+          boothId={selectedBooth.booth_id}
+          boothName={selectedBooth.name}
+          onClose={() => setSelectedBooth(null)}
+          onSuccess={() => {
+            setRefreshKey((prev) => prev + 1);
+          }}
+        />
+      )}
     </>
   );
 }
