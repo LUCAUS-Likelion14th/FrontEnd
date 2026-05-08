@@ -12,5 +12,5 @@ export const homeApi = {
   getPromotion: () => fetcher<Promotion[]>("/promotion"),
   getLiveStage: () => fetcher<LiveStage[]>("/live-stage"),
   getHotFood: () => fetcher<HotFood[]>("/hot-food"),
-  getActiveNotice: () => fetcher<ActiveNotice[]>("/active-notice"),
+  getActiveNotice: () => fetcher<ActiveNotice>("/active-notice"),
 };
