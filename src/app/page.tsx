@@ -4,13 +4,13 @@ import Footer from "@/components/layouts/Footer";
 import { homeApi } from "@/lib/api/homeApi";
 
 export default async function Home() {
-  const [topBooths, promotions, liveStages, hotFoods, activeNotices] =
+  const [topBooths, promotions, liveStages, hotFoods, activeNotice] =
     await Promise.all([
       homeApi.getTopBooth().catch(() => []),
       homeApi.getPromotion().catch(() => []),
       homeApi.getLiveStage().catch(() => []),
       homeApi.getHotFood().catch(() => []),
-      homeApi.getActiveNotice().catch(() => []),
+      homeApi.getActiveNotice().catch(() => null),
     ]);
 
   return (
@@ -21,7 +21,7 @@ export default async function Home() {
         <div className="flex flex-col gap-8">
           <ImageSwiper promotions={promotions} />
           <div className="flex flex-col px-4 gap-2">
-            <NoticeBanner notices={activeNotices} />
+            <NoticeBanner notice={activeNotice} />
             <StampShortcutButton />
           </div>
         </div>
