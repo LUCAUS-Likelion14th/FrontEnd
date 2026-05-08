@@ -1,14 +1,20 @@
 "use client";
 
 import { AiOutlineInstagram } from "react-icons/ai";
-import { FiHeart } from "react-icons/fi";
+import LikeButton from "../../common/Button/LikeButton";
 
 interface DetailActionsProps {
+  id: number;
+  type: "booth" | "foodtruck";
+  isLiked: boolean;
   ownerInsta?: string;
   likeCount: number;
 }
 
 export default function DetailAction({
+  id,
+  type,
+  isLiked,
   ownerInsta,
   likeCount,
 }: DetailActionsProps) {
@@ -23,10 +29,16 @@ export default function DetailAction({
       </button>
 
       <div className="flex-1 flex flex-col items-center justify-center gap-2">
-        <FiHeart size={30} />
-        <span className="text-[14px]">
-          <span>{likeCount}</span>명이 좋아했어요
-        </span>
+        <LikeButton
+          id={id}
+          type={type}
+          initialIsLiked={isLiked}
+          initialLikeCount={likeCount}
+          layout="vertical"
+          countSuffix="명이 좋아했어요"
+          outlineColor="text-black"
+          countColor="text-black"
+        />
       </div>
     </div>
   );

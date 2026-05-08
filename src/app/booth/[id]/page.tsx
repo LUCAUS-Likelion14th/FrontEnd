@@ -30,6 +30,9 @@ export default async function BoothDetailPage({ params }: Props) {
         />
 
         <DetailAction
+          id={booth.booth_id}
+          type="booth"
+          isLiked={booth.is_liked}
           ownerInsta={booth.owner_insta}
           likeCount={booth.like_count}
         />

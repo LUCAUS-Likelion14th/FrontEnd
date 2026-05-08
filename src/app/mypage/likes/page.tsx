@@ -1,134 +1,34 @@
 "use client";
 
 import { useState } from "react";
-import { BoothLikeItem, FoodLikeItem } from "@/types/mylikes";
-import { DetailHeader, Card } from '@/components';
-
-const mockBooths: BoothLikeItem[] = [
-  {
-    booth_id: 1,
-    location_id: 1,
-    booth_image: "/img.png",
-    booth_name: "부스 이름",
-    booth_owner: "단체 이름",
-    booth_location: "해방광장",
-    is_liked: true,
-    like_count: 78,
-  },
-  {
-    booth_id: 2,
-    location_id: 2,
-    booth_image: "/img.png",
-    booth_name: "부스 이름",
-    booth_owner: "단체 이름",
-    booth_location: "해방광장",
-    is_liked: true,
-    like_count: 52,
-  },
-  {
-    booth_id: 3,
-    location_id: 3,
-    booth_image: "/img.png",
-    booth_name: "부스 이름",
-    booth_owner: "단체 이름",
-    booth_location: "해방광장",
-    is_liked: true,
-    like_count: 4,
-  },
-];
-
-const mockFoodtrucks: FoodLikeItem[] = [
-  {
-    truck_id: 1,
-    location_id: 1,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 5,
-  },
-  {
-    truck_id: 2,
-    location_id: 1,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 5,
-  },
-  {
-    truck_id: 3,
-    location_id: 1,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 5,
-  },
-  {
-    truck_id: 4,
-    location_id: 1,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 5,
-  },
-  {
-    truck_id: 5,
-    location_id: 2,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 6,
-  },
-  {
-    truck_id: 6,
-    location_id: 1,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 15,
-  },
-  {
-    truck_id: 7,
-    location_id: 3,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 5,
-  },
-  {
-    truck_id: 8,
-    location_id: 1,
-    truck_image: "/img.png",
-    truck_name: "푸드트럭 이름",
-    main_menu: "대표 메뉴",
-    truck_location: "해방광장",
-    is_liked: true,
-    like_count: 35,
-  },
-];
+import { useQuery } from "@tanstack/react-query";
+import { mypageApi } from "@/lib";
+import { DetailHeader, Card } from "@/components";
 
 export default function LikesPage() {
   const [tab, setTab] = useState<"booth" | "food">("booth");
 
+
+  const { data: booths, isLoading: boothLoading, isError: boothError } = useQuery({
+    queryKey: ["mypage", "booth"],
+    queryFn: mypageApi.getLikedBooths,
+  });
+
+  const { data: trucks, isLoading: truckLoading, isError: truckError } = useQuery({
+    queryKey: ["mypage", "foodtruck"],
+    queryFn: mypageApi.getLikedFoodTrucks,
+  });
+
+  const isLoading = boothLoading || truckLoading;
+  const isError = boothError || truckError;
+
+  if (isLoading) return <div className="pt-40 text-center">불러오는 중...</div>;
+  if (isError) return <div className="pt-40 text-center">에러가 발생했습니다.</div>;
+
   return (
     <main className="pb-25">
-      {/* 고정 헤더 */}
       <div className="fixed top-14 left-0 right-0 bg-white z-10">
         <DetailHeader title="내 좋아요" />
-
         <div className="relative">
           <div className="flex">
             <button
@@ -156,11 +56,10 @@ export default function LikesPage() {
         </div>
       </div>
 
-      {/* 스크롤 영역 - 헤더 높이만큼 padding 줘서 안 겹치게 */}
       <div className="pt-32 px-4 pb-12">
         <div className="grid grid-cols-2 gap-4">
           {tab === "booth"
-            ? mockBooths.map((booth) => (
+            ? booths?.map((booth) => (
                 <Card
                   key={booth.booth_id}
                   id={booth.booth_id}
@@ -173,20 +72,27 @@ export default function LikesPage() {
                   likeCount={booth.like_count}
                 />
               ))
-            : mockFoodtrucks.map((truck) => (
+            : trucks?.map((truck) => (
                 <Card
-                  key={truck.truck_id}
-                  id={truck.truck_id}
+                  key={truck.id}
+                  id={truck.id}
                   type="foodtruck"
-                  image={truck.truck_image}
-                  name={truck.truck_name}
-                  subText={truck.main_menu}
-                  location={truck.truck_location}
-                  isLiked={truck.is_liked}
-                  likeCount={truck.like_count}
+                  image={truck.image}
+                  name={truck.name}
+                  subText={truck.bestMenu}
+                  location={truck.location}
+                  isLiked={truck.liked}
+                  likeCount={truck.likeCount}
                 />
               ))}
         </div>
+
+        {tab === "booth" && booths?.length === 0 && (
+          <div className="text-center py-20 text-text-sub">좋아요한 부스가 없어요.</div>
+        )}
+        {tab === "food" && trucks?.length === 0 && (
+          <div className="text-center py-20 text-text-sub">좋아요한 푸드트럭이 없어요.</div>
+        )}
       </div>
     </main>
   );

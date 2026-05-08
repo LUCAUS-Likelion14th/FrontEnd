@@ -1,6 +1,6 @@
 "use client";
 
-import { fetcher } from "@/lib/api/fetcher";
+import { authFetcher } from "@/lib/api/fetcher";
 import { useState } from "react";
 import { DetailHeader } from "../detail";
 import Image from "next/image";
@@ -32,13 +32,9 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
 
     try {
       // 1. PATCH /stamp/init API 호출
-      await fetcher<any>("/stamp/init", {
-        method: "PATCH",
-        credentials: "include",
-        body: JSON.stringify({
-          name: name,
-          student_id: studentId,
-        }),
+      await authFetcher("/stamp/init", "PATCH", {
+        name: name,
+        student_id: studentId,
       });
 
       setIsModalOpen(false);

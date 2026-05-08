@@ -2,35 +2,61 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
+import { mutate } from "@/lib/api/fetcher";
 
 type LikeButtonProps = {
+  id: number | string;
+  type: "booth" | "foodtruck";
   initialIsLiked: boolean;
   initialLikeCount: number;
-  layout?: "vertical" | "horizontal"; // 배치 방향 (세로/가로)
+  layout?: "vertical" | "horizontal";
+  hideCount?: boolean;
+  countSuffix?: string;
+  outlineColor?: string;
+  countColor?: string;
 };
 
 export default function LikeButton({
+  id,
+  type,
   initialIsLiked,
   initialLikeCount,
   layout = "vertical",
+  hideCount = false,
+  countSuffix,
+  outlineColor = "text-text-sub",
+  countColor,
 }: LikeButtonProps) {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [animateKey, setAnimateKey] = useState(0);
+  const router = useRouter();
 
-  const handleLikeClick = (e: React.MouseEvent) => {
+  const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!isLiked) {
-      setAnimateKey((prev) => prev + 1);
-      setLikeCount((prev) => prev + 1);
-    } else {
-      setLikeCount((prev) => prev - 1);
+    const endpoint = type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
+    const nextLiked = !isLiked;
+
+    setIsLiked(nextLiked);
+    setLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
+    if (nextLiked) setAnimateKey((prev) => prev + 1);
+
+    try {
+      await mutate(endpoint, nextLiked ? "POST" : "DELETE");
+      // 서버 캐시를 무효화하여 다른 페이지에서도 좋아요 상태가 동기화되도록 함
+      router.refresh();
+    } catch (error) {
+      console.error("좋아요 처리 실패:", error);
+      setIsLiked(!nextLiked);
+      setLikeCount((prev) => (nextLiked ? prev - 1 : prev + 1));
+      const goLogin = window.confirm("로그인이 필요합니다. 로그인 하시겠습니까?");
+      if (goLogin) router.push("/login");
     }
-    setIsLiked(!isLiked);
   };
 
   const containerClass =
@@ -43,9 +69,7 @@ export default function LikeButton({
       onClick={handleLikeClick}
       className={`${containerClass} shrink-0 cursor-pointer relative`}
     >
-      {/* 하트 아이콘 영역 (터지는 효과를 위해 relative로 잡음) */}
-      <div className="relative flex items-center justify-center w-6 h-6">
-        {/* 1. 메인 하트 아이콘 */}
+      <div className="relative flex items-center justify-center w-[38px] h-[38px]">
         <AnimatePresence mode="wait">
           {isLiked ? (
             <motion.div
@@ -55,7 +79,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.1, ease: "easeOut" }}
             >
-              <FaHeart size={24} className="text-[#FF0080]" />
+              <FaHeart size={30} className="text-[#FF0080]" />
             </motion.div>
           ) : (
             <motion.div
@@ -65,12 +89,11 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <FiHeart size={24} className="text-text-sub" />
+              <FiHeart size={30} className={outlineColor} />
             </motion.div>
           )}
         </AnimatePresence>
 
-        {/* 2. 팡 터지는 8개 선 효과 (좋아요 누를 때만 잠깐 등장) */}
         <AnimatePresence>
           {animateKey > 0 && isLiked && (
             <motion.div
@@ -90,12 +113,13 @@ export default function LikeButton({
         </AnimatePresence>
       </div>
 
-      {/* 3. 좋아요 숫자 */}
-      <span
-        className={`${layout === "vertical" ? "text-sm text-text-sub" : "text-base text-text-sub"} z-10 relative`}
-      >
-        {likeCount}
-      </span>
+      {!hideCount && (
+        <span
+          className={`${layout === "vertical" ? "text-sm" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
+        >
+          {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
+        </span>
+      )}
     </div>
   );
 }

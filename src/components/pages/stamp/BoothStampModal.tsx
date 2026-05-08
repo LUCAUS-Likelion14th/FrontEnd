@@ -1,4 +1,4 @@
-import { fetcher } from "@/lib/api/fetcher";
+import { authFetcher } from "@/lib/api/fetcher";
 import Image from "next/image";
 import { useState } from "react";
 
@@ -31,12 +31,7 @@ export default function BoothStampModal({
 
     setIsLoading(true);
     try {
-      await fetcher(`/stamp/${boothId}`, {
-        method: "POST",
-        credentials: "include",
-        body: JSON.stringify({ password }),
-        // body: JSON.stringify(requestBody),
-      });
+      await authFetcher(`/stamp/${boothId}`, "POST", { password });
 
       setIsSuccess(true);
     } catch (error: any) {

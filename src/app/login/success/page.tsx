@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LoadingScreen } from "@/components";
 
-export const dynamic = "force-dynamic";
+
 
 function LoginSuccessContent() {
   const router = useRouter();
@@ -13,6 +13,7 @@ function LoginSuccessContent() {
   useEffect(() => {
     const accessToken = searchParams.get("accessToken");
     const refreshToken = searchParams.get("refreshToken");
+    const nickname = searchParams.get("nickname");
 
     if (!accessToken || !refreshToken) {
       router.replace("/login");
@@ -21,6 +22,7 @@ function LoginSuccessContent() {
 
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
+    if (nickname) localStorage.setItem("nickname", nickname);
 
     router.replace("/");
   }, [searchParams, router]);

@@ -14,7 +14,7 @@ export default function BoothLocationFilter({
   onSelectLocation,
 }: Props) {
   return (
-    <div className="flex items-center gap-2.5 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div className="grid grid-cols-[2fr_1.5fr_1.5fr] gap-2 w-full">
       {BOOTH_LOCATIONS.map((loc) => {
         const isActive = selectedLocation === loc;
 
@@ -24,7 +24,7 @@ export default function BoothLocationFilter({
           <button
             key={loc}
             onClick={() => onSelectLocation(isActive ? null : loc)}
-            className={`flex items-center gap-2 px-2.5 h-10 rounded-[6px] transition-colors ${
+            className={`flex items-center justify-center gap-1.5 h-10 rounded-[6px] transition-colors ${
               isActive
                 ? "bg-primary text-white"
                 : "border border-text-sub text-text-sub"

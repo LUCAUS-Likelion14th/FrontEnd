@@ -1,5 +1,5 @@
 import { BackButton } from "@/components/common";
-import { fetcher } from "@/lib/api/fetcher";
+import { authFetcher } from "@/lib/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -30,11 +30,7 @@ export default function PrizeApplyForm({
     }
     setIsLoading(true);
     try {
-      await fetcher("/stamp/prize", {
-        method: "PATCH",
-        credentials: "include",
-        body: JSON.stringify({ password }),
-      });
+      await authFetcher("/stamp/prize", "PATCH", { password });
       alert("경품 응모가 완료되었습니다!");
       router.push("/stamp");
     } catch (error: any) {

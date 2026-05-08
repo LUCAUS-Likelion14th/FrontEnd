@@ -27,7 +27,7 @@ export default function Pagination({
   );
 
   return (
-    <div className="fixed bottom-23 left-0 right-0 w-full flex justify-center gap-2 mt-6">
+    <div className="w-full flex justify-center gap-2 mt-6">
       <button
         onClick={() => onChange(Math.max(page - 1, 1))}
         disabled={page === 1}

@@ -1,66 +1,56 @@
 "use client";
 
-import { useState, useMemo } from "react";
-import { BoothLocationFilter, BoothCategoryFilter, BoothSearchBar, DateFilter, Pagination, Card }  from "@/components";
-import { BOOTH_DATA, BoothLocation, BoothCategory } from "@/data/boothData";
+import { useState, useEffect } from "react";
+import { BoothLocationFilter, BoothCategoryFilter, BoothSearchBar, DateFilter, Pagination, Card } from "@/components";
+import { BoothLocation, BoothCategory, BOOTH_DATES } from "@/data/boothData";
+import { BoothApi } from "@/lib/api/boothApi";
+import { BoothListItem } from "@/types/booth";
 
 const PAGE_SIZE = 8;
 
+const getDefaultDate = () => {
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const valid = BOOTH_DATES.filter((d) => d.value !== "all").map((d) => d.value as string);
+  return (valid.includes(todayStr) ? todayStr : valid[0]) as typeof BOOTH_DATES[number]["value"];
+};
+
 export default function BoothPage() {
-  const [selectedDate, setSelectedDate] = useState("2026-05-21");
+  const [booths, setBooths] = useState<BoothListItem[]>([]);
+  const [selectedDate, setSelectedDate] = useState<string>(getDefaultDate());
   const [selectedLocation, setSelectedLocation] =
-    useState<BoothLocation | null>(null);
+    useState<BoothLocation | null>("서라벌홀 일대");
   const [selectedCategory, setSelectedCategory] =
     useState<BoothCategory>("전체");
   const [searchQuery, setSearchQuery] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
 
-  // 필터링 로직
-  const filteredBooths = useMemo(() => {
-    return BOOTH_DATA.filter((booth) => {
-      // 날짜 필터
-      if (selectedDate !== "all" && !booth.date.includes(selectedDate))
-        return false;
+  const locationMap: Record<BoothLocation, string> = {
+    "서라벌홀 일대": "서라벌홀",
+    "후문 일대": "후문",
+    대운동장: "운동장",
+  };
 
-      // 장소 필터
-      if (selectedLocation) {
-        const locationMap: Record<BoothLocation, string> = {
-          "해방광장 일대": "해방광장",
-          "후문 일대": "후문",
-          대운동장: "대운동장",
-        };
-        if (!booth.location.includes(locationMap[selectedLocation]))
-          return false;
-      }
-
-      // 카테고리 필터
-      if (selectedCategory !== "전체") {
-        if (!booth.booth_category.includes(selectedCategory)) return false;
-      }
-
-      // 검색어 필터
-      if (searchQuery.trim()) {
-        const q = searchQuery.trim().toLowerCase();
-        if (
-          !booth.booth_name.toLowerCase().includes(q) &&
-          !booth.booth_category.some((c) => c.toLowerCase().includes(q))
-        ) {
-          return false;
-        }
-      }
-
-      return true;
-    });
+  useEffect(() => {
+    const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
+    BoothApi.getList({
+      date: dateParam,
+      location: selectedLocation ? locationMap[selectedLocation] : undefined,
+      category: selectedCategory !== "전체" ? selectedCategory : undefined,
+      search: searchQuery.trim() || undefined,
+    })
+      .then(setBooths)
+      .catch(console.error);
   }, [selectedDate, selectedLocation, selectedCategory, searchQuery]);
 
-  // 페이지네이션
+  const filteredBooths = booths;
+
   const totalPages = Math.max(1, Math.ceil(filteredBooths.length / PAGE_SIZE));
   const pagedBooths = filteredBooths.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE,
   );
 
-  // 필터 변경 시 페이지 리셋
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
     setCurrentPage(1);
@@ -80,15 +70,13 @@ export default function BoothPage() {
 
   return (
     <main className="px-4 pt-5 pb-25">
-      {/* 필터 영역 */}
       <section className="flex flex-col gap-[17px] mb-5">
-        {/* 날짜 + 장소 필터 */}
         <div className="flex flex-col gap-2.5">
           <DateFilter
             selectedDate={selectedDate}
             onSelectDate={handleDateChange}
           />
-          <div className="overflow-x-auto">
+          <div className="w-full">
             <BoothLocationFilter
               selectedLocation={selectedLocation}
               onSelectLocation={handleLocationChange}
@@ -96,48 +84,29 @@ export default function BoothPage() {
           </div>
         </div>
 
-        {selectedLocation === "대운동장" ? (
-          <div className="flex flex-col gap-14">
-            {/* 대운동장: 지도 플레이스홀더 + 도장판 바로 가기 */}
-            <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-              <span className="text-text-sub text-base">지도</span>
-            </div>
-            <button className="w-full py-3 bg-primary text-white text-base font-semibold rounded-[10px]">
-              도장판 바로 가기
+        <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
+          <span className="text-text-sub text-base">지도</span>
+          <div className="absolute right-4 bottom-5 flex flex-col gap-2">
+            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
+              +
+            </button>
+            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
+              −
             </button>
           </div>
-        ) : (
-          /* 기본: 지도 플레이스홀더 */
-          <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-            <span className="text-text-sub text-base">지도</span>
-            <div className="absolute right-4 bottom-5 flex flex-col gap-2">
-              <button className="w-7 h-7 bg-white rounded-full shadow flex items-center justify-center text-lg leading-none">
-                +
-              </button>
-              <button className="w-7 h-7 bg-white rounded-full shadow flex items-center justify-center text-lg leading-none">
-                −
-              </button>
-            </div>
-          </div>
-        )}
+        </div>
       </section>
 
-      {/* 검색 + 카테고리 + 카드 목록 */}
       <section className="flex flex-col">
-        {/* 대운동장이 아닐 때만 검색바 / 카테고리 표시 */}
-        {selectedLocation !== "대운동장" && (
-          <>
-            <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-            <div className="pt-2.5 pb-5 overflow-x-auto">
-              <BoothCategoryFilter
-                selectedCategory={selectedCategory}
-                onSelectCategory={handleCategoryChange}
-              />
-            </div>
-          </>
-        )}
+        <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
+        <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide">
+          <BoothCategoryFilter
+            selectedCategory={selectedCategory}
+            onSelectCategory={handleCategoryChange}
+            showStamp={selectedDate === "2026-05-18" || selectedDate === "2026-05-19"}
+          />
+        </div>
 
-        {/* 부스 카드 그리드 */}
         {pagedBooths.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedBooths.map((booth) => (
@@ -147,7 +116,7 @@ export default function BoothPage() {
                 type="booth"
                 name={booth.booth_name}
                 subText={booth.booth_owner}
-                location={booth.location}
+                location={booth.booth_location}
                 image={booth.booth_image}
                 isLiked={booth.is_liked}
                 likeCount={booth.like_count}
@@ -160,7 +129,6 @@ export default function BoothPage() {
           </div>
         )}
 
-        {/* 페이지네이션 */}
         <Pagination
           page={currentPage}
           totalPages={totalPages}

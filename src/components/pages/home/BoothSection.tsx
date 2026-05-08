@@ -18,6 +18,8 @@ export function BoothSection({ booths }: Props) {
         {booths.map((booth) => (
           <ListCard
             key={booth.booth_id}
+            id={booth.booth_id}
+            type="booth"
             imageUrl={booth.booth_image}
             href={`/booth/${booth.booth_id}`}
             location={booth.location}
