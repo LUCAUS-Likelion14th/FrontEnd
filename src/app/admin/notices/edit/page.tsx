@@ -39,7 +39,7 @@ export default function NoticeEditPage() {
           <p className="admin-list-instruction">수정할 공지를 선택하세요</p>
 
           {loading ? (
-            <p style={{ color: "#8d97a7", textAlign: "center", padding: "40px 0" }}>불러오는 중...</p>
+            <p className="admin-loading">불러오는 중...</p>
           ) : (
             <div className="admin-list">
               {notices.map((notice) => (
