@@ -75,9 +75,9 @@ export default async function StageDetailPage({
               </h3>
               <p className="text-base text-right">{stage.time}</p>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-start">
               <h3 className="text-base font-semibold text-text-sub">공연 곡</h3>
-              <div className="flex flex-col text-base text-right">
+              <div className="flex flex-col gap-2 text-base text-right">
                 {stage.songs && stage.songs.length > 0 ? (
                   stage.songs
                     .sort((a, b) => a.play_order - b.play_order)
@@ -87,16 +87,16 @@ export default async function StageDetailPage({
                 )}
               </div>
             </div>
-            <div className="flex justify-between">
+            <div className="flex justify-between items-start">
               <h3 className="text-base font-semibold text-text-sub">소개글</h3>
-              <p className="text-base text-right whitespace-pre-line">
+              <p className="text-base text-left whitespace-pre-line w-[332px]">
                 {stage.stage_info}
               </p>
             </div>
           </div>
         </section>
 
-        <small className="block text-xs font-light text-center">
+        <small className="block text-xs font-light text-center text-[#888]">
           *주최 측의 사정에 따라 일정이 변경될 수 있습니다
         </small>
       </div>
