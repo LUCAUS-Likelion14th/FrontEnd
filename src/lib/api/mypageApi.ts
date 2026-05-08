@@ -6,6 +6,14 @@ import type {
 } from "@/types/mypage";
 
 export const mypageApi = {
+  getLikedBooths: async (): Promise<MyBoothLikes[]> => {
+    return fetcher<MyBoothLikes[]>("/mypage/booth");
+  },
+
+  getLikedFoodTrucks: async (): Promise<MyFoodTruckLikes[]> => {
+    return fetcher<MyFoodTruckLikes[]>("/mypage/foodtruck");
+  },
+
   getMyPage: async (): Promise<MyPageData> => {
     const [booths, trucks] = await Promise.all([
       fetcher<MyBoothLikes[]>("/mypage/booth"),

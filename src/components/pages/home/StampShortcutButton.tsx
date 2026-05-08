@@ -10,14 +10,19 @@ export function StampShortcutButton() {
   const [showLogin, setShowLogin] = useState(false);
   const router = useRouter();
 
-  const isLoggedIn = false; // TODO: auth store
+  const getIsLoggedIn = () => {
+    if (typeof window !== "undefined") {
+      return !!localStorage.getItem("accessToken");
+    }
+    return false;
+  };
 
-  const handleClick = () => {
-    if (!isLoggedIn) {
+   const handleClick = () => {
+    if (!getIsLoggedIn()) {
       setShowLogin(true);
       return;
     }
-    router.push("/stamp");
+    router.push("/stamp"); 
   };
 
   return (
