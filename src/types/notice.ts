@@ -11,3 +11,9 @@ export interface NoticeResponse {
   content: Notice[];
   totalPages: number;
 }
+
+export interface NoticeParams {
+  page?: number;
+  size?: number;
+  sort?: string[];
+}
