@@ -50,6 +50,8 @@ export default function Card({
           </div>
 
           <LikeButton
+            id={id}
+            type={type}
             initialIsLiked={isLiked}
             initialLikeCount={likeCount}
             layout="vertical"
