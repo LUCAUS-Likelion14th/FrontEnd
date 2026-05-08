@@ -101,7 +101,7 @@ export default function StampBoard() {
           >
             <div
               onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
-              className="relative w-[80px] h-[80px] flex justify-center items-center"
+              className="relative w-[80px] h-[80px] flex justify-center items-center cursor-pointer"
             >
               <Image
                 src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
@@ -113,7 +113,7 @@ export default function StampBoard() {
 
             <span
               onClick={() => router.push(`/booth/${booth.booth_id}`)}
-              className="text-text-sub text-[14px] font-medium text-center text-decoration-line: underline break-keep"
+              className="text-text-sub text-[14px] font-medium text-center text-decoration-line: underline break-keep cursor-pointer"
             >
               {booth.name}
             </span>
