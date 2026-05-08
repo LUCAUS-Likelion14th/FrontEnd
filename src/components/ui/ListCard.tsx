@@ -3,17 +3,20 @@ import Link from "next/link";
 import LikeButton from "../common/Button/LikeButton";
 
 type ListCardProps = {
+  id: number;
+  type: "booth" | "foodtruck";
   imageUrl: string;
   href: string;
   location: string;
   name: string;
   isLiked: boolean;
   likeCount: number;
-
   department?: string;
 };
 
 export default function ListCard({
+  id,
+  type,
   imageUrl,
   href,
   location,
@@ -41,6 +44,8 @@ export default function ListCard({
 
           <div className="flex flex-col items-end gap-3 shrink-0">
             <LikeButton
+              id={id}
+              type={type}
               initialIsLiked={isLiked}
               initialLikeCount={likeCount}
               layout="horizontal"
