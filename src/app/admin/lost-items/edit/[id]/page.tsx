@@ -94,7 +94,7 @@ export default function LostItemEditDetailPage() {
   if (loading) {
     return (
       <div className="admin-main">
-        <p style={{ color: "#8d97a7", textAlign: "center", padding: "40px 0" }}>불러오는 중...</p>
+        <p className="admin-loading">불러오는 중...</p>
       </div>
     );
   }
@@ -107,10 +107,10 @@ export default function LostItemEditDetailPage() {
 
       <div className="admin-main">
         <div className="admin-form">
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "32px", marginBottom: "16px" }}>
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+          <div className="admin-form__grid">
+            <div className="admin-form__grid-col">
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 90 }}>분실물 이름 :</label>
+                <label className="admin-form__label">분실물 이름 :</label>
                 <input
                   type="text"
                   className="admin-form__input"
@@ -120,7 +120,7 @@ export default function LostItemEditDetailPage() {
                 />
               </div>
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 90 }}>발견 위치 :</label>
+                <label className="admin-form__label">발견 위치 :</label>
                 <input
                   type="text"
                   className="admin-form__input"
@@ -131,9 +131,9 @@ export default function LostItemEditDetailPage() {
               </div>
             </div>
 
-            <div style={{ display: "flex", flexDirection: "column", gap: "16px" }}>
+            <div className="admin-form__grid-col">
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 60 }}>날짜 :</label>
+                <label className="admin-form__label">날짜 :</label>
                 <div className="admin-form__select-wrapper">
                   <select className="admin-form__select" value={date} onChange={(e) => setDate(e.target.value)}>
                     <option value="" disabled>날짜 선택</option>
@@ -143,7 +143,7 @@ export default function LostItemEditDetailPage() {
                 </div>
               </div>
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 60 }}>종류 :</label>
+                <label className="admin-form__label">종류 :</label>
                 <div className="admin-form__select-wrapper">
                   <select className="admin-form__select" value={category} onChange={(e) => setCategory(e.target.value)}>
                     <option value="" disabled>종류 선택</option>

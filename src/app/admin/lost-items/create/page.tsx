@@ -66,11 +66,11 @@ export default function LostItemCreatePage() {
 
       <div className="admin-main">
         <div className="admin-form">
-          <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '32px', marginBottom: '16px' }}>
+          <div className="admin-form__grid">
             {/* 좌측: 이름, 위치 */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="admin-form__grid-col">
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 90 }}>분실물 이름 :</label>
+                <label className="admin-form__label">분실물 이름 :</label>
                 <input
                   type="text"
                   className="admin-form__input"
@@ -80,7 +80,7 @@ export default function LostItemCreatePage() {
                 />
               </div>
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 90 }}>발견 위치 :</label>
+                <label className="admin-form__label">발견 위치 :</label>
                 <input
                   type="text"
                   className="admin-form__input"
@@ -92,9 +92,9 @@ export default function LostItemCreatePage() {
             </div>
 
             {/* 우측: 날짜, 종류 */}
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px' }}>
+            <div className="admin-form__grid-col">
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 60 }}>날짜 :</label>
+                <label className="admin-form__label">날짜 :</label>
                 <div className="admin-form__select-wrapper">
                   <select 
                     className="admin-form__select"
@@ -108,7 +108,7 @@ export default function LostItemCreatePage() {
                 </div>
               </div>
               <div className="admin-form__field">
-                <label className="admin-form__label" style={{ minWidth: 60 }}>종류 :</label>
+                <label className="admin-form__label">종류 :</label>
                 <div className="admin-form__select-wrapper">
                   <select 
                     className="admin-form__select"
