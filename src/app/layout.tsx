@@ -1,6 +1,7 @@
 import BottomNav from "@/components/layouts/BottomNav";
 import "./globals.css";
 import Header from "@/components/layouts/Header";
+import Providers from "./providers";
 
 export default function RootLayout({
   children,
@@ -10,9 +11,11 @@ export default function RootLayout({
   return (
     <html lang="ko">
       <body>
-        <Header />
-        <main className="min-h-screen mt-14">{children}</main>
-        <BottomNav />
+        <Providers>
+          <Header />
+          <main className="min-h-screen mt-14">{children}</main>
+          <BottomNav />
+        </Providers>
       </body>
     </html>
   );
