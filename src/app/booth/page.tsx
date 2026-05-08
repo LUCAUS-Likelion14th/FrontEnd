@@ -2,17 +2,24 @@
 
 import { useState, useEffect } from "react";
 import { BoothLocationFilter, BoothCategoryFilter, BoothSearchBar, DateFilter, Pagination, Card } from "@/components";
-import { BoothLocation, BoothCategory } from "@/data/boothData";
+import { BoothLocation, BoothCategory, BOOTH_DATES } from "@/data/boothData";
 import { BoothApi } from "@/lib/api/boothApi";
 import { BoothListItem } from "@/types/booth";
 
 const PAGE_SIZE = 8;
 
+const getDefaultDate = () => {
+  const today = new Date();
+  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
+  const valid = BOOTH_DATES.filter((d) => d.value !== "all").map((d) => d.value as string);
+  return (valid.includes(todayStr) ? todayStr : valid[0]) as typeof BOOTH_DATES[number]["value"];
+};
+
 export default function BoothPage() {
   const [booths, setBooths] = useState<BoothListItem[]>([]);
-  const [selectedDate, setSelectedDate] = useState("2026-05-21");
+  const [selectedDate, setSelectedDate] = useState<string>(getDefaultDate());
   const [selectedLocation, setSelectedLocation] =
-    useState<BoothLocation | null>(null);
+    useState<BoothLocation | null>("서라벌홀 일대");
   const [selectedCategory, setSelectedCategory] =
     useState<BoothCategory>("전체");
   const [searchQuery, setSearchQuery] = useState("");
@@ -77,42 +84,28 @@ export default function BoothPage() {
           </div>
         </div>
 
-        {selectedLocation === "대운동장" ? (
-          <div className="flex flex-col gap-14">
-            <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-              <span className="text-text-sub text-base">지도</span>
-            </div>
-            <button className="w-full py-3 bg-primary text-white text-base font-semibold rounded-[10px]">
-              도장판 바로 가기
+        <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
+          <span className="text-text-sub text-base">지도</span>
+          <div className="absolute right-4 bottom-5 flex flex-col gap-2">
+            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
+              +
+            </button>
+            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
+              −
             </button>
           </div>
-        ) : (
-          <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-            <span className="text-text-sub text-base">지도</span>
-            <div className="absolute right-4 bottom-5 flex flex-col gap-2">
-              <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-                +
-              </button>
-              <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-                −
-              </button>
-            </div>
-          </div>
-        )}
+        </div>
       </section>
 
       <section className="flex flex-col">
-        {selectedLocation !== "대운동장" && (
-          <>
-            <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-            <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide">
-              <BoothCategoryFilter
-                selectedCategory={selectedCategory}
-                onSelectCategory={handleCategoryChange}
-              />
-            </div>
-          </>
-        )}
+        <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
+        <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide">
+          <BoothCategoryFilter
+            selectedCategory={selectedCategory}
+            onSelectCategory={handleCategoryChange}
+            showStamp={selectedDate === "2026-05-18" || selectedDate === "2026-05-19"}
+          />
+        </div>
 
         {pagedBooths.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
