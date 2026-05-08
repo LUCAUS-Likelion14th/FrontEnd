@@ -22,7 +22,8 @@ export default function MyPage() {
     const fetchData = async () => {
       try {
         const res = await mypageApi.getMyPage();
-        setData(res);
+        const nickname = localStorage.getItem("nickname");
+        setData({ ...res, name: nickname ?? res.name });
       } catch (error) {
         console.error("Failed to fetch mypage:", error);
       }
