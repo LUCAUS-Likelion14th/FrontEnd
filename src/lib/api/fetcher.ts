@@ -2,7 +2,8 @@ import { ApiResponse } from "@/types/home";
 
 const getEnv = (key: string) => {
   const val = process.env[key];
-  if (!val || val === "undefined" || val === "null" || val.trim() === "") return null;
+  if (!val || val === "undefined" || val === "null" || val.trim() === "")
+    return null;
   return val;
 };
 
@@ -29,7 +30,10 @@ function clearAuthAndRedirect() {
   window.location.replace("/login");
 }
 
-export async function mutate(endpoint: string, method: "POST" | "DELETE"): Promise<void> {
+export async function mutate(
+  endpoint: string,
+  method: "POST" | "DELETE",
+): Promise<void> {
   const token = localStorage.getItem("accessToken");
 
   const res = await fetch(`/api${endpoint}`, {
@@ -93,7 +97,7 @@ export async function fetcher<T>(endpoint: string): Promise<T> {
 export async function authFetcher<T>(
   endpoint: string,
   method: "POST" | "PATCH" | "DELETE",
-  body?: unknown
+  body?: unknown,
 ): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const token = getToken();
