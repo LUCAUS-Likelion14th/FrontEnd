@@ -85,7 +85,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
                 <FiChevronRight size={24} className="text-[#727272]" />
               </div>
               <div className="grid grid-cols-3 gap-2">
-                {data.booth_like_list.map((booth) => (
+                {data.booth_like_list.slice(0, 3).map((booth) => (
                   <div
                     key={booth.booth_id}
                     className="flex flex-col border border-text-sub2 rounded-[7px] overflow-hidden"
@@ -106,7 +106,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
                   </div>
                 ))}
 
-                {data.food_truck_like_list.map((truck) => (
+                {data.food_truck_like_list.slice(0, 3).map((truck) => (
                   <div
                     key={truck.id}
                     className="flex flex-col border border-text-sub2 rounded-[10px] overflow-hidden"
