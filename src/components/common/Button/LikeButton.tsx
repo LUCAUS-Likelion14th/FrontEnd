@@ -12,8 +12,11 @@ type LikeButtonProps = {
   type: "booth" | "foodtruck";
   initialIsLiked: boolean;
   initialLikeCount: number;
-  layout?: "vertical" | "horizontal"; // 배치 방향 (세로/가로)
+  layout?: "vertical" | "horizontal";
   hideCount?: boolean;
+  countSuffix?: string;
+  outlineColor?: string;
+  countColor?: string;
 };
 
 export default function LikeButton({
@@ -23,6 +26,9 @@ export default function LikeButton({
   initialLikeCount,
   layout = "vertical",
   hideCount = false,
+  countSuffix,
+  outlineColor = "text-text-sub",
+  countColor,
 }: LikeButtonProps) {
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likeCount, setLikeCount] = useState(initialLikeCount);
@@ -62,7 +68,7 @@ export default function LikeButton({
       onClick={handleLikeClick}
       className={`${containerClass} shrink-0 cursor-pointer relative`}
     >
-      <div className="relative flex items-center justify-center w-6 h-6">
+      <div className="relative flex items-center justify-center w-[38px] h-[38px]">
         <AnimatePresence mode="wait">
           {isLiked ? (
             <motion.div
@@ -72,7 +78,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.1, ease: "easeOut" }}
             >
-              <FaHeart size={24} className="text-[#FF0080]" />
+              <FaHeart size={30} className="text-[#FF0080]" />
             </motion.div>
           ) : (
             <motion.div
@@ -82,7 +88,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <FiHeart size={24} className="text-text-sub" />
+              <FiHeart size={30} className={outlineColor} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -106,12 +112,11 @@ export default function LikeButton({
         </AnimatePresence>
       </div>
 
-      {/* 3. 좋아요 숫자 */}
       {!hideCount && (
         <span
-          className={`${layout === "vertical" ? "text-sm text-text-sub" : "text-base text-text-sub"} z-10 relative`}
+          className={`${layout === "vertical" ? "text-sm" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
         >
-          {likeCount}
+          {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
         </span>
       )}
     </div>
