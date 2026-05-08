@@ -18,6 +18,8 @@ export function FoodSection({ foods }: Props) {
         {foods.map((food) => (
           <ListCard
             key={food.id}
+            id={food.id}
+            type="foodtruck"
             imageUrl={food.image}
             href={`/foodtruck/${food.id}`}
             location={food.bestMenu}

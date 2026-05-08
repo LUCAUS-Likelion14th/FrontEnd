@@ -4,14 +4,19 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
+import { mutate } from "@/lib/api/fetcher";
 
 type LikeButtonProps = {
+  id: number;
+  type: "booth" | "foodtruck";
   initialIsLiked: boolean;
   initialLikeCount: number;
-  layout?: "vertical" | "horizontal"; // 배치 방향 (세로/가로)
+  layout?: "vertical" | "horizontal";
 };
 
 export default function LikeButton({
+  id,
+  type,
   initialIsLiked,
   initialLikeCount,
   layout = "vertical",
@@ -20,17 +25,23 @@ export default function LikeButton({
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [animateKey, setAnimateKey] = useState(0);
 
-  const handleLikeClick = (e: React.MouseEvent) => {
+  const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
 
-    if (!isLiked) {
-      setAnimateKey((prev) => prev + 1);
-      setLikeCount((prev) => prev + 1);
-    } else {
-      setLikeCount((prev) => prev - 1);
+    const endpoint = type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
+    const nextLiked = !isLiked;
+
+    setIsLiked(nextLiked);
+    setLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
+    if (nextLiked) setAnimateKey((prev) => prev + 1);
+
+    try {
+      await mutate(endpoint, nextLiked ? "POST" : "DELETE");
+    } catch {
+      setIsLiked(!nextLiked);
+      setLikeCount((prev) => (nextLiked ? prev - 1 : prev + 1));
     }
-    setIsLiked(!isLiked);
   };
 
   const containerClass =
@@ -43,9 +54,7 @@ export default function LikeButton({
       onClick={handleLikeClick}
       className={`${containerClass} shrink-0 cursor-pointer relative`}
     >
-      {/* 하트 아이콘 영역 (터지는 효과를 위해 relative로 잡음) */}
       <div className="relative flex items-center justify-center w-6 h-6">
-        {/* 1. 메인 하트 아이콘 */}
         <AnimatePresence mode="wait">
           {isLiked ? (
             <motion.div
@@ -70,7 +79,6 @@ export default function LikeButton({
           )}
         </AnimatePresence>
 
-        {/* 2. 팡 터지는 8개 선 효과 (좋아요 누를 때만 잠깐 등장) */}
         <AnimatePresence>
           {animateKey > 0 && isLiked && (
             <motion.div
@@ -90,7 +98,6 @@ export default function LikeButton({
         </AnimatePresence>
       </div>
 
-      {/* 3. 좋아요 숫자 */}
       <span
         className={`${layout === "vertical" ? "text-sm text-text-sub" : "text-base text-text-sub"} z-10 relative`}
       >
