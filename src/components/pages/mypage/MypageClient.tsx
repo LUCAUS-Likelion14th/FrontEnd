@@ -22,10 +22,10 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
     [stampCount],
   );
 
-    const handleLogout = () => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      router.replace("/");
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    router.replace("/");
   };
 
   return (
@@ -50,7 +50,6 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
           </div>
 
-
           <div className="px-4 flex flex-col gap-8">
             <EmptyBox title="내 좋아요" />
             <EmptyBox title="도장판" />
@@ -66,7 +65,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               <span className="text-base font-medium text-white text-right">
                 {data.name}님, 환영합니다!
               </span>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="bg-white text-primary text-base font-semibold w-[106px] rounded-[28px] p-2.5"
               >
@@ -77,9 +76,10 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
           <div className="flex flex-col px-4 gap-8">
             {/* 좋아요 */}
-            <div 
+            <div
               onClick={() => router.push("/mypage/likes")}
-              className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer">
+              className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer"
+            >
               <div className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">내 좋아요</span>
                 <FiChevronRight size={24} className="text-[#727272]" />
@@ -130,9 +130,10 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
 
             {/* 도장판 */}
-            <div 
+            <div
               onClick={() => router.push("/mypage/stamp")}
-              className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer">
+              className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer"
+            >
               <div className="flex items-center justify-between mb-9">
                 <span className="text-[20px] font-semibold">도장판</span>
                 <FiChevronRight size={24} className="text-[#727272]" />

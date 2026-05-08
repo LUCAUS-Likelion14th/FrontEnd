@@ -17,14 +17,14 @@ export default function NoticeEditPage() {
   useEffect(() => {
     setLoading(true);
     adminNoticeApi
-      .getNotices(page, PAGE_SIZE)
+      .getNotices()
       .then((res) => {
         setNotices(res.content);
         setTotalPages(res.totalPages);
       })
       .catch(console.error)
       .finally(() => setLoading(false));
-  }, [page]);
+  }, []);
 
   const pageNumbers = Array.from({ length: totalPages }, (_, i) => i);
 

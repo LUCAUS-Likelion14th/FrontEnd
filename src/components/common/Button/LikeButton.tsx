@@ -54,7 +54,8 @@ export default function LikeButton({
       console.error("좋아요 처리 실패:", error);
       setIsLiked(!nextLiked);
       setLikeCount((prev) => (nextLiked ? prev - 1 : prev + 1));
-      alert("로그인이 필요하거나 서버 오류가 발생했습니다.");
+      const goLogin = window.confirm("로그인이 필요합니다. 로그인 하시겠습니까?");
+      if (goLogin) router.push("/login");
     }
   };
 

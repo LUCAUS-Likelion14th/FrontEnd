@@ -11,7 +11,7 @@ export default function MainNoticeAdminPage() {
 
   useEffect(() => {
     adminNoticeApi
-      .getNotices(0, 100)
+      .getNotices()
       .then((res) => setNotices(res.content))
       .catch(console.error)
       .finally(() => setLoading(false));

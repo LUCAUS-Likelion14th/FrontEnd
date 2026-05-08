@@ -2,13 +2,13 @@ import { fetcher, authFetcher } from "./fetcher";
 import { Notice, NoticeResponse } from "@/types/notice";
 
 export const adminNoticeApi = {
-  getNotices: (page = 0, size = 10) =>
-    fetcher<NoticeResponse>(`/admin/notice?page=${page}&size=${size}&sort=createdAt,desc`),
+  getNotices: () =>
+    fetcher<NoticeResponse>(`/notice`),
 
   createNotice: (data: { title: string; content: string }) =>
     authFetcher<Notice>("/admin/notice", "POST", data),
 
-  updateNotice: (id: number, data: { title: string; content: string }) =>
+  updateNotice: (id: number, data: { title: string; content: string; important: boolean; active: boolean }) =>
     authFetcher<Notice>(`/admin/notice/${id}`, "PATCH", data),
 
   deleteNotice: (id: number) =>

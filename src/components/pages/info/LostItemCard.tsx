@@ -1,6 +1,5 @@
 "use client";
 
-import { formatDate } from "@/lib/utils/date";
 import { LostItem } from "@/types/lost";
 import Image from "next/image";
 
@@ -22,8 +21,8 @@ export default function LostItemCard({ item }: Props) {
         <div className="flex flex-col">
           <span className="text-base font-semibold">{item.name}</span>
 
-          <div className="flex justify-between text-[14px] text-[#8F99AA]">
-            <span>{formatDate(item.date, "dot")}</span>
+          <div className="flex justify-between text-[14px] text-black">
+            <span>{item.date}</span>
             <span>{item.find_location}</span>
           </div>
         </div>
