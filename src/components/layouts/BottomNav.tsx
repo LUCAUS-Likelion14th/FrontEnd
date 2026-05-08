@@ -52,8 +52,7 @@ export default function BottomNav() {
     pathname.startsWith("/stage/"),
     pathname.startsWith("/booth/"),
     pathname.startsWith("/foodtruck/"),
-    pathname.startsWith("/info/notice/"),
-    pathname === "/info/lost",
+    pathname.startsWith("/info/"),
     pathname === "/mypage/likes",
   ].some(Boolean);
 
