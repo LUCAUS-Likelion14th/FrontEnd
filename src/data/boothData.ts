@@ -1,5 +1,5 @@
 export const BOOTH_LOCATIONS = [
-  "서라벌관 일대",
+  "서라벌홀 일대",
   "후문 일대",
   "대운동장",
 ] as const;

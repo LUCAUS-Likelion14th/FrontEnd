@@ -19,7 +19,7 @@ export default function BoothPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const locationMap: Record<BoothLocation, string> = {
-    "서라벌관 일대": "서라벌관",
+    "서라벌홀 일대": "서라벌홀",
     "후문 일대": "후문",
     대운동장: "운동장",
   };
