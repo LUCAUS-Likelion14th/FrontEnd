@@ -42,10 +42,10 @@ body:has(.admin-root) main.min-h-screen {
 
 .admin-sidebar__subtitle {
   display: block;
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.5);
-  margin-top: 4px;
+  font-size: 16px;
+  font-weight: 400;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 8px;
   letter-spacing: 2px;
   text-transform: uppercase;
 }
@@ -65,7 +65,7 @@ body:has(.admin-root) main.min-h-screen {
   padding: 14px 16px;
   border-radius: 10px;
   font-size: 15px;
-  font-weight: 500;
+  font-weight: 400;
   color: rgba(255, 255, 255, 0.6);
   text-decoration: none;
   transition: all 0.2s ease;
@@ -148,20 +148,19 @@ body:has(.admin-root) main.min-h-screen {
 /* ---- Cards ---- */
 .admin-cards {
   display: grid;
-  grid-template-rows: repeat(auto-fill, minmax(220px, 1fr));
   gap: 16px;
 }
 
 .admin-cards--column {
-  grid-template-columns: 1fr;
+  grid-template-columns: 1frs;
 }
 
 .admin-card {
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   align-items: center;
-  gap: 14px;
-  padding: 32px 24px;
+  gap: 16px;
+  padding: 20px 24px;
   background: #ffffff;
   border: 1px solid #dce2e9;
   border-radius: 10px;
@@ -172,21 +171,21 @@ body:has(.admin-root) main.min-h-screen {
 }
 
 .admin-card:hover {
+  background: #f4f8ff;
   border-color: #06387d;
-  box-shadow: 0 4px 20px rgba(6, 56, 125, 0.1);
-  transform: translateY(-2px);
 }
 
 .admin-card__icon-wrapper {
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 10px;
+  border-radius: 50%;
   background: #eef3fb;
   color: #06387d;
-  font-size: 26px;
+  font-size: 20px;
   transition: all 0.2s ease;
 }
 
@@ -196,11 +195,10 @@ body:has(.admin-root) main.min-h-screen {
 }
 
 .admin-card__body {
+  flex: 1;
   display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 6px;
-  text-align: center;
+  flex-direction: column;
+  gap: 3px;
 }
 
 .admin-card__label {
@@ -210,10 +208,21 @@ body:has(.admin-root) main.min-h-screen {
 }
 
 .admin-card__description {
-  font-size: 13px;
+  font-size: 12px;
   color: #8d97a7;
   line-height: 1.5;
-  text-align: center;
+}
+
+.admin-card__arrow {
+  color: #dce2e9;
+  font-size: 18px;
+  transition: all 0.2s ease;
+  flex-shrink: 0;
+}
+
+.admin-card:hover .admin-card__arrow {
+  color: #06387d;
+  transform: translateX(2px);
 }
 
 /* ---- Section Headers ---- */

@@ -29,8 +29,8 @@ export default function AdminSidebar() {
   return (
     <aside className="admin-sidebar">
       <div className="admin-sidebar__header">
+        <span className="admin-sidebar__subtitle">관리자 대시보드</span>
         <Image src="/lucaus-logo.png" alt="LUCAUS" width={180} height={24} />
-        <span className="admin-sidebar__subtitle">관리자</span>
       </div>
 
       <nav className="admin-sidebar__nav">

@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { MdAddCircleOutline, MdEditNote } from "react-icons/md";
+import { FiChevronRight } from "react-icons/fi";
 
 export default function LostItemsAdminPage() {
   return (
@@ -18,17 +19,16 @@ export default function LostItemsAdminPage() {
             <span className="admin-section__badge">2개 항목</span>
           </div>
 
-          <div className="admin-cards">
+          <div className="admin-cards admin-cards--column">
             <Link href="/admin/lost-items/create" className="admin-card">
               <div className="admin-card__icon-wrapper">
                 <MdAddCircleOutline />
               </div>
               <div className="admin-card__body">
                 <div className="admin-card__label">분실물 등록하기</div>
-                <div className="admin-card__description">
-                  새로운 분실물을 접수하고 등록합니다
-                </div>
+                <div className="admin-card__description">새로운 분실물을 접수하고 등록합니다</div>
               </div>
+              <FiChevronRight className="admin-card__arrow" />
             </Link>
 
             <Link href="/admin/lost-items/edit" className="admin-card">
@@ -37,10 +37,9 @@ export default function LostItemsAdminPage() {
               </div>
               <div className="admin-card__body">
                 <div className="admin-card__label">분실물 수정하기</div>
-                <div className="admin-card__description">
-                  등록된 분실물 정보를 수정하거나 상태를 변경합니다
-                </div>
+                <div className="admin-card__description">등록된 분실물 정보를 수정하거나 상태를 변경합니다</div>
               </div>
+              <FiChevronRight className="admin-card__arrow" />
             </Link>
           </div>
         </div>
