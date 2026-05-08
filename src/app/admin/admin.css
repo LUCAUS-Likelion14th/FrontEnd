@@ -109,6 +109,32 @@ body:has(.admin-root) main.min-h-screen {
   color: rgba(255, 255, 255, 0.8);
 }
 
+/* ---- Admin Indicator ---- */
+.admin-indicator {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  background: #ffffff;
+  border-bottom: 1px solid #dce2e9;
+}
+
+.admin-indicator__badge {
+  font-size: 12px;
+  font-weight: 700;
+  color: #ffffff;
+  background: #06387d;
+  padding: 2px 8px;
+  border-radius: 4px;
+  letter-spacing: 0.5px;
+}
+
+.admin-indicator__text {
+  font-size: 12px;
+  font-weight: 500;
+  color: #8d97a7;
+}
+
 /* ---- Content Area ---- */
 .admin-content {
   flex: 1;
