@@ -4,7 +4,7 @@ import { Suspense, useEffect } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { LoadingScreen } from "@/components";
 
-export const dynamic = "force-dynamic";
+
 
 function LoginSuccessContent() {
   const router = useRouter();

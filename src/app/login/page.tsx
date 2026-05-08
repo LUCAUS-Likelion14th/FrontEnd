@@ -5,7 +5,7 @@ export default function LoginPage() {
   return (
     <main
       className="relative flex flex-col items-center justify-center min-h-screen px-7 gap-41"
-      style={{ backgroundImage: "url('/login-bg.png)" }}
+      style={{ backgroundImage: "url('/login-bg.png')" }}
     >
       <div className="absolute inset-0 -z-10">
         <Image

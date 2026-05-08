@@ -3,7 +3,7 @@ import Link from "next/link";
 import LikeButton from "../common/Button/LikeButton";
 
 type ListCardProps = {
-  id: number;
+  id: number | string;
   type: "booth" | "foodtruck";
   imageUrl: string;
   href: string;
