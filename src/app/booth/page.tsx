@@ -19,7 +19,7 @@ export default function BoothPage() {
   const [currentPage, setCurrentPage] = useState(1);
 
   const locationMap: Record<BoothLocation, string> = {
-    "해방광장 일대": "해방광장",
+    "서라벌관 일대": "서라벌관",
     "후문 일대": "후문",
     대운동장: "운동장",
   };
@@ -105,7 +105,7 @@ export default function BoothPage() {
         {selectedLocation !== "대운동장" && (
           <>
             <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-            <div className="pt-2.5 pb-5 overflow-x-auto">
+            <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide">
               <BoothCategoryFilter
                 selectedCategory={selectedCategory}
                 onSelectCategory={handleCategoryChange}

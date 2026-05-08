@@ -3,14 +3,12 @@
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { adminNoticeApi } from "@/lib/api/adminNoticeApi";
-import { Notice } from "@/types/notice";
 
 export default function NoticeEditDetailPage() {
   const router = useRouter();
   const { id } = useParams<{ id: string }>();
   const noticeId = Number(id);
 
-  const [notice, setNotice] = useState<Notice | null>(null);
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPinned, setIsPinned] = useState(false);
@@ -20,11 +18,10 @@ export default function NoticeEditDetailPage() {
 
   useEffect(() => {
     adminNoticeApi
-      .getNotices(0, 100)
+      .getNotices()
       .then((res) => {
         const found = res.content.find((n) => n.id === noticeId);
         if (found) {
-          setNotice(found);
           setTitle(found.title);
           setContent(found.content);
           setIsPinned(found.important);
@@ -43,14 +40,12 @@ export default function NoticeEditDetailPage() {
 
     setIsSubmitting(true);
     try {
-      await adminNoticeApi.updateNotice(noticeId, { title, content });
-
-      if (isPinned) await adminNoticeApi.setImportant(noticeId);
-      if (isHomeExposed) {
-        await adminNoticeApi.setActive(noticeId);
-      } else if (notice?.active) {
-        await adminNoticeApi.setInactive(noticeId);
-      }
+      await adminNoticeApi.updateNotice(noticeId, {
+        title,
+        content,
+        important: isPinned,
+        active: isHomeExposed,
+      });
 
       alert("공지가 수정되었습니다.");
       router.push("/admin/notices/edit");
