@@ -24,6 +24,8 @@ export default async function FoodTruckDetailPage({ params }: Props) {
 
       <div className="flex flex-col px-4 gap-10">
         <FoodTruckTitle
+          id={foodTruck.id}
+          type="foodtruck"
           name={foodTruck.name}
           isLiked={foodTruck.liked}
           likeCount={foodTruck.likeCount}

@@ -8,6 +8,7 @@ import { DetailHeader, Card } from "@/components";
 export default function LikesPage() {
   const [tab, setTab] = useState<"booth" | "food">("booth");
 
+
   const { data: booths, isLoading: boothLoading, isError: boothError } = useQuery({
     queryKey: ["mypage", "booth"],
     queryFn: mypageApi.getLikedBooths,
