@@ -1,3 +1,6 @@
+"use client";
+
+import { useEffect, useRef } from "react";
 import { TimeTable } from "@/types/stage";
 import TimelineCard from "./TimelineCard";
 import { formatDate } from "@/lib/utils/date";
@@ -8,15 +11,26 @@ type StageTimelineProps = {
 };
 
 export default function StageTimeline({ data, activeId }: StageTimelineProps) {
+  const containerRef = useRef<HTMLDivElement>(null);
+  const activeRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    if (!containerRef.current || !activeRef.current) return;
+    const container = containerRef.current;
+    const activeEl = activeRef.current;
+    const offset = activeEl.offsetTop - container.offsetTop - container.clientHeight / 2 + activeEl.clientHeight / 2;
+    container.scrollTo({ top: offset, behavior: "smooth" });
+  }, [activeId, data]);
+
   return (
-    <div className="flex flex-col max-h-101 border border-text-sub2 rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div ref={containerRef} className="flex flex-col max-h-101 border border-text-sub2 rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item, index) => {
         const isActive = item.stage_id === activeId;
         const isFirst = index === 0;
         const isLast = index === data.length - 1;
 
         return (
-          <div key={item.stage_id} className="flex w-full min-h-30 items-start">
+          <div key={item.stage_id} ref={isActive ? activeRef : null} className="flex w-full min-h-30 items-start">
             {/* [1] 시간 영역: 원의 중심(24px)에 맞추기 위해 mt 조정 */}
             <div
               className={`mt-5.25 text-[14px] leading-none min-w-21 shrink-0 ${
