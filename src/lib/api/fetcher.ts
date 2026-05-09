@@ -41,7 +41,6 @@ export async function mutate(endpoint: string, method: "POST" | "DELETE"): Promi
   });
 
   if (res.status === 401) {
-    clearAuthAndRedirect();
     throw new Error("Unauthorized");
   }
 
