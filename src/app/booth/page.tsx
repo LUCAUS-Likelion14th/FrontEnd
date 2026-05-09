@@ -10,7 +10,7 @@ const PAGE_SIZE = 8;
 
 export default function BoothPage() {
   const [booths, setBooths] = useState<BoothListItem[]>([]);
-  const [selectedDate, setSelectedDate] = useState("2026-05-21");
+  const [selectedDate, setSelectedDate] = useState("all");
   const [selectedLocation, setSelectedLocation] =
     useState<BoothLocation | null>(null);
   const [selectedCategory, setSelectedCategory] =
