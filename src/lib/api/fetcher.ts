@@ -45,7 +45,6 @@ export async function mutate(
   });
 
   if (res.status === 401) {
-    clearAuthAndRedirect();
     throw new Error("Unauthorized");
   }
 

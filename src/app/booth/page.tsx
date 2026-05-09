@@ -17,7 +17,7 @@ const getDefaultDate = () => {
 
 export default function BoothPage() {
   const [booths, setBooths] = useState<BoothListItem[]>([]);
-  const [selectedDate, setSelectedDate] = useState<string>(getDefaultDate());
+  const [selectedDate, setSelectedDate] = useState("all");
   const [selectedLocation, setSelectedLocation] =
     useState<BoothLocation | null>("서라벌홀 일대");
   const [selectedCategory, setSelectedCategory] =

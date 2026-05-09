@@ -100,11 +100,11 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
           <div className="flex flex-col px-4 gap-8">
             {/* 좋아요 */}
-            <div
-              onClick={() => router.push("/mypage/likes")}
-              className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer"
-            >
-              <div className="flex items-center justify-between">
+            <div className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3">
+              <div
+                onClick={() => router.push("/mypage/likes")}
+                className="flex items-center justify-between cursor-pointer"
+              >
                 <span className="text-[20px] font-semibold">내 좋아요</span>
                 <FiChevronRight size={24} className="text-[#727272]" />
               </div>
@@ -112,7 +112,8 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
                 {data.booth_like_list.slice(0, 3).map((booth) => (
                   <div
                     key={booth.booth_id}
-                    className="flex flex-col border border-text-sub2 rounded-[7px] overflow-hidden"
+                    onClick={() => router.push(`/booth/${booth.booth_id}`)}
+                    className="flex flex-col border border-text-sub2 rounded-[7px] overflow-hidden cursor-pointer"
                   >
                     <div className="relative aspect-square">
                       <Image
@@ -133,7 +134,8 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
                 {data.food_truck_like_list.slice(0, 3).map((truck) => (
                   <div
                     key={truck.id}
-                    className="flex flex-col border border-text-sub2 rounded-[10px] overflow-hidden"
+                    onClick={() => router.push(`/foodtruck/${truck.id}`)}
+                    className="flex flex-col border border-text-sub2 rounded-[10px] overflow-hidden cursor-pointer"
                   >
                     <div className="relative aspect-square">
                       <Image

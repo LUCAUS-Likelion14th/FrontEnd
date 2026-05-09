@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { mutate } from "@/lib/api/fetcher";
+import LoginBottomSheet from "@/components/common/LoginBottomSheet";
 
 type LikeButtonProps = {
   id: number | string;
@@ -33,11 +34,13 @@ export default function LikeButton({
   const [isLiked, setIsLiked] = useState(initialIsLiked);
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [animateKey, setAnimateKey] = useState(0);
+  const [showLoginSheet, setShowLoginSheet] = useState(false);
   const router = useRouter();
 
   const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
+    e.nativeEvent.stopImmediatePropagation();
 
     const endpoint = type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
     const nextLiked = !isLiked;
@@ -54,8 +57,7 @@ export default function LikeButton({
       console.error("좋아요 처리 실패:", error);
       setIsLiked(!nextLiked);
       setLikeCount((prev) => (nextLiked ? prev - 1 : prev + 1));
-      const goLogin = window.confirm("로그인이 필요합니다. 로그인 하시겠습니까?");
-      if (goLogin) router.push("/login");
+      setShowLoginSheet(true);
     }
   };
 
@@ -65,6 +67,8 @@ export default function LikeButton({
       : "flex items-center gap-1";
 
   return (
+    <>
+    <LoginBottomSheet isOpen={showLoginSheet} onClose={() => setShowLoginSheet(false)} />
     <div
       onClick={handleLikeClick}
       className={`${containerClass} shrink-0 cursor-pointer relative`}
@@ -121,5 +125,6 @@ export default function LikeButton({
         </span>
       )}
     </div>
+    </>
   );
 }
