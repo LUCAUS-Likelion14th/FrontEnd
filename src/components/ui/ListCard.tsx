@@ -1,3 +1,5 @@
+"use client";
+
 import Image from "next/image";
 import Link from "next/link";
 import LikeButton from "../common/Button/LikeButton";
@@ -43,13 +45,15 @@ export default function ListCard({
           </div>
 
           <div className="flex flex-col items-end gap-3 shrink-0">
-            <LikeButton
-              id={id}
-              type={type}
-              initialIsLiked={isLiked}
-              initialLikeCount={likeCount}
-              layout="horizontal"
-            />
+            <div onClick={(e) => { e.preventDefault(); e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}>
+              <LikeButton
+                id={id}
+                type={type}
+                initialIsLiked={isLiked}
+                initialLikeCount={likeCount}
+                layout="horizontal"
+              />
+            </div>
             <span className="text-base text-text-sub">{department}</span>
           </div>
         </div>
