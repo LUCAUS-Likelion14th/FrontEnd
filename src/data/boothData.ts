@@ -1,7 +1,7 @@
 export const BOOTH_LOCATIONS = [
   "서라벌홀 일대",
-  "후문 일대",
   "대운동장",
+  "후문 일대",
 ] as const;
 export type BoothLocation = (typeof BOOTH_LOCATIONS)[number];
 

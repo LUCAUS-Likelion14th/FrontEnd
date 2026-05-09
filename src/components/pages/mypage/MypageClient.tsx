@@ -2,9 +2,10 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import { useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { MyPageData } from "@/types/mypage";
 import { FiChevronRight } from "react-icons/fi";
+import { fetcher } from "@/lib/api/fetcher";
 
 const TOTAL_STAMPS = 8; // TODO: 실제 전체 스탬프 개수로 변경
 
@@ -16,16 +17,39 @@ interface MypageClientProps {
 export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
   const router = useRouter();
 
-  const stampCount = 4; // mypage에 stamp 개수 없어서 생기면 연결
+  const [stampData, setStampData] = useState<{
+    stamp_count: number;
+    stamp_all: number;
+  } | null>(null);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      const getStampStatus = async () => {
+        try {
+          const res = await fetcher<{ stamp_count: number; stamp_all: number }>(
+            "/stamp/my",
+          );
+          setStampData(res);
+        } catch (error) {
+          console.error("도장 데이터를 가져오지 못했습니다.", error);
+        }
+      };
+      getStampStatus();
+    }
+  }, [isLoggedIn]);
+
+  const stampCount = stampData?.stamp_count || 0;
+  const totalStamps = stampData?.stamp_all || 8; // 기본값 8
+
   const stampProgress = useMemo(
-    () => Math.min((stampCount / TOTAL_STAMPS) * 100, 100),
-    [stampCount],
+    () => Math.min((stampCount / totalStamps) * 100, 100),
+    [stampCount, totalStamps],
   );
 
-    const handleLogout = () => {
-      localStorage.removeItem("accessToken");
-      localStorage.removeItem("refreshToken");
-      router.replace("/");
+  const handleLogout = () => {
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    router.replace("/");
   };
 
   return (
@@ -50,7 +74,6 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
           </div>
 
-
           <div className="px-4 flex flex-col gap-8">
             <EmptyBox title="내 좋아요" />
             <EmptyBox title="도장판" />
@@ -66,7 +89,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               <span className="text-base font-medium text-white text-right">
                 {data.name}님, 환영합니다!
               </span>
-              <button 
+              <button
                 onClick={handleLogout}
                 className="bg-white text-primary text-base font-semibold w-[106px] rounded-[28px] p-2.5"
               >
@@ -133,16 +156,17 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
 
             {/* 도장판 */}
-            <div 
-              onClick={() => router.push("/mypage/stamp")}
-              className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer">
+            <div
+              onClick={() => router.push("/stamp")}
+              className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3 cursor-pointer"
+            >
               <div className="flex items-center justify-between mb-9">
                 <span className="text-[20px] font-semibold">도장판</span>
                 <FiChevronRight size={24} className="text-[#727272]" />
               </div>
 
               <span className="text-base text-center mb-8">
-                {TOTAL_STAMPS}개 중 {stampCount}개를 모았어요
+                {totalStamps}개 중 {stampCount}개를 모았어요
               </span>
 
               <div className="w-full bg-gray-200 rounded-full h-2 mb-5">
