@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
+import { FiImage } from "react-icons/fi";
 import LikeButton from "../common/Button/LikeButton";
 
 type ListCardProps = {
@@ -34,7 +35,9 @@ export default function ListCard({
     <Link href={href} className="ml-[30px]">
       <article className="flex items-center gap-[13px] w-full p-2.5 rounded-[10px] bg-white border border-text-sub2">
         {imgError || !imageUrl ? (
-          <div className="w-[76px] h-[76px] rounded-[10px] bg-gray-100 shrink-0" />
+          <div className="w-[76px] h-[76px] rounded-[10px] bg-gray-100 shrink-0 flex items-center justify-center">
+            <FiImage size={28} className="text-gray-300" />
+          </div>
         ) : (
           <Image
             src={imageUrl}
