@@ -34,7 +34,11 @@ export default function PrizeApplyForm({
       alert("경품 응모가 완료되었습니다!");
       router.push("/stamp");
     } catch (error: any) {
-      alert(error.message || "응모 코드가 틀렸거나 오류가 발생했습ㄴ디ㅏ.");
+      if (error.message.includes("409")) {
+        alert("이미 응모하셨습니다! 결과 발표를 기다려주세요.");
+      } else {
+        alert(error.message || "응모 코드가 틀렸거나 오류가 발생했습니다.");
+      }
     } finally {
       setIsLoading(false);
     }
