@@ -15,19 +15,25 @@ export function FoodSection({ foods }: Props) {
         href="/foodtruck"
       />
       <div className="flex flex-col gap-2">
-        {foods.map((food) => (
-          <ListCard
-            key={food.id}
-            id={food.id}
-            type="foodtruck"
-            imageUrl={food.image}
-            href={`/foodtruck/${food.id}`}
-            location={food.bestMenu}
-            name={food.name}
-            isLiked={food.liked}
-            likeCount={food.likeCount}
-          />
-        ))}
+        {(foods ?? []).length === 0 ? (
+          <div className="ml-[30px] flex items-center justify-center h-[97px] rounded-[10px] bg-white border border-text-sub2 text-text-sub text-base">
+            등록된 푸드트럭이 없어요
+          </div>
+        ) : (
+          foods.map((food) => (
+            <ListCard
+              key={food.id}
+              id={food.id}
+              type="foodtruck"
+              imageUrl={food.image}
+              href={`/foodtruck/${food.id}`}
+              location={food.bestMenu}
+              name={food.name}
+              isLiked={food.liked}
+              likeCount={food.likeCount}
+            />
+          ))
+        )}
       </div>
     </section>
   );
