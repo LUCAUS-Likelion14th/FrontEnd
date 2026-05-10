@@ -39,7 +39,15 @@ export default function NoticePage() {
       <div className="px-4">
         <section className="border-t border-text-sub2">
           {isLoading ? (
-            <div>로딩 중...</div>
+            Array.from({ length: 5 }).map((_, i) => (
+              <div key={i} className="flex items-center justify-between py-3 border-b border-[#DCE2E9]">
+                <div className="flex items-center gap-4">
+                  <div className="w-10 h-7.75 rounded-[8px] bg-gray-200 animate-pulse" />
+                  <div className="w-40 h-5 rounded bg-gray-200 animate-pulse" />
+                </div>
+                <div className="w-16 h-5 rounded bg-gray-200 animate-pulse" />
+              </div>
+            ))
           ) : noticeData.length > 0 ? (
             noticeData.map((notice) => (
               <NoticeItem
@@ -51,7 +59,9 @@ export default function NoticePage() {
               />
             ))
           ) : (
-            <div>공지사항이 없습니다.</div>
+            <div className="flex items-center justify-center py-20 text-text-sub text-base">
+              등록된 공지사항이 없습니다.
+            </div>
           )}
         </section>
 
