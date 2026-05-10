@@ -44,7 +44,7 @@ export function StampShortcutButton() {
 
         <button
           onClick={handleClick}
-          className="flex gap-1.5 justify-center items-center pl-[16.5px] pr-[9.5px] py-[7.5px] rounded-[23px] bg-white/19 text-white text-[16px] font-semibold leading-4.5 border border-white/30 shadow-lg hover:active:scale-95 transition-all"
+          className="flex gap-1.5 justify-center items-center pl-[16.5px] pr-[9.5px] py-[7.5px] rounded-[23px] bg-white/19 text-white text-[16px] font-semibold leading-4.5 border border-white/30 shadow-lg active:scale-95 transition-all"
         >
           도장판 바로가기
           <FiChevronRight size={24} />

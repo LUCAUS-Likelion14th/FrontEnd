@@ -23,7 +23,7 @@ export default function StageSection({ stages }: Props) {
           <StageCard
             key={stage.stage_id}
             imageUrl={stage.logo}
-            href="/stage"
+            href={`/stage/${stage.stage_id}`}
             location="잔디광장"
             name={stage.performer}
             time={stage.time}
