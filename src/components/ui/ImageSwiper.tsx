@@ -23,7 +23,15 @@ export default function NoticeSwiper({ promotions }: Props) {
     window.open(instagram, "_blank", "noopener,noreferrer");
   };
 
-  if (promotions.length === 0) return null;
+  if (promotions.length === 0) {
+    return (
+      <div className="px-[8.33%]">
+        <div className="aspect-square w-full rounded-[10px] bg-gray-100 flex items-center justify-center text-text-sub text-base">
+          등록된 배너가 없어요
+        </div>
+      </div>
+    );
+  }
 
   const multiple = promotions.length > 1;
   const n = promotions.length;

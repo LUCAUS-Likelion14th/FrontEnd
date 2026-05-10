@@ -20,16 +20,13 @@ export default function BoothStampModal({
   const [isSuccess, setIsSuccess] = useState(false);
 
   const handleStampSubmit = async () => {
-    // const requestBody = { password: password };
-    // console.log("보내는 데이터:", requestBody);
-    // console.log("보내는 주소:", `/stamp/${boothId}`);
-
     if (!password) {
       alert("코드를 입력해주세요.");
       return;
     }
 
     setIsLoading(true);
+
     try {
       await authFetcher(`/stamp/${boothId}`, "POST", { password });
 
@@ -65,13 +62,19 @@ export default function BoothStampModal({
               {boothId}번 부스 &lsquo;{boothName}&rsquo; <br /> 도장을 찍었어요!
             </p>
 
-            <div className="relative mb-[57px]">
+            <div className="relative mb-[57px] flex justify-center items-center w-30 h-30">
+              <div className="stamp-burst">
+                {Array.from({ length: 8 }).map((_, i) => (
+                  <div key={i} className={`stamp-line line-${i}`} />
+                ))}
+              </div>
+
               <Image
                 src="/stamp-success.png"
                 alt="도장 찍기 성공"
                 width={111}
                 height={111}
-                className="object-contain"
+                className="object-contain animate-stamp z-10"
               />
             </div>
 

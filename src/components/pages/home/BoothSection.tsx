@@ -15,20 +15,26 @@ export function BoothSection({ booths }: Props) {
         href="/booth"
       />
       <div className="flex flex-col gap-2">
-        {booths.map((booth) => (
-          <ListCard
-            key={booth.booth_id}
-            id={booth.booth_id}
-            type="booth"
-            imageUrl={booth.booth_image}
-            href={`/booth/${booth.booth_id}`}
-            location={booth.location}
-            name={booth.booth_name}
-            isLiked={booth.is_liked}
-            likeCount={booth.like_count}
-            department={booth.owner}
-          />
-        ))}
+        {(booths ?? []).length === 0 ? (
+          <div className="ml-[30px] flex items-center justify-center h-[97px] rounded-[10px] bg-white border border-text-sub2 text-text-sub text-base">
+            등록된 부스가 없어요
+          </div>
+        ) : (
+          booths.map((booth) => (
+            <ListCard
+              key={booth.booth_id}
+              id={booth.booth_id}
+              type="booth"
+              imageUrl={booth.booth_image}
+              href={`/booth/${booth.booth_id}`}
+              location={booth.location}
+              name={booth.booth_name}
+              isLiked={booth.is_liked}
+              likeCount={booth.like_count}
+              department={booth.owner}
+            />
+          ))
+        )}
       </div>
     </section>
   );

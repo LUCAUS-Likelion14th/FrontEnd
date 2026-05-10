@@ -13,7 +13,9 @@ export function NoticeBanner({ notice }: Props) {
         <Image src={noticeIcon} alt="공지" width={20} height={20} />
         <span className="font-semibold">중요 공지</span>
       </div>
-      <span className="truncate">{notice?.title ?? ""}</span>
+      <span className={`truncate ${!notice ? "text-text-sub" : ""}`}>
+        {notice?.title ?? "중요 공지가 없습니다"}
+      </span>
     </div>
   );
 }
