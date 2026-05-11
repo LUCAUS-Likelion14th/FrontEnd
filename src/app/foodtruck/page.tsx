@@ -29,24 +29,21 @@ function FoodTruckPageContent() {
     router.replace(`?${params.toString()}`, { scroll: false });
   }, [selectedDate, currentPage]);
 
-  // Fetch trucks (once)
+  // Fetch trucks
   useEffect(() => {
     setIsLoading(true);
+    const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
     foodTruckApi
-      .getList()
-      .then(setTrucks)
+      .getList({ date: dateParam })
+      .then((data) => {
+        setTrucks(data);
+      })
       .catch(console.error)
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [selectedDate]);
 
-  const filteredTrucks = trucks.filter((truck) => {
-    if (selectedDate !== "all" && truck.date && !truck.date.includes(selectedDate))
-      return false;
-    return true;
-  });
-
-  const totalPages = Math.max(1, Math.ceil(filteredTrucks.length / PAGE_SIZE));
-  const pagedTrucks = filteredTrucks.slice(
+  const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
+  const pagedTrucks = trucks.slice(
     (currentPage - 1) * PAGE_SIZE,
     currentPage * PAGE_SIZE
   );

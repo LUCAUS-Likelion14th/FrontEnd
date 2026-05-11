@@ -29,6 +29,12 @@ export default function LostPage() {
         });
 
         setLostData(response);
+        // API가 6개씩 반환 — 6개면 다음 페이지 존재 가능성
+        if (response.length < ITEMS_PER_PAGE) {
+          setTotalPages(currentPage);
+        } else {
+          setTotalPages(currentPage + 1);
+        }
       } catch (error) {
         console.error("분실물 목록 로드 실패: ", error);
       } finally {

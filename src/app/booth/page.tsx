@@ -9,12 +9,6 @@ import { BoothListItem } from "@/types/booth";
 
 const PAGE_SIZE = 8;
 
-const locationMap: Record<BoothLocation, string> = {
-  "서라벌홀 일대": "서라벌홀",
-  "후문 일대": "후문",
-  대운동장: "운동장",
-};
-
 function BoothPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
@@ -22,11 +16,12 @@ function BoothPageContent() {
   const [booths, setBooths] = useState<BoothListItem[]>([]);
   const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
+  const [isStampMode, setIsStampMode] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
     () => searchParams.get("date") ?? "all"
   );
   const [selectedLocation, setSelectedLocation] = useState<BoothLocation | null>(
-    () => (searchParams.get("location") as BoothLocation) ?? "서라벌홀 일대"
+    () => (searchParams.get("location") as BoothLocation) ?? null
   );
   const [selectedCategory, setSelectedCategory] = useState<BoothCategory>(
     () => (searchParams.get("category") as BoothCategory) ?? "전체"
@@ -55,25 +50,33 @@ function BoothPageContent() {
   // Fetch booths
   useEffect(() => {
     setIsLoading(true);
+    if (isStampMode) {
+      BoothApi.getStampList()
+        .then((data) => {
+          setBooths(data);
+          setTotalPages(Math.max(1, Math.ceil(data.length / PAGE_SIZE)));
+        })
+        .catch(() => { setBooths([]); setTotalPages(1); })
+        .finally(() => setIsLoading(false));
+      return;
+    }
     const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
     BoothApi.getList({
       date: dateParam,
-      location: selectedLocation ? locationMap[selectedLocation] : undefined,
       category: selectedCategory !== "전체" ? selectedCategory : undefined,
       search: debouncedSearch.trim() || undefined,
-      page: currentPage - 1,
-      size: PAGE_SIZE,
     })
       .then((data) => {
-        setBooths(data.content ?? []);
-        setTotalPages(data.totalPages ?? 1);
+        setBooths(data);
+        setTotalPages(Math.max(1, Math.ceil(data.length / PAGE_SIZE)));
       })
-      .catch(console.error)
+      .catch(() => { setBooths([]); setTotalPages(1); })
       .finally(() => setIsLoading(false));
-  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch, currentPage]);
+  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch, isStampMode]);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
+    setIsStampMode(false);
     setCurrentPage(1);
   };
   const handleLocationChange = (loc: BoothLocation | null) => {
@@ -81,11 +84,17 @@ function BoothPageContent() {
     setCurrentPage(1);
   };
   const handleCategoryChange = (cat: BoothCategory) => {
+    setIsStampMode(false);
     setSelectedCategory(cat);
     setCurrentPage(1);
   };
   const handleSearchChange = (q: string) => {
     setSearchQuery(q);
+    setCurrentPage(1);
+  };
+  const handleStampClick = () => {
+    if (isStampMode) return;
+    setIsStampMode(true);
     setCurrentPage(1);
   };
 
@@ -124,37 +133,41 @@ function BoothPageContent() {
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
             onSelectCategory={handleCategoryChange}
-            showStamp={selectedDate === "2026-05-18" || selectedDate === "2026-05-19"}
+            showStamp={["2026-05-18", "2026-05-19", "2026-05-20"].includes(selectedDate)}
+            onStampClick={handleStampClick}
+            isStampActive={isStampMode}
           />
         </div>
 
-        {isLoading ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
-            ))}
-          </div>
-        ) : booths.length > 0 ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
-            {booths.map((booth) => (
-              <Card
-                key={booth.booth_id}
-                id={booth.booth_id}
-                type="booth"
-                name={booth.booth_name}
-                subText={booth.booth_owner}
-                location={booth.booth_location}
-                image={booth.booth_image}
-                isLiked={booth.is_liked}
-                likeCount={booth.like_count}
-              />
-            ))}
-          </div>
-        ) : (
-          <div className="flex items-center justify-center py-20 text-text-sub text-base">
-            해당 조건에 맞는 부스가 없습니다.
-          </div>
-        )}
+        <div className="min-h-[596px]">
+          {isLoading ? (
+            <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+              {Array.from({ length: 4 }).map((_, i) => (
+                <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
+              ))}
+            </div>
+          ) : booths.length > 0 ? (
+            <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+              {booths.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((booth) => (
+                <Card
+                  key={booth.booth_id}
+                  id={booth.booth_id}
+                  type="booth"
+                  name={booth.booth_name}
+                  subText={booth.booth_owner}
+                  location={booth.booth_location}
+                  image={booth.booth_image}
+                  isLiked={booth.is_liked}
+                  likeCount={booth.like_count}
+                />
+              ))}
+            </div>
+          ) : (
+            <div className="flex items-center justify-center h-full text-text-sub text-base">
+              해당 조건에 맞는 부스가 없습니다.
+            </div>
+          )}
+        </div>
 
         <Pagination
           page={currentPage}

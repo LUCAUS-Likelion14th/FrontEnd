@@ -2,10 +2,19 @@ import { fetcher, authFetcher } from "./fetcher";
 import type { FoodTruckDetail } from "@/types/foodtruck";
 import { FOODTRUCK_DATA } from "@/data/foodtruckData";
 
+type FoodTruckListParams = {
+  date?: string;
+  locate?: string;
+};
+
 export const foodTruckApi = {
-  getList: async () => {
+  getList: async (params?: FoodTruckListParams) => {
+    const query = new URLSearchParams();
+    if (params?.date) query.set("date", params.date);
+    if (params?.locate) query.set("locate", params.locate);
+    const qs = query.toString().replace(/\+/g, "%20");
     try {
-      return await fetcher<FoodTruckDetail[]>("/foodtruck");
+      return await fetcher<FoodTruckDetail[]>(`/foodtruck${qs ? `?${qs}` : ""}`);
     } catch (error) {
       console.warn("푸드트럭 API 연결 실패, 모의 데이터를 반환합니다:", error);
       return FOODTRUCK_DATA;
