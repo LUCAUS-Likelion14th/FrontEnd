@@ -54,6 +54,7 @@ const NAV_ITEMS: NavItem[] = [
 
 export default function BottomNav() {
   const pathname = usePathname();
+
   const shouldHide = [
     pathname.startsWith("/stage/"),
     pathname.startsWith("/booth/"),
@@ -66,14 +67,33 @@ export default function BottomNav() {
 
   const isLogin = pathname === "/login";
 
+  const activeIndex = NAV_ITEMS.findIndex((item) => item.href === pathname);
+
   return (
     <nav
       aria-label="하단 메뉴"
-      className={`fixed bottom-0 left-0 w-full z-10 ${isLogin ? "bg-white/10" : "bg-white/35 backdrop-blur-xs"}`}
+      className={`fixed bottom-0 left-0 w-full z-10 ${
+        isLogin ? "bg-white/10" : "bg-white/35 backdrop-blur-xs"
+      }`}
     >
-      <ul className="flex justify-around items-center my-2">
+      <ul className="relative flex justify-around items-center my-1">
+        {!isLogin && activeIndex !== -1 && (
+          <motion.div
+            className="absolute -top-1 h-[2px] w-[43px] bg-primary rounded-[5px]"
+            animate={{
+              left: `calc(${activeIndex} * 20% + 10% - 21.5px)`,
+            }}
+            transition={{
+              type: "spring",
+              stiffness: 300,
+              damping: 35,
+            }}
+          />
+        )}
+
         {NAV_ITEMS.map((item) => {
           const isActive = pathname === item.href;
+
           const iconSrc = isLogin
             ? item.loginIcon
             : isActive
@@ -81,10 +101,10 @@ export default function BottomNav() {
               : item.icon;
 
           return (
-            <li key={item.href}>
+            <li key={item.href} className="flex-1">
               <Link
                 href={item.href}
-                className={`flex flex-col items-center text-xs gap-2 cursor-pointer transition-colors ${
+                className={`flex flex-col items-center text-xs gap-2 transition-colors ${
                   isLogin
                     ? isActive
                       ? "text-[#06387D]"
@@ -94,14 +114,6 @@ export default function BottomNav() {
                       : "text-text-sub"
                 }`}
               >
-                {!isLogin && isActive && (
-                  <motion.div
-                    layoutId="active-bar"
-                    className="absolute top-0 w-[43px] h-[2px] bg-primary rounded-[5px]"
-                    transition={{ type: "spring", stiffness: 300, damping: 35 }}
-                  />
-                )}
-
                 <div className="relative w-9 h-9 mt-1">
                   <Image
                     src={iconSrc}
@@ -110,6 +122,7 @@ export default function BottomNav() {
                     className="object-contain"
                   />
                 </div>
+
                 <span>{item.label}</span>
               </Link>
             </li>
