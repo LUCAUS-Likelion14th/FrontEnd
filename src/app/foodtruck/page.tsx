@@ -1,33 +1,51 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { FoodTruckDetail } from "@/types/foodtruck";
 import { foodTruckApi } from "@/lib/api/foodTruckApi";
 import { Card, Pagination, DateFilter } from "@/components";
 
 const PAGE_SIZE = 8;
 
-export default function FoodTruckPage() {
+function FoodTruckPageContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [trucks, setTrucks] = useState<FoodTruckDetail[]>([]);
-  const [selectedDate, setSelectedDate] = useState("2026-05-21");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState<string>(
+    () => searchParams.get("date") ?? "all"
+  );
+  const [currentPage, setCurrentPage] = useState(
+    () => Number(searchParams.get("page") ?? 1)
+  );
 
+  // Sync filters to URL
   useEffect(() => {
-    foodTruckApi.getList()
-      .then(setTrucks)
-      .catch(console.error);
-  }, []);
+    const params = new URLSearchParams();
+    if (selectedDate !== "all") params.set("date", selectedDate);
+    if (currentPage > 1) params.set("page", String(currentPage));
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }, [selectedDate, currentPage]);
 
-  const filteredTrucks = trucks.filter((truck) => {
-    if (selectedDate !== "all" && truck.date && !truck.date.includes(selectedDate))
-      return false;
-    return true;
-  });
+  // Fetch trucks
+  useEffect(() => {
+    setIsLoading(true);
+    const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
+    foodTruckApi
+      .getList({ date: dateParam })
+      .then((data) => {
+        setTrucks(data);
+      })
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, [selectedDate]);
 
-  const totalPages = Math.max(1, Math.ceil(filteredTrucks.length / PAGE_SIZE));
-  const pagedTrucks = filteredTrucks.slice(
+  const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
+  const pagedTrucks = trucks.slice(
     (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
+    currentPage * PAGE_SIZE
   );
 
   const handleDateChange = (date: string) => {
@@ -53,7 +71,13 @@ export default function FoodTruckPage() {
       </section>
 
       <section className="flex flex-col">
-        {pagedTrucks.length > 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
+            ))}
+          </div>
+        ) : pagedTrucks.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedTrucks.map((truck) => (
               <Card
@@ -82,5 +106,13 @@ export default function FoodTruckPage() {
         />
       </section>
     </main>
+  );
+}
+
+export default function FoodTruckPage() {
+  return (
+    <Suspense>
+      <FoodTruckPageContent />
+    </Suspense>
   );
 }

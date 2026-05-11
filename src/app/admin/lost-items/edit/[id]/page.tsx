@@ -6,7 +6,13 @@ import { FiChevronDown, FiImage } from "react-icons/fi";
 import { adminLostApi } from "@/lib/api/adminLostApi";
 import { LostItem } from "@/types/lost";
 
-const dates = ["5월 18일 (월)", "5월 19일 (화)", "5월 20일 (수)", "5월 21일 (목)", "5월 22일 (금)"];
+const dates = [
+  { value: "05.18", label: "5월 18일 (월)" },
+  { value: "05.19", label: "5월 19일 (화)" },
+  { value: "05.20", label: "5월 20일 (수)" },
+  { value: "05.21", label: "5월 21일 (목)" },
+  { value: "05.22", label: "5월 22일 (금)" },
+];
 const categories = ["전자기기", "지갑/카드", "화장품", "우산", "기타"];
 
 export default function LostItemEditDetailPage() {
@@ -137,7 +143,7 @@ export default function LostItemEditDetailPage() {
                 <div className="admin-form__select-wrapper">
                   <select className="admin-form__select" value={date} onChange={(e) => setDate(e.target.value)}>
                     <option value="" disabled>날짜 선택</option>
-                    {dates.map((d) => <option key={d} value={d}>{d}</option>)}
+                    {dates.map((d) => <option key={d.value} value={d.value}>{d.label}</option>)}
                   </select>
                   <FiChevronDown className="admin-form__select-icon" size={20} />
                 </div>

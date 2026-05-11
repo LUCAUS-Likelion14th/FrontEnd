@@ -82,6 +82,7 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
               <label className="text-[16px] font-normal">학번</label>
               <input
                 type="text"
+                inputMode="numeric"
                 value={studentId}
                 onChange={(e) => setStudentId(e.target.value)}
                 placeholder="학번을 입력해 주세요"

@@ -11,11 +11,11 @@ export type LostItem = {
 
 export const LOST_ITEM_TYPES = [
   { label: "종류", value: "all" },
-  { label: "전자기기", value: "electronics" },
-  { label: "지갑/카드", value: "wallet" },
-  { label: "화장품", value: "cosmetic" },
-  { label: "우산", value: "umbrella" },
-  { label: "기타", value: "etc" },
+  { label: "전자기기", value: "전자기기" },
+  { label: "지갑/카드", value: "지갑/카드" },
+  { label: "화장품", value: "화장품" },
+  { label: "우산", value: "우산" },
+  { label: "기타", value: "기타" },
 ];
 
 export const lostItems: LostItem[] = [

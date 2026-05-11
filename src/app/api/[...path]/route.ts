@@ -41,11 +41,21 @@ async function proxyRequest(request: NextRequest, path: string[]) {
 
   const text = await res.text();
 
+  const responseHeaders: Record<string, string> = {
+    "Content-Type": res.headers.get("content-type") ?? "application/json",
+  };
+
+  if (request.method === "GET") {
+    if (authorization) {
+      responseHeaders["Cache-Control"] = "private, no-store";
+    } else {
+      responseHeaders["Cache-Control"] = "public, s-maxage=30, stale-while-revalidate=60";
+    }
+  }
+
   return new Response(text || null, {
     status: res.status,
-    headers: {
-      "Content-Type": res.headers.get("content-type") ?? "application/json",
-    },
+    headers: responseHeaders,
   });
 }
 

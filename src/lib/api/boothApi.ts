@@ -6,7 +6,6 @@ type BoothListParams = {
   location?: string;
   category?: string;
   search?: string;
-  page?: number;
 };
 
 export const BoothApi = {
@@ -16,10 +15,10 @@ export const BoothApi = {
     if (params?.location) query.set("location", params.location);
     if (params?.category) query.set("category", params.category);
     if (params?.search) query.set("search", params.search);
-    if (params?.page) query.set("page", String(params.page));
-    const qs = query.toString();
+    const qs = query.toString().replace(/\+/g, "%20");
     return fetcher<BoothListItem[]>(`/booth${qs ? `?${qs}` : ""}`);
   },
+  getStampList: () => fetcher<BoothListItem[]>(`/booth/stamp`),
   getDetail: (boothId: string) => fetcher<BoothDetail>(`/booth/${boothId}`),
   likeBooth: (boothId: number | string) =>
     authFetcher<null>(`/booth/${boothId}/like`, "POST"),

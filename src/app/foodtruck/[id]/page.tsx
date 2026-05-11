@@ -1,26 +1,55 @@
-import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail }  from "@/components"
+"use client";
+
+import { use, useState, useEffect } from "react";
+import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail } from "@/components";
 import { foodTruckApi } from "@/lib/api/foodTruckApi";
-import Image from "next/image";
+import type { FoodTruckDetail } from "@/types/foodtruck";
+import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function FoodTruckDetailPage({ params }: Props) {
-  const { id } = await params;
-  const foodTruck = await foodTruckApi.getDetail(id);
+export default function FoodTruckDetailPage({ params }: Props) {
+  const { id } = use(params);
+  const [foodTruck, setFoodTruck] = useState<FoodTruckDetail | null>(null);
+  const [error, setError] = useState(false);
+
+  useEffect(() => {
+    foodTruckApi.getDetail(id)
+      .then((data) => {
+        if (!data) setError(true);
+        else setFoodTruck(data);
+      })
+      .catch(() => setError(true));
+  }, [id]);
+
+  if (error) {
+    return (
+      <main>
+        <DetailHeader title="푸드트럭 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          푸드트럭 정보를 불러오는 중 오류가 발생했습니다.
+        </div>
+      </main>
+    );
+  }
+
+  if (!foodTruck) {
+    return (
+      <main>
+        <DetailHeader title="푸드트럭 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          불러오는 중...
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main className="pb-12">
       <DetailHeader title="푸드트럭 정보" />
-      <div className="relative w-full aspect-390/264">
-        <Image
-          src={foodTruck.image}
-          alt="푸드트럭 사진"
-          fill
-          className="object-cover"
-        />
-      </div>
+      <DetailHeroImage src={foodTruck.image} alt="푸드트럭 사진" />
 
       <div className="flex flex-col px-4 gap-10">
         <FoodTruckTitle

@@ -29,6 +29,12 @@ export default function LostPage() {
         });
 
         setLostData(response);
+        // API가 6개씩 반환 — 6개면 다음 페이지 존재 가능성
+        if (response.length < ITEMS_PER_PAGE) {
+          setTotalPages(currentPage);
+        } else {
+          setTotalPages(currentPage + 1);
+        }
       } catch (error) {
         console.error("분실물 목록 로드 실패: ", error);
       } finally {
@@ -77,7 +83,11 @@ export default function LostPage() {
         </div>
 
         {isLoading ? (
-          <div className="py-20 text-center">로딩 중...</div>
+          <div className="grid grid-cols-2 gap-5">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
+            ))}
+          </div>
         ) : (
           <div className="grid grid-cols-2 gap-5">
             {lostData.length > 0 ? (
@@ -85,7 +95,7 @@ export default function LostPage() {
                 <LostItemCard key={item.lost_id} item={item} />
               ))
             ) : (
-              <div className="col-span-2 py-20 text-center text-text-sub">
+              <div className="col-span-2 flex items-center justify-center py-20 text-text-sub text-base">
                 해당 조건의 분실물이 없습니다.
               </div>
             )}
