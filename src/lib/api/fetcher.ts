@@ -53,25 +53,40 @@ export async function mutate(
   }
 }
 
-export async function fetcher<T>(endpoint: string): Promise<T> {
+export async function fetcher<T>(
+  endpoint: string,
+  options?: { revalidate?: number }
+): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const token = getToken();
+  const isServer = typeof window === "undefined";
+
+  const init: RequestInit = {
+    headers: {
+      "Content-Type": "application/json",
+      ...(token && { Authorization: `Bearer ${token}` }),
+    },
+  };
+
+  if (isServer && options?.revalidate !== undefined) {
+    (init as any).next = { revalidate: options.revalidate };
+  } else {
+    init.cache = "no-store";
+  }
 
   let res: Response;
   try {
-    res = await fetch(url, {
-      cache: "no-store",
-      headers: {
-        "Content-Type": "application/json",
-        ...(token && { Authorization: `Bearer ${token}` }),
-      },
-    });
+    res = await fetch(url, init);
   } catch (error: any) {
     throw new Error(`Fetch failed for URL: "${url}". Cause: ${error.message}`);
   }
 
   if (res.status === 401) {
-    clearAuthAndRedirect();
+    if (typeof window !== "undefined") {
+      localStorage.removeItem("accessToken");
+      localStorage.removeItem("refreshToken");
+      localStorage.removeItem("nickname");
+    }
     throw new Error("Unauthorized");
   }
 
