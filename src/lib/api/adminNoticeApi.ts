@@ -8,7 +8,7 @@ export const adminNoticeApi = {
   createNotice: (data: { title: string; content: string }) =>
     authFetcher<Notice>("/admin/notice", "POST", data),
 
-  updateNotice: (id: number, data: { title: string; content: string; important: boolean; active: boolean }) =>
+  updateNotice: (id: number, data: { title: string; content: string; important: boolean; active?: boolean }) =>
     authFetcher<Notice>(`/admin/notice/${id}`, "PATCH", data),
 
   deleteNotice: (id: number) =>
