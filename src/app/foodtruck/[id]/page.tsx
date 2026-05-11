@@ -13,11 +13,25 @@ export default async function FoodTruckDetailPage({ params }: Props) {
   try {
     foodTruck = await foodTruckApi.getDetail(id);
   } catch {
-    return <div className="p-4">푸드트럭 정보를 불러오는 중 오류가 발생했습니다.</div>;
+    return (
+      <main>
+        <DetailHeader title="푸드트럭 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          푸드트럭 정보를 불러오는 중 오류가 발생했습니다.
+        </div>
+      </main>
+    );
   }
 
   if (!foodTruck) {
-    return <div className="p-4">푸드트럭 정보를 찾을 수 없습니다.</div>;
+    return (
+      <main>
+        <DetailHeader title="푸드트럭 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          푸드트럭 정보를 찾을 수 없습니다.
+        </div>
+      </main>
+    );
   }
 
   return (
