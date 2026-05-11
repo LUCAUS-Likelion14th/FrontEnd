@@ -18,12 +18,24 @@ export default async function StageDetailPage({
   } catch (error) {
     console.error("공연 상세 정보 로드 실패: ", error);
     return (
-      <div className="p-4">공연 정보를 불러오는 중 오류가 발생했습니다.</div>
+      <main>
+        <DetailHeader title="공연 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          공연 정보를 불러오는 중 오류가 발생했습니다.
+        </div>
+      </main>
     );
   }
 
   if (!stage) {
-    return <div className="p-4">공연 정보를 찾을 수 없습니다.</div>;
+    return (
+      <main>
+        <DetailHeader title="공연 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          공연 정보를 찾을 수 없습니다.
+        </div>
+      </main>
+    );
   }
 
   return (
