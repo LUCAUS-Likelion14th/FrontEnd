@@ -34,11 +34,11 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
             key={item.stage_id}
             ref={isActive ? activeRef : null}
             className="grid w-full min-h-30"
-            style={{ gridTemplateColumns: "5.25rem 2rem 1fr" }}
+            style={{ gridTemplateColumns: "6.5rem 2rem 1fr" }}
           >
             {/* [1] 시간 영역 */}
             <div
-              className={`mt-5.25 text-[14px] leading-none ${
+              className={`mt-5.25 text-[14px] leading-none whitespace-nowrap ${
                 isActive ? "text-primary font-semibold" : "text-text-sub"
               }`}
             >
