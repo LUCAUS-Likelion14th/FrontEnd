@@ -101,9 +101,10 @@ export default function BoothStampModal({
                 type="text"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+                onKeyDown={(e) => e.key === "Enter" && handleStampSubmit()}
                 placeholder="코드를 입력해 주세요"
                 className="bg-white text-[16px] font-medium text-center px-[77px] py-[13px] rounded-[10px] outline-none focus:border-primary"
-              ></input>
+              />
             </div>
 
             <button
