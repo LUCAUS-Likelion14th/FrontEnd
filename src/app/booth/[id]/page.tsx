@@ -1,18 +1,27 @@
-import { BoothTitle, DetailAction, DetailHeader, DetailInfo} from "@/components";
+"use client";
+
+import { use, useState, useEffect } from "react";
+import { BoothTitle, DetailAction, DetailHeader, DetailInfo } from "@/components";
 import { BoothApi } from "@/lib/api/boothApi";
+import type { BoothDetail } from "@/types/booth";
 import Image from "next/image";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function BoothDetailPage({ params }: Props) {
-  const { id } = await params;
+export default function BoothDetailPage({ params }: Props) {
+  const { id } = use(params);
+  const [booth, setBooth] = useState<BoothDetail | null>(null);
+  const [error, setError] = useState(false);
 
-  let booth;
-  try {
-    booth = await BoothApi.getDetail(id);
-  } catch {
+  useEffect(() => {
+    BoothApi.getDetail(id)
+      .then(setBooth)
+      .catch(() => setError(true));
+  }, [id]);
+
+  if (error) {
     return (
       <main>
         <DetailHeader title="부스 정보" />
@@ -28,7 +37,7 @@ export default async function BoothDetailPage({ params }: Props) {
       <main>
         <DetailHeader title="부스 정보" />
         <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          부스 정보를 찾을 수 없습니다.
+          불러오는 중...
         </div>
       </main>
     );

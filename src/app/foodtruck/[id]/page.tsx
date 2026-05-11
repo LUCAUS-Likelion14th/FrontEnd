@@ -1,18 +1,30 @@
+"use client";
+
+import { use, useState, useEffect } from "react";
 import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail } from "@/components";
 import { foodTruckApi } from "@/lib/api/foodTruckApi";
+import type { FoodTruckDetail } from "@/types/foodtruck";
 import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function FoodTruckDetailPage({ params }: Props) {
-  const { id } = await params;
+export default function FoodTruckDetailPage({ params }: Props) {
+  const { id } = use(params);
+  const [foodTruck, setFoodTruck] = useState<FoodTruckDetail | null>(null);
+  const [error, setError] = useState(false);
 
-  let foodTruck;
-  try {
-    foodTruck = await foodTruckApi.getDetail(id);
-  } catch {
+  useEffect(() => {
+    foodTruckApi.getDetail(id)
+      .then((data) => {
+        if (!data) setError(true);
+        else setFoodTruck(data);
+      })
+      .catch(() => setError(true));
+  }, [id]);
+
+  if (error) {
     return (
       <main>
         <DetailHeader title="푸드트럭 정보" />
@@ -28,7 +40,7 @@ export default async function FoodTruckDetailPage({ params }: Props) {
       <main>
         <DetailHeader title="푸드트럭 정보" />
         <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          푸드트럭 정보를 찾을 수 없습니다.
+          불러오는 중...
         </div>
       </main>
     );
