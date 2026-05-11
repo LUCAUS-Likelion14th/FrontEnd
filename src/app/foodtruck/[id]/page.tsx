@@ -1,6 +1,6 @@
-import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail }  from "@/components"
+import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail } from "@/components";
 import { foodTruckApi } from "@/lib/api/foodTruckApi";
-import Image from "next/image";
+import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -8,19 +8,22 @@ type Props = {
 
 export default async function FoodTruckDetailPage({ params }: Props) {
   const { id } = await params;
-  const foodTruck = await foodTruckApi.getDetail(id);
+
+  let foodTruck;
+  try {
+    foodTruck = await foodTruckApi.getDetail(id);
+  } catch {
+    return <div className="p-4">푸드트럭 정보를 불러오는 중 오류가 발생했습니다.</div>;
+  }
+
+  if (!foodTruck) {
+    return <div className="p-4">푸드트럭 정보를 찾을 수 없습니다.</div>;
+  }
 
   return (
     <main className="pb-12">
       <DetailHeader title="푸드트럭 정보" />
-      <div className="relative w-full aspect-390/264">
-        <Image
-          src={foodTruck.image}
-          alt="푸드트럭 사진"
-          fill
-          className="object-cover"
-        />
-      </div>
+      <DetailHeroImage src={foodTruck.image} alt="푸드트럭 사진" />
 
       <div className="flex flex-col px-4 gap-10">
         <FoodTruckTitle

@@ -57,8 +57,6 @@ export async function fetcher<T>(endpoint: string): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const token = getToken();
 
-  console.log("[FETCHER DEBUG] Fetching URL:", url);
-
   let res: Response;
   try {
     res = await fetch(url, {

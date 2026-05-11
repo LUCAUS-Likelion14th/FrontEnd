@@ -87,9 +87,9 @@ export default async function StageDetailPage({
                 )}
               </div>
             </div>
-            <div className="flex justify-between items-start">
+            <div className="flex flex-col gap-2">
               <h3 className="text-base font-semibold text-text-sub">소개글</h3>
-              <p className="text-base text-left whitespace-pre-line w-[332px]">
+              <p className="text-base whitespace-pre-line">
                 {stage.stage_info}
               </p>
             </div>
