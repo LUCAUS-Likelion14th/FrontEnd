@@ -30,10 +30,15 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
         const isLast = index === data.length - 1;
 
         return (
-          <div key={item.stage_id} ref={isActive ? activeRef : null} className="flex w-full min-h-30 items-start">
-            {/* [1] 시간 영역: 원의 중심(24px)에 맞추기 위해 mt 조정 */}
+          <div
+            key={item.stage_id}
+            ref={isActive ? activeRef : null}
+            className="grid w-full min-h-30"
+            style={{ gridTemplateColumns: "6.5rem 2rem 1fr" }}
+          >
+            {/* [1] 시간 영역 */}
             <div
-              className={`mt-5.25 text-[14px] leading-none min-w-21 shrink-0 ${
+              className={`mt-5.25 text-[14px] leading-none whitespace-nowrap ${
                 isActive ? "text-primary font-semibold" : "text-text-sub"
               }`}
             >
@@ -41,21 +46,26 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
               {formatDate(item.end_at, "time")}
             </div>
 
-            {/* [2] 타임라인 축 (원 + 선) */}
-            <div className="relative flex flex-col items-center w-8 shrink-0 self-stretch">
-              {/* 위쪽 선: 상단에서 24px 지점까지 내려오되, 원과 닿지 않게 여백 부여 */}
-              <div
-                className={`w-px bg-text-sub ${isFirst ? "invisible" : "visible"}`}
-                style={{
-                  height: "28px",
-                  // 원의 중심이 24px이므로, 위쪽 선은 (24px - 반지름 - 여백)만큼만 그려져야 함
-                  paddingBottom: isActive ? "16px" : "14px",
-                  backgroundClip: "content-box", // padding 영역에는 배경색(선)이 안 그려지게 함
-                }}
-              />
+            {/* [2] 타임라인 축 (원 + 선) — grid 아이템이라 h-full이 definite */}
+            <div className="relative flex flex-col items-center h-full">
+              {/* 위쪽 선: top-0 → 원 상단 6px 전 (원과 닿지 않게) */}
+              {!isFirst && (
+                <div
+                  className="absolute top-0 w-px bg-text-sub"
+                  style={{ height: "14px" }}
+                />
+              )}
 
-              {/* 중앙 원: 정확히 위에서 24px 지점 */}
-              <div className="flex items-center justify-center shrink-0 h-0 relative z-10">
+              {/* 아래쪽 선: 원 하단 6px 아래부터 → bottom-0 */}
+              {!isLast && (
+                <div
+                  className="absolute bottom-0 w-px bg-text-sub"
+                  style={{ top: isActive ? "46px" : "34px" }}
+                />
+              )}
+
+              {/* 원: mt-5(20px) + 반지름(4px/10px) = 중심이 24px/30px */}
+              <div className="mt-5 relative z-10">
                 {isActive ? (
                   <div className="relative flex items-center justify-center">
                     <div className="w-5 h-5 rounded-full border-2 border-primary bg-white" />
@@ -65,19 +75,10 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
                   <div className="w-2 h-2 rounded-full bg-white border border-text-sub" />
                 )}
               </div>
-
-              {/* 아래쪽 선: 원 아래부터 시작해서 다음 칸까지 쭉 연결 */}
-              <div
-                className={`w-px flex-1 bg-text-sub ${isLast ? "invisible" : "visible"}`}
-                style={{
-                  // 원의 중심 아래로 여백을 주고 시작
-                  marginTop: isActive ? "16px" : "14px",
-                }}
-              />
             </div>
 
             {/* [3] 카드 영역 */}
-            <div className="flex-1 py-3.5 pl-1">
+            <div className="py-3.5 pl-1">
               <TimelineCard
                 id={item.stage_id}
                 image={item.logo_image}
