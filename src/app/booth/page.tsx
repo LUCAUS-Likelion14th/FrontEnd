@@ -20,6 +20,7 @@ function BoothPageContent() {
   const searchParams = useSearchParams();
 
   const [booths, setBooths] = useState<BoothListItem[]>([]);
+  const [totalPages, setTotalPages] = useState(1);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState<string>(
     () => searchParams.get("date") ?? "all"
@@ -60,14 +61,16 @@ function BoothPageContent() {
       location: selectedLocation ? locationMap[selectedLocation] : undefined,
       category: selectedCategory !== "전체" ? selectedCategory : undefined,
       search: debouncedSearch.trim() || undefined,
+      page: currentPage - 1,
+      size: PAGE_SIZE,
     })
-      .then(setBooths)
+      .then((data) => {
+        setBooths(data.content);
+        setTotalPages(data.totalPages);
+      })
       .catch(console.error)
       .finally(() => setIsLoading(false));
-  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch]);
-
-  const totalPages = Math.max(1, Math.ceil(booths.length / PAGE_SIZE));
-  const pagedBooths = booths.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
+  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch, currentPage]);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
@@ -131,9 +134,9 @@ function BoothPageContent() {
               <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
             ))}
           </div>
-        ) : pagedBooths.length > 0 ? (
+        ) : booths.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
-            {pagedBooths.map((booth) => (
+            {booths.map((booth) => (
               <Card
                 key={booth.booth_id}
                 id={booth.booth_id}
