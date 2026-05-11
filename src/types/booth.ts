@@ -1,3 +1,8 @@
+export type BoothListResponse = {
+  content: BoothListItem[];
+  totalPages: number;
+};
+
 export type BoothListItem = {
   booth_id: number;
   location_id: number;
