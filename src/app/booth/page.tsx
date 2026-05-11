@@ -65,8 +65,8 @@ function BoothPageContent() {
       size: PAGE_SIZE,
     })
       .then((data) => {
-        setBooths(data.content);
-        setTotalPages(data.totalPages);
+        setBooths(data.content ?? []);
+        setTotalPages(data.totalPages ?? 1);
       })
       .catch(console.error)
       .finally(() => setIsLoading(false));
