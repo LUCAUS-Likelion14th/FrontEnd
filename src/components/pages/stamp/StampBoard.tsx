@@ -116,7 +116,7 @@ export default function StampBoard() {
             style={{ width: `${progressPercentage}%` }}
           />
         </div>
-        <span className="text-text-sub text-[14px] font-semibold text-decoration-line: underline underline-offset-4 cursor-pointer">
+        <span className="text-text-sub text-[14px] font-semibold underline underline-offset-4 cursor-pointer">
           상품은 언제 받을 수 있나요?
         </span>
       </div>
@@ -129,7 +129,7 @@ export default function StampBoard() {
           >
             <div
               onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
-              className="relative w-[80px] h-[80px] flex justify-center items-center cursor-pointer"
+              className={`relative w-[80px] h-[80px] flex justify-center items-center ${booth.is_stamped ? "cursor-default" : "cursor-pointer"}`}
             >
               <Image
                 src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
