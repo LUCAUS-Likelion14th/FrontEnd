@@ -25,12 +25,6 @@ export default function Card({
   isLiked,
   likeCount,
 }: CardProps) {
-  const handleLikeClick = (e: React.MouseEvent) => {
-    e.preventDefault();
-    e.stopPropagation();
-    e.nativeEvent.stopImmediatePropagation();
-  };
-
   return (
     <Link href={`/${type}/${id}`} className="block">
       <article className="relative w-full h-[137px] rounded-[10px] overflow-hidden bg-[#D9D9D9]">
@@ -50,15 +44,13 @@ export default function Card({
             </span>
           </div>
 
-          <div onClick={handleLikeClick}>
-            <LikeButton
-              id={id}
-              type={type}
-              initialIsLiked={isLiked}
-              initialLikeCount={likeCount}
-              layout="vertical"
-            />
-          </div>
+          <LikeButton
+            id={id}
+            type={type}
+            initialIsLiked={isLiked}
+            initialLikeCount={likeCount}
+            layout="vertical"
+          />
         </div>
       </article>
     </Link>

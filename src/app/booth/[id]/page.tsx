@@ -8,7 +8,17 @@ type Props = {
 
 export default async function BoothDetailPage({ params }: Props) {
   const { id } = await params;
-  const booth = await BoothApi.getDetail(id);
+
+  let booth;
+  try {
+    booth = await BoothApi.getDetail(id);
+  } catch {
+    return <div className="p-4">부스 정보를 불러오는 중 오류가 발생했습니다.</div>;
+  }
+
+  if (!booth) {
+    return <div className="p-4">부스 정보를 찾을 수 없습니다.</div>;
+  }
 
   return (
     <main className="pb-12">

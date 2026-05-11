@@ -1,55 +1,73 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, Suspense } from "react";
+import { useSearchParams, useRouter } from "next/navigation";
 import { BoothLocationFilter, BoothCategoryFilter, BoothSearchBar, DateFilter, Pagination, Card } from "@/components";
-import { BoothLocation, BoothCategory, BOOTH_DATES } from "@/data/boothData";
+import { BoothLocation, BoothCategory } from "@/data/boothData";
 import { BoothApi } from "@/lib/api/boothApi";
 import { BoothListItem } from "@/types/booth";
 
 const PAGE_SIZE = 8;
 
-const getDefaultDate = () => {
-  const today = new Date();
-  const todayStr = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}-${String(today.getDate()).padStart(2, "0")}`;
-  const valid = BOOTH_DATES.filter((d) => d.value !== "all").map((d) => d.value as string);
-  return (valid.includes(todayStr) ? todayStr : valid[0]) as typeof BOOTH_DATES[number]["value"];
+const locationMap: Record<BoothLocation, string> = {
+  "서라벌홀 일대": "서라벌홀",
+  "후문 일대": "후문",
+  대운동장: "운동장",
 };
 
-export default function BoothPage() {
+function BoothPageContent() {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+
   const [booths, setBooths] = useState<BoothListItem[]>([]);
-  const [selectedDate, setSelectedDate] = useState("all");
-  const [selectedLocation, setSelectedLocation] =
-    useState<BoothLocation | null>("서라벌홀 일대");
-  const [selectedCategory, setSelectedCategory] =
-    useState<BoothCategory>("전체");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
+  const [isLoading, setIsLoading] = useState(true);
+  const [selectedDate, setSelectedDate] = useState<string>(
+    () => searchParams.get("date") ?? "all"
+  );
+  const [selectedLocation, setSelectedLocation] = useState<BoothLocation | null>(
+    () => (searchParams.get("location") as BoothLocation) ?? "서라벌홀 일대"
+  );
+  const [selectedCategory, setSelectedCategory] = useState<BoothCategory>(
+    () => (searchParams.get("category") as BoothCategory) ?? "전체"
+  );
+  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") ?? "");
+  const [debouncedSearch, setDebouncedSearch] = useState(() => searchParams.get("q") ?? "");
+  const [currentPage, setCurrentPage] = useState(() => Number(searchParams.get("page") ?? 1));
 
-  const locationMap: Record<BoothLocation, string> = {
-    "서라벌홀 일대": "서라벌홀",
-    "후문 일대": "후문",
-    대운동장: "운동장",
-  };
-
+  // Sync filters to URL
   useEffect(() => {
+    const params = new URLSearchParams();
+    if (selectedDate !== "all") params.set("date", selectedDate);
+    if (selectedLocation) params.set("location", selectedLocation);
+    if (selectedCategory !== "전체") params.set("category", selectedCategory);
+    if (debouncedSearch) params.set("q", debouncedSearch);
+    if (currentPage > 1) params.set("page", String(currentPage));
+    router.replace(`?${params.toString()}`, { scroll: false });
+  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch, currentPage]);
+
+  // Debounce search
+  useEffect(() => {
+    const t = setTimeout(() => setDebouncedSearch(searchQuery), 300);
+    return () => clearTimeout(t);
+  }, [searchQuery]);
+
+  // Fetch booths
+  useEffect(() => {
+    setIsLoading(true);
     const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
     BoothApi.getList({
       date: dateParam,
       location: selectedLocation ? locationMap[selectedLocation] : undefined,
       category: selectedCategory !== "전체" ? selectedCategory : undefined,
-      search: searchQuery.trim() || undefined,
+      search: debouncedSearch.trim() || undefined,
     })
       .then(setBooths)
-      .catch(console.error);
-  }, [selectedDate, selectedLocation, selectedCategory, searchQuery]);
+      .catch(console.error)
+      .finally(() => setIsLoading(false));
+  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch]);
 
-  const filteredBooths = booths;
-
-  const totalPages = Math.max(1, Math.ceil(filteredBooths.length / PAGE_SIZE));
-  const pagedBooths = filteredBooths.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
-  );
+  const totalPages = Math.max(1, Math.ceil(booths.length / PAGE_SIZE));
+  const pagedBooths = booths.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
@@ -107,7 +125,13 @@ export default function BoothPage() {
           />
         </div>
 
-        {pagedBooths.length > 0 ? (
+        {isLoading ? (
+          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+            {Array.from({ length: 4 }).map((_, i) => (
+              <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
+            ))}
+          </div>
+        ) : pagedBooths.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-4 gap-y-4">
             {pagedBooths.map((booth) => (
               <Card
@@ -136,5 +160,13 @@ export default function BoothPage() {
         />
       </section>
     </main>
+  );
+}
+
+export default function BoothPage() {
+  return (
+    <Suspense>
+      <BoothPageContent />
+    </Suspense>
   );
 }
