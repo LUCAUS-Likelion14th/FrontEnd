@@ -3,6 +3,7 @@
 import ListCard from "@/components/ui/ListCard";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useHotFood } from "@/hooks/queries/home";
+import { FiTruck } from "react-icons/fi";
 
 export function FoodSection() {
   const { data: foods = [], isLoading } = useHotFood();
@@ -20,8 +21,16 @@ export function FoodSection() {
             <div key={i} className="ml-[30px] h-[97px] rounded-[10px] bg-gray-200 animate-pulse" />
           ))
         ) : foods.length === 0 ? (
-          <div className="ml-[30px] flex items-center justify-center h-[97px] rounded-[10px] bg-white border border-text-sub2 text-text-sub text-base">
-            등록된 푸드트럭이 없어요
+          <div className="ml-[30px] flex flex-col items-center justify-center gap-2.5 h-[110px] rounded-[14px] bg-gradient-to-b from-[#EEF2FF] to-[#F8F9FB]">
+            <FiTruck size={24} className="text-[#06387d]/40 animate-pulse" />
+            <span className="text-[13px] font-medium text-[#8D97A7] flex items-end">
+              인기 푸드트럭을 집계 중이에요
+              <span className="flex gap-[2px] ml-0.5 mb-[1px]">
+                {[0, 1, 2].map((i) => (
+                  <span key={i} className="animate-bounce" style={{ animationDelay: `${i * 0.15}s` }}>.</span>
+                ))}
+              </span>
+            </span>
           </div>
         ) : (
           foods.map((food) => (
