@@ -45,9 +45,10 @@ export default function LostItemCreatePage() {
     try {
       const formData = new FormData();
       formData.append("name", name);
-      formData.append("findLocation", location);
+      formData.append("find_location", location);
       formData.append("date", date);
       formData.append("category", category);
+      formData.append("isVisible", String(isVisible));
       if (image) {
         formData.append("image", image);
       }

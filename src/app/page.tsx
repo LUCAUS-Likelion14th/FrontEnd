@@ -4,12 +4,10 @@ import Footer from "@/components/layouts/Footer";
 import { homeApi } from "@/lib/api/homeApi";
 
 export default async function Home() {
-  const [topBooths, promotions, liveStages, hotFoods, activeNotice] =
+  const [promotions, liveStages, activeNotice] =
     await Promise.all([
-      homeApi.getTopBooth().catch(() => []),
       homeApi.getPromotion().catch(() => []),
       homeApi.getLiveStage().catch(() => []),
-      homeApi.getHotFood().catch(() => []),
       homeApi.getActiveNotice().catch(() => null),
     ]);
 
@@ -28,8 +26,8 @@ export default async function Home() {
 
         <section className="flex flex-col px-4 gap-8">
           <StageSection stages={liveStages} />
-          <BoothSection booths={topBooths} />
-          <FoodSection foods={hotFoods} />
+          <BoothSection />
+          <FoodSection />
         </section>
       </main>
 

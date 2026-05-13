@@ -1,9 +1,8 @@
 "use client";
 
-import { Pagination, LostItemCard, LostTypeFilter, DetailHeader, DateFilter } from "@/components"
-import { useEffect, useState } from "react";
-import { lostApi } from "@/lib/api/lostApi";
-import { LostItem } from "@/types/lost";
+import { Pagination, LostItemCard, LostTypeFilter, DetailHeader, DateFilter } from "@/components";
+import { useState } from "react";
+import { useLostItems } from "@/hooks/queries/lost";
 import Image from "next/image";
 
 const ITEMS_PER_PAGE = 6;
@@ -13,30 +12,13 @@ export default function LostPage() {
   const [selectedType, setSelectedType] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const [lostData, setLostData] = useState<LostItem[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const { data: lostData = [], isLoading } = useLostItems({
+    category: selectedType === "all" ? undefined : selectedType,
+    date: selectedDate === "all" ? undefined : selectedDate,
+    page: currentPage - 1,
+  });
 
-  const [totalPages, setTotalPages] = useState(1);
-
-  useEffect(() => {
-    async function fetchLostItems() {
-      setIsLoading(true);
-      try {
-        const response = await lostApi.getLostItems({
-          category: selectedType === "all" ? undefined : selectedType,
-          date: selectedDate === "all" ? undefined : selectedDate,
-          page: currentPage - 1,
-        });
-
-        setLostData(response);
-      } catch (error) {
-        console.error("분실물 목록 로드 실패: ", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchLostItems();
-  }, [selectedDate, selectedType, currentPage]);
+  const totalPages = lostData.length < ITEMS_PER_PAGE ? currentPage : currentPage + 1;
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);

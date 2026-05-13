@@ -12,7 +12,6 @@ export default function NoticeEditDetailPage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPinned, setIsPinned] = useState(false);
-  const [isHomeExposed, setIsHomeExposed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [loading, setLoading] = useState(true);
 
@@ -25,7 +24,6 @@ export default function NoticeEditDetailPage() {
           setTitle(found.title);
           setContent(found.content);
           setIsPinned(found.important);
-          setIsHomeExposed(found.active);
         }
       })
       .catch(console.error)
@@ -44,7 +42,6 @@ export default function NoticeEditDetailPage() {
         title,
         content,
         important: isPinned,
-        active: isHomeExposed,
       });
 
       alert("공지가 수정되었습니다.");
@@ -128,21 +125,6 @@ export default function NoticeEditDetailPage() {
               </div>
             </div>
 
-            <div className="admin-form__option-row">
-              <span className="admin-form__option-label">홈 화면에 노출 하시겠습니까?</span>
-              <div className="admin-form__radio-group">
-                <label className="admin-form__radio">
-                  <input type="radio" name="isHomeExposed" checked={isHomeExposed === true} onChange={() => setIsHomeExposed(true)} />
-                  <span className="admin-form__radio-custom" />
-                  <span>예</span>
-                </label>
-                <label className="admin-form__radio">
-                  <input type="radio" name="isHomeExposed" checked={isHomeExposed === false} onChange={() => setIsHomeExposed(false)} />
-                  <span className="admin-form__radio-custom" />
-                  <span>아니오</span>
-                </label>
-              </div>
-            </div>
           </div>
 
           <div className="admin-form__actions">

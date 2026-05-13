@@ -2,8 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { FoodTruckDetail } from "@/types/foodtruck";
-import { foodTruckApi } from "@/lib/api/foodTruckApi";
+import { useFoodTruckList } from "@/hooks/queries/foodtruck";
 import { Card, Pagination, DateFilter } from "@/components";
 
 const PAGE_SIZE = 8;
@@ -12,8 +11,6 @@ function FoodTruckPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [trucks, setTrucks] = useState<FoodTruckDetail[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedDate, setSelectedDate] = useState<string>(
     () => searchParams.get("date") ?? "all"
   );
@@ -29,27 +26,12 @@ function FoodTruckPageContent() {
     router.replace(`?${params.toString()}`, { scroll: false });
   }, [selectedDate, currentPage]);
 
-  // Fetch trucks (once)
-  useEffect(() => {
-    setIsLoading(true);
-    foodTruckApi
-      .getList()
-      .then(setTrucks)
-      .catch(console.error)
-      .finally(() => setIsLoading(false));
-  }, []);
+  const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
 
-  const filteredTrucks = trucks.filter((truck) => {
-    if (selectedDate !== "all" && truck.date && !truck.date.includes(selectedDate))
-      return false;
-    return true;
-  });
+  const { data: trucks = [], isLoading } = useFoodTruckList({ date: dateParam });
 
-  const totalPages = Math.max(1, Math.ceil(filteredTrucks.length / PAGE_SIZE));
-  const pagedTrucks = filteredTrucks.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE
-  );
+  const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
+  const pagedTrucks = trucks.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);

@@ -1,12 +1,12 @@
+"use client";
+
 import ListCard from "@/components/ui/ListCard";
 import SectionHeader from "@/components/ui/SectionHeader";
-import type { HotFood } from "@/types/home";
+import { useHotFood } from "@/hooks/queries/home";
 
-interface Props {
-  foods: HotFood[];
-}
+export function FoodSection() {
+  const { data: foods = [], isLoading } = useHotFood();
 
-export function FoodSection({ foods }: Props) {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
@@ -15,7 +15,11 @@ export function FoodSection({ foods }: Props) {
         href="/foodtruck"
       />
       <div className="flex flex-col gap-2">
-        {(foods ?? []).length === 0 ? (
+        {isLoading ? (
+          Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="ml-[30px] h-[97px] rounded-[10px] bg-gray-200 animate-pulse" />
+          ))
+        ) : foods.length === 0 ? (
           <div className="ml-[30px] flex items-center justify-center h-[97px] rounded-[10px] bg-white border border-text-sub2 text-text-sub text-base">
             등록된 푸드트럭이 없어요
           </div>

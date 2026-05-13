@@ -9,7 +9,6 @@ export default function NoticeCreatePage() {
   const [title, setTitle] = useState("");
   const [content, setContent] = useState("");
   const [isPinned, setIsPinned] = useState(false);
-  const [isHomeExposed, setIsHomeExposed] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleSubmit = async () => {
@@ -22,7 +21,6 @@ export default function NoticeCreatePage() {
     try {
       const notice = await adminNoticeApi.createNotice({ title, content });
       if (isPinned) await adminNoticeApi.setImportant(notice.id);
-      if (isHomeExposed) await adminNoticeApi.setActive(notice.id);
       alert("공지가 등록되었습니다.");
       router.push("/admin/notices");
     } catch (error: any) {
@@ -101,34 +99,6 @@ export default function NoticeCreatePage() {
               </div>
             </div>
 
-            {/* 홈 화면 노출 여부 */}
-            <div className="admin-form__option-row">
-              <span className="admin-form__option-label">
-                홈 화면에 노출 (기존에 노출된 공지가 대체됩니다) 하시겠습니까?
-              </span>
-              <div className="admin-form__radio-group">
-                <label className="admin-form__radio">
-                  <input
-                    type="radio"
-                    name="isHomeExposed"
-                    checked={isHomeExposed === true}
-                    onChange={() => setIsHomeExposed(true)}
-                  />
-                  <span className="admin-form__radio-custom" />
-                  <span>예</span>
-                </label>
-                <label className="admin-form__radio">
-                  <input
-                    type="radio"
-                    name="isHomeExposed"
-                    checked={isHomeExposed === false}
-                    onChange={() => setIsHomeExposed(false)}
-                  />
-                  <span className="admin-form__radio-custom" />
-                  <span>아니오</span>
-                </label>
-              </div>
-            </div>
           </div>
 
           {/* 등록 버튼 */}

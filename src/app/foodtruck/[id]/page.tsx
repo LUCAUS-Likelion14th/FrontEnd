@@ -1,23 +1,38 @@
+"use client";
+
+import { use } from "react";
 import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail } from "@/components";
-import { foodTruckApi } from "@/lib/api/foodTruckApi";
+import { useFoodTruckDetail } from "@/hooks/queries/foodtruck";
 import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
 
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default async function FoodTruckDetailPage({ params }: Props) {
-  const { id } = await params;
+export default function FoodTruckDetailPage({ params }: Props) {
+  const { id } = use(params);
+  const { data: foodTruck, isLoading, isError } = useFoodTruckDetail(id);
 
-  let foodTruck;
-  try {
-    foodTruck = await foodTruckApi.getDetail(id);
-  } catch {
-    return <div className="p-4">푸드트럭 정보를 불러오는 중 오류가 발생했습니다.</div>;
+  if (isLoading) {
+    return (
+      <main>
+        <DetailHeader title="푸드트럭 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          불러오는 중...
+        </div>
+      </main>
+    );
   }
 
-  if (!foodTruck) {
-    return <div className="p-4">푸드트럭 정보를 찾을 수 없습니다.</div>;
+  if (isError || !foodTruck) {
+    return (
+      <main>
+        <DetailHeader title="푸드트럭 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          푸드트럭 정보를 불러오는 중 오류가 발생했습니다.
+        </div>
+      </main>
+    );
   }
 
   return (

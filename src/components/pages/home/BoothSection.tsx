@@ -1,12 +1,12 @@
+"use client";
+
 import ListCard from "@/components/ui/ListCard";
 import SectionHeader from "@/components/ui/SectionHeader";
-import type { TopBooth } from "@/types/home";
+import { useTopBooth } from "@/hooks/queries/home";
 
-interface Props {
-  booths: TopBooth[];
-}
+export function BoothSection() {
+  const { data: booths = [], isLoading } = useTopBooth();
 
-export function BoothSection({ booths }: Props) {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
@@ -15,7 +15,11 @@ export function BoothSection({ booths }: Props) {
         href="/booth"
       />
       <div className="flex flex-col gap-2">
-        {(booths ?? []).length === 0 ? (
+        {isLoading ? (
+          Array.from({ length: 2 }).map((_, i) => (
+            <div key={i} className="ml-[30px] h-[97px] rounded-[10px] bg-gray-200 animate-pulse" />
+          ))
+        ) : booths.length === 0 ? (
           <div className="ml-[30px] flex items-center justify-center h-[97px] rounded-[10px] bg-white border border-text-sub2 text-text-sub text-base">
             등록된 부스가 없어요
           </div>
