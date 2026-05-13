@@ -1,7 +1,7 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
@@ -39,6 +39,9 @@ export default function LikeButton({
   const [showLoginSheet, setShowLoginSheet] = useState(false);
   const queryClient = useQueryClient();
 
+  useEffect(() => { setIsLiked(initialIsLiked); }, [initialIsLiked]);
+  useEffect(() => { setLikeCount(initialLikeCount); }, [initialLikeCount]);
+
   const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -54,6 +57,7 @@ export default function LikeButton({
     try {
       await mutate(endpoint, nextLiked ? "POST" : "DELETE");
       queryClient.invalidateQueries({ queryKey: [type] });
+      queryClient.invalidateQueries({ queryKey: [type === "booth" ? "topBooth" : "hotFood"] });
       queryClient.invalidateQueries({ queryKey: ["mypage", type === "booth" ? "booth" : "foodtruck"] });
     } catch (error) {
       console.error("좋아요 처리 실패:", error);
