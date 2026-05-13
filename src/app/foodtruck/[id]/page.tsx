@@ -1,7 +1,7 @@
 "use client";
 
 import { use } from "react";
-import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail } from "@/components";
+import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail, LoadingSpinner } from "@/components";
 import { useFoodTruckDetail } from "@/hooks/queries/foodtruck";
 import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
 
@@ -17,9 +17,7 @@ export default function FoodTruckDetailPage({ params }: Props) {
     return (
       <main>
         <DetailHeader title="푸드트럭 정보" />
-        <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          불러오는 중...
-        </div>
+        <LoadingSpinner />
       </main>
     );
   }
