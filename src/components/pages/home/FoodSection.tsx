@@ -4,6 +4,7 @@ import ListCard from "@/components/ui/ListCard";
 import SectionHeader from "@/components/ui/SectionHeader";
 import { useHotFood } from "@/hooks/queries/home";
 import { FiTruck } from "react-icons/fi";
+import { motion } from "framer-motion";
 
 export function FoodSection() {
   const { data: foods = [], isLoading } = useHotFood();
@@ -22,14 +23,14 @@ export function FoodSection() {
           ))
         ) : foods.length === 0 ? (
           <div className="ml-7.5 flex flex-col items-center justify-center gap-2.5 h-[110px] rounded-[10px] bg-gradient-to-r from-[#f7f9ff] to-[#e8f2ff]">
-            <FiTruck size={24} className="text-[#06387d]/40 animate-pulse" />
-            <span className="text-[13px] font-medium text-[#8D97A7] flex items-end">
-              인기 푸드트럭을 집계 중이에요
-              <span className="flex gap-[2px] ml-0.5 mb-[1px]">
-                {[0, 1, 2].map((i) => (
-                  <span key={i} className="animate-bounce" style={{ animationDelay: `${i * 0.15}s` }}>.</span>
-                ))}
-              </span>
+            <motion.div
+              animate={{ opacity: [0.3, 0.7, 0.3] }}
+              transition={{ duration: 2.5, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <FiTruck size={24} className="text-[#06387d]" />
+            </motion.div>
+            <span className="text-[13px] font-medium text-[#8D97A7]">
+              운영 시간에 만나요!
             </span>
           </div>
         ) : (
