@@ -36,13 +36,13 @@ function FoodTruckPageContent() {
 
       <section className="flex flex-col">
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-5">
             {Array.from({ length: 4 }).map((_, i) => (
               <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
             ))}
           </div>
         ) : pagedTrucks.length > 0 ? (
-          <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+          <div className="grid grid-cols-2 gap-x-3 gap-y-5">
             {pagedTrucks.map((truck) => (
               <Card
                 key={truck.id}
