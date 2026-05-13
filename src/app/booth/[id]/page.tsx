@@ -1,7 +1,7 @@
 "use client";
 
 import { use } from "react";
-import { BoothTitle, DetailAction, DetailHeader, DetailInfo } from "@/components";
+import { BoothTitle, DetailAction, DetailHeader, DetailInfo, LoadingSpinner } from "@/components";
 import { useBoothDetail } from "@/hooks/queries/booth";
 import Image from "next/image";
 
@@ -17,9 +17,7 @@ export default function BoothDetailPage({ params }: Props) {
     return (
       <main>
         <DetailHeader title="부스 정보" />
-        <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          불러오는 중...
-        </div>
+        <LoadingSpinner />
       </main>
     );
   }

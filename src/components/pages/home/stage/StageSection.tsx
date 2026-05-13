@@ -15,7 +15,7 @@ export default function StageSection({ stages }: Props) {
         href="/stage"
       />
       {(stages ?? []).length === 0 ? (
-        <div className="ml-[30px] flex flex-col items-center justify-center gap-3 h-[110px] rounded-[14px] bg-gradient-to-b from-[#EEF2FF] to-[#F8F9FB]">
+        <div className="ml-7.5 flex flex-col items-center justify-center gap-3 h-[110px] rounded-[10px] bg-gradient-to-r from-[#f7f9ff] to-[#e8f2ff]">
           <div className="flex items-end gap-[3px] h-5">
             {[0.4, 0.75, 1, 0.6, 0.85, 0.5, 0.9].map((h, i) => (
               <span
