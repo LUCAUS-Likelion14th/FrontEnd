@@ -91,6 +91,8 @@ export default function NoticeSwiper({ promotions }: Props) {
                 src={item.image}
                 alt={`프로모션 ${item.id}`}
                 fill
+                sizes="(max-width: 640px) 83vw, (max-width: 1024px) 45vw, 33vw"
+                priority={i < n}
                 className="object-cover"
                 draggable={false}
               />
