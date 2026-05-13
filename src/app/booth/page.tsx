@@ -2,7 +2,14 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
-import { BoothLocationFilter, BoothCategoryFilter, BoothSearchBar, DateFilter, Pagination, Card } from "@/components";
+import {
+  BoothLocationFilter,
+  BoothCategoryFilter,
+  BoothSearchBar,
+  DateFilter,
+  Pagination,
+  Card,
+} from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory } from "@/data/boothData";
 import { useBoothList, useBoothStampList } from "@/hooks/queries/booth";
@@ -15,19 +22,25 @@ function BoothPageContent() {
 
   const [isStampMode, setIsStampMode] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
-    () => searchParams.get("date") ?? "all"
+    () => searchParams.get("date") ?? "all",
   );
-  const [selectedLocation, setSelectedLocation] = useState<BoothLocation | null>(
-    () => (searchParams.get("location") as BoothLocation) ?? null
-  );
+  const [selectedLocation, setSelectedLocation] =
+    useState<BoothLocation | null>(
+      () => (searchParams.get("location") as BoothLocation) ?? null,
+    );
   const [selectedCategory, setSelectedCategory] = useState<BoothCategory>(
-    () => (searchParams.get("category") as BoothCategory) ?? "전체"
+    () => (searchParams.get("category") as BoothCategory) ?? "전체",
   );
-  const [searchQuery, setSearchQuery] = useState(() => searchParams.get("q") ?? "");
-  const [debouncedSearch, setDebouncedSearch] = useState(() => searchParams.get("q") ?? "");
-  const [currentPage, setCurrentPage] = useState(() => Number(searchParams.get("page") ?? 1));
+  const [searchQuery, setSearchQuery] = useState(
+    () => searchParams.get("q") ?? "",
+  );
+  const [debouncedSearch, setDebouncedSearch] = useState(
+    () => searchParams.get("q") ?? "",
+  );
+  const [currentPage, setCurrentPage] = useState(() =>
+    Number(searchParams.get("page") ?? 1),
+  );
 
-  // Sync filters to URL
   useEffect(() => {
     const params = new URLSearchParams();
     if (selectedDate !== "all") params.set("date", selectedDate);
@@ -36,33 +49,47 @@ function BoothPageContent() {
     if (debouncedSearch) params.set("q", debouncedSearch);
     if (currentPage > 1) params.set("page", String(currentPage));
     router.replace(`?${params.toString()}`, { scroll: false });
-  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch, currentPage]);
+  }, [
+    selectedDate,
+    selectedLocation,
+    selectedCategory,
+    debouncedSearch,
+    currentPage,
+  ]);
 
-  // Debounce search
   useEffect(() => {
     const t = setTimeout(() => setDebouncedSearch(searchQuery), 300);
     return () => clearTimeout(t);
   }, [searchQuery]);
 
-  const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
+  const dateParam =
+    selectedDate === "all"
+      ? undefined
+      : selectedDate.replace(/-/g, "").slice(4);
 
   const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
-    { date: dateParam, location: selectedLocation ?? undefined, category: selectedCategory !== "전체" ? selectedCategory : undefined, search: debouncedSearch.trim() || undefined },
-    { enabled: !isStampMode }
+    {
+      page: currentPage - 1,
+      size: PAGE_SIZE,
+      date: dateParam,
+      location: selectedLocation ?? undefined,
+      category: selectedCategory !== "전체" ? selectedCategory : undefined,
+      search: debouncedSearch.trim() || undefined,
+    },
+    { enabled: !isStampMode },
   );
 
-  const { data: stampBoothsData, isLoading: stampLoading } = useBoothStampList(
-    { enabled: isStampMode }
-  );
+  const { data: stampBoothsData, isLoading: stampLoading } = useBoothStampList({
+    enabled: isStampMode,
+  });
 
   const normalBooths = normalBoothsData?.content ?? [];
-  const stampBooths = stampBoothsData?.content ?? [];
+  const stampBooths = stampBoothsData?.data ?? [];
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
-  const totalPages = isStampMode
-    ? (stampBoothsData?.totalPages ?? 1)
-    : (normalBoothsData?.totalPages ?? 1);
+
+  const totalPages = isStampMode ? 1 : (normalBoothsData?.totalPages ?? 1);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
@@ -123,7 +150,9 @@ function BoothPageContent() {
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
             onSelectCategory={handleCategoryChange}
-            showStamp={["2026-05-18", "2026-05-19", "2026-05-20"].includes(selectedDate)}
+            showStamp={["2026-05-18", "2026-05-19", "2026-05-20"].includes(
+              selectedDate,
+            )}
             onStampClick={handleStampClick}
             isStampActive={isStampMode}
           />
@@ -132,13 +161,16 @@ function BoothPageContent() {
         <div className={booths.length > 0 ? "min-h-[596px]" : ""}>
           {isLoading ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-              {Array.from({ length: 4 }).map((_, i) => (
-                <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
+              {Array.from({ length: PAGE_SIZE }).map((_, i) => (
+                <div
+                  key={i}
+                  className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse"
+                />
               ))}
             </div>
           ) : booths.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-              {booths.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((booth) => (
+              {booths.map((booth) => (
                 <Card
                   key={booth.booth_id}
                   id={booth.booth_id}
@@ -158,14 +190,18 @@ function BoothPageContent() {
                 <FiSearch size={28} className="text-[#06387D]" />
               </div>
               <div className="flex flex-col items-center gap-1">
-                <p className="text-[15px] font-semibold text-[#3B4A5A]">부스를 찾을 수 없어요</p>
-                <p className="text-[13px] text-text-sub">조건을 변경해서 다시 검색해보세요</p>
+                <p className="text-[15px] font-semibold text-[#3B4A5A]">
+                  부스를 찾을 수 없어요
+                </p>
+                <p className="text-[13px] text-text-sub">
+                  조건을 변경해서 다시 검색해보세요
+                </p>
               </div>
             </div>
           )}
         </div>
 
-        {booths.length > 0 && (
+        {totalPages > 1 && (
           <Pagination
             page={currentPage}
             totalPages={totalPages}
