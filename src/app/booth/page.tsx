@@ -46,18 +46,23 @@ function BoothPageContent() {
 
   const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
 
-  const { data: normalBooths = [], isLoading: normalLoading } = useBoothList(
-    { date: dateParam, category: selectedCategory !== "전체" ? selectedCategory : undefined, search: debouncedSearch.trim() || undefined },
+  const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
+    { date: dateParam, location: selectedLocation ?? undefined, category: selectedCategory !== "전체" ? selectedCategory : undefined, search: debouncedSearch.trim() || undefined },
     { enabled: !isStampMode }
   );
 
-  const { data: stampBooths = [], isLoading: stampLoading } = useBoothStampList(
+  const { data: stampBoothsData, isLoading: stampLoading } = useBoothStampList(
     { enabled: isStampMode }
   );
 
+  const normalBooths = normalBoothsData?.content ?? [];
+  const stampBooths = stampBoothsData?.content ?? [];
+
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
-  const totalPages = Math.max(1, Math.ceil(booths.length / PAGE_SIZE));
+  const totalPages = isStampMode
+    ? (stampBoothsData?.totalPages ?? 1)
+    : (normalBoothsData?.totalPages ?? 1);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
