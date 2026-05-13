@@ -70,11 +70,13 @@ function FoodTruckPageContent() {
           </div>
         )}
 
-        <Pagination
-          page={currentPage}
-          totalPages={totalPages}
-          onChange={setCurrentPage}
-        />
+        {trucks.length > 0 && (
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            onChange={setCurrentPage}
+          />
+        )}
       </section>
     </main>
   );
