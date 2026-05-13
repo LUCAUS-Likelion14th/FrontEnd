@@ -1,9 +1,8 @@
 "use client";
 
-import { use, useState, useEffect } from "react";
+import { use } from "react";
 import { BoothTitle, DetailAction, DetailHeader, DetailInfo } from "@/components";
-import { BoothApi } from "@/lib/api/boothApi";
-import type { BoothDetail } from "@/types/booth";
+import { useBoothDetail } from "@/hooks/queries/booth";
 import Image from "next/image";
 
 type Props = {
@@ -12,32 +11,25 @@ type Props = {
 
 export default function BoothDetailPage({ params }: Props) {
   const { id } = use(params);
-  const [booth, setBooth] = useState<BoothDetail | null>(null);
-  const [error, setError] = useState(false);
+  const { data: booth, isLoading, isError } = useBoothDetail(id);
 
-  useEffect(() => {
-    BoothApi.getDetail(id)
-      .then(setBooth)
-      .catch(() => setError(true));
-  }, [id]);
-
-  if (error) {
-    return (
-      <main>
-        <DetailHeader title="부스 정보" />
-        <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          부스 정보를 불러오는 중 오류가 발생했습니다.
-        </div>
-      </main>
-    );
-  }
-
-  if (!booth) {
+  if (isLoading) {
     return (
       <main>
         <DetailHeader title="부스 정보" />
         <div className="flex items-center justify-center py-20 text-text-sub text-base">
           불러오는 중...
+        </div>
+      </main>
+    );
+  }
+
+  if (isError || !booth) {
+    return (
+      <main>
+        <DetailHeader title="부스 정보" />
+        <div className="flex items-center justify-center py-20 text-text-sub text-base">
+          부스 정보를 불러오는 중 오류가 발생했습니다.
         </div>
       </main>
     );
