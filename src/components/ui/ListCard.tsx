@@ -32,39 +32,50 @@ export default function ListCard({
   const [imgError, setImgError] = useState(false);
 
   return (
-    <div className="ml-[30px]">
-      <article className="flex items-center gap-[13px] w-full p-2.5 rounded-[10px] bg-white border border-text-sub2">
-        <Link href={href} className="flex items-center gap-[13px] flex-1 min-w-0">
-          {imgError || !imageUrl ? (
-            <div className="w-[76px] h-[76px] rounded-[10px] bg-gray-100 shrink-0 flex items-center justify-center">
-              <FiImage size={28} className="text-gray-300" />
-            </div>
-          ) : (
-            <Image
-              src={imageUrl}
-              alt={name}
-              width={76}
-              height={76}
-              className="rounded-[10px] object-cover shrink-0"
-              onError={() => setImgError(true)}
-            />
-          )}
+    <div className="ml-7.5">
+      <article className="relative w-full pl-[10px] pr-[16px] py-[16px] rounded-[10px] bg-gradient-to-r from-[#f7f9ff] to-[#e8f2ff]">
+        <Link href={href} className="flex items-center gap-[13px]">
+          <div className="relative w-[76px] h-[76px] rounded-[8px] overflow-hidden shrink-0 bg-gray-200">
+            {imgError || !imageUrl ? (
+              <div className="w-full h-full flex items-center justify-center">
+                <FiImage size={28} className="text-gray-300" />
+              </div>
+            ) : (
+              <Image
+                src={imageUrl}
+                alt={name}
+                fill
+                className="object-cover"
+                onError={() => setImgError(true)}
+              />
+            )}
+          </div>
 
-          <div className="flex flex-col gap-3 flex-1 min-w-0">
-            <span className="text-base">{location}</span>
-            <strong className="text-xl font-bold truncate">{name}</strong>
+          <div className="flex flex-col gap-1 flex-1 min-w-0">
+            <span className="text-base text-black pr-14 truncate">{location}</span>
+            <div className="flex items-end justify-between gap-2">
+              <strong className="text-xl font-semibold truncate">{name}</strong>
+              {department && (
+                <span className="text-base text-text-sub text-right shrink-0 max-w-[84px] truncate">
+                  {department}
+                </span>
+              )}
+            </div>
           </div>
         </Link>
 
-        <div className="flex flex-col items-end gap-3 shrink-0">
+        <div
+          className="absolute top-[16px] right-[16px]"
+          onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+        >
           <LikeButton
             id={id}
             type={type}
             initialIsLiked={isLiked}
             initialLikeCount={likeCount}
             layout="horizontal"
+            size="sm"
           />
-          <span className="text-base text-text-sub">{department}</span>
         </div>
       </article>
     </div>

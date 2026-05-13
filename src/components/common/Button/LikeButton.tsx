@@ -66,7 +66,7 @@ export default function LikeButton({
   const containerClass =
     layout === "vertical"
       ? "flex flex-col items-center gap-1"
-      : "flex items-center gap-1";
+      : "flex items-center gap-[4px]";
 
   return (
     <>
@@ -75,6 +75,14 @@ export default function LikeButton({
       onClick={handleLikeClick}
       className={`${containerClass} shrink-0 cursor-pointer relative`}
     >
+      {!hideCount && layout === "horizontal" && (
+        <span
+          className={`${size === "sm" ? "text-[16px]" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
+        >
+          {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
+        </span>
+      )}
+
       <div className={`relative flex items-center justify-center ${size === "sm" ? "w-6 h-6" : "w-[38px] h-[38px]"}`}>
         <AnimatePresence mode="wait">
           {isLiked ? (
@@ -85,7 +93,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.1, ease: "easeOut" }}
             >
-              <FaHeart size={size === "sm" ? 20 : 30} className="text-[#FF0080]" />
+              <FaHeart size={size === "sm" ? 24 : 30} className="text-[#E93885]" />
             </motion.div>
           ) : (
             <motion.div
@@ -95,7 +103,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <FiHeart size={size === "sm" ? 20 : 30} className={outlineColor} />
+              <FiHeart size={size === "sm" ? 24 : 30} className={outlineColor} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -119,7 +127,7 @@ export default function LikeButton({
         </AnimatePresence>
       </div>
 
-      {!hideCount && (
+      {!hideCount && layout !== "horizontal" && (
         <span
           className={`${size === "sm" ? "text-[14px]" : layout === "vertical" ? "text-sm" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
         >
