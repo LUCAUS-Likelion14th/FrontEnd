@@ -4,6 +4,7 @@ import { Pagination, LostItemCard, LostTypeFilter, DetailHeader, DateFilter } fr
 import { useState } from "react";
 import { useLostItems } from "@/hooks/queries/lost";
 import Image from "next/image";
+import { FiSearch } from "react-icons/fi";
 
 const ITEMS_PER_PAGE = 6;
 
@@ -71,8 +72,14 @@ export default function LostPage() {
                 <LostItemCard key={item.lost_id} item={item} />
               ))
             ) : (
-              <div className="col-span-2 flex items-center justify-center py-20 text-text-sub text-base">
-                해당 조건의 분실물이 없습니다.
+              <div className="col-span-2 flex flex-col items-center justify-center gap-3 py-16">
+                <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
+                  <FiSearch size={28} className="text-[#06387D]" />
+                </div>
+                <div className="flex flex-col items-center gap-1">
+                  <p className="text-[15px] font-semibold text-[#3B4A5A]">해당 조건의 분실물이 없어요</p>
+                  <p className="text-[13px] text-text-sub">조건을 변경해서 다시 검색해보세요</p>
+                </div>
               </div>
             )}
           </div>
