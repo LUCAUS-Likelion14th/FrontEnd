@@ -4,6 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useFoodTruckList } from "@/hooks/queries/foodtruck";
 import { Card, Pagination } from "@/components";
+import { FiSearch } from "react-icons/fi";
 
 const PAGE_SIZE = 8;
 
@@ -58,8 +59,14 @@ function FoodTruckPageContent() {
             ))}
           </div>
         ) : (
-          <div className="flex items-center justify-center py-20 text-text-sub text-base">
-            해당 조건에 맞는 푸드트럭이 없습니다.
+          <div className="flex flex-col items-center justify-center gap-3 py-16">
+            <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
+              <FiSearch size={28} className="text-[#06387D]" />
+            </div>
+            <div className="flex flex-col items-center gap-1">
+              <p className="text-[15px] font-semibold text-[#3B4A5A]">푸드트럭을 찾을 수 없어요</p>
+              <p className="text-[13px] text-text-sub">조건을 변경해서 다시 검색해보세요</p>
+            </div>
           </div>
         )}
 
