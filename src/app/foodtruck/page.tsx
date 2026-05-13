@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useFoodTruckList } from "@/hooks/queries/foodtruck";
-import { Card, Pagination, DateFilter } from "@/components";
+import { Card, Pagination } from "@/components";
 
 const PAGE_SIZE = 8;
 
@@ -11,45 +11,24 @@ function FoodTruckPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [selectedDate, setSelectedDate] = useState<string>(
-    () => searchParams.get("date") ?? "all"
-  );
   const [currentPage, setCurrentPage] = useState(
     () => Number(searchParams.get("page") ?? 1)
   );
 
-  // Sync filters to URL
   useEffect(() => {
     const params = new URLSearchParams();
-    if (selectedDate !== "all") params.set("date", selectedDate);
     if (currentPage > 1) params.set("page", String(currentPage));
     router.replace(`?${params.toString()}`, { scroll: false });
-  }, [selectedDate, currentPage]);
+  }, [currentPage]);
 
-  const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
-
-  const { data: trucks = [], isLoading } = useFoodTruckList({ date: dateParam });
+  const { data: trucks = [], isLoading } = useFoodTruckList({});
 
   const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
   const pagedTrucks = trucks.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
 
-  const handleDateChange = (date: string) => {
-    setSelectedDate(date);
-    setCurrentPage(1);
-  };
-
   return (
     <main className="px-4 pt-5 pb-25">
       <section className="flex flex-col gap-5 pb-10 border-b border-b-text-sub2 mb-5">
-        <div className="flex flex-col gap-2.5">
-          <div className="w-fit">
-            <DateFilter
-              selectedDate={selectedDate}
-              onSelectDate={handleDateChange}
-            />
-          </div>
-        </div>
-
         <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
           <span className="text-text-sub text-base">지도</span>
         </div>
