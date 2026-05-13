@@ -124,7 +124,7 @@ function BoothPageContent() {
           />
         </div>
 
-        <div className="min-h-[596px]">
+        <div className={booths.length > 0 ? "min-h-[596px]" : ""}>
           {isLoading ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
               {Array.from({ length: 4 }).map((_, i) => (
@@ -160,11 +160,13 @@ function BoothPageContent() {
           )}
         </div>
 
-        <Pagination
-          page={currentPage}
-          totalPages={totalPages}
-          onChange={setCurrentPage}
-        />
+        {booths.length > 0 && (
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            onChange={setCurrentPage}
+          />
+        )}
       </section>
     </main>
   );
