@@ -1,8 +1,8 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { mutate } from "@/lib/api/fetcher";
@@ -37,7 +37,10 @@ export default function LikeButton({
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [animateKey, setAnimateKey] = useState(0);
   const [showLoginSheet, setShowLoginSheet] = useState(false);
-  const router = useRouter();
+  const queryClient = useQueryClient();
+
+  useEffect(() => { setIsLiked(initialIsLiked); }, [initialIsLiked]);
+  useEffect(() => { setLikeCount(initialLikeCount); }, [initialLikeCount]);
 
   const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,8 +56,9 @@ export default function LikeButton({
 
     try {
       await mutate(endpoint, nextLiked ? "POST" : "DELETE");
-      // 서버 캐시를 무효화하여 다른 페이지에서도 좋아요 상태가 동기화되도록 함
-      router.refresh();
+      queryClient.invalidateQueries({ queryKey: [type] });
+      queryClient.invalidateQueries({ queryKey: [type === "booth" ? "topBooth" : "hotFood"] });
+      queryClient.invalidateQueries({ queryKey: ["mypage", type === "booth" ? "booth" : "foodtruck"] });
     } catch (error) {
       console.error("좋아요 처리 실패:", error);
       setIsLiked(!nextLiked);
@@ -66,7 +70,7 @@ export default function LikeButton({
   const containerClass =
     layout === "vertical"
       ? "flex flex-col items-center gap-1"
-      : "flex items-center gap-1";
+      : "flex items-center gap-[4px]";
 
   return (
     <>
@@ -75,6 +79,14 @@ export default function LikeButton({
       onClick={handleLikeClick}
       className={`${containerClass} shrink-0 cursor-pointer relative`}
     >
+      {!hideCount && layout === "horizontal" && (
+        <span
+          className={`${size === "sm" ? "text-[16px]" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
+        >
+          {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
+        </span>
+      )}
+
       <div className={`relative flex items-center justify-center ${size === "sm" ? "w-6 h-6" : "w-[38px] h-[38px]"}`}>
         <AnimatePresence mode="wait">
           {isLiked ? (
@@ -85,7 +97,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.1, ease: "easeOut" }}
             >
-              <FaHeart size={size === "sm" ? 20 : 30} className="text-[#E93885]" />
+              <FaHeart size={size === "sm" ? 24 : 30} className="text-[#E93885]" />
             </motion.div>
           ) : (
             <motion.div
@@ -95,7 +107,7 @@ export default function LikeButton({
               exit={{ scale: 0 }}
               transition={{ duration: 0.2 }}
             >
-              <FiHeart size={size === "sm" ? 20 : 30} className={outlineColor} />
+              <FiHeart size={size === "sm" ? 24 : 30} className={outlineColor} />
             </motion.div>
           )}
         </AnimatePresence>
@@ -119,7 +131,7 @@ export default function LikeButton({
         </AnimatePresence>
       </div>
 
-      {!hideCount && (
+      {!hideCount && layout !== "horizontal" && (
         <span
           className={`${size === "sm" ? "text-[14px]" : layout === "vertical" ? "text-sm" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
         >

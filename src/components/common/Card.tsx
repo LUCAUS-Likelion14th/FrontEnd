@@ -31,8 +31,8 @@ export default function Card({
 
   return (
     <Link href={`/${type}/${id}`} className="block">
-      <article className="w-full rounded-[10px] border border-[#DCE2E9] p-[10px] flex flex-col gap-[9px] bg-white">
-        <div className="relative w-full h-[109px] rounded-[8px] overflow-hidden bg-[#D9D9D9] shrink-0">
+      <article className="w-full rounded-[10px] overflow-hidden flex flex-col shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+        <div className="relative w-full h-[109px] bg-[#D9D9D9] shrink-0">
           {imgError || !image ? (
             <div className="w-full h-full flex items-center justify-center bg-gray-100">
               <FiImage size={28} className="text-gray-300" />
@@ -48,8 +48,8 @@ export default function Card({
           )}
         </div>
 
-        <div className="flex items-start justify-between">
-          <div className="flex flex-col gap-[2px] min-w-0">
+        <div className="flex items-start justify-between p-[10px] pt-[9px] bg-white">
+          <div className="flex flex-col gap-[2px] flex-1 min-w-0 mr-2">
             <span className="text-[12px] leading-normal text-[#8D97A7] truncate">
               {subText}
             </span>
