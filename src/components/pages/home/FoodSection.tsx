@@ -21,7 +21,7 @@ export function FoodSection() {
             <div key={i} className="ml-[30px] h-[97px] rounded-[10px] bg-gray-200 animate-pulse" />
           ))
         ) : foods.length === 0 ? (
-          <div className="ml-[30px] flex flex-col items-center justify-center gap-2.5 h-[110px] rounded-[14px] bg-gradient-to-b from-[#EEF2FF] to-[#F8F9FB]">
+          <div className="ml-7.5 flex flex-col items-center justify-center gap-2.5 h-[110px] rounded-[10px] bg-gradient-to-r from-[#f7f9ff] to-[#e8f2ff]">
             <FiTruck size={24} className="text-[#06387d]/40 animate-pulse" />
             <span className="text-[13px] font-medium text-[#8D97A7] flex items-end">
               인기 푸드트럭을 집계 중이에요
