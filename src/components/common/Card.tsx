@@ -2,6 +2,8 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { useState } from "react";
+import { FiImage } from "react-icons/fi";
 import LikeButton from "./Button/LikeButton";
 
 type CardProps = {
@@ -25,11 +27,25 @@ export default function Card({
   isLiked,
   likeCount,
 }: CardProps) {
+  const [imgError, setImgError] = useState(false);
+
   return (
     <Link href={`/${type}/${id}`} className="block">
       <article className="w-full rounded-[10px] border border-[#DCE2E9] p-[10px] flex flex-col gap-[9px] bg-white">
         <div className="relative w-full h-[109px] rounded-[8px] overflow-hidden bg-[#D9D9D9] shrink-0">
-          <Image src={image} alt={name} fill className="object-cover" />
+          {imgError || !image ? (
+            <div className="w-full h-full flex items-center justify-center bg-gray-100">
+              <FiImage size={28} className="text-gray-300" />
+            </div>
+          ) : (
+            <Image
+              src={image}
+              alt={name}
+              fill
+              className="object-cover"
+              onError={() => setImgError(true)}
+            />
+          )}
         </div>
 
         <div className="flex items-start justify-between">
