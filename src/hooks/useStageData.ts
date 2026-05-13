@@ -1,8 +1,8 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { stageApi } from "@/lib/api/stageApi";
-import { Stage, TimeTable } from "@/types/stage";
 
 const CATEGORY_MAP: Record<string, string> = {
   "학생 공연": "STUDENT_PERFORMANCE",
@@ -11,36 +11,24 @@ const CATEGORY_MAP: Record<string, string> = {
 };
 
 export function useStageData(selectedDate: string, selected: string) {
-  const [stage, setStage] = useState<Stage[]>([]);
-  const [timeTable, setTimeTable] = useState<TimeTable[]>([]);
   const [currentTime, setCurrentTime] = useState(new Date());
 
-  useEffect(() => {
-    async function fetchData() {
-      try {
-        const timeLineData = await stageApi.getTimeTable(selectedDate);
-        setTimeTable(timeLineData);
+  const { data: stage = [] } = useQuery({
+    queryKey: ["stage", selectedDate, selected],
+    queryFn: () => stageApi.getStage(selectedDate, CATEGORY_MAP[selected]),
+    enabled: selected !== "무대기획전",
+    staleTime: 60_000,
+  });
 
-        if (selected !== "무대기획전") {
-          const stageData = await stageApi.getStage(
-            selectedDate,
-            CATEGORY_MAP[selected],
-          );
-          setStage(stageData);
-        }
-      } catch (error) {
-        console.error("데이터 로드 실패", error);
-        setStage([]);
-        setTimeTable([]);
-      }
-    }
-    fetchData();
-  }, [selectedDate, selected]);
+  const { data: timeTable = [] } = useQuery({
+    queryKey: ["stage", "timetable", selectedDate],
+    queryFn: () => stageApi.getTimeTable(selectedDate),
+    staleTime: 60_000,
+  });
 
   const timelineData = useMemo(() => {
     return [...timeTable].sort(
-      (a, b) =>
-        new Date(a.start_at).getTime() - new Date(b.start_at).getTime(),
+      (a, b) => new Date(a.start_at).getTime() - new Date(b.start_at).getTime(),
     );
   }, [timeTable]);
 
@@ -61,17 +49,11 @@ export function useStageData(selectedDate: string, selected: string) {
       new Date(item.start_at),
       new Date(item.end_at),
     ]);
-
     const futureTimes = times.filter((time) => time > now);
     if (futureTimes.length === 0) return;
 
-    const nextTime = new Date(
-      Math.min(...futureTimes.map((t) => t.getTime())),
-    );
-    const timeout = setTimeout(() => {
-      setCurrentTime(new Date());
-    }, nextTime.getTime() - now.getTime());
-
+    const nextTime = new Date(Math.min(...futureTimes.map((t) => t.getTime())));
+    const timeout = setTimeout(() => setCurrentTime(new Date()), nextTime.getTime() - now.getTime());
     return () => clearTimeout(timeout);
   }, [selected, timelineData]);
 

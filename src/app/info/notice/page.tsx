@@ -1,36 +1,21 @@
 "use client";
 
 import { Pagination, DetailHeader, NoticeItem } from "@/components";
-import { noticeApi } from "@/lib/api/noticeApi";
 import { formatDate } from "@/lib/utils/date";
-import { Notice } from "@/types/notice";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNotices } from "@/hooks/queries/notice";
 
 export default function NoticePage() {
   const [currentPage, setCurrentPage] = useState(1);
-  const [noticeData, setNoticeData] = useState<Notice[]>([]);
-  const [totalPages, setTotalPages] = useState(0);
-  const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    async function fetchNotices() {
-      setIsLoading(true);
-      try {
-        const response = await noticeApi.getNotices({
-          page: currentPage - 1,
-          size: 10,
-          sort: ["important,desc", "createdAt,desc"],
-        });
-        setNoticeData(response.content);
-        setTotalPages(response.totalPages);
-      } catch (error) {
-        console.error("공지사항 로드 실패: ", error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchNotices();
-  }, [currentPage]);
+  const { data, isLoading } = useNotices({
+    page: currentPage - 1,
+    size: 10,
+    sort: ["important,desc", "createdAt,desc"],
+  });
+
+  const noticeData = data?.content ?? [];
+  const totalPages = data?.totalPages ?? 0;
 
   return (
     <main className="pb-25">

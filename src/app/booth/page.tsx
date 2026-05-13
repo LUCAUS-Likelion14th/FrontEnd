@@ -4,8 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { BoothLocationFilter, BoothCategoryFilter, BoothSearchBar, DateFilter, Pagination, Card } from "@/components";
 import { BoothLocation, BoothCategory } from "@/data/boothData";
-import { BoothApi } from "@/lib/api/boothApi";
-import { BoothListItem } from "@/types/booth";
+import { useBoothList, useBoothStampList } from "@/hooks/queries/booth";
 
 const PAGE_SIZE = 8;
 
@@ -13,9 +12,6 @@ function BoothPageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const [booths, setBooths] = useState<BoothListItem[]>([]);
-  const [totalPages, setTotalPages] = useState(1);
-  const [isLoading, setIsLoading] = useState(true);
   const [isStampMode, setIsStampMode] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
     () => searchParams.get("date") ?? "all"
@@ -47,32 +43,20 @@ function BoothPageContent() {
     return () => clearTimeout(t);
   }, [searchQuery]);
 
-  // Fetch booths
-  useEffect(() => {
-    setIsLoading(true);
-    if (isStampMode) {
-      BoothApi.getStampList()
-        .then((data) => {
-          setBooths(data);
-          setTotalPages(Math.max(1, Math.ceil(data.length / PAGE_SIZE)));
-        })
-        .catch(() => { setBooths([]); setTotalPages(1); })
-        .finally(() => setIsLoading(false));
-      return;
-    }
-    const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
-    BoothApi.getList({
-      date: dateParam,
-      category: selectedCategory !== "전체" ? selectedCategory : undefined,
-      search: debouncedSearch.trim() || undefined,
-    })
-      .then((data) => {
-        setBooths(data);
-        setTotalPages(Math.max(1, Math.ceil(data.length / PAGE_SIZE)));
-      })
-      .catch(() => { setBooths([]); setTotalPages(1); })
-      .finally(() => setIsLoading(false));
-  }, [selectedDate, selectedLocation, selectedCategory, debouncedSearch, isStampMode]);
+  const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
+
+  const { data: normalBooths = [], isLoading: normalLoading } = useBoothList(
+    { date: dateParam, category: selectedCategory !== "전체" ? selectedCategory : undefined, search: debouncedSearch.trim() || undefined },
+    { enabled: !isStampMode }
+  );
+
+  const { data: stampBooths = [], isLoading: stampLoading } = useBoothStampList(
+    { enabled: isStampMode }
+  );
+
+  const booths = isStampMode ? stampBooths : normalBooths;
+  const isLoading = isStampMode ? stampLoading : normalLoading;
+  const totalPages = Math.max(1, Math.ceil(booths.length / PAGE_SIZE));
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
