@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useQueryClient } from "@tanstack/react-query";
 import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { mutate } from "@/lib/api/fetcher";
@@ -37,7 +37,7 @@ export default function LikeButton({
   const [likeCount, setLikeCount] = useState(initialLikeCount);
   const [animateKey, setAnimateKey] = useState(0);
   const [showLoginSheet, setShowLoginSheet] = useState(false);
-  const router = useRouter();
+  const queryClient = useQueryClient();
 
   const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
@@ -53,8 +53,8 @@ export default function LikeButton({
 
     try {
       await mutate(endpoint, nextLiked ? "POST" : "DELETE");
-      // 서버 캐시를 무효화하여 다른 페이지에서도 좋아요 상태가 동기화되도록 함
-      router.refresh();
+      queryClient.invalidateQueries({ queryKey: [type] });
+      queryClient.invalidateQueries({ queryKey: ["mypage", type === "booth" ? "booth" : "foodtruck"] });
     } catch (error) {
       console.error("좋아요 처리 실패:", error);
       setIsLiked(!nextLiked);
