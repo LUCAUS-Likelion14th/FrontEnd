@@ -45,14 +45,18 @@ export default function Card({
             </span>
           </div>
 
-          <LikeButton
-            id={id}
-            type={type}
-            initialIsLiked={isLiked}
-            initialLikeCount={likeCount}
-            layout="vertical"
-            size="sm"
-          />
+          <div
+            onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          >
+            <LikeButton
+              id={id}
+              type={type}
+              initialIsLiked={isLiked}
+              initialLikeCount={likeCount}
+              layout="vertical"
+              size="sm"
+            />
+          </div>
         </div>
       </article>
     </Link>
