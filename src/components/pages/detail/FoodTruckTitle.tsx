@@ -31,7 +31,7 @@ export default function FoodTruckTitle({
           layout="vertical"
         />
       </div>
-      <p>{info}</p>
+      <p className="break-keep">{info}</p>
     </div>
   );
 }
