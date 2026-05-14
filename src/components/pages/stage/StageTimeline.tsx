@@ -23,7 +23,7 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
   }, [activeId, data]);
 
   return (
-    <div ref={containerRef} className="flex flex-col max-h-101 border border-text-sub2 rounded-[10px] px-3 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+    <div ref={containerRef} className="flex flex-col bg-primary-light rounded-[10px] px-3">
       {data.map((item, index) => {
         const isActive = item.stage_id === activeId;
         const isFirst = index === 0;
@@ -51,7 +51,7 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
               {/* 위쪽 선: top-0 → 원 상단 6px 전 (원과 닿지 않게) */}
               {!isFirst && (
                 <div
-                  className="absolute top-0 w-px bg-text-sub"
+                  className="absolute top-0 w-px bg-text-sub/30"
                   style={{ height: "14px" }}
                 />
               )}
@@ -59,7 +59,7 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
               {/* 아래쪽 선: 원 하단 6px 아래부터 → bottom-0 */}
               {!isLast && (
                 <div
-                  className="absolute bottom-0 w-px bg-text-sub"
+                  className="absolute bottom-0 w-px bg-text-sub/30"
                   style={{ top: isActive ? "46px" : "34px" }}
                 />
               )}
@@ -68,11 +68,11 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
               <div className="mt-5 relative z-10">
                 {isActive ? (
                   <div className="relative flex items-center justify-center">
-                    <div className="w-5 h-5 rounded-full border-2 border-primary bg-white" />
+                    <div className="w-5 h-5 rounded-full border-2 border-primary bg-primary-light" />
                     <div className="absolute w-3 h-3 rounded-full bg-primary" />
                   </div>
                 ) : (
-                  <div className="w-2 h-2 rounded-full bg-white border border-text-sub" />
+                  <div className="w-2 h-2 rounded-full bg-primary/30" />
                 )}
               </div>
             </div>

@@ -19,8 +19,8 @@ export default function TimelineCard({
   return (
     <Link href={`/stage/${id}`}>
       <article
-        className={`flex items-center gap-4.75 w-full min-w-59.75 min-h-24 p-2.5 rounded-[10px] cursor-pointer ${
-          isActive ? "border-2 border-primary" : "border border-text-sub2"
+        className={`flex items-center gap-4.75 w-full min-w-59.75 min-h-24 p-2.5 rounded-[10px] cursor-pointer bg-white ${
+          isActive ? "border-2 border-primary shadow-md" : "shadow-sm"
         }`}
       >
         <div className="rounded-lg overflow-hidden">
