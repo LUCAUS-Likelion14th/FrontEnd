@@ -31,7 +31,11 @@ export default function LostTypeFilter({ selectedType, onSelectType }: Props) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 px-3 h-9 rounded-full bg-[#EEF3FB] text-[#8D97A7]"
+        className={`flex items-center gap-2 px-3 h-9 rounded-full transition-colors ${
+          selectedType !== "all"
+            ? "bg-primary text-white"
+            : "bg-[#EEF3FB] text-[#8D97A7]"
+        }`}
       >
         <FiList size={15} />
         <span className="text-sm font-medium">{currentLabel}</span>
