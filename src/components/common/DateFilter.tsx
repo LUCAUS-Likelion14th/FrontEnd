@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
-import { FiCalendar, FiChevronDown, FiChevronUp, FiCheck } from "react-icons/fi";
+import { useState } from "react";
+import { FiCalendar, FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { BOOTH_DATES } from "@/data/boothData";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -12,26 +12,15 @@ type Props = {
 
 export default function DateFilter({ selectedDate, onSelectDate }: Props) {
   const [isOpen, setIsOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
 
   const currentLabel =
     BOOTH_DATES.find((d) => d.value === selectedDate)?.label ?? "";
 
-  useEffect(() => {
-    function handleClickOutside(e: MouseEvent) {
-      if (ref.current && !ref.current.contains(e.target as Node)) {
-        setIsOpen(false);
-      }
-    }
-    document.addEventListener("mousedown", handleClickOutside);
-    return () => document.removeEventListener("mousedown", handleClickOutside);
-  }, []);
-
   return (
-    <div ref={ref} className="relative">
+    <div className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 px-3 h-9 rounded-[6px] bg-[#EEF3FB] text-[#8D97A7]"
+        className="flex items-center gap-2 px-3 h-9 rounded-[6px] bg-primary text-white"
       >
         <FiCalendar size={15} />
         <span className="text-sm font-medium">{currentLabel}</span>
@@ -40,7 +29,9 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
 
       <AnimatePresence>
         {isOpen && (
-          <motion.ul
+          <>
+            <div className="fixed inset-0 z-10" onClick={() => setIsOpen(false)} />
+            <motion.ul
             initial={{ opacity: 0, y: -6, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
@@ -69,6 +60,7 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
               );
             })}
           </motion.ul>
+          </>
         )}
       </AnimatePresence>
     </div>
