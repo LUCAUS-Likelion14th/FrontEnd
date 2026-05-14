@@ -26,7 +26,7 @@ export default function NoticeSwiper({ promotions }: Props) {
   if (promotions.length === 0) {
     return (
       <div className="px-[8.33%]">
-        <div className="aspect-square w-full rounded-[10px] bg-gray-100 flex items-center justify-center text-text-sub text-base">
+        <div className="aspect-[4/5] w-full rounded-[10px] bg-gray-100 flex items-center justify-center text-text-sub text-base">
           등록된 배너가 없어요
         </div>
       </div>
@@ -36,15 +36,12 @@ export default function NoticeSwiper({ promotions }: Props) {
   const multiple = promotions.length > 1;
   const n = promotions.length;
 
-  // 슬라이드를 3배 복제해 양옆이 항상 채워지도록 함
   const slides = multiple
     ? [...promotions, ...promotions, ...promotions]
     : promotions;
 
-  // 중간 세트에서 시작
   const initialSlide = multiple ? n : 0;
 
-  // 트랜지션 끝에 가장자리 도달 시 중간으로 조용히 점프
   const handleTransitionEnd = (swiper: SwiperType) => {
     if (!multiple) return;
     const idx = swiper.activeIndex;
@@ -55,7 +52,6 @@ export default function NoticeSwiper({ promotions }: Props) {
     }
   };
 
-  // 자동 슬라이드
   useEffect(() => {
     if (!multiple || !swiperRef) return;
     const swiper = swiperRef;
@@ -84,7 +80,7 @@ export default function NoticeSwiper({ promotions }: Props) {
         {slides.map((item, i) => (
           <SwiperSlide key={`${item.id}-${i}`}>
             <div
-              className="relative aspect-square rounded-[10px] overflow-hidden cursor-pointer"
+              className="relative aspect-[4/5] rounded-[10px] overflow-hidden cursor-pointer mt-3"
               onClick={() => handleClick(item.instagram)}
             >
               <Image

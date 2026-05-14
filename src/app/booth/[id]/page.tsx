@@ -34,8 +34,9 @@ export default function BoothDetailPage({ params }: Props) {
   }
 
   return (
-    <main className="pb-12">
+    <main className="pb-16">
       <DetailHeader title="부스 정보" />
+
       <div className="relative w-full aspect-390/264">
         <Image
           src={booth.booth_image}
@@ -45,7 +46,7 @@ export default function BoothDetailPage({ params }: Props) {
         />
       </div>
 
-      <div className="flex flex-col px-4 gap-8">
+      <div className="flex flex-col px-4 gap-6">
         <BoothTitle
           name={booth.booth_name}
           categories={booth.booth_category}
@@ -66,13 +67,15 @@ export default function BoothDetailPage({ params }: Props) {
           hasBorder={false}
         />
 
-        <div className="relative w-full h-60">
-          <Image
-            src={booth.location_image}
-            alt={booth.location}
-            fill
-            className="object-cover rounded-[10px]"
-          />
+        <div className="flex flex-col gap-3">
+          <div className="relative w-full h-60 rounded-[10px]">
+            <Image
+              src={booth.location_image}
+              alt={booth.location}
+              fill
+              className="object-cover"
+            />
+          </div>
         </div>
       </div>
     </main>

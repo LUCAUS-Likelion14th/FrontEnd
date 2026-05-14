@@ -1,6 +1,7 @@
 "use client";
 
 import { Pagination, DetailHeader, NoticeItem } from "@/components";
+import { FiBell } from "react-icons/fi";
 import { formatDate } from "@/lib/utils/date";
 import { useState } from "react";
 import { useNotices } from "@/hooks/queries/notice";
@@ -44,8 +45,14 @@ export default function NoticePage() {
               />
             ))
           ) : (
-            <div className="flex items-center justify-center py-20 text-text-sub text-base">
-              등록된 공지사항이 없습니다.
+            <div className="flex flex-col items-center justify-center gap-3 py-16">
+              <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
+                <FiBell size={28} className="text-[#06387D]" />
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <p className="text-[15px] font-semibold text-[#3B4A5A]">등록된 공지사항이 없어요</p>
+                <p className="text-[13px] text-text-sub">새로운 공지가 올라오면 알려드릴게요</p>
+              </div>
             </div>
           )}
         </section>
