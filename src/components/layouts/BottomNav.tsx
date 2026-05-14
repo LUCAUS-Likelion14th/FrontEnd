@@ -73,7 +73,7 @@ export default function BottomNav() {
     <nav
       aria-label="하단 메뉴"
       className={`fixed bottom-0 left-0 w-full z-10 ${
-        isLogin ? "bg-white/10" : "bg-white/35 backdrop-blur-xs"
+        isLogin ? "bg-white/10" : "bg-white/90 backdrop-blur-md"
       }`}
     >
       <ul className="relative flex justify-around items-center my-1">
