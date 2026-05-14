@@ -38,7 +38,7 @@ export default function FoodTruckDetailPage({ params }: Props) {
       <DetailHeader title="푸드트럭 정보" />
       <DetailHeroImage src={foodTruck.image} alt="푸드트럭 사진" />
 
-      <div className="flex flex-col px-4 gap-10">
+      <div className="flex flex-col px-4 gap-6">
         <FoodTruckTitle
           id={foodTruck.id}
           type="foodtruck"
@@ -47,10 +47,8 @@ export default function FoodTruckDetailPage({ params }: Props) {
           likeCount={foodTruck.likeCount}
           info={foodTruck.foodTruckInfo}
         />
-        <DetailInfo location={foodTruck.location} date={foodTruck.date} />
-        <div className="-mt-5">
-          <MenuDetail menuList={foodTruck.menu} />
-        </div>
+        <DetailInfo location={foodTruck.location} date={foodTruck.date} hasBorder={false} />
+        <MenuDetail menuList={foodTruck.menu} />
       </div>
     </main>
   );
