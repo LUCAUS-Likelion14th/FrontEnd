@@ -82,7 +82,7 @@ export default function StagePage() {
       <section className="flex flex-col gap-4 mb-3">
         <div className="flex justify-between items-center">
           <h2 className="text-[24px] font-semibold">본무대 타임라인</h2>
-          <button className="px-[37.5px] py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg">
+          <button className="px-9 py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg">
             본무대 FAQ
           </button>
         </div>
