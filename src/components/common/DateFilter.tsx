@@ -20,7 +20,7 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
     <div className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 px-3 h-9 rounded-[6px] bg-primary text-white"
+        className="flex items-center gap-2 px-3 h-9 rounded-[20px] bg-primary text-white"
       >
         <FiCalendar size={15} />
         <span className="text-sm font-medium">{currentLabel}</span>
@@ -36,7 +36,7 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="absolute top-11 left-0 z-20 bg-white rounded-[6px] shadow-lg overflow-hidden min-w-[110px]"
+            className="absolute top-11 left-0 z-20 bg-white rounded-[20px] shadow-lg overflow-hidden min-w-[110px]"
           >
             {BOOTH_DATES.map((d) => {
               const isSelected = selectedDate === d.value;
