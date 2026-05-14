@@ -30,7 +30,7 @@ export default function StageCategory({
                 : "text-text-sub"
             }`}
           >
-            21일
+            21일 목
           </button>
 
           <button
@@ -41,7 +41,7 @@ export default function StageCategory({
                 : "text-text-sub"
             }`}
           >
-            22일
+            22일 금
           </button>
         </div>
 
@@ -64,10 +64,10 @@ export default function StageCategory({
           <button
             key={item}
             onClick={() => onSelect(item)}
-            className={`p-2.5 rounded-md leading-4.5 shrink-0 ${
+            className={`px-3 py-2 rounded-md text-sm font-medium leading-4.5 shrink-0 transition-colors ${
               selected === item
                 ? "bg-primary text-white"
-                : "bg-white text-[#8D97A7] border border-[#8D97A7]"
+                : "bg-[#EEF3FB] text-primary"
             }`}
           >
             {item}
