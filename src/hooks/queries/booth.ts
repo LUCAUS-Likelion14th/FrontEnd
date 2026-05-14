@@ -2,15 +2,12 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { BoothApi } from "@/lib/api/boothApi";
+import { BoothListParams } from "@/types/booth";
 
-type BoothListParams = {
-  date?: string;
-  location?: string;
-  category?: string;
-  search?: string;
-};
-
-export function useBoothList(params?: BoothListParams, options?: { enabled?: boolean }) {
+export function useBoothList(
+  params?: BoothListParams,
+  options?: { enabled?: boolean },
+) {
   return useQuery({
     queryKey: ["booth", "list", params],
     queryFn: () => BoothApi.getList(params),
