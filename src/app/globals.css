@@ -12,10 +12,11 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-primary: #06387d; /* 메인 블루 */
+  --color-primary: #06387d; 
+  --color-primary-light: #eef3fb;
   --color-primary-hover: ;
-  --color-text-main: black; /* 기본 텍스트 */
-  --color-text-sub: #8d97a7; /* 보조 텍스트 */
+  --color-text-main: black; 
+  --color-text-sub: #8d97a7; 
   --color-text-sub2: #dce2e9;
 }
 

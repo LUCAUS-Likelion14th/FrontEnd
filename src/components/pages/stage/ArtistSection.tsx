@@ -7,7 +7,7 @@ type ArtistSectionProps = {
 
 export default function ArtistSection({ data }: ArtistSectionProps) {
   return (
-    <div className="flex gap-4 overflow-x whitespace-nowrap">
+    <div className="flex gap-4 overflow-x-auto whitespace-nowrap [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item) => (
         <ArtistButton
           key={item.stage_id}

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { preload } from "react-dom";
 import { useEffect, useMemo, useState } from "react";
 import { MyPageData } from "@/types/mypage";
 import { FiChevronRight, FiImage } from "react-icons/fi";
@@ -16,30 +17,33 @@ function MiniCard({ href, src, alt, name }: { href: string; src: string; alt: st
   const [imgError, setImgError] = useState(false);
 
   return (
-    <Link href={href} className="flex flex-col border border-text-sub2 rounded-[7px] overflow-hidden">
-      <div className="relative aspect-square bg-gray-100">
-        {imgError || !src ? (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <FiImage size={24} className="text-gray-300" />
-          </div>
-        ) : (
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            className="object-cover"
-            onError={() => setImgError(true)}
-          />
-        )}
-      </div>
-      <div className="px-2 py-1 bg-gradient-to-t from-white to-[#d9d9d9]">
-        <span className="text-sm truncate block">{name}</span>
-      </div>
+    <Link href={href} className="block">
+      <article className="w-full rounded-[10px] overflow-hidden flex flex-col shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+        <div className="relative w-full h-[80px] bg-[#D9D9D9] shrink-0">
+          {imgError || !src ? (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <FiImage size={20} className="text-gray-300" />
+            </div>
+          ) : (
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              className="object-cover"
+              onError={() => setImgError(true)}
+            />
+          )}
+        </div>
+        <div className="px-[10px] py-[8px] bg-white">
+          <span className="text-[13px] font-semibold leading-normal text-black truncate block">{name}</span>
+        </div>
+      </article>
     </Link>
   );
 }
 
 export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
+  preload("/mypage-login-bg.jpg", { as: "image" });
   const [stampData, setStampData] = useState<{
     stamp_count: number;
     stamp_all: number;
@@ -81,11 +85,15 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
     <main className="flex flex-col gap-4 pb-25">
       {!isLoggedIn ? (
         <div className="flex flex-col gap-8">
-          <div
-            className="flex items-end justify-end pt-13.5 pb-[15px] px-4 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/mypage-login-bg.png')" }}
-          >
-            <div className="flex flex-col items-end gap-2.5">
+          <div className="relative flex items-end justify-end pt-13.5 pb-[15px] px-4">
+            <Image
+              src="/mypage-login-bg.jpg"
+              alt="마이페이지 배경"
+              fill
+              priority
+              className="object-cover object-center"
+            />
+            <div className="relative z-10 flex flex-col items-end gap-2.5">
               <div className="flex flex-col text-base font-medium text-white text-right">
                 <span>로그인 후</span>
                 <span>청:ON을 더 즐겨보세요!</span>
@@ -106,11 +114,15 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
         </div>
       ) : (
         <div className="flex flex-col gap-8">
-          <div
-            className="flex items-end justify-end pt-13.5 pb-[15px] px-4 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/mypage-login-bg.png')" }}
-          >
-            <div className="flex flex-col items-end gap-3">
+          <div className="relative flex items-end justify-end pt-13.5 pb-[15px] px-4">
+            <Image
+              src="/mypage-login-bg.jpg"
+              alt="마이페이지 배경"
+              fill
+              priority
+              className="object-cover object-center"
+            />
+            <div className="relative z-10 flex flex-col items-end gap-3">
               <span className="text-base font-medium text-white text-right">
                 {data.name}님, 환영합니다!
               </span>
@@ -125,7 +137,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
           <div className="flex flex-col px-4 gap-8">
             {/* 좋아요 */}
-            <div className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3">
+            <div className="flex flex-col gap-5 bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] px-4 py-3">
               <Link href="/mypage/likes" className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">내 좋아요</span>
                 <FiChevronRight size={24} className="text-[#727272]" />
@@ -162,7 +174,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             {/* 도장판 */}
             <Link
               href="/stamp"
-              className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3"
+              className="flex flex-col bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] px-4 py-3"
             >
               <div className="flex items-center justify-between mb-9">
                 <span className="text-[20px] font-semibold">도장판</span>
@@ -201,7 +213,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
 function EmptyBox({ title }: { title: string }) {
   return (
-    <div className="bg-white border rounded-[10px] p-4">
+    <div className="bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] p-4">
       <span className="font-semibold">{title}</span>
       <div className="text-center text-gray-400 mt-10 mb-16">
         로그인 후 확인할 수 있어요.
