@@ -31,7 +31,7 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
     <div ref={ref} className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 px-3 h-9 rounded-[6px] bg-[#EEF3FB] text-primary"
+        className="flex items-center gap-2 px-3 h-9 rounded-[6px] bg-[#EEF3FB] text-[#8D97A7]"
       >
         <FiCalendar size={15} />
         <span className="text-sm font-medium">{currentLabel}</span>

@@ -26,7 +26,7 @@ export default function BoothLocationFilter({
             className={`flex items-center justify-center gap-1.5 h-9 rounded-[6px] text-sm font-medium transition-colors ${
               isActive
                 ? "bg-primary text-white"
-                : "bg-[#EEF3FB] text-primary"
+                : "bg-[#EEF3FB] text-[#8D97A7]"
             }`}
           >
             <Icon size={14} />

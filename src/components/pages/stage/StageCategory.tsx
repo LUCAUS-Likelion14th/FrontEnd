@@ -67,7 +67,7 @@ export default function StageCategory({
             className={`px-3 py-2 rounded-md text-sm font-medium leading-4.5 shrink-0 transition-colors ${
               selected === item
                 ? "bg-primary text-white"
-                : "bg-[#EEF3FB] text-primary"
+                : "bg-[#EEF3FB] text-[#8D97A7]"
             }`}
           >
             {item}
