@@ -2,10 +2,10 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { lostApi } from "@/lib/api/lostApi";
-import { LostParams } from "@/types/lost";
+import { LostListResponse, LostParams } from "@/types/lost";
 
 export function useLostItems(params: LostParams) {
-  return useQuery({
+  return useQuery<LostListResponse>({
     queryKey: ["lost", params],
     queryFn: () => lostApi.getLostItems(params),
     staleTime: 30_000,

@@ -6,8 +6,17 @@ export interface LostItem {
   find_location: string;
 }
 
+export interface LostListResponse {
+  content: LostItem[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+}
+
 export interface LostParams {
   category?: string;
   date?: string;
   page?: number;
+  size?: number;
 }

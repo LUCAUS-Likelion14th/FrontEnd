@@ -1,5 +1,5 @@
 import { fetcher } from "./fetcher";
-import { LostItem, LostParams } from "@/types/lost";
+import { LostListResponse, LostParams } from "@/types/lost";
 
 export const lostApi = {
   getLostItems: ({ category, date, page = 0 }: LostParams = {}) => {
@@ -12,6 +12,6 @@ export const lostApi = {
     }
     params.append("page", page.toString());
 
-    return fetcher<LostItem[]>(`/lost?${params.toString()}`);
+    return fetcher<LostListResponse>(`/lost?${params.toString()}`);
   },
 };
