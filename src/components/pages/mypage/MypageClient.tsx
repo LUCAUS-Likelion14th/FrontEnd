@@ -16,25 +16,27 @@ function MiniCard({ href, src, alt, name }: { href: string; src: string; alt: st
   const [imgError, setImgError] = useState(false);
 
   return (
-    <Link href={href} className="flex flex-col border border-text-sub2 rounded-[7px] overflow-hidden">
-      <div className="relative aspect-square bg-gray-100">
-        {imgError || !src ? (
-          <div className="absolute inset-0 flex items-center justify-center">
-            <FiImage size={24} className="text-gray-300" />
-          </div>
-        ) : (
-          <Image
-            src={src}
-            alt={alt}
-            fill
-            className="object-cover"
-            onError={() => setImgError(true)}
-          />
-        )}
-      </div>
-      <div className="px-2 py-1 bg-gradient-to-t from-white to-[#d9d9d9]">
-        <span className="text-sm truncate block">{name}</span>
-      </div>
+    <Link href={href} className="block">
+      <article className="w-full rounded-[10px] overflow-hidden flex flex-col shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+        <div className="relative w-full h-[80px] bg-[#D9D9D9] shrink-0">
+          {imgError || !src ? (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <FiImage size={20} className="text-gray-300" />
+            </div>
+          ) : (
+            <Image
+              src={src}
+              alt={alt}
+              fill
+              className="object-cover"
+              onError={() => setImgError(true)}
+            />
+          )}
+        </div>
+        <div className="px-[10px] py-[8px] bg-white">
+          <span className="text-[13px] font-semibold leading-normal text-black truncate block">{name}</span>
+        </div>
+      </article>
     </Link>
   );
 }
