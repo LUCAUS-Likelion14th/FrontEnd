@@ -19,10 +19,10 @@ export default function DetailAction({
   likeCount,
 }: DetailActionsProps) {
   return (
-    <div className="flex border-y border-text-sub py-5">
+    <div className="flex border-y border-text-sub2 py-5">
       <button
         onClick={() => ownerInsta && window.open(ownerInsta, "_blank")}
-        className="flex-1 flex flex-col items-center justify-center gap-2 border-r border-text-sub"
+        className="flex-1 flex flex-col items-center justify-center gap-2 border-r border-text-sub2"
       >
         <AiOutlineInstagram size={38} />
         <span className="text-[14px]">주최자 인스타 바로 가기</span>
