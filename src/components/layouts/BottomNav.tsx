@@ -73,8 +73,9 @@ export default function BottomNav() {
     <nav
       aria-label="하단 메뉴"
       className={`fixed bottom-0 left-0 w-full z-10 ${
-        isLogin ? "bg-white/10" : "bg-white/90 backdrop-blur-md"
+        isLogin ? "bg-white/10" : "bg-white/90 backdrop-blur-md shadow-[0_-2px_8px_rgba(0,0,0,0.06)]"
       }`}
+      style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
       <ul className="relative flex justify-around items-center my-1">
         {!isLogin && activeIndex !== -1 && (
