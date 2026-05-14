@@ -50,7 +50,7 @@ export default function StagePage() {
 
   return (
     <main className="px-4 pt-5 pb-25">
-      <section className="mb-15">
+      <section className="mb-10">
         <StageCategory
           categories={CATEGORY}
           selected={selected}
@@ -60,7 +60,7 @@ export default function StagePage() {
         />
       </section>
 
-      <section className="mb-17">
+      <section className="mb-13">
         <div className="flex flex-col gap-0.5 mb-4">
           <h2 className="text-[24px] font-semibold">{currentCategory.title}</h2>
           <p className="text-base font-normal text-text-sub">
