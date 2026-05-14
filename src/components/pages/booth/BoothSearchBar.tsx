@@ -9,7 +9,7 @@ type Props = {
 
 export default function BoothSearchBar({ value, onChange }: Props) {
   return (
-    <div className="flex items-center w-full px-4 py-1.5 border border-text-sub rounded-[18px] transition-colors focus-within:border-primary">
+    <div className="flex items-center w-full px-4 py-1.5 border border-text-sub/50 rounded-[18px] transition-colors focus-within:border-primary/60">
       <input
         type="text"
         value={value}
