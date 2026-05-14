@@ -48,7 +48,9 @@ export default function FoodTruckDetailPage({ params }: Props) {
           info={foodTruck.foodTruckInfo}
         />
         <DetailInfo location={foodTruck.location} date={foodTruck.date} />
-        <MenuDetail menuList={foodTruck.menu} />
+        <div className="-mt-5">
+          <MenuDetail menuList={foodTruck.menu} />
+        </div>
       </div>
     </main>
   );
