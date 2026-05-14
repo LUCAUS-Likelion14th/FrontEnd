@@ -13,7 +13,7 @@ export default function DetailHeader({ title }: Props) {
   return (
     <div className="flex flex-col">
       <div
-        className="flex items-center gap-1 px-4 py-5 cursor-pointer"
+        className="flex items-center gap-1 px-2.5 py-3.5 cursor-pointer"
         onClick={() => router.back()}
       >
         <FiChevronLeft size={24} />
