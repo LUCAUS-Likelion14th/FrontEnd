@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { preload } from "react-dom";
 import { useEffect, useMemo, useState } from "react";
 import { MyPageData } from "@/types/mypage";
 import { FiChevronRight, FiImage } from "react-icons/fi";
@@ -42,6 +43,7 @@ function MiniCard({ href, src, alt, name }: { href: string; src: string; alt: st
 }
 
 export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
+  preload("/mypage-login-bg.jpg", { as: "image" });
   const [stampData, setStampData] = useState<{
     stamp_count: number;
     stamp_all: number;
@@ -83,11 +85,15 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
     <main className="flex flex-col gap-4 pb-25">
       {!isLoggedIn ? (
         <div className="flex flex-col gap-8">
-          <div
-            className="flex items-end justify-end pt-13.5 pb-[15px] px-4 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/mypage-login-bg.png')" }}
-          >
-            <div className="flex flex-col items-end gap-2.5">
+          <div className="relative flex items-end justify-end pt-13.5 pb-[15px] px-4">
+            <Image
+              src="/mypage-login-bg.jpg"
+              alt="마이페이지 배경"
+              fill
+              priority
+              className="object-cover object-center"
+            />
+            <div className="relative z-10 flex flex-col items-end gap-2.5">
               <div className="flex flex-col text-base font-medium text-white text-right">
                 <span>로그인 후</span>
                 <span>청:ON을 더 즐겨보세요!</span>
@@ -108,11 +114,15 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
         </div>
       ) : (
         <div className="flex flex-col gap-8">
-          <div
-            className="flex items-end justify-end pt-13.5 pb-[15px] px-4 bg-cover bg-center bg-no-repeat"
-            style={{ backgroundImage: "url('/mypage-login-bg.png')" }}
-          >
-            <div className="flex flex-col items-end gap-3">
+          <div className="relative flex items-end justify-end pt-13.5 pb-[15px] px-4">
+            <Image
+              src="/mypage-login-bg.jpg"
+              alt="마이페이지 배경"
+              fill
+              priority
+              className="object-cover object-center"
+            />
+            <div className="relative z-10 flex flex-col items-end gap-3">
               <span className="text-base font-medium text-white text-right">
                 {data.name}님, 환영합니다!
               </span>
