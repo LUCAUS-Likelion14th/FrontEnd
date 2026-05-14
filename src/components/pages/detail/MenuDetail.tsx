@@ -31,23 +31,18 @@ function MenuImage({ src, alt }: { src: string; alt: string }) {
 
 export default function MenuDetail({ menuList }: { menuList: MenuItem[] }) {
   return (
-    <div>
-      <div className="flex flex-col gap-10">
-        {menuList.map((menu, index) => (
-          <div key={index} className="flex justify-between">
-            <div className="flex flex-col gap-4">
-              <div className="max-w-[194px]">
-                <h3 className="text-xl font-semibold">{menu.name}</h3>
-              </div>
-              <p className="text-xl font-semibold">
-                {menu.price.toLocaleString()}원
-              </p>
-            </div>
-
-            <MenuImage src={menu.image} alt={menu.name} />
+    <div className="flex flex-col">
+      {menuList.map((menu, index) => (
+        <div key={index} className="flex justify-between items-center py-4">
+          <div className="flex flex-col gap-1.5">
+            <h3 className="text-xl font-semibold">{menu.name}</h3>
+            <span className="text-[16px] font-medium text-primary">
+              {menu.price.toLocaleString()}원
+            </span>
           </div>
-        ))}
-      </div>
+          <MenuImage src={menu.image} alt={menu.name} />
+        </div>
+      ))}
     </div>
   );
 }

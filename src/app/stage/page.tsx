@@ -50,7 +50,7 @@ export default function StagePage() {
 
   return (
     <main className="px-4 pt-5 pb-25">
-      <section className="mb-15">
+      <section className="mb-10">
         <StageCategory
           categories={CATEGORY}
           selected={selected}
@@ -60,7 +60,7 @@ export default function StagePage() {
         />
       </section>
 
-      <section className="mb-17">
+      <section className="mb-13">
         <div className="flex flex-col gap-0.5 mb-4">
           <h2 className="text-[24px] font-semibold">{currentCategory.title}</h2>
           <p className="text-base font-normal text-text-sub">
@@ -82,7 +82,7 @@ export default function StagePage() {
       <section className="flex flex-col gap-4 mb-3">
         <div className="flex justify-between items-center">
           <h2 className="text-[24px] font-semibold">본무대 타임라인</h2>
-          <button className="px-[37.5px] py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg">
+          <button className="px-9 py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg">
             본무대 FAQ
           </button>
         </div>
