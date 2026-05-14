@@ -26,7 +26,7 @@ export default function NoticeSwiper({ promotions }: Props) {
   if (promotions.length === 0) {
     return (
       <div className="px-[8.33%]">
-        <div className="aspect-square w-full rounded-[10px] bg-gray-100 flex items-center justify-center text-text-sub text-base">
+        <div className="aspect-[4/5] w-full rounded-[10px] bg-gray-100 flex items-center justify-center text-text-sub text-base">
           등록된 배너가 없어요
         </div>
       </div>
@@ -80,7 +80,7 @@ export default function NoticeSwiper({ promotions }: Props) {
         {slides.map((item, i) => (
           <SwiperSlide key={`${item.id}-${i}`}>
             <div
-              className="relative aspect-square rounded-[10px] overflow-hidden cursor-pointer mt-3"
+              className="relative aspect-[4/5] rounded-[10px] overflow-hidden cursor-pointer mt-3"
               onClick={() => handleClick(item.instagram)}
             >
               <Image
