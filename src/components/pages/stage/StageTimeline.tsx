@@ -11,19 +11,15 @@ type StageTimelineProps = {
 };
 
 export default function StageTimeline({ data, activeId }: StageTimelineProps) {
-  const containerRef = useRef<HTMLDivElement>(null);
   const activeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    if (!containerRef.current || !activeRef.current) return;
-    const container = containerRef.current;
-    const activeEl = activeRef.current;
-    const offset = activeEl.offsetTop - container.offsetTop - container.clientHeight / 2 + activeEl.clientHeight / 2;
-    container.scrollTo({ top: offset, behavior: "smooth" });
+    if (!activeRef.current) return;
+    activeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
   }, [activeId, data]);
 
   return (
-    <div ref={containerRef} className="flex flex-col bg-primary-light rounded-[10px] px-3">
+    <div className="flex flex-col bg-primary-light rounded-[10px] px-3">
       {data.map((item, index) => {
         const isActive = item.stage_id === activeId;
         const isFirst = index === 0;
