@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { useSearchParams, useRouter } from "next/navigation";
 import { BoothLocationFilter, BoothCategoryFilter, BoothSearchBar, DateFilter, Pagination, Card } from "@/components";
+import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory } from "@/data/boothData";
 import { useBoothList, useBoothStampList } from "@/hooks/queries/booth";
 
@@ -45,18 +46,23 @@ function BoothPageContent() {
 
   const dateParam = selectedDate === "all" ? undefined : selectedDate.replace(/-/g, "").slice(4);
 
-  const { data: normalBooths = [], isLoading: normalLoading } = useBoothList(
-    { date: dateParam, category: selectedCategory !== "전체" ? selectedCategory : undefined, search: debouncedSearch.trim() || undefined },
+  const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
+    { date: dateParam, location: selectedLocation ?? undefined, category: selectedCategory !== "전체" ? selectedCategory : undefined, search: debouncedSearch.trim() || undefined },
     { enabled: !isStampMode }
   );
 
-  const { data: stampBooths = [], isLoading: stampLoading } = useBoothStampList(
+  const { data: stampBoothsData, isLoading: stampLoading } = useBoothStampList(
     { enabled: isStampMode }
   );
 
+  const normalBooths = normalBoothsData?.content ?? [];
+  const stampBooths = stampBoothsData?.content ?? [];
+
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
-  const totalPages = Math.max(1, Math.ceil(booths.length / PAGE_SIZE));
+  const totalPages = isStampMode
+    ? (stampBoothsData?.totalPages ?? 1)
+    : (normalBoothsData?.totalPages ?? 1);
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
@@ -123,15 +129,15 @@ function BoothPageContent() {
           />
         </div>
 
-        <div className="min-h-[596px]">
+        <div className={booths.length > 0 ? "min-h-[596px]" : ""}>
           {isLoading ? (
-            <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-5">
               {Array.from({ length: 4 }).map((_, i) => (
                 <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
               ))}
             </div>
           ) : booths.length > 0 ? (
-            <div className="grid grid-cols-2 gap-x-4 gap-y-4">
+            <div className="grid grid-cols-2 gap-x-3 gap-y-5">
               {booths.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE).map((booth) => (
                 <Card
                   key={booth.booth_id}
@@ -147,17 +153,25 @@ function BoothPageContent() {
               ))}
             </div>
           ) : (
-            <div className="flex items-center justify-center h-full text-text-sub text-base">
-              해당 조건에 맞는 부스가 없습니다.
+            <div className="flex flex-col items-center justify-center h-full gap-3 py-16">
+              <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
+                <FiSearch size={28} className="text-[#06387D]" />
+              </div>
+              <div className="flex flex-col items-center gap-1">
+                <p className="text-[15px] font-semibold text-[#3B4A5A]">부스를 찾을 수 없어요</p>
+                <p className="text-[13px] text-text-sub">조건을 변경해서 다시 검색해보세요</p>
+              </div>
             </div>
           )}
         </div>
 
-        <Pagination
-          page={currentPage}
-          totalPages={totalPages}
-          onChange={setCurrentPage}
-        />
+        {booths.length > 0 && (
+          <Pagination
+            page={currentPage}
+            totalPages={totalPages}
+            onChange={setCurrentPage}
+          />
+        )}
       </section>
     </main>
   );

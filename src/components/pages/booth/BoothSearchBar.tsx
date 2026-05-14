@@ -17,7 +17,6 @@ export default function BoothSearchBar({ value, onChange }: Props) {
         placeholder="부스 이름 검색"
         className="flex-1 text-base outline-none bg-transparent placeholder:text-text-sub"
       />
-
       <FiSearch size={24} className="text-text-sub shrink-0" />
     </div>
   );

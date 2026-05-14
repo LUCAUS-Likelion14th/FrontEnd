@@ -33,7 +33,7 @@ export default function ListCard({
 
   return (
     <div className="ml-7.5">
-      <article className="relative w-full pl-[10px] pr-[16px] py-[16px] rounded-[10px] bg-gradient-to-r from-[#f7f9ff] to-[#e8f2ff]">
+      <article className="relative w-full pl-[10px] pr-[16px] py-[16px] rounded-[10px] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
         <Link href={href} className="flex items-center gap-[13px]">
           <div className="relative w-[76px] h-[76px] rounded-[8px] overflow-hidden shrink-0 bg-gray-200">
             {imgError || !imageUrl ? (

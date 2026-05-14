@@ -21,7 +21,7 @@ export default function BoothTitle({ name, categories, info }: Props) {
         </div>
       </div>
 
-      <p>{info}</p>
+      <p className="break-keep">{info}</p>
     </div>
   );
 }
