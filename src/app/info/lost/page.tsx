@@ -1,25 +1,30 @@
 "use client";
 
-import { Pagination, LostItemCard, LostTypeFilter, DetailHeader, DateFilter } from "@/components";
+import {
+  Pagination,
+  LostItemCard,
+  LostTypeFilter,
+  DetailHeader,
+  DateFilter,
+} from "@/components";
 import { useState } from "react";
 import { useLostItems } from "@/hooks/queries/lost";
 import Image from "next/image";
 import { FiSearch } from "react-icons/fi";
-
-const ITEMS_PER_PAGE = 6;
 
 export default function LostPage() {
   const [selectedDate, setSelectedDate] = useState("all");
   const [selectedType, setSelectedType] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: lostData = [], isLoading } = useLostItems({
+  const { data: response, isLoading } = useLostItems({
     category: selectedType === "all" ? undefined : selectedType,
     date: selectedDate === "all" ? undefined : selectedDate,
     page: currentPage - 1,
   });
 
-  const totalPages = lostData.length < ITEMS_PER_PAGE ? currentPage : currentPage + 1;
+  const lostData = response?.content ?? [];
+  const totalPages = response?.totalPages ?? 1;
 
   const handleDateChange = (date: string) => {
     setSelectedDate(date);
@@ -62,7 +67,10 @@ export default function LostPage() {
         {isLoading ? (
           <div className="grid grid-cols-2 gap-5">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
+              <div
+                key={i}
+                className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse"
+              />
             ))}
           </div>
         ) : (
@@ -77,8 +85,12 @@ export default function LostPage() {
                   <FiSearch size={28} className="text-[#06387D]" />
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                  <p className="text-[15px] font-semibold text-[#3B4A5A]">해당 조건의 분실물이 없어요</p>
-                  <p className="text-[13px] text-text-sub">조건을 변경해서 다시 검색해보세요</p>
+                  <p className="text-[15px] font-semibold text-[#3B4A5A]">
+                    해당 조건의 분실물이 없어요
+                  </p>
+                  <p className="text-[13px] text-text-sub">
+                    조건을 변경해서 다시 검색해보세요
+                  </p>
                 </div>
               </div>
             )}
