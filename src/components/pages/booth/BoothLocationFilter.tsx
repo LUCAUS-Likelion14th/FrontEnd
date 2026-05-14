@@ -17,21 +17,20 @@ export default function BoothLocationFilter({
     <div className="grid grid-cols-[2fr_1.5fr_1.5fr] gap-2 w-full">
       {BOOTH_LOCATIONS.map((loc) => {
         const isActive = selectedLocation === loc;
-
         const Icon = isActive ? BsGeoFill : BsGeo;
 
         return (
           <button
             key={loc}
             onClick={() => onSelectLocation(isActive ? null : loc)}
-            className={`flex items-center justify-center gap-1.5 h-10 rounded-[6px] transition-colors ${
+            className={`flex items-center justify-center gap-1.5 h-9 rounded-[6px] text-sm font-medium transition-colors ${
               isActive
                 ? "bg-primary text-white"
-                : "border border-text-sub text-text-sub"
+                : "bg-[#EEF3FB] text-primary"
             }`}
           >
-            <Icon size={20} />
-            <span className="text-base whitespace-nowrap">{loc}</span>
+            <Icon size={14} />
+            <span className="whitespace-nowrap">{loc}</span>
           </button>
         );
       })}
