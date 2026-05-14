@@ -137,7 +137,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
           <div className="flex flex-col px-4 gap-8">
             {/* 좋아요 */}
-            <div className="flex flex-col gap-5 bg-white border border-primary rounded-[10px] px-4 py-3">
+            <div className="flex flex-col gap-5 bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] px-4 py-3">
               <Link href="/mypage/likes" className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">내 좋아요</span>
                 <FiChevronRight size={24} className="text-[#727272]" />
@@ -174,7 +174,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             {/* 도장판 */}
             <Link
               href="/stamp"
-              className="flex flex-col bg-white border border-primary rounded-[10px] px-4 py-3"
+              className="flex flex-col bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] px-4 py-3"
             >
               <div className="flex items-center justify-between mb-9">
                 <span className="text-[20px] font-semibold">도장판</span>
@@ -213,7 +213,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
 function EmptyBox({ title }: { title: string }) {
   return (
-    <div className="bg-white border rounded-[10px] p-4">
+    <div className="bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] p-4">
       <span className="font-semibold">{title}</span>
       <div className="text-center text-gray-400 mt-10 mb-16">
         로그인 후 확인할 수 있어요.
