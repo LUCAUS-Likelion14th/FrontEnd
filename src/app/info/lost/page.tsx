@@ -6,7 +6,6 @@ import {
   LostTypeFilter,
   DetailHeader,
   DateFilter,
-  LoadingScreen,
 } from "@/components";
 import { useState } from "react";
 import { useLostItems } from "@/hooks/queries/lost";
@@ -23,8 +22,6 @@ export default function LostPage() {
     date: selectedDate === "all" ? undefined : selectedDate,
     page: currentPage - 1,
   });
-
-  if (isLoading) return <LoadingScreen />;
 
   const lostData = response?.content ?? [];
   const totalPages = response?.totalPages ?? 1;

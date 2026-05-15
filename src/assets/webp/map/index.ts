@@ -1,0 +1,1 @@
+export { default as routeMap } from './route-map.webp'
