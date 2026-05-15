@@ -19,8 +19,8 @@ export default function LostItemEditPage() {
     adminLostApi
       .getLostItems(page, PAGE_SIZE)
       .then((res) => {
-        setItems(res);
-        setHasMore(res.length === PAGE_SIZE);
+        setItems(res.content);
+        setHasMore(!res.totalPages || page < res.totalPages - 1);
       })
       .catch(console.error)
       .finally(() => setLoading(false));

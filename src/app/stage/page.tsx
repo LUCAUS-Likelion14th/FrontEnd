@@ -1,7 +1,8 @@
 "use client";
 
 import { StageEventSection, StageCategory, ArtistSection, StageTimeline } from '@/components';
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 import { useStageData } from "@/hooks/useStageData";
 
@@ -13,6 +14,13 @@ const CATEGORY: CategoryType[] = [
   "아티스트 공연",
   "무대기획전",
 ];
+
+const TYPE_MAP: Record<string, CategoryType> = {
+  student: "학생 공연",
+  festival: "청룡가요제",
+  artist: "아티스트 공연",
+  special: "무대기획전",
+};
 
 const CATEGORY_INFO: Record<
   CategoryType,
@@ -37,8 +45,16 @@ const CATEGORY_INFO: Record<
 };
 
 export default function StagePage() {
+  const searchParams = useSearchParams();
   const [selectedDate, setSelectedDate] = useState("2026-05-21");
   const [selected, setSelected] = useState<CategoryType>("학생 공연");
+
+  useEffect(() => {
+    const type = searchParams.get("type");
+    if (type && TYPE_MAP[type]) {
+      setSelected(TYPE_MAP[type]);
+    }
+  }, [searchParams]);
 
   const { stage, timelineData, activeId } = useStageData(selectedDate, selected);
 
