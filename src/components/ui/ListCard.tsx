@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiImage } from "react-icons/fi";
 import LikeButton from "../common/Button/LikeButton";
+import { motion } from "framer-motion";
 
 type ListCardProps = {
   id: number | string;
@@ -33,7 +34,11 @@ export default function ListCard({
 
   return (
     <div className="ml-7.5">
-      <article className="relative w-full pl-[10px] pr-[16px] py-[16px] rounded-[10px] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+      <motion.article
+        className="relative w-full pl-[10px] pr-[16px] py-[16px] rounded-[10px] bg-white shadow-[0_2px_8px_rgba(0,0,0,0.08)]"
+        whileHover={{ y: -2, transition: { duration: 0.18 } }}
+        whileTap={{ scale: 0.99, transition: { duration: 0.1 } }}
+      >
         <Link href={href} className="flex items-center gap-[13px]">
           <div className="relative w-[76px] h-[76px] rounded-[8px] overflow-hidden shrink-0 bg-gray-200">
             {imgError || !imageUrl ? (
@@ -77,7 +82,7 @@ export default function ListCard({
             size="sm"
           />
         </div>
-      </article>
+      </motion.article>
     </div>
   );
 }
