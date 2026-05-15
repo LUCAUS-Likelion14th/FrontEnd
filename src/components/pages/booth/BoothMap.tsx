@@ -16,6 +16,8 @@ const DEFAULT_MAP = map1;
 const MIN_SCALE = 1;
 const MAX_SCALE = 4;
 
+const NO_PAN_MAPS = new Set([map1, map2]);
+
 function clamp(v: number, lo: number, hi: number) {
   return Math.max(lo, Math.min(hi, v));
 }
@@ -27,14 +29,16 @@ export default function BoothMap({ selectedLocation }: Props) {
     (selectedLocation && MAP_IMAGE[selectedLocation as keyof typeof MAP_IMAGE]) ??
     DEFAULT_MAP;
 
+  const noPan = NO_PAN_MAPS.has(mapImage as typeof map1);
+
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   const [pos, setPos] = useState({ x: 0, y: 0 });
-  const [coverSize, setCoverSize] = useState({ w: 0, h: 0 });
+  const [imgSize, setImgSize] = useState({ w: 0, h: 0 });
 
   const scaleRef = useRef(1);
   const posRef = useRef({ x: 0, y: 0 });
-  const coverSizeRef = useRef({ w: 0, h: 0 });
+  const imgSizeRef = useRef({ w: 0, h: 0 });
 
   const sync = useCallback((s: number, p: { x: number; y: number }) => {
     scaleRef.current = s;
@@ -43,8 +47,6 @@ export default function BoothMap({ selectedLocation }: Props) {
     setPos(p);
   }, []);
 
-  // Compute "cover" dimensions so the image always fills the container
-  // regardless of device width, while preserving aspect ratio
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
@@ -53,43 +55,47 @@ export default function BoothMap({ selectedLocation }: Props) {
       const cW = el.clientWidth;
       const cH = el.clientHeight;
       const aspect = mapImage.width / mapImage.height;
+      const containerAspect = cW / cH;
 
       let w: number, h: number;
-      if (aspect * cH >= cW) {
-        h = cH;
-        w = aspect * cH;
+      if (noPan) {
+        // contain: entire image visible, no clipping
+        if (containerAspect > aspect) {
+          h = cH; w = aspect * cH;
+        } else {
+          w = cW; h = cW / aspect;
+        }
       } else {
-        w = cW;
-        h = cW / aspect;
+        // cover: fill container, allow panning
+        if (aspect * cH >= cW) {
+          h = cH; w = aspect * cH;
+        } else {
+          w = cW; h = cW / aspect;
+        }
       }
 
-      coverSizeRef.current = { w, h };
-      setCoverSize({ w, h });
+      imgSizeRef.current = { w, h };
+      setImgSize({ w, h });
     };
 
     update();
     const ro = new ResizeObserver(update);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [mapImage]);
+  }, [mapImage, noPan]);
 
-  // transformOrigin: left center
-  // At scale=1, y=0: image is centered vertically (auto-overflow if taller than container)
-  // X clamp: left edge ≤ 0, right edge ≥ containerW
-  // Y clamp: top edge ≤ 0, bottom edge ≥ containerH
+  // Only used for pan map (map3)
   const clampPos = useCallback(
     (x: number, y: number, s: number) => {
       const el = containerRef.current;
       if (!el) return { x, y };
       const cW = el.clientWidth;
       const cH = el.clientHeight;
-      const { w: rW, h: rH } = coverSizeRef.current;
+      const { w: rW, h: rH } = imgSizeRef.current;
       if (rW === 0) return { x, y };
 
       const minX = Math.min(0, cW - rW * s);
       const maxX = 0;
-
-      // transformOrigin Y = cH/2; image top at ty + cH/2 - rH*s/2
       const maxY = (rH * s - cH) / 2;
       const minY = -maxY;
 
@@ -98,7 +104,6 @@ export default function BoothMap({ selectedLocation }: Props) {
     []
   );
 
-  // Reset position when map changes
   useEffect(() => {
     sync(1, { x: 0, y: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -134,7 +139,9 @@ export default function BoothMap({ selectedLocation }: Props) {
         const dy = e.touches[0].clientY - touchRef.current.y;
         touchRef.current.x = e.touches[0].clientX;
         touchRef.current.y = e.touches[0].clientY;
-        sync(s, clampPos(p.x + dx, p.y + dy, s));
+        if (!noPan) {
+          sync(s, clampPos(p.x + dx, p.y + dy, s));
+        }
       } else if (e.touches.length === 2 && touchRef.current.dist !== null) {
         const dx = e.touches[0].clientX - e.touches[1].clientX;
         const dy = e.touches[0].clientY - e.touches[1].clientY;
@@ -149,10 +156,14 @@ export default function BoothMap({ selectedLocation }: Props) {
         touchRef.current.x = midX;
         touchRef.current.y = midY;
 
-        sync(newScale, clampPos(p.x + pdx, p.y + pdy, newScale));
+        if (noPan) {
+          sync(newScale, { x: 0, y: 0 });
+        } else {
+          sync(newScale, clampPos(p.x + pdx, p.y + pdy, newScale));
+        }
       }
     },
-    [clampPos, sync]
+    [clampPos, noPan, sync]
   );
 
   const handleTouchEnd = useCallback(() => {
@@ -168,13 +179,13 @@ export default function BoothMap({ selectedLocation }: Props) {
 
   const handleMouseMove = useCallback(
     (e: MouseEvent) => {
-      if (!mouseRef.current) return;
+      if (!mouseRef.current || noPan) return;
       const dx = e.clientX - mouseRef.current.x;
       const dy = e.clientY - mouseRef.current.y;
       mouseRef.current = { x: e.clientX, y: e.clientY };
       sync(scaleRef.current, clampPos(posRef.current.x + dx, posRef.current.y + dy, scaleRef.current));
     },
-    [clampPos, sync]
+    [clampPos, noPan, sync]
   );
 
   const handleMouseUp = useCallback(() => {
@@ -185,9 +196,9 @@ export default function BoothMap({ selectedLocation }: Props) {
     (e: WheelEvent) => {
       e.preventDefault();
       const newScale = clamp(scaleRef.current * (e.deltaY > 0 ? 0.9 : 1.1), MIN_SCALE, MAX_SCALE);
-      sync(newScale, clampPos(posRef.current.x, posRef.current.y, newScale));
+      sync(newScale, noPan ? { x: 0, y: 0 } : clampPos(posRef.current.x, posRef.current.y, newScale));
     },
-    [clampPos, sync]
+    [clampPos, noPan, sync]
   );
 
   useEffect(() => {
@@ -217,30 +228,60 @@ export default function BoothMap({ selectedLocation }: Props) {
       className="relative w-full h-[240px] rounded-[10px] overflow-hidden select-none cursor-grab active:cursor-grabbing"
       style={{ touchAction: "none" }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          height: "100%",
-          transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
-          transformOrigin: "left center",
-          willChange: "transform",
-        }}
-      >
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={mapImage.src}
-          alt="부스 지도"
+      {noPan ? (
+        /* contain: full map visible, zoom from center */
+        <div
           style={{
-            width: coverSize.w > 0 ? `${coverSize.w}px` : "auto",
-            height: coverSize.h > 0 ? `${coverSize.h}px` : "100%",
-            maxWidth: "none",
-            display: "block",
+            position: "absolute",
+            inset: 0,
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            transform: `scale(${scale})`,
+            transformOrigin: "center center",
+            willChange: "transform",
           }}
-          draggable={false}
-        />
-      </div>
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={mapImage.src}
+            alt="부스 지도"
+            style={{
+              width: imgSize.w > 0 ? `${imgSize.w}px` : "auto",
+              height: imgSize.h > 0 ? `${imgSize.h}px` : "auto",
+              maxWidth: "none",
+              display: "block",
+            }}
+            draggable={false}
+          />
+        </div>
+      ) : (
+        /* cover: fills container, pan + zoom */
+        <div
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            height: "100%",
+            transform: `translate(${pos.x}px, ${pos.y}px) scale(${scale})`,
+            transformOrigin: "left center",
+            willChange: "transform",
+          }}
+        >
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={mapImage.src}
+            alt="부스 지도"
+            style={{
+              width: imgSize.w > 0 ? `${imgSize.w}px` : "auto",
+              height: imgSize.h > 0 ? `${imgSize.h}px` : "100%",
+              maxWidth: "none",
+              display: "block",
+            }}
+            draggable={false}
+          />
+        </div>
+      )}
     </div>
   );
 }
