@@ -48,7 +48,6 @@ export default function PrizeApplyForm({
 
   return (
     <>
-      {/* 배경 이미지 */}
       <div className="fixed inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
@@ -86,21 +85,22 @@ export default function PrizeApplyForm({
             </div>
 
             <div
-              className="absolute -top-2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center"
+              className="absolute -top-2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2"
               style={{
-                left: `clamp(35px, ${progressPercentage}%, calc(100% - 25px))`,
+                left: `clamp(35px, ${progressPercentage}%, calc(100% - 20px))`,
               }}
             >
-              <div className="relative w-[62px] h-[42px] flex items-center justify-center z-10">
-                <Image
-                  src="/count-bubble.png"
-                  alt="도장 개수 말풍선"
-                  fill
-                  className="object-contain"
+              <div className="relative z-10 mb-2">
+                <div className="bg-[#06387D] text-white px-3 py-1 rounded-lg text-[16px] font-semibold flex items-center justify-center shadow-md whitespace-nowrap">
+                  {stampCount === stampAll ? "완성!" : `${stampCount}개`}
+                </div>
+
+                <div
+                  className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 
+                  border-l-[6px] border-l-transparent 
+                  border-r-[6px] border-r-transparent 
+                  border-t-[8px] border-t-[#06387D]"
                 />
-                <span className="absolute inset-0 flex items-center justify-center text-white text-[16px] font-semibold pb-1.75">
-                  {stampCount}개
-                </span>
               </div>
 
               <Image
@@ -111,10 +111,6 @@ export default function PrizeApplyForm({
                 className="-mt-2 relative z-0"
               />
             </div>
-
-            {/* <span className="absolute right-0 -bottom-8 text-text-sub text-[16px] font-medium">
-              {stampAll}개
-            </span> */}
           </div>
 
           <div className="w-full flex flex-col items-center justify-center gap-2 mb-10 px-2">
