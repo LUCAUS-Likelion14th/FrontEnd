@@ -39,14 +39,10 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           if (data.data.refreshToken && data.data.refreshToken !== token) {
             localStorage.setItem("refreshToken", data.data.refreshToken);
           }
-          if (localStorage.getItem("isAdmin") === "true") {
-            fetch("/api/auth/admin", { method: "POST" }).catch(() => {});
-          }
         } else {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("nickname");
-          localStorage.removeItem("isAdmin");
           fetch("/api/auth/admin", { method: "DELETE" });
           if (window.location.pathname !== "/login") {
             window.location.replace("/login");
@@ -57,7 +53,6 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("nickname");
-        localStorage.removeItem("isAdmin");
         fetch("/api/auth/admin", { method: "DELETE" });
         if (window.location.pathname !== "/login") {
           window.location.replace("/login");
