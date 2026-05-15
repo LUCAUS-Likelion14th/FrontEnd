@@ -1,6 +1,8 @@
 "use client";
 
 import Image from "next/image";
+import { useEffect, useState } from "react";
+import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import GoogleLoginButton from "./Button/GoogleLoginButton";
 
@@ -10,7 +12,12 @@ type Props = {
 };
 
 export default function LoginBottomSheet({ isOpen, onClose }: Props) {
-  return (
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => { setMounted(true); }, []);
+
+  if (!mounted) return null;
+
+  return createPortal(
     <AnimatePresence>
       {isOpen && (
         <>
@@ -20,23 +27,23 @@ export default function LoginBottomSheet({ isOpen, onClose }: Props) {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             onClick={onClose}
-            className="fixed inset-0 bg-black/50 z-40"
+            className="fixed inset-0 bg-black/50 z-40 cursor-pointer"
           />
 
           {/* 바텀시트 */}
           <motion.div
-            initial={{ y: "100%" }} // 처음엔 화면 아래에 숨어있음
-            animate={{ y: 0 }} // 위로 쓱 올라옴
-            exit={{ y: "100%" }} // 닫을 때 아래로 내려감
-            transition={{ type: "spring", damping: 25, stiffness: 210 }} // 쫀득한 애니메이션
-            /* 드래그 설정 */
+            initial={{ y: "100%" }}
+            animate={{ y: 0 }}
+            exit={{ y: "100%" }}
+            transition={{ type: "tween", ease: [0.32, 0.72, 0, 1], duration: 0.35 }}
             drag="y"
-            dragConstraints={{ top: 0 }} // 위로는 못 올라가게 제한
-            dragElastic={0.2} // 위로 끌 때 살짝 저항감
+            dragConstraints={{ top: 0 }}
+            dragElastic={{ top: 0.05, bottom: 0.3 }}
+            dragMomentum={false}
             onDragEnd={(_, info) => {
-              // 아래로 100px 이상 드래그하면 닫기
               if (info.offset.y > 100) onClose();
             }}
+            onClick={e => e.stopPropagation()}
             className="fixed bottom-0 left-0 right-0 bg-[rgba(6,56,125,0.25)] rounded-t-[20px] z-50 px-7 pt-5.5 pb-[37px] backdrop-blur-[10px] border border-white/20 shadow-lg"
           >
             {/* 상단 드래그 핸들 바 */}
@@ -91,6 +98,7 @@ export default function LoginBottomSheet({ isOpen, onClose }: Props) {
           </motion.div>
         </>
       )}
-    </AnimatePresence>
+    </AnimatePresence>,
+    document.body
   );
 }
