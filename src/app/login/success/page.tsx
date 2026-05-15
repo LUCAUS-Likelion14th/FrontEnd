@@ -14,6 +14,7 @@ function LoginSuccessContent() {
     const accessToken = searchParams.get("accessToken");
     const refreshToken = searchParams.get("refreshToken");
     const nickname = searchParams.get("nickname");
+    const isAdmin = searchParams.get("isAdmin");
 
     if (!accessToken || !refreshToken) {
       router.replace("/login");
@@ -23,6 +24,10 @@ function LoginSuccessContent() {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
     if (nickname) localStorage.setItem("nickname", nickname);
+
+    if (isAdmin === "true") {
+      await fetch("/api/auth/admin", { method: "POST" });
+    }
 
     router.replace("/");
   }, [searchParams, router]);
