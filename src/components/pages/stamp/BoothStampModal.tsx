@@ -59,13 +59,13 @@ export default function BoothStampModal({
         </button>
 
         {/* 1. 상단 타이틀 영역 */}
-        <p className="text-[24px] font-semibold text-white text-center mb-[22px]">
-          {boothId}번 부스 &lsquo;{boothName}&rsquo; <br />
+        <p className="text-[20px] font-semibold text-white text-center ">
+          {boothId}번 부스<br /> &lsquo;{boothName}&rsquo; <br />
           {isSuccess ? "별빛을 밝혔어요!" : "별빛 밝히기!"}
         </p>
 
         {/* 2. 중앙 스탬프 연출 영역 (perspective-500 추가로 3D 입체감 확보) */}
-        <div className="relative mb-[35px] flex justify-center items-center w-40 h-40 perspective-500">
+        <div className="relative flex justify-center items-center w-40 h-40 perspective-500">
           
           {/* [변경] 꺼진 별 이미지: 성공 시 global.css에 적어둔 coin-out 애니메이션 실행 */}
           <Image
@@ -107,7 +107,7 @@ export default function BoothStampModal({
           </button>
         ) : (
           <>
-            <div className="flex flex-col justify-center items-center gap-2 mb-[35px]">
+            <div className="flex flex-col justify-center items-center gap-2 mb-[25px]">
               <span className="text-[16px] font-medium text-white">
                 STAFF에게 해당 화면을 보여주세요!
               </span>
@@ -141,7 +141,7 @@ export default function BoothStampModal({
                 background: "rgba(6, 56, 125, 0.50)",
               }}
             >
-              {isLoading ? "확인 중..." : "도장 찍기"}
+              도장 찍기
             </button>
           </>
         )}
