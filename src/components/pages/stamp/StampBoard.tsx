@@ -75,6 +75,34 @@ export default function StampBoard() {
 
   const progressPercentage = (data.stamp_count / data.stamp_all) * 100;
 
+  const renderBooth = (booth: Booth | undefined) => {
+    if (!booth) return <div className="w-[80px]" />;
+    return (
+      <div key={booth.booth_id} className="flex flex-col items-center gap-2">
+        <div
+          onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
+          className={`relative w-[80px] h-[80px] flex justify-center items-center ${
+            booth.is_stamped ? "cursor-default" : "cursor-pointer"
+          }`}
+        >
+          <Image
+            src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
+            alt={booth.name}
+            width={80}
+            height={80}
+          />
+        </div>
+
+        <span
+          onClick={() => router.push(`/booth/${booth.booth_id}`)}
+          className="text-text-sub text-[14px] font-medium text-center underline break-keep cursor-pointer"
+        >
+          {booth.name}
+        </span>
+      </div>
+    );
+  };
+
   return (
     <>
       <div className="absolute inset-0 -z-10">
@@ -116,9 +144,11 @@ export default function StampBoard() {
       </div>
 
       <div className="flex flex-col justify-center items-center mb-11 w-full px-4 relative z-10">
-        <div className="flex flex-end mb-2">
-          <span className="text-[20px] font-medium">{data.stamp_count}</span>
-          <span className="text-[16px] text-text-sub font-medium">
+        <div className="w-full flex justify-end items-baseline gap-0.5 mb-2">
+          <span className="text-[20px] font-medium leading-none">
+            {data.stamp_count}
+          </span>
+          <span className="text-[16px] text-text-sub font-medium leading-none">
             /{data.stamp_all}개
           </span>
         </div>
@@ -133,32 +163,24 @@ export default function StampBoard() {
         </span>
       </div>
 
-      <section className="grid grid-cols-3 gap-y-8 px-6 pb-20 relative z-10">
-        {data.booths.map((booth) => (
-          <div
-            key={booth.booth_id}
-            className="flex flex-col items-center gap-2"
-          >
-            <div
-              onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
-              className={`relative w-[80px] h-[80px] flex justify-center items-center ${booth.is_stamped ? "cursor-default" : "cursor-pointer"}`}
-            >
-              <Image
-                src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
-                alt={booth.name}
-                width={80}
-                height={80}
-              />
-            </div>
+      <section className="flex flex-col items-center gap-y-10 px-10 pb-20 relative z-10">
+        <div className="flex justify-center w-full">
+          {renderBooth(data.booths[0])}
+        </div>
 
-            <span
-              onClick={() => router.push(`/booth/${booth.booth_id}`)}
-              className="text-text-sub text-[14px] font-medium text-center text-decoration-line: underline break-keep cursor-pointer"
-            >
-              {booth.name}
-            </span>
-          </div>
-        ))}
+        <div className="flex justify-between w-full">
+          {renderBooth(data.booths[1])}
+          {renderBooth(data.booths[2])}
+        </div>
+
+        <div className="flex justify-center w-full">
+          {renderBooth(data.booths[3])}
+        </div>
+
+        <div className="flex justify-between w-full">
+          {renderBooth(data.booths[4])}
+          {renderBooth(data.booths[5])}
+        </div>
       </section>
 
       {selectedBooth && (
