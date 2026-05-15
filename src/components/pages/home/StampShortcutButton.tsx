@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { LoginBottomSheet } from '@/components'
-import Image from "next/image";
+import puangBg from "@/assets/webp/puang-bg.webp";
 import { FiChevronRight } from "react-icons/fi";
 
 export function StampShortcutButton() {
@@ -27,16 +27,10 @@ export function StampShortcutButton() {
 
   return (
     <div
-      className="flex items-end justify-between min-h-[106px] pl-[18px] pr-[14px] rounded-[10px] bg-cover bg-center bg-no-repeat"
-      style={{ backgroundImage: "url('/stamp-short-btn-bg.png')" }}
+      className="flex items-end justify-end min-h-[106px] pl-[18px] pr-[14px] rounded-[10px] bg-cover bg-center bg-no-repeat"
+      style={{ backgroundImage: `url(${puangBg.src})` }}
     >
-      <Image
-        src={"/stamp-short-btn-img.png"}
-        alt={"도장판 바로가기 버튼 선물 이미지"}
-        width={133}
-        height={133}
-      />
-      <div className="flex flex-col pt-[18px] pb-3 items-end gap-[9px]">
+<div className="flex flex-col pt-[18px] pb-3 items-end gap-[9px]">
         <div className="flex flex-col pr-[9px] text-base font-medium text-white text-right leading-[1.3]">
           <span>도장판 완성하고</span>
           <span>푸짐한 경품 받아가세요!</span>

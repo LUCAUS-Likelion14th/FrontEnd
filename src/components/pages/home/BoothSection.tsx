@@ -12,8 +12,8 @@ export function BoothSection() {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
-        title="TOP BOOTH"
-        description="현 시간 가장 핫한 부스!"
+        title="BOOTH RANK"
+        description="오늘의 실시간 인기 부스"
         href="/booth"
       />
       <div className="flex flex-col gap-2">

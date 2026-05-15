@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import barrierFreeMap from "@/assets/webp/map/barrier-free-map.webp";
 import DetailHeader from "@/components/pages/detail/DetailHeader";
 import { FiAlertCircle, FiChevronDown } from "react-icons/fi";
 import {
@@ -153,8 +155,12 @@ export default function BarrierFreePage() {
 
         {/* 1. 운영 안내 */}
         <Section title="위치 및 운영 안내" icon={MdAccessTime}>
-        <div className="w-full h-44 rounded-[12px] bg-[#F2F4F6] flex items-center justify-center mt-3">
-            <p className="text-[13px] text-[#8d97a7]">위치 지도 이미지 추가 예정</p>
+          <div className="relative w-full rounded-[12px] overflow-hidden mt-3">
+            <Image
+              src={barrierFreeMap}
+              alt="배리어프리존 위치 지도"
+              className="w-full h-auto"
+            />
           </div>
           <p className="text-[13px] text-[#3B4A5A] leading-5 mt-3 mb-6">
             배리어프리존은 <span className="font-semibold text-primary">잔디광장 내 학생회관 측</span>에 위치합니다.
