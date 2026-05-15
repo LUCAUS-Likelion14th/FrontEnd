@@ -1,22 +1,21 @@
 "use client";
 
 import { useRef, useState, useCallback, useEffect } from "react";
-import map1 from "@/assets/webp/map1_4x.webp";
-import map2 from "@/assets/webp/map2_4x.webp";
-import map3 from "@/assets/webp/map3_4x.webp";
 import { BoothLocation } from "@/data/boothData";
 
-const MAP_IMAGE = {
-  "서라벌홀 일대": map1,
-  "대운동장": map2,
-  "후문 일대": map3,
-} as const;
+type MapConfig = { src: string; width: number; height: number };
 
-const DEFAULT_MAP = map1;
+const MAP_CONFIG: Record<string, MapConfig> = {
+  "서라벌홀 일대": { src: "/maps/Seorabeol.svg", width: 389, height: 259 },
+  "대운동장":      { src: "/maps/playground.svg", width: 389, height: 259 },
+  "후문 일대":     { src: "/maps/backdoor.svg", width: 776, height: 259 },
+};
+
+const DEFAULT_MAP = MAP_CONFIG["서라벌홀 일대"];
+const NO_PAN_KEYS = new Set(["서라벌홀 일대", "대운동장"]);
+
 const MIN_SCALE = 1;
 const MAX_SCALE = 4;
-
-const NO_PAN_MAPS = new Set([map1, map2]);
 
 function clamp(v: number, lo: number, hi: number) {
   return Math.max(lo, Math.min(hi, v));
@@ -25,11 +24,11 @@ function clamp(v: number, lo: number, hi: number) {
 type Props = { selectedLocation?: BoothLocation | null };
 
 export default function BoothMap({ selectedLocation }: Props) {
-  const mapImage =
-    (selectedLocation && MAP_IMAGE[selectedLocation as keyof typeof MAP_IMAGE]) ??
+  const mapConfig: MapConfig =
+    (selectedLocation && MAP_CONFIG[selectedLocation as keyof typeof MAP_CONFIG]) ??
     DEFAULT_MAP;
 
-  const noPan = NO_PAN_MAPS.has(mapImage as typeof map1);
+  const noPan = NO_PAN_KEYS.has(selectedLocation ?? "서라벌홀 일대");
 
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
@@ -54,7 +53,7 @@ export default function BoothMap({ selectedLocation }: Props) {
     const update = () => {
       const cW = el.clientWidth;
       const cH = el.clientHeight;
-      const aspect = mapImage.width / mapImage.height;
+      const aspect = mapConfig.width / mapConfig.height;
       const containerAspect = cW / cH;
 
       let w: number, h: number;
@@ -82,9 +81,8 @@ export default function BoothMap({ selectedLocation }: Props) {
     const ro = new ResizeObserver(update);
     ro.observe(el);
     return () => ro.disconnect();
-  }, [mapImage, noPan]);
+  }, [mapConfig, noPan]);
 
-  // Only used for pan map (map3)
   const clampPos = useCallback(
     (x: number, y: number, s: number) => {
       const el = containerRef.current;
@@ -107,7 +105,7 @@ export default function BoothMap({ selectedLocation }: Props) {
   useEffect(() => {
     sync(1, { x: 0, y: 0 });
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [mapImage]);
+  }, [mapConfig]);
 
   /* ── Touch ── */
   const touchRef = useRef<{ x: number; y: number; dist: number | null } | null>(null);
@@ -222,11 +220,22 @@ export default function BoothMap({ selectedLocation }: Props) {
     };
   }, [handleTouchStart, handleTouchMove, handleTouchEnd, handleMouseDown, handleMouseMove, handleMouseUp, handleWheel]);
 
+  const containerWidth = containerRef.current?.clientWidth ?? 0;
+  const thumbRatio = imgSize.w > 0 ? Math.min(1, containerWidth / (imgSize.w * scale)) : 1;
+  const thumbLeft = imgSize.w > 0
+    ? (-pos.x / (imgSize.w * scale - containerWidth + 0.001)) * (1 - thumbRatio) * 100
+    : 0;
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[240px] rounded-[10px] overflow-hidden select-none cursor-grab active:cursor-grabbing"
-      style={{ touchAction: "none" }}
+      className="relative w-full rounded-[10px] overflow-hidden select-none cursor-grab active:cursor-grabbing"
+      style={{
+        touchAction: "none",
+        ...(noPan
+          ? { aspectRatio: `${mapConfig.width} / ${mapConfig.height}` }
+          : { height: "240px" }),
+      }}
     >
       {noPan ? (
         /* contain: full map visible, zoom from center */
@@ -244,7 +253,7 @@ export default function BoothMap({ selectedLocation }: Props) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={mapImage.src}
+            src={mapConfig.src}
             alt="부스 지도"
             style={{
               width: imgSize.w > 0 ? `${imgSize.w}px` : "auto",
@@ -270,7 +279,7 @@ export default function BoothMap({ selectedLocation }: Props) {
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={mapImage.src}
+            src={mapConfig.src}
             alt="부스 지도"
             style={{
               width: imgSize.w > 0 ? `${imgSize.w}px` : "auto",
@@ -279,6 +288,34 @@ export default function BoothMap({ selectedLocation }: Props) {
               display: "block",
             }}
             draggable={false}
+          />
+        </div>
+      )}
+
+      {!noPan && thumbRatio < 1 && (
+        <div
+          style={{
+            position: "absolute",
+            bottom: 13,
+            left: 12,
+            right: 12,
+            height: 4,
+            borderRadius: 9999,
+            backgroundColor: "rgba(0,0,0,0.08)",
+            pointerEvents: "none",
+          }}
+        >
+          <div
+            style={{
+              position: "absolute",
+              top: 0,
+              left: `${Math.max(0, Math.min(thumbLeft, 100 - thumbRatio * 100))}%`,
+              width: `${thumbRatio * 100}%`,
+              height: "100%",
+              borderRadius: 9999,
+              backgroundColor: "rgba(0,0,0,0.2)",
+              transition: "left 0.05s linear",
+            }}
           />
         </div>
       )}

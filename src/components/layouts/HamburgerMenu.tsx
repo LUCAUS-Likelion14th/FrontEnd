@@ -149,7 +149,13 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
               </button>
 
               {/* 메뉴 목록 — Figma: layout_5CXZWT (col, stretch, gap 32) */}
-              <nav
+              <motion.nav
+                initial="hidden"
+                animate="visible"
+                variants={{
+                  hidden: {},
+                  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
+                }}
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -160,8 +166,12 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                 {NAV_ITEMS.map((item) =>
                   item.subItems ? (
                     /* 서브메뉴 있는 항목 — Figma: layout_9GDCBS (col, gap 12, w 70) */
-                    <div
+                    <motion.div
                       key={item.href + item.label}
+                      variants={{
+                        hidden: { opacity: 0, x: -18 },
+                        visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
+                      }}
                       style={{
                         display: "flex",
                         flexDirection: "column",
@@ -204,28 +214,35 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                           {sub.label}
                         </Link>
                       ))}
-                    </div>
+                    </motion.div>
                   ) : (
                     /* 서브메뉴 없는 항목 — style_3CB3O9: SemiBold 24 */
-                    <Link
+                    <motion.div
                       key={item.href + item.label}
-                      href={item.href}
-                      onClick={onClose}
-                      style={{
-                        fontFamily:
-                          "var(--font-pretendard, Pretendard, sans-serif)",
-                        fontWeight: 600,
-                        fontSize: "24px",
-                        lineHeight: 1.2,
-                        color: "#FFFFFF",
-                        textDecoration: "none",
+                      variants={{
+                        hidden: { opacity: 0, x: -18 },
+                        visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
                       }}
                     >
-                      {item.label}
-                    </Link>
+                      <Link
+                        href={item.href}
+                        onClick={onClose}
+                        style={{
+                          fontFamily:
+                            "var(--font-pretendard, Pretendard, sans-serif)",
+                          fontWeight: 600,
+                          fontSize: "24px",
+                          lineHeight: 1.2,
+                          color: "#FFFFFF",
+                          textDecoration: "none",
+                        }}
+                      >
+                        {item.label}
+                      </Link>
+                    </motion.div>
                   )
                 )}
-              </nav>
+              </motion.nav>
             </div>
           </motion.div>
         </>
