@@ -24,11 +24,13 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       .then((data) => {
         const token = data?.data?.accessToken;
         if (token) {
+          localStorage.setItem("accessToken", token);
           setAccessToken(token);
           if (data.data.refreshToken) {
             localStorage.setItem("refreshToken", data.data.refreshToken);
           }
         } else {
+          localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("nickname");
         }
