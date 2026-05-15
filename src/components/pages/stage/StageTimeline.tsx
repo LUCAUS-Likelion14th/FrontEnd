@@ -19,7 +19,7 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
   }, [activeId, data]);
 
   return (
-    <div className="flex flex-col bg-primary-light rounded-[10px] px-3">
+    <div className="flex flex-col bg-primary-light rounded-[10px] px-3 max-h-101 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item, index) => {
         const isActive = item.stage_id === activeId;
         const isFirst = index === 0;
