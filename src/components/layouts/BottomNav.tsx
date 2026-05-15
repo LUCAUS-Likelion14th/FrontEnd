@@ -73,7 +73,9 @@ export default function BottomNav() {
     <nav
       aria-label="하단 메뉴"
       className={`fixed bottom-0 left-0 w-full z-10 ${
-        isLogin ? "bg-white/10" : "bg-white/90 backdrop-blur-md shadow-[0_-2px_8px_rgba(0,0,0,0.06)]"
+        isLogin
+          ? "bg-white/10"
+          : "bg-white/90 backdrop-blur-md shadow-[0_-2px_8px_rgba(0,0,0,0.06)]"
       }`}
       style={{ paddingBottom: "env(safe-area-inset-bottom)" }}
     >
@@ -115,7 +117,7 @@ export default function BottomNav() {
                       : "text-text-sub"
                 }`}
               >
-                <div className="relative w-9 h-9 mt-1">
+                <div className="relative w-7 h-7 mt-1">
                   <Image
                     src={iconSrc}
                     alt={item.label}

@@ -30,16 +30,20 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
             key={item.stage_id}
             ref={isActive ? activeRef : null}
             className="grid w-full min-h-30"
-            style={{ gridTemplateColumns: "6.5rem 2rem 1fr" }}
+            style={{ gridTemplateColumns: "5.5rem 2rem 1fr" }}
           >
             {/* [1] 시간 영역 */}
             <div
-              className={`mt-5.25 text-[14px] leading-none whitespace-nowrap ${
+              className={`mt-5.25 text-[14px] leading-none ${
                 isActive ? "text-primary font-semibold" : "text-text-sub"
               }`}
             >
-              {formatDate(item.start_at, "time")} -{" "}
-              {formatDate(item.end_at, "time")}
+              <span className="whitespace-nowrap">
+                {formatDate(item.start_at, "time")}
+              </span>{" "}
+              <span className="whitespace-nowrap">
+                - {formatDate(item.end_at, "time")}
+              </span>
             </div>
 
             {/* [2] 타임라인 축 (원 + 선) — grid 아이템이라 h-full이 definite */}

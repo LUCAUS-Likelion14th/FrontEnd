@@ -22,7 +22,13 @@ function StampBoardSkeleton() {
   return (
     <div className="relative min-h-[calc(100vh-56px)]">
       <div className="absolute inset-0 -z-10">
-        <Image src="/stamp-bg.png" alt="" fill priority className="object-cover object-top" />
+        <Image
+          src="/stamp-bg.png"
+          alt=""
+          fill
+          priority
+          className="object-cover object-top"
+        />
       </div>
       <div className="px-4 py-5 flex justify-between mb-12">
         <div className="w-32 h-10 rounded-lg bg-white/20 animate-pulse" />
@@ -95,7 +101,7 @@ export default function StampBoard() {
         </button>
       </div>
 
-      <div className="relative flex flex-col justify-center items-center mb-[30px]">
+      <div className="relative flex flex-col justify-center items-center mb-[18px]">
         <Image
           src="/stamp-light.png"
           alt="빛 그라데이션"
@@ -109,7 +115,13 @@ export default function StampBoard() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center mb-[43px] w-full px-4 relative z-10">
+      <div className="flex flex-col justify-center items-center mb-11 w-full px-4 relative z-10">
+        <div className="flex flex-end mb-2">
+          <span className="text-[20px] font-medium">{data.stamp_count}</span>
+          <span className="text-[16px] text-text-sub font-medium">
+            /{data.stamp_all}개
+          </span>
+        </div>
         <div className="w-full h-3 bg-white/30 rounded-full mb-3 overflow-hidden">
           <div
             className="bg-[#00337C] h-full transition-all duration-700 ease-out"
