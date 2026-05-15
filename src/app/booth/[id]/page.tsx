@@ -1,8 +1,10 @@
 "use client";
 
-import { use, useState } from "react";
+import { use, useState, Suspense } from "react";
+import { useSearchParams } from "next/navigation";
 import { BoothTitle, DetailAction, DetailHeader, DetailInfo } from "@/components";
 import { useBoothDetail } from "@/hooks/queries/booth";
+import BoothMapWithMarker from "@/components/pages/detail/BoothMapWithMarker";
 import Image from "next/image";
 import { FiImage } from "react-icons/fi";
 
@@ -11,12 +13,14 @@ const DAY_KO: Record<string, string> = {
   THURSDAY: "목", FRIDAY: "금", SATURDAY: "토", SUNDAY: "일",
 };
 
+
 type Props = {
   params: Promise<{ id: string }>;
 };
 
-export default function BoothDetailPage({ params }: Props) {
+function BoothDetailContent({ params }: Props) {
   const { id } = use(params);
+  const searchParams = useSearchParams();
   const { data: booth, isLoading, isError } = useBoothDetail(id);
   const [boothImgError, setBoothImgError] = useState(false);
 
@@ -32,6 +36,28 @@ export default function BoothDetailPage({ params }: Props) {
       </main>
     );
   }
+
+  const selectedDate = searchParams.get("date");
+  const filteredSettings = selectedDate
+    ? booth.settings.filter((s) => s.date === selectedDate)
+    : booth.settings;
+  const activeSettings = filteredSettings.length > 0 ? filteredSettings : booth.settings;
+
+  const uniqueLocations = [...new Set(activeSettings.map((s) => s.location))];
+
+  const locationGroups = uniqueLocations.map((loc) => {
+    const locSettings = activeSettings.filter((s) => s.location === loc);
+    return {
+      location: loc,
+      locationId: locSettings[0]?.locationId ?? "",
+      dates: booth.settings
+        .filter((s) => s.location === loc)
+        .map((s) => {
+          const [, m, d] = s.date.split("-");
+          return `${Number(m)}월 ${Number(d)}일(${DAY_KO[s.day] ?? s.day}) ${s.startAt} ~ ${s.endAt}`;
+        }),
+    };
+  });
 
   return (
     <main className="pb-16">
@@ -68,15 +94,26 @@ export default function BoothDetailPage({ params }: Props) {
           likeCount={booth.like_count}
         />
 
-        <DetailInfo
-          location={[...new Set(booth.settings.map((s) => s.location))].join(" · ")}
-          date={booth.settings.map((s) => {
-            const [, m, d] = s.date.split("-");
-            return `${Number(m)}월 ${Number(d)}일(${DAY_KO[s.day] ?? s.day}) ${s.startAt} ~ ${s.endAt}`;
-          })}
-          hasBorder={false}
-        />
+        <div className="flex flex-col gap-4">
+          {locationGroups.map((group) => (
+            <div key={group.location} className="flex flex-col gap-4">
+              <DetailInfo locationGroups={[group]} hasBorder={false} />
+              <BoothMapWithMarker
+                location={group.location}
+                locationId={group.locationId}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </main>
+  );
+}
+
+export default function BoothDetailPage({ params }: Props) {
+  return (
+    <Suspense>
+      <BoothDetailContent params={params} />
+    </Suspense>
   );
 }

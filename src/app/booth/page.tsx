@@ -173,9 +173,11 @@ function BoothPageContent() {
                     name={booth.booth_name}
                     subText={booth.booth_owner}
                     location={booth.location}
+                    locationId={booth.location_id}
                     image={booth.booth_image}
                     isLiked={booth.is_liked}
                     likeCount={booth.like_count}
+                    date={selectedDate}
                   />
                 </motion.div>
               ))}

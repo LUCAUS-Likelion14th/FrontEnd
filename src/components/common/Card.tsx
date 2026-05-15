@@ -13,9 +13,11 @@ type CardProps = {
   name: string;
   subText?: string;
   location?: string;
+  locationId?: string;
   image: string;
   isLiked: boolean;
   likeCount: number;
+  date?: string;
 };
 
 export default function Card({
@@ -24,18 +26,22 @@ export default function Card({
   name,
   subText,
   location,
+  locationId,
   image,
   isLiked,
   likeCount,
+  date,
 }: CardProps) {
   const [imgError, setImgError] = useState(false);
+
+  const href = date ? `/${type}/${id}?date=${date}` : `/${type}/${id}`;
 
   return (
     <motion.div
       whileHover={{ y: -3, transition: { duration: 0.18 } }}
       whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
     >
-    <Link href={`/${type}/${id}`} className="block">
+    <Link href={href} className="block">
       <article className="w-full rounded-[10px] overflow-hidden flex flex-col shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
         <div className="relative w-full h-[109px] bg-[#D9D9D9] shrink-0">
           {imgError || !image ? (
@@ -65,7 +71,7 @@ export default function Card({
             </span>
             {location && (
               <span className="text-[12px] leading-normal text-black truncate">
-                {location}
+                {location}{locationId ? ` #${locationId}` : ""}
               </span>
             )}
           </div>
