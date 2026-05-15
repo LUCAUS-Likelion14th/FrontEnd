@@ -2,7 +2,6 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { FiChevronLeft } from "react-icons/fi";
 import likelionLogo from "@/assets/webp/likelion-logo.webp";
 
 const CREDITS = [
@@ -34,11 +33,11 @@ export default function CreditPage() {
           </p>
         </div>
 
-        <div className="w-[330px] h-px bg-[#273850]/20 mb-12" />
+        <div className="w-[330px] h-px bg-[#273850]/20 mb-10" />
 
-        <div className="flex flex-col items-center gap-[52px]">
+        <div className="flex flex-col items-center gap-10">
           {CREDITS.map(({ role, members }) => (
-            <div key={role} className="flex flex-col items-center gap-5">
+            <div key={role} className="flex flex-col items-center gap-2.5">
               <span className="text-[#8d97a7] text-[16px]">{role}</span>
               <span className="text-[#273850] text-[16px] font-semibold text-center">
                 {members.join("  ")}
