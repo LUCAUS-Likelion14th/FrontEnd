@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { FiCalendar, FiChevronDown, FiChevronUp } from "react-icons/fi";
+import { FiCalendar, FiChevronDown, FiChevronUp, FiCheck } from "react-icons/fi";
 import { BOOTH_DATES } from "@/data/boothData";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -20,7 +20,11 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
     <div className="relative">
       <button
         onClick={() => setIsOpen((prev) => !prev)}
-        className="flex items-center gap-2 px-3 h-9 rounded-[20px] bg-primary text-white"
+        className={`flex items-center gap-2 px-3 h-9 rounded-[20px] transition-colors ${
+          selectedDate === "all"
+            ? "bg-[#EEF3FB] text-[#8d97a7]"
+            : "bg-primary text-white"
+        }`}
       >
         <FiCalendar size={15} />
         <span className="text-sm font-medium">{currentLabel}</span>
@@ -36,7 +40,7 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -6, scale: 0.97 }}
             transition={{ duration: 0.15, ease: "easeOut" }}
-            className="absolute top-11 left-0 z-20 bg-white rounded-[20px] shadow-lg overflow-hidden min-w-[110px]"
+            className="absolute top-full mt-1 left-0 z-20 bg-white rounded-xl shadow-lg overflow-hidden min-w-[110px]"
           >
             {BOOTH_DATES.map((d) => {
               const isSelected = selectedDate === d.value;
@@ -55,6 +59,7 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
                   >
                     <FiCalendar size={15} className="shrink-0" />
                     <span>{d.label}</span>
+                    {isSelected && <FiCheck size={13} className="shrink-0 ml-1" />}
                   </button>
                 </li>
               );

@@ -34,18 +34,25 @@ export function FoodSection() {
             </span>
           </div>
         ) : (
-          foods.map((food) => (
-            <ListCard
+          foods.map((food, i) => (
+            <motion.div
               key={food.id}
-              id={food.id}
-              type="foodtruck"
-              imageUrl={food.image}
-              href={`/foodtruck/${food.id}`}
-              location={food.bestMenu}
-              name={food.name}
-              isLiked={food.liked}
-              likeCount={food.likeCount}
-            />
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{ duration: 0.35, delay: i * 0.08, ease: "easeOut" }}
+            >
+              <ListCard
+                id={food.id}
+                type="foodtruck"
+                imageUrl={food.image}
+                href={`/foodtruck/${food.id}`}
+                location={food.bestMenu}
+                name={food.name}
+                isLiked={food.liked}
+                likeCount={food.likeCount}
+              />
+            </motion.div>
           ))
         )}
       </div>

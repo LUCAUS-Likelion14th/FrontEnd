@@ -13,15 +13,15 @@ interface NoticeItemProps {
 const categoryMap = {
   important: {
     label: "중요",
-    style: "bg-[#FF0000] rounded-[8px] text-white",
+    style: "bg-[#FFF0F0] rounded-[8px] text-[#E53935]",
   },
   notice: {
     label: "공지",
-    style: "rounded-[8px] border border-[#A1ABBC] text-[#A1ABBC]",
+    style: "rounded-[8px] bg-[#EEF3FB] text-primary",
   },
   event: {
     label: "이벤트",
-    style: "rounded-[8px] border border-[#A1ABBC] text-[#A1ABBC]",
+    style: "rounded-[8px] bg-[#EEF3FB] text-primary",
   },
 };
 
