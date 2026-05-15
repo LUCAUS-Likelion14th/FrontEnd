@@ -16,14 +16,16 @@ export default function TimelineCard({
   artist,
   isActive,
 }: TimelineCardProps) {
+  const isLongText = artist.length > 10;
+
   return (
     <Link href={`/stage/${id}`}>
       <article
-        className={`flex items-center gap-4.75 w-full min-h-24 p-2.5 rounded-[10px] cursor-pointer bg-white ${
+        className={`flex items-center gap-3.5 w-full min-h-24 pl-2.5 pr-3 py-2.5 rounded-[10px] cursor-pointer bg-white ${
           isActive ? "border-2 border-primary shadow-md" : "shadow-sm"
         }`}
       >
-        <div className="w-[76px] h-[76px] shrink-0 rounded-lg overflow-hidden">
+        <div className="w-[60px] h-[60px] shrink-0 rounded-lg overflow-hidden">
           <Image
             src={image}
             alt={`${artist} 사진`}
@@ -33,7 +35,9 @@ export default function TimelineCard({
           />
         </div>
 
-        <div className="flex flex-col max-w-30 gap-3">
+        <div
+          className={`flex flex-col w-full ${isLongText ? "gap-2" : "gap-2.5"}`}
+        >
           <p
             className={`text-[11px] font-normal leading-3.5 ${
               isActive ? "text-primary" : "text-text-sub"
@@ -42,9 +46,10 @@ export default function TimelineCard({
             {category}
           </p>
           <p
-            className={`text-[15px] font-semibold leading-5 break-keep ${
+            className={`font-semibold break-keep ${
               isActive ? "text-primary" : "text-black"
-            }`}
+            }
+            ${isLongText ? "text-[13px] leading-tight" : "text-[15px] leading-5"}`}
           >
             {artist}
           </p>

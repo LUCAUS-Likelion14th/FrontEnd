@@ -50,51 +50,42 @@ export default function BoothStampModal({
 
   return (
     <div className="fixed inset-0 z-15 flex items-center justify-center bg-black/51">
-      <section className="relative w-full max-w-[365px] rounded-[20px] bg-[rgba(6,56,125,0.35)] p-8 pt-12 backdrop-blur-xs flex flex-col items-center">
+      <section className="relative w-full max-w-[365px] min-h-[445px] rounded-[20px] bg-[rgba(6,56,125,0.35)] p-7.5 pt-[57px] backdrop-blur-xs flex flex-col items-center">
         <button
           onClick={onClose}
-          className="absolute top-5 right-4 text-white z-10"
+          className="absolute top-5 right-6 text-white z-10"
         >
           X
         </button>
 
-        {/* 1. 상단 타이틀 영역 */}
-        <p className="text-[20px] font-semibold text-white text-center ">
-          {boothId}번 부스<br /> &lsquo;{boothName}&rsquo; <br />
+        <p className="text-[20px] font-semibold text-white text-center mb-[22px]">
+          {boothId}번 부스
+          <br /> &lsquo;{boothName}&rsquo; <br />
           {isSuccess ? "별빛을 밝혔어요!" : "별빛 밝히기!"}
         </p>
 
-        {/* 2. 중앙 스탬프 연출 영역 (perspective-500 추가로 3D 입체감 확보) */}
-        <div className="relative flex justify-center items-center w-40 h-40 perspective-500">
-          
-          {/* [변경] 꺼진 별 이미지: 성공 시 global.css에 적어둔 coin-out 애니메이션 실행 */}
+        <div className="relative flex justify-center items-center w-[111px] h-[111px] perspective-500 mb-[35px]">
           <Image
             src="/star-off.png"
             alt="도장 찍기 전"
             width={111}
             height={111}
             className={`absolute object-contain z-10 ${
-              isSuccess 
-                ? "animate-coin-out pointer-events-none" 
-                : "opacity-100"
+              isSuccess ? "animate-coin-out pointer-events-none" : "opacity-100"
             }`}
           />
 
-          {/* [변경] 켜진 별 이미지: 성공 시 동전처럼 스르륵 핑그르르 도는 coin-in 애니메이션 실행 */}
           <Image
             src="/star-on.png"
             alt="도장 찍기 성공"
             width={149}
             height={149}
             className={`absolute object-contain z-10 ${
-              isSuccess 
-                ? "animate-coin-in" 
-                : "opacity-0 pointer-events-none"
+              isSuccess ? "animate-coin-in" : "opacity-0 pointer-events-none"
             }`}
           />
         </div>
 
-        {/* 3. 하단 UI 제어 영역 */}
         {isSuccess ? (
           <button
             onClick={handleFinalClose}

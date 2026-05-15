@@ -75,30 +75,76 @@ export default function StampBoard() {
 
   const progressPercentage = (data.stamp_count / data.stamp_all) * 100;
 
+  // const renderBooth = (booth: Booth | undefined) => {
+  //   if (!booth) return <div className="w-[80px]" />;
+  //   return (
+  //     <div key={booth.booth_id} className="flex flex-col items-center gap-2">
+  //       <div
+  //         onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
+  //         className={`relative w-[80px] h-[80px] flex justify-center items-center ${
+  //           booth.is_stamped ? "cursor-default" : "cursor-pointer"
+  //         }`}
+  //       >
+  //         <Image
+  //           src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
+  //           alt={booth.name}
+  //           width={80}
+  //           height={80}
+  //           className={`object-contain ${
+  //             booth.is_stamped ? "opacity-100" : "opacity-50"
+  //           }`}
+  //         />
+  //       </div>
+
+  //       <span
+  //         onClick={() => router.push(`/booth/${booth.booth_id}`)}
+  //         className="text-text-sub text-[14px] font-medium text-center underline break-keep cursor-pointer"
+  //       >
+  //         {booth.name}
+  //       </span>
+  //     </div>
+  //   );
+  // };
+
   const renderBooth = (booth: Booth | undefined) => {
     if (!booth) return <div className="w-[80px]" />;
     return (
-      <div key={booth.booth_id} className="flex flex-col items-center gap-2">
+      <div
+        key={booth.booth_id}
+        className="relative flex flex-col items-center w-[80px]"
+      >
         <div
           onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
-          className={`relative w-[80px] h-[80px] flex justify-center items-center ${
+          className={`relative w-[80px] h-[80px] flex justify-center items-center perspective-500 ${
             booth.is_stamped ? "cursor-default" : "cursor-pointer"
           }`}
         >
+          {/* 0. 스타일 백색광 효과 (is_stamped가 true일 때만 확실하게 켜지도록 조건 수정) */}
+          <div
+            className={`absolute w-[80px] h-[80px] rounded-full z-0 pointer-events-none transition-opacity duration-1000 ease-out filter blur-2xl ${
+              booth.is_stamped
+                ? "opacity-80 bg-white/60 shadow-[0_0_50px_20px_rgba(255,255,255,0.6)] animate-glow-gentle"
+                : "opacity-0"
+            }`}
+          />
+
+          {/* 1. 비활성화 스탬프 (z-10 뒤에 공백 추가, 가독성을 위해 opacity를 60으로 약간 상향) */}
           <Image
             src={booth.is_stamped ? "/star-on.png" : "/star-off.png"}
             alt={booth.name}
-            width={80}
-            height={80}
+            width={70}
+            height={70}
           />
         </div>
 
-        <span
-          onClick={() => router.push(`/booth/${booth.booth_id}`)}
-          className="text-text-sub text-[14px] font-medium text-center underline break-keep cursor-pointer"
-        >
-          {booth.name}
-        </span>
+        <div className="absolute top-[80px] w-[100px] flex justify-center">
+          <span
+            onClick={() => router.push(`/booth/${booth.booth_id}`)}
+            className="text-text-sub text-[14px] font-medium text-center underline break-keep leading-tight cursor-pointer"
+          >
+            {booth.name}
+          </span>
+        </div>
       </div>
     );
   };
@@ -115,7 +161,7 @@ export default function StampBoard() {
         />
       </div>
 
-      <div className="flex justify-between relative z-10 px-4 py-5 mb-12">
+      <div className="flex justify-between relative z-10 px-4 py-5 mb-7">
         <div className="bg-white border border-text-sub px-[14.5px] py-2.5 text-base text-primary font-medium rounded-lg">
           {data.name}
           <span className="text-[16px] font-medium text-text-sub2"> | </span>
@@ -130,22 +176,22 @@ export default function StampBoard() {
       </div>
 
       <div className="relative flex flex-col justify-center items-center mb-[18px]">
-        <Image
+        {/* <Image
           src="/stamp-light.png"
           alt="빛 그라데이션"
           width={152}
           height={72}
           className="z-0"
-        />
-        <div className="absolute flex flex-col text-[20px] font-semibold text-center z-10">
+        /> */}
+        <div className="absolute flex flex-col text-white text-[20px] font-semibold text-center z-10">
           <span>부스를 돌며</span>
           <span>별빛을 밝혀 주세요!</span>
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center mb-11 w-full px-4 relative z-10">
+      <div className="flex flex-col justify-center items-center mb-9 w-full px-4 relative z-10">
         <div className="w-full flex justify-end items-baseline gap-0.5 mb-2">
-          <span className="text-[20px] font-medium leading-none">
+          <span className="text-[20px] font-medium text-white leading-none">
             {data.stamp_count}
           </span>
           <span className="text-[16px] text-text-sub font-medium leading-none">
@@ -163,24 +209,22 @@ export default function StampBoard() {
         </span>
       </div>
 
-      <section className="flex flex-col items-center px-10 pb-20 relative z-10">
-        <div className="flex justify-center w-full">
+      <section className="grid grid-cols-2 justify-center items-center gap-y-2 px-11">
+        <div className="col-span-2 justify-self-center">
           {renderBooth(data.booths[0])}
         </div>
 
-        <div className="flex justify-between w-full">
-          {renderBooth(data.booths[1])}
-          {renderBooth(data.booths[2])}
-        </div>
+        <div className="justify-self-start">{renderBooth(data.booths[1])}</div>
 
-        <div className="flex justify-center w-full">
+        <div className="justify-self-end">{renderBooth(data.booths[2])}</div>
+
+        <div className="col-span-2 justify-self-center">
           {renderBooth(data.booths[3])}
         </div>
 
-        <div className="flex justify-between w-full">
-          {renderBooth(data.booths[4])}
-          {renderBooth(data.booths[5])}
-        </div>
+        <div className="justify-self-start">{renderBooth(data.booths[4])}</div>
+
+        <div className="justify-self-end">{renderBooth(data.booths[5])}</div>
       </section>
 
       {selectedBooth && (
