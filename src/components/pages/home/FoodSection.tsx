@@ -12,8 +12,8 @@ export function FoodSection() {
   return (
     <section className="flex flex-col gap-2">
       <SectionHeader
-        title="HOT FOOD"
-        description="303관 지하 1층에서 음식을 무뎌보자~~^^"
+        title="FOOD RANK"
+        description="지금 가장 인기 있는 푸드트럭"
         href="/foodtruck"
       />
       <div className="flex flex-col gap-2">
