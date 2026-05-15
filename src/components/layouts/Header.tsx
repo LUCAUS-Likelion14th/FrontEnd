@@ -4,6 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import HamburgerMenu from "./HamburgerMenu";
+import { headerBg } from "@/assets/webp";
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -11,9 +12,9 @@ export default function Header() {
   return (
     <>
       <header className="fixed top-0 left-0 right-0 flex items-center h-14 px-4 z-20 overflow-hidden">
-        <div className="absolute inset-0 -z-10">
+        <div className="absolute -inset-px -z-10">
           <Image
-            src="/header-bg.png"
+            src={headerBg}
             alt="헤더 배경"
             fill
             priority
