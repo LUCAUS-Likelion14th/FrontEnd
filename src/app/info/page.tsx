@@ -35,7 +35,7 @@ export default function InfoPage() {
         />
         <InfoCard
           imageUrl={infoRoute}
-          title="통행 정책"
+          title="입장 정책"
           link="info/route"
         />
         <InfoCard
