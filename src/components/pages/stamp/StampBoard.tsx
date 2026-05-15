@@ -163,7 +163,7 @@ export default function StampBoard() {
         </span>
       </div>
 
-      <section className="flex flex-col items-center gap-y-10 px-10 pb-20 relative z-10">
+      <section className="flex flex-col items-center px-10 pb-20 relative z-10">
         <div className="flex justify-center w-full">
           {renderBooth(data.booths[0])}
         </div>
