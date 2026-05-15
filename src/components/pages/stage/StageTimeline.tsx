@@ -32,7 +32,7 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
 
         return (
           <div
-            key={item.stage_id}
+            key={item.stage_id ?? index}
             ref={isActive ? activeRef : null}
             className="grid w-full min-h-30"
             style={{ gridTemplateColumns: "5.5rem 2rem 1fr" }}

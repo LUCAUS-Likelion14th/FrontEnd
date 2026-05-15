@@ -1,11 +1,11 @@
 // 부스 리스트 아이템 (공통)
 export type BoothListItem = {
   booth_id: number;
-  location_id?: number;
+  location_id?: string;
   booth_image: string;
   booth_name: string;
   booth_owner: string;
-  booth_location: string;
+  location: string;
   is_liked: boolean;
   like_count: number;
 };
