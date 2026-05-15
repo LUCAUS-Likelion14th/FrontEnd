@@ -78,7 +78,10 @@ export default function StampBoard() {
   const renderBooth = (booth: Booth | undefined) => {
     if (!booth) return <div className="w-[80px]" />;
     return (
-      <div key={booth.booth_id} className="flex flex-col items-center gap-2">
+      <div
+        key={booth.booth_id}
+        className="relative flex flex-col items-center w-[80px]"
+      >
         <div
           onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
           className={`relative w-[80px] h-[80px] flex justify-center items-center ${
@@ -88,17 +91,19 @@ export default function StampBoard() {
           <Image
             src={booth.is_stamped ? "/star-on.png" : "/star-off.png"}
             alt={booth.name}
-            width={80}
-            height={80}
+            width={70}
+            height={70}
           />
         </div>
 
-        <span
-          onClick={() => router.push(`/booth/${booth.booth_id}`)}
-          className="text-text-sub text-[14px] font-medium text-center underline break-keep cursor-pointer"
-        >
-          {booth.name}
-        </span>
+        <div className="absolute top-[80px] w-[100px] flex justify-center">
+          <span
+            onClick={() => router.push(`/booth/${booth.booth_id}`)}
+            className="text-text-sub text-[14px] font-medium text-center underline break-keep leading-tight cursor-pointer"
+          >
+            {booth.name}
+          </span>
+        </div>
       </div>
     );
   };
@@ -115,7 +120,7 @@ export default function StampBoard() {
         />
       </div>
 
-      <div className="flex justify-between relative z-10 px-4 py-5 mb-12">
+      <div className="flex justify-between relative z-10 px-4 py-5 mb-7">
         <div className="bg-white border border-text-sub px-[14.5px] py-2.5 text-base text-primary font-medium rounded-lg">
           {data.name}
           <span className="text-[16px] font-medium text-text-sub2"> | </span>
@@ -143,7 +148,7 @@ export default function StampBoard() {
         </div>
       </div>
 
-      <div className="flex flex-col justify-center items-center mb-11 w-full px-4 relative z-10">
+      <div className="flex flex-col justify-center items-center mb-9 w-full px-4 relative z-10">
         <div className="w-full flex justify-end items-baseline gap-0.5 mb-2">
           <span className="text-[20px] font-medium leading-none">
             {data.stamp_count}
@@ -163,24 +168,22 @@ export default function StampBoard() {
         </span>
       </div>
 
-      <section className="flex flex-col items-center px-10 pb-20 relative z-10">
-        <div className="flex justify-center w-full">
+      <section className="grid grid-cols-2 justify-center items-center gap-y-2 px-11">
+        <div className="col-span-2 justify-self-center">
           {renderBooth(data.booths[0])}
         </div>
 
-        <div className="flex justify-between w-full">
-          {renderBooth(data.booths[1])}
-          {renderBooth(data.booths[2])}
-        </div>
+        <div className="justify-self-start">{renderBooth(data.booths[1])}</div>
 
-        <div className="flex justify-center w-full">
+        <div className="justify-self-end">{renderBooth(data.booths[2])}</div>
+
+        <div className="col-span-2 justify-self-center">
           {renderBooth(data.booths[3])}
         </div>
 
-        <div className="flex justify-between w-full">
-          {renderBooth(data.booths[4])}
-          {renderBooth(data.booths[5])}
-        </div>
+        <div className="justify-self-start">{renderBooth(data.booths[4])}</div>
+
+        <div className="justify-self-end">{renderBooth(data.booths[5])}</div>
       </section>
 
       {selectedBooth && (
