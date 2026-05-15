@@ -41,6 +41,14 @@ export default function BoothStampModal({
     }
   };
 
+  const handleCloseAttempt = () => {
+    if (isSuccess) {
+      handleFinalClose();
+    } else {
+      onClose();
+    }
+  };
+
   const handleFinalClose = () => {
     onClose();
     setTimeout(() => {
@@ -52,7 +60,7 @@ export default function BoothStampModal({
     <div className="fixed inset-0 z-15 flex items-center justify-center bg-black/51">
       <section className="relative w-full max-w-[365px] min-h-[445px] rounded-[20px] bg-[rgba(6,56,125,0.35)] p-7.5 pt-[57px] backdrop-blur-xs flex flex-col items-center">
         <button
-          onClick={onClose}
+          onClick={handleCloseAttempt}
           className="absolute top-5 right-6 text-white z-10"
         >
           X
@@ -64,14 +72,16 @@ export default function BoothStampModal({
           {isSuccess ? "별빛을 밝혔어요!" : "별빛 밝히기!"}
         </p>
 
-        <div className="relative flex justify-center items-center w-[111px] h-[111px] perspective-500 mb-[35px]">
+        <div className="relative flex justify-center items-center perspective-500 mb-[35px]">
           <Image
             src="/star-off.png"
             alt="도장 찍기 전"
             width={111}
             height={111}
-            className={`absolute object-contain z-10 ${
-              isSuccess ? "animate-coin-out pointer-events-none" : "opacity-100"
+            className={`object-contain z-10 ${
+              isSuccess
+                ? "absolute animate-coin-out pointer-events-none"
+                : "relative opacity-100"
             }`}
           />
 
@@ -80,8 +90,10 @@ export default function BoothStampModal({
             alt="도장 찍기 성공"
             width={149}
             height={149}
-            className={`absolute object-contain z-10 ${
-              isSuccess ? "animate-coin-in" : "opacity-0 pointer-events-none"
+            className={`object-contain z-10 ${
+              isSuccess
+                ? "relative animate-coin-in my-3"
+                : "absolute opacity-0 pointer-events-none"
             }`}
           />
         </div>
