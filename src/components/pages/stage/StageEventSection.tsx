@@ -1,5 +1,6 @@
 import { formatDate } from "@/lib/utils/date";
 import Image from "next/image";
+import Link from "next/link";
 import crimesceneImg from "@/assets/crimescene.png";
 
 type StageEventProps = {
@@ -16,7 +17,7 @@ export default function StageEventSection({
   end,
 }: StageEventProps) {
   return (
-    <div className="relative w-full rounded-[10px] overflow-hidden" style={{ height: "188px" }}>
+    <Link href="/stage/exhibition" className="block relative w-full rounded-[10px] overflow-hidden" style={{ height: "188px" }}>
       {/* 배경 이미지 */}
       <Image
         src={crimesceneImg}
@@ -49,7 +50,7 @@ export default function StageEventSection({
           </time>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
