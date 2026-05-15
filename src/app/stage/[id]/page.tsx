@@ -43,35 +43,39 @@ export default async function StageDetailPage({
       <DetailHeader title="공연 정보" />
 
       {/* 히어로 이미지 */}
-      <section className="relative w-full h-64 mb-0">
-        <Image
-          src={stage.performer_image}
-          alt={`${stage.performer} 사진`}
-          fill
-          className="object-cover"
-          priority
-        />
+      <section className="mb-4">
+        <div className="relative w-full h-78 overflow-hidden">
+          <Image
+            src={stage.performer_image}
+            alt={`${stage.performer} 사진`}
+            fill
+            className="object-cover"
+            priority
+          />
+          {/* 하단 그라데이션 */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          {/* 공연자 이름 + SNS */}
+          <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-4 py-3">
+            <h2 className="text-[22px] font-bold text-white leading-tight">{stage.performer}</h2>
+            <div className="flex gap-2">
+              {stage.youtube && (
+                <a href={stage.youtube} target="_blank" rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-black/20 flex items-center justify-center text-white hover:bg-black/40 transition-colors">
+                  <AiOutlineYoutube size={22} />
+                </a>
+              )}
+              {stage.instagram && (
+                <a href={stage.instagram} target="_blank" rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-black/20 flex items-center justify-center text-white hover:bg-black/40 transition-colors">
+                  <AiOutlineInstagram size={20} />
+                </a>
+              )}
+            </div>
+          </div>
+        </div>
       </section>
 
       <div className="px-4 flex flex-col gap-3">
-        {/* 공연자 이름 + SNS */}
-        <div className="flex items-center justify-between py-4">
-          <h2 className="text-[26px] font-bold text-[#1A1A2E] leading-tight">{stage.performer}</h2>
-          <div className="flex gap-1.5">
-            {stage.youtube && (
-              <a href={stage.youtube} target="_blank" rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-[#EEF3FB] flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
-                <AiOutlineYoutube size={28} />
-              </a>
-            )}
-            {stage.instagram && (
-              <a href={stage.instagram} target="_blank" rel="noopener noreferrer"
-                className="w-11 h-11 rounded-full bg-[#EEF3FB] flex items-center justify-center text-primary hover:bg-primary hover:text-white transition-colors">
-                <AiOutlineInstagram size={26} />
-              </a>
-            )}
-          </div>
-        </div>
         {/* 공연 일정 */}
         <div className="flex items-center justify-between bg-[#EEF3FB] rounded-[12px] px-4 py-3.5">
           <div className="flex items-center gap-2 text-primary">
@@ -107,7 +111,7 @@ export default async function StageDetailPage({
           </div>
         )}
 
-        <small className="block text-xs font-light text-center text-text-sub mt-5">
+        <small className="block text-xs font-light text-center text-text-sub mt-6">
           *주최 측의 사정에 따라 일정이 변경될 수 있습니다
         </small>
       </div>
