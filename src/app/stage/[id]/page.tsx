@@ -54,10 +54,9 @@ export default async function StageDetailPage({
             className="object-cover"
             style={
               stage.performer === "도드리" ? { objectPosition: "center -40px" } :
-              stage.performer === "체리필터" ? { objectPosition: "center -150px" } :
               stage.performer === "빅나티" ? { objectPosition: "center 5px" } :
+              stage.performer === "프로미스나인" ? { objectPosition: "center -180px" } :
               stage.performer === "오드유스" ? { objectPosition: "center -50px" } :
-              stage.performer === "이창섭" ? { objectPosition: "center -50px" } :
               stage.performer === "로이킴" ? { objectPosition: "center -10px" } :
               stage.performer === "장기하" ? { objectPosition: "center -5px" } :
               stage.performer === "실리카겔" ? { objectPosition: "center -10px" } :
