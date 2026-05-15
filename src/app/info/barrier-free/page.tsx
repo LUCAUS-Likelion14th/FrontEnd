@@ -64,9 +64,9 @@ const VIEWING_RULES = [
 
 const PROHIBITED = [
   { label: "뚜껑이 없는 음료, 일반 식음료", sub: "뚜껑이 있는 음료나 텀블러는 허용" },
-  { label: "모든 종류의 주류", red: true },
+  { label: "모든 종류의 주류" },
   { label: "삼각대, 대포카메라 등 전문 촬영 장비" },
-  { label: "유리병 등 위험 물품", red: true },
+  { label: "유리병 등 위험 물품" },
   { label: "타인의 시야 또는 진로를 방해할 수 있는 물품" },
   { label: "기타 안전상의 문제가 발생할 수 있는 물품" },
 ];
@@ -114,7 +114,21 @@ function NoteList({ items }: { items: { text: string; red?: boolean }[] }) {
         <li key={i} className="flex items-start gap-2">
           <span className={`text-[11px] mt-0.5 shrink-0 ${item.red ? "text-[#C0392B]" : "text-primary"}`}>●</span>
           <span className={`text-[13px] leading-5 ${item.red ? "text-[#C0392B] font-medium" : "text-[#3B4A5A]"}`}>
-            {item.text}
+            {item.text.includes('\n') ? (() => {
+              const lines = item.text.split('\n');
+              const colonIdx = lines[0].indexOf(': ');
+              const prefix = colonIdx >= 0 ? lines[0].slice(0, colonIdx + 2) : '';
+              return (
+                <>
+                  <span className="block">{lines[0]}</span>
+                  {lines.slice(1).map((line, j) => (
+                    <span key={j} className="block">
+                      <span className="invisible">{prefix}</span>{line}
+                    </span>
+                  ))}
+                </>
+              );
+            })() : item.text}
           </span>
         </li>
       ))}
