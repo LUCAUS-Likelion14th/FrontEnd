@@ -1,9 +1,10 @@
 "use client";
 
-import { use } from "react";
+import { use, useState } from "react";
 import { BoothTitle, DetailAction, DetailHeader, DetailInfo, LoadingSpinner } from "@/components";
 import { useBoothDetail } from "@/hooks/queries/booth";
 import Image from "next/image";
+import { FiImage } from "react-icons/fi";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -12,6 +13,8 @@ type Props = {
 export default function BoothDetailPage({ params }: Props) {
   const { id } = use(params);
   const { data: booth, isLoading, isError } = useBoothDetail(id);
+  const [boothImgError, setBoothImgError] = useState(false);
+  const [locationImgError, setLocationImgError] = useState(false);
 
   if (isLoading) {
     return (
@@ -37,13 +40,20 @@ export default function BoothDetailPage({ params }: Props) {
     <main className="pb-16">
       <DetailHeader title="부스 정보" />
 
-      <div className="relative w-full aspect-390/264">
-        <Image
-          src={booth.booth_image}
-          alt={"부스 사진"}
-          fill
-          className="object-cover"
-        />
+      <div className="relative w-full aspect-390/264 bg-gray-100">
+        {boothImgError || !booth.booth_image ? (
+          <div className="absolute inset-0 flex items-center justify-center">
+            <FiImage size={40} className="text-gray-300" />
+          </div>
+        ) : (
+          <Image
+            src={booth.booth_image}
+            alt="부스 사진"
+            fill
+            className="object-cover"
+            onError={() => setBoothImgError(true)}
+          />
+        )}
       </div>
 
       <div className="flex flex-col px-4 gap-6">
@@ -67,16 +77,19 @@ export default function BoothDetailPage({ params }: Props) {
           hasBorder={false}
         />
 
-        <div className="flex flex-col gap-3">
-          <div className="relative w-full h-60 rounded-[10px]">
-            <Image
-              src={booth.location_image}
-              alt={booth.location}
-              fill
-              className="object-cover"
-            />
+        {booth.location_image && !locationImgError && (
+          <div className="flex flex-col gap-3">
+            <div className="relative w-full h-60 rounded-[10px] overflow-hidden">
+              <Image
+                src={booth.location_image}
+                alt={booth.location}
+                fill
+                className="object-cover"
+                onError={() => setLocationImgError(true)}
+              />
+            </div>
           </div>
-        </div>
+        )}
       </div>
     </main>
   );
