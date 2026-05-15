@@ -8,6 +8,8 @@ import { Card, Pagination } from "@/components";
 import FoodTruckMap from "@/components/pages/foodtruck/FoodTruckMap";
 import { FiSearch } from "react-icons/fi";
 
+import { trackEvent } from "@/lib/api/analytics";
+
 const PAGE_SIZE = 8;
 
 function FoodTruckPageContent() {
@@ -25,6 +27,13 @@ function FoodTruckPageContent() {
   }, [currentPage]);
 
   const { data: trucks = [], isLoading } = useFoodTruckList({});
+  useEffect(() => {
+    if (!isLoading) {
+      trackEvent("foodtruck_list_view", {
+        total_count: trucks.length,
+      });
+    }
+  }, [isLoading]);
 
   const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
   const pagedTrucks = trucks.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);
