@@ -3,7 +3,6 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BoothStampModal from "./BoothStampModal";
-import { creditBg } from "@/assets";
 
 interface Booth {
   booth_id: number;
@@ -24,7 +23,7 @@ function StampBoardSkeleton() {
     <div className="relative min-h-[calc(100vh-56px)]">
       <div className="absolute inset-0 -z-10">
         <Image
-          src={creditBg}
+          src="/stamp-bg.png"
           alt=""
           fill
           priority
@@ -87,7 +86,7 @@ export default function StampBoard() {
           }`}
         >
           <Image
-            src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
+            src={booth.is_stamped ? "/star-on.png" : "/star-off.png"}
             alt={booth.name}
             width={80}
             height={80}
@@ -108,7 +107,7 @@ export default function StampBoard() {
     <>
       <div className="absolute inset-0 -z-10">
         <Image
-          src={creditBg}
+          src="/stamp-bg.png"
           alt="도장판 배경 이미지"
           fill
           priority

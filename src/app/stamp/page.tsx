@@ -1,6 +1,5 @@
 "use client";
 
-import { creditBg } from "@/assets";
 import StampBoard from "@/components/pages/stamp/StampBoard";
 import UserInfoForm from "@/components/pages/stamp/UserInfoForm";
 import { fetcher } from "@/lib/api/fetcher";
@@ -17,7 +16,7 @@ function StampSkeleton() {
     <div className="relative min-h-[calc(100vh-56px)]">
       <div className="absolute inset-0 -z-10">
         <Image
-          src={creditBg}
+          src={"/stamp-bg.png"}
           alt=""
           fill
           priority

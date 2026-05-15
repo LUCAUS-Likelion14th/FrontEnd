@@ -31,7 +31,6 @@ export default function BoothStampModal({
 
     try {
       await authFetcher(`/stamp/${boothId}`, "POST", { password });
-
       setIsSuccess(true);
     } catch (error: any) {
       console.warn("도장 찍기 에러: ", error);
@@ -50,55 +49,65 @@ export default function BoothStampModal({
   };
 
   return (
-    <div className="fixed fixed top-0 left-0 right-0 bottom-0 z-15 flex bg-black/82">
-      <button
-        onClick={onClose}
-        className="absolute top-21 right-4 text-white z-10"
-      >
-        X
-      </button>
+    <div className="fixed inset-0 z-15 flex items-center justify-center bg-black/51">
+      <section className="relative w-full max-w-[365px] rounded-[20px] bg-[rgba(6,56,125,0.35)] p-8 pt-12 backdrop-blur-xs flex flex-col items-center">
+        <button
+          onClick={onClose}
+          className="absolute top-5 right-4 text-white z-10"
+        >
+          X
+        </button>
 
-      <section className="relative w-full flex flex-col justify-center items-center">
+        {/* 1. 상단 타이틀 영역 */}
+        <p className="text-[24px] font-semibold text-white text-center mb-[22px]">
+          {boothId}번 부스 &lsquo;{boothName}&rsquo; <br />
+          {isSuccess ? "별빛을 밝혔어요!" : "별빛 밝히기!"}
+        </p>
+
+        {/* 2. 중앙 스탬프 연출 영역 (perspective-500 추가로 3D 입체감 확보) */}
+        <div className="relative mb-[35px] flex justify-center items-center w-40 h-40 perspective-500">
+          
+          {/* [변경] 꺼진 별 이미지: 성공 시 global.css에 적어둔 coin-out 애니메이션 실행 */}
+          <Image
+            src="/star-off.png"
+            alt="도장 찍기 전"
+            width={111}
+            height={111}
+            className={`absolute object-contain z-10 ${
+              isSuccess 
+                ? "animate-coin-out pointer-events-none" 
+                : "opacity-100"
+            }`}
+          />
+
+          {/* [변경] 켜진 별 이미지: 성공 시 동전처럼 스르륵 핑그르르 도는 coin-in 애니메이션 실행 */}
+          <Image
+            src="/star-on.png"
+            alt="도장 찍기 성공"
+            width={149}
+            height={149}
+            className={`absolute object-contain z-10 ${
+              isSuccess 
+                ? "animate-coin-in" 
+                : "opacity-0 pointer-events-none"
+            }`}
+          />
+        </div>
+
+        {/* 3. 하단 UI 제어 영역 */}
         {isSuccess ? (
-          <>
-            <p className="text-[24px] font-semibold text-white text-center mb-9.5">
-              {boothId}번 부스 &lsquo;{boothName}&rsquo; <br /> 도장을 찍었어요!
-            </p>
-
-            <div className="relative mb-[57px] flex justify-center items-center w-30 h-30">
-              <div className="stamp-burst">
-                {Array.from({ length: 8 }).map((_, i) => (
-                  <div key={i} className={`stamp-line line-${i}`} />
-                ))}
-              </div>
-
-              <Image
-                src="/stamp-success.png"
-                alt="도장 찍기 성공"
-                width={111}
-                height={111}
-                className="object-contain animate-stamp z-10"
-              />
-            </div>
-
-            <button
-              onClick={handleFinalClose}
-              className="px-[58px] py-3 text-[16px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98]"
-              style={{
-                background: "rgba(6, 56, 125, 0.50)",
-                boxShadow: "0 0 10px 0 rgba(135, 185, 255, 0.40)",
-              }}
-            >
-              완료
-            </button>
-          </>
+          <button
+            onClick={handleFinalClose}
+            className="px-[58px] py-3 text-[16px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98]"
+            style={{
+              background: "rgba(6, 56, 125, 0.50)",
+            }}
+          >
+            완료
+          </button>
         ) : (
           <>
-            <p className="text-[24px] font-semibold text-white text-center mb-[67px]">
-              {boothId}번 부스 &lsquo;{boothName}&rsquo; <br /> 도장을 꾸욱!
-            </p>
-
-            <div className="flex flex-col justify-center items-center gap-2 mb-[67px]">
+            <div className="flex flex-col justify-center items-center gap-2 mb-[35px]">
               <span className="text-[16px] font-medium text-white">
                 STAFF에게 해당 화면을 보여주세요!
               </span>
@@ -106,10 +115,16 @@ export default function BoothStampModal({
               <input
                 type="text"
                 value={password}
-                onChange={(e) => { setPassword(e.target.value); setErrorMsg(""); }}
+                onChange={(e) => {
+                  setPassword(e.target.value);
+                  setErrorMsg("");
+                }}
                 onKeyDown={(e) => e.key === "Enter" && handleStampSubmit()}
                 placeholder="코드를 입력해 주세요"
-                className={`bg-white text-[16px] font-medium text-center px-[77px] py-[13px] rounded-[10px] outline-none focus:border-primary ${errorMsg ? "border-2 border-red-400" : ""}`}
+                disabled={isLoading}
+                className={`bg-white/30 text-[14px] text-white font-medium text-center px-[33px] py-[13px] rounded-[10px] outline-none focus:border-primary placeholder:text-white ${
+                  errorMsg ? "border-2 border-red-400" : ""
+                }`}
               />
               {errorMsg && (
                 <span className="text-red-400 text-[13px] font-medium mt-1">
@@ -120,13 +135,13 @@ export default function BoothStampModal({
 
             <button
               onClick={handleStampSubmit}
+              disabled={isLoading}
               className="px-10.5 py-3 text-[16px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98]"
               style={{
                 background: "rgba(6, 56, 125, 0.50)",
-                boxShadow: "0 0 10px 0 rgba(135, 185, 255, 0.40)",
               }}
             >
-              도장 찍기
+              {isLoading ? "확인 중..." : "도장 찍기"}
             </button>
           </>
         )}
