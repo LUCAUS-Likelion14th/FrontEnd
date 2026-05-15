@@ -5,6 +5,7 @@ import { useState } from "react";
 import { DetailHeader } from "../detail";
 import Image from "next/image";
 import RegisterModal from "./RegisterModal";
+import { creditBg } from "@/assets";
 
 interface UserInfoFormProps {
   onComplete: () => void;
@@ -51,7 +52,7 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
     <>
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/stamp-register-bg.png"
+          src={creditBg}
           alt="도장판 인적사항 입력 배경 이미지"
           fill
           priority
