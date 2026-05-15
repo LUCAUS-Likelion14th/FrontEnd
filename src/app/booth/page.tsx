@@ -11,6 +11,7 @@ import {
   DateFilter,
   Pagination,
   Card,
+  LoadingScreen,
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory } from "@/data/boothData";
@@ -90,6 +91,8 @@ function BoothPageContent() {
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
+
+  if (isLoading) return <LoadingScreen />;
 
   const totalPages = isStampMode ? 1 : (normalBoothsData?.totalPages ?? 1);
 

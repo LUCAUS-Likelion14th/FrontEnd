@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { mypageApi } from "@/lib";
-import { DetailHeader, Card } from "@/components";
+import { DetailHeader, Card, LoadingScreen } from "@/components";
 
 export default function LikesPage() {
   const [tab, setTab] = useState<"booth" | "food">("booth");
@@ -30,6 +30,8 @@ export default function LikesPage() {
 
   const isLoading = boothLoading || truckLoading;
   const isError = boothError || truckError;
+
+  if (isLoading) return <LoadingScreen />;
 
   const TabBar = () => (
     <div className="relative">

@@ -1,6 +1,6 @@
 "use client";
 
-import { Pagination, DetailHeader, NoticeItem } from "@/components";
+import { Pagination, DetailHeader, NoticeItem, LoadingScreen } from "@/components";
 import { FiBell } from "react-icons/fi";
 import { formatDate } from "@/lib/utils/date";
 import { useState } from "react";
@@ -14,6 +14,8 @@ export default function NoticePage() {
     size: 10,
     sort: ["important,desc", "createdAt,desc"],
   });
+
+  if (isLoading) return <LoadingScreen />;
 
   const noticeData = data?.content ?? [];
   const totalPages = data?.totalPages ?? 0;
