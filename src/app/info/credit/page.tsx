@@ -10,7 +10,7 @@ const CREDITS = [
   { role: "DESIGN", members: ["서예진"] },
   { role: "FRONTEND", members: ["강지혜", "김유겸", "이은지"] },
   { role: "BACKEND", members: ["김윤형", "이채연", "최서영"] },
-  { role: "Special Thanks to", members: ["윤리현 정건 총학인원들누구누구.."] },
+  { role: "Special Thanks to", members: ["윤리현 정건"] },
 ];
 
 export default function CreditPage() {
@@ -26,14 +26,7 @@ export default function CreditPage() {
         priority
       />
 
-      <button
-        onClick={() => router.back()}
-        className="absolute left-4 top-7 z-10"
-      >
-        <FiChevronLeft size={24} className="text-[#273850]" />
-      </button>
-
-      <div className="relative z-10 flex flex-col items-center pt-20 pb-12">
+      <div className="relative z-10 flex flex-col items-center pt-12 pb-12">
         <div className="flex flex-col items-center gap-2 mb-12">
           <Image src={likelionLogo} alt="LIKELION" width={49} height={27} />
           <p className="text-[#273850] text-[16px] font-semibold mt-1">
