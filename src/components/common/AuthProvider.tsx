@@ -33,11 +33,18 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("nickname");
+          if (window.location.pathname !== "/login") {
+            window.location.replace("/login");
+          }
         }
       })
       .catch(() => {
+        localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("nickname");
+        if (window.location.pathname !== "/login") {
+          window.location.replace("/login");
+        }
       })
       .finally(() => {
         setInitialized();

@@ -83,7 +83,7 @@ export async function fetcher<T>(
 
   if (res.status === 401) {
     if (typeof window !== "undefined") {
-      localStorage.removeItem("accessToken");
+      clearAuthAndRedirect();
     }
     throw new Error("Unauthorized");
   }
