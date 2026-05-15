@@ -71,9 +71,10 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
     [stampCount, totalStamps],
   );
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
+    await fetch("/api/auth/admin", { method: "DELETE" });
     window.location.replace("/");
   };
 

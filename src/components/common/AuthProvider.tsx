@@ -33,6 +33,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("nickname");
+          fetch("/api/auth/admin", { method: "DELETE" });
           if (window.location.pathname !== "/login") {
             window.location.replace("/login");
           }
@@ -42,6 +43,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         localStorage.removeItem("accessToken");
         localStorage.removeItem("refreshToken");
         localStorage.removeItem("nickname");
+        fetch("/api/auth/admin", { method: "DELETE" });
         if (window.location.pathname !== "/login") {
           window.location.replace("/login");
         }
