@@ -1,7 +1,7 @@
 "use client";
 
-import ListCard from "@/components/ui/ListCard";
-import SectionHeader from "@/components/ui/SectionHeader";
+import ListCard from "@/components/common/ListCard";
+import SectionHeader from "@/components/common/SectionHeader";
 import { useHotFood } from "@/hooks/queries/home";
 import { FiTruck } from "react-icons/fi";
 import { motion } from "framer-motion";

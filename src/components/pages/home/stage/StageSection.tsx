@@ -1,7 +1,7 @@
 "use client";
 
 import StageCard from './StageCard'
-import SectionHeader from '@/components/ui/SectionHeader'
+import SectionHeader from '@/components/common/SectionHeader'
 import type { LiveStage } from "@/types/home";
 import { motion } from "framer-motion";
 

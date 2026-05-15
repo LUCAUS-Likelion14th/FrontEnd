@@ -4,7 +4,7 @@ import { StageEventSection, StageCategory, ArtistSection, StageTimeline } from '
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
-import { useStageData } from "@/hooks/useStageData";
+import { useStageData } from "@/hooks/queries/useStageData";
 import Link from 'next/link';
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";

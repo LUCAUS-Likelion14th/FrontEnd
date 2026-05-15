@@ -1,5 +1,5 @@
 import { NoticeBanner, StageSection, StampShortcutButton, BoothSection, FoodSection, SplashScreen} from "@/components";
-import ImageSwiper from "@/components/ui/ImageSwiper";
+import ImageSwiper from "@/components/common/ImageSwiper";
 import Footer from "@/components/layouts/Footer";
 import { homeApi } from "@/lib/api/homeApi";
 
