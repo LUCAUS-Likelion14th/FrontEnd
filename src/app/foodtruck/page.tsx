@@ -57,8 +57,7 @@ function FoodTruckPageContent() {
                   id={truck.id}
                   type="foodtruck"
                   name={truck.name}
-                  subText={truck.bestMenu}
-                  location={truck.location}
+                  location={truck.bestMenu}
                   image={truck.image}
                   isLiked={truck.liked}
                   likeCount={truck.likeCount}
