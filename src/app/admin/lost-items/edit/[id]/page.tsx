@@ -35,7 +35,7 @@ export default function LostItemEditDetailPage() {
     adminLostApi
       .getLostItems(0, 100)
       .then((res) => {
-        const found = res.find((i) => i.lost_id === lostId);
+        const found = res.content.find((i) => i.lost_id === lostId);
         if (found) {
           setItem(found);
           setName(found.name);
