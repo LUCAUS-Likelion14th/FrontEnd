@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
+import BoothMap from "@/components/pages/booth/BoothMap";
 import {
   BoothLocationFilter,
   BoothCategoryFilter,
@@ -132,17 +133,7 @@ function BoothPageContent() {
           </div>
         </div>
 
-        <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-          <span className="text-text-sub text-base">지도</span>
-          <div className="absolute right-4 bottom-5 flex flex-col gap-2">
-            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-              +
-            </button>
-            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-              −
-            </button>
-          </div>
-        </div>
+        <BoothMap selectedLocation={selectedLocation} />
       </section>
 
       <section className="flex flex-col">
