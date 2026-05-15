@@ -139,7 +139,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
           <div className="flex flex-col px-4 gap-8">
             {/* 좋아요 */}
-            <div className="flex flex-col gap-4 bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] px-4 py-5">
+            <div className="flex flex-col gap-3">
               <Link href="/mypage/likes" className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">내 좋아요</span>
                 <FiChevronRight size={24} className="text-[#727272]" />
@@ -175,62 +175,48 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
 
             {/* 도장판 */}
-            <Link
-              href="/stamp"
-              className="flex flex-col bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] px-4 py-5 gap-4"
-            >
+            <Link href="/stamp" className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">도장판</span>
                 <FiChevronRight size={24} className="text-[#727272]" />
               </div>
 
               {stampData === null ? (
-                <div className="flex flex-col gap-3">
-                  <div className="flex gap-2">
-                    {Array.from({ length: 4 }).map((_, i) => (
-                      <div key={i} className="w-12 h-12 rounded-full bg-gray-200 animate-pulse" />
-                    ))}
+                <div className="flex items-center gap-4">
+                  <div className="w-14 h-14 rounded-full bg-gray-200 animate-pulse shrink-0" />
+                  <div className="flex-1 flex flex-col gap-2">
+                    <div className="h-3 w-24 rounded bg-gray-200 animate-pulse" />
+                    <div className="h-2 w-full rounded-full bg-gray-200 animate-pulse" />
+                    <div className="h-3 w-40 rounded bg-gray-200 animate-pulse" />
                   </div>
-                  <div className="h-2 w-full rounded-full bg-gray-200 animate-pulse" />
-                  <div className="h-4 w-32 rounded bg-gray-200 animate-pulse" />
                 </div>
               ) : (
-                <>
-                  <div className="flex gap-2 flex-wrap">
-                    {Array.from({ length: Math.min(totalStamps, 6) }).map((_, i) => (
-                      <div key={i} className="relative w-12 h-12 shrink-0">
-                        <Image
-                          src={i < stampCount ? "/stamp-on.png" : "/stamp-off.png"}
-                          alt={i < stampCount ? "획득한 도장" : "미획득 도장"}
-                          fill
-                          className="object-contain"
-                        />
-                      </div>
-                    ))}
-                    {totalStamps > 6 && (
-                      <div className="w-12 h-12 rounded-full bg-primary-light flex items-center justify-center text-primary text-sm font-semibold shrink-0">
-                        +{totalStamps - 6}
-                      </div>
-                    )}
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <div className="flex justify-between text-sm text-text-sub">
-                      <span>{stampCount}개 획득</span>
-                      <span>총 {totalStamps}개</span>
-                    </div>
-                    <div className="w-full bg-gray-200 rounded-full h-2">
-                      <div
-                        className="bg-primary h-2 rounded-full transition-all duration-500"
-                        style={{ width: `${stampProgress}%` }}
+                <div className="flex items-center gap-4">
+                  <div className="relative shrink-0 w-14 h-14">
+                    <svg viewBox="0 0 56 56" className="w-full h-full -rotate-90">
+                      <circle cx="28" cy="28" r="22" fill="none" stroke="#dce2e9" strokeWidth="5" />
+                      <circle
+                        cx="28" cy="28" r="22" fill="none"
+                        stroke="#06387d" strokeWidth="5"
+                        strokeLinecap="round"
+                        strokeDasharray={`${2 * Math.PI * 22}`}
+                        strokeDashoffset={`${2 * Math.PI * 22 * (1 - stampProgress / 100)}`}
+                        className="transition-all duration-500"
                       />
+                    </svg>
+                    <div className="absolute inset-0 flex flex-col items-center justify-center">
+                      <span className="text-[13px] font-bold text-primary leading-none">{stampCount}</span>
+                      <span className="text-[9px] text-text-sub leading-none">/{totalStamps}</span>
                     </div>
                   </div>
-                </>
+                  <div className="flex flex-col gap-0.5">
+                    <span className="text-[15px] font-semibold text-text-main">
+                      {totalStamps}개 중 <span className="text-primary">{stampCount}개</span> 획득
+                    </span>
+                    <span className="text-sm text-text-sub">광장기획전에 참여하고 경품 받아가세요!</span>
+                  </div>
+                </div>
               )}
-
-              <p className="text-sm text-text-sub">
-                광장기획전에 참여하고 푸짐한 경품 받아가세요!
-              </p>
             </Link>
           </div>
         </div>

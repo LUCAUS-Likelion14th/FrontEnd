@@ -3,7 +3,7 @@
 import { useState } from "react";
 import DetailHeader from "@/components/pages/detail/DetailHeader";
 import { FiChevronDown, FiAlertTriangle } from "react-icons/fi";
-import { MdQrCode2, MdAccessTime, MdBadge, MdPeople, MdBlock, MdWarning, MdDoorFront, MdExitToApp, MdHelpOutline } from "react-icons/md";
+import { MdQrCode2, MdAccessTime, MdBadge, MdBlock, MdDoorFront, MdExitToApp, MdHelpOutline } from "react-icons/md";
 import { IconType } from "react-icons";
 
 const TICKETS = [
@@ -14,53 +14,37 @@ const TICKETS = [
   { id: "E", time: "16:00 - 16:30" },
   { id: "F", time: "16:30 - 17:00" },
   { id: "G", time: "17:00 - 17:30" },
-  { id: "H", time: "17:30 - 입장 마감" },
+  { id: "H", time: "17:30 - 입장 마감 시까지" },
 ];
 
 const TIMELINE = [
-  { time: "13:00 이전", desc: "티켓 배부 세팅\n(리더기, 도장, 팔찌, 듀라테이블, 캐노피, 노트북 등)" },
-  { time: "13:30", desc: "1대기구역 → A티켓 대기\n2대기구역 → B티켓 대기\n*티켓별 입장시간 30분 전부터 대기" },
-  { time: "14:00", desc: "A티켓 대기 마감\n잔디광장 입장 시작" },
-  { time: "14:30", desc: "A입장 완료 → B티켓 인원 1대기구역 이동\n입장번호 순서대로 잔디광장 입장\n2대기구역 C티켓 대기 시작" },
-  { time: "15:00 ~", desc: "동일 방식 반복 (B→C→D→E→F→G→H)\nH티켓 17:30까지" },
+  { time: "13:30", desc: "1 대기구역 → A 티켓 대기\n2 대기구역 → B 티켓 대기\n*티켓별 입장시간 30분 전부터 대기 시작" },
+  { time: "14:00", desc: "A 티켓 대기 마감\n잔디광장 입장 시작" },
+  { time: "14:30 ~", desc: "동일 방식 반복 (B→C→D→E→F→G→H)" },
 ];
 
-const PROHIBITED = [
-  { label: "우산" },
-  { label: "유리병 등 위협 물품" },
-  { label: "주류" },
-  { label: "식음료", sub: "뚜껑 개폐 가능한 페트음료는 가능, 테이크아웃 잔 불가" },
-  { label: "대포카메라·사다리·의자·셀카봉", sub: "타인의 진로·시야를 방해하는 물품", red: true },
-];
-
-const ENTRY_NOTES = [
-  { text: "QR코드 / 신분증 / 학생증(e-ID) 3가지 모두 확인 후 도장 배부" },
-  { text: "일자별로 도장 색과 일자가 다르니 확인 후 배부" },
-  { text: "대리수령 불가" },
-  { text: "훼손된 팔찌·도장은 재수령 불가" },
-  { text: "미처 수거 못한 반입금지물품은 입장 시 수거" },
-  { text: "입장 시작 이후 도착한 인원은 해당 줄 맨 마지막에서 입장" },
+const PROHIBITED: { label: string; sub?: string; red?: boolean }[] = [
+  { label: "뚜껑이 없는 음료, 일반 식음료", sub: "뚜껑이 있는 음료나 텀블러는 허용" },
+  { label: "모든 종류의 주류" },
+  { label: "삼각대, 대포카메라 등 전문 촬영 장비" },
+  { label: "유리병 등 위험 물품" },
+  { label: "타인의 시야 또는 진로를 방해할 수 있는 물품" },
+  { label: "기타 안전상의 문제가 발생할 수 있는 물품" },
 ];
 
 const AFTER_ENTRY = [
-  { text: "일행과 같이 관람 시 무대 뒤쪽으로만 이동 가능 (앞쪽 이동 불가)" },
-  { text: "화장실은 101관(영신관) 사용" },
-  { text: "자리를 비울 경우 주변 분들께 양해 구하고 이동 (자리 보장 X)" },
-  { text: "도장·팔찌 확인된 인원만 빼광 쪽 재입장ZONE으로 퇴장·재입장 가능" },
-  { text: "스탠딩 전환 시 입장통제 (퇴장만 가능)" },
-];
-
-const EXIT_NOTES = [
-  { text: "퇴장 진행 시 잔디광장 폐쇄", red: true },
-  { text: "정문·R&D 및 빼광 인원 우선 퇴장 후 잔디광장 인원 퇴장" },
+  { text: "일행과 같이 관람 시 무대 뒤쪽으로만 이동 가능하며, 앞쪽으로는 이동이 불가합니다" },
+  { text: "화장실은 101관(영신관)을 사용해주세요" },
+  { text: "자리를 비울 경우, 자리를 보장해드릴 수 없습니다" },
+  { text: "도장, 팔찌가 확인된 인원만 빼빼로 광장 쪽 재입장존으로 재입장이 가능합니다" },
+  { text: "스탠딩 전환 시 입장이 통제되며, 퇴장만 가능합니다" },
 ];
 
 const FAQS = [
   { q: "대리 수령 가능한가요?", a: "불가능합니다." },
-  { q: "도장·팔찌가 훼손/분실 됐는데 재수령 가능한가요?", a: "원칙적으로 불가능하나, 재입장을 진행하지 않았을 경우 가능합니다." },
+  { q: "도장·팔찌가 훼손/분실 됐는데 재수령 가능한가요?", a: "재입장을 진행하지 않았을 경우에만 가능합니다." },
   { q: "입장 시간이 지났는데 입장이 가능할까요?", a: "현재 입장하고 있는 줄 마지막에 서서 입장 가능합니다." },
   { q: "친구가 앞쪽에 있는데 앞쪽으로 가도 되나요?", a: "입장 번호대로 입장한 것이기에 앞으로 이동하는 것은 불가능합니다." },
-  { q: "방금 들어온 사람이 저희보다 앞쪽으로 들어갔어요", a: "주변분들 티켓 확인 후 맨 뒤로 유도해주세요." },
 ];
 
 function Section({
@@ -152,7 +136,7 @@ export default function RoutePage() {
       <div className="mx-4 mt-4 flex items-center gap-2.5 px-4 py-3 rounded-[12px] bg-red-50 border border-red-200">
         <FiAlertTriangle size={15} className="text-[#C0392B] shrink-0" />
         <p className="text-[13px] text-[#C0392B] leading-5 font-medium">
-          QR코드 · 신분증 · 학생증(e-ID) 미리 준비해주세요
+          QR코드 · 신분증 · 학생증(e-ID)을 미리 준비해주세요
         </p>
       </div>
 
@@ -170,9 +154,6 @@ export default function RoutePage() {
               </div>
             ))}
           </div>
-          <p className="mt-3 text-[12px] text-[#8d97a7] leading-5">
-            * 8개 티켓 중 하나 선택 · 선착순 번호 부여 (ex. A-001~A-500)
-          </p>
         </Section>
 
         {/* 2. 입장 대기 */}
@@ -204,26 +185,15 @@ export default function RoutePage() {
         <Section title="푸앙패스" icon={MdBadge}>
           <NoteList items={[
             { text: "대기열: 영신관 옆" },
-            { text: "양일 약 50여명 · 신분증·학생증·e-ID 확인 후 배부" },
+            { text: "A 티켓 입장완료된 시점으로부터 전체 입장 마감 시간까지 자유롭게 입장 가능" }
           ]} />
           <div className="mt-3 rounded-[10px] bg-red-50 border border-red-100 px-3 py-2.5 flex flex-col gap-1">
-            <p className="text-[12px] text-[#C0392B] leading-5">* 별도의 QR코드가 없는 티켓</p>
-            <p className="text-[12px] text-[#C0392B] leading-5">* 재입장 시 학적 확인 및 팔찌 훼손 여부 확인</p>
+            <p className="text-[12px] text-[#C0392B] leading-5">* 학적 확인을 위해 신분증, 학생증과 e-ID 필요</p>
           </div>
         </Section>
 
-        {/* 4. 줄관리 */}
-        <Section title="줄관리" icon={MdPeople}>
-          <MapPlaceholder />
-          <NoteList items={[
-            { text: "그림에 적힌 번호가 입장번호" },
-            { text: "양쪽 펜스 번호에 맞춰 서서 대기" },
-            { text: "입장번호대로 줄 설 수 있도록 안내" },
-          ]} />
-        </Section>
-
         {/* 5. 반입금지물품 */}
-        <Section title="반입금지물품" icon={MdBlock}>
+        <Section title="반입 금지 물품" icon={MdBlock}>
           <div className="flex flex-col gap-2.5 mt-2">
             {PROHIBITED.map((item, i) => (
               <div key={i} className={`flex items-start gap-2 rounded-[8px] px-3 py-2 ${item.red ? "bg-red-50" : "bg-[#F5F8FF]"}`}>
@@ -236,23 +206,15 @@ export default function RoutePage() {
                 </div>
               </div>
             ))}
+            <div className="px-3 flex flex-col">
+            <p className="text-[12px] text-[#8d97a7] leading-5">* 위반 시 입장이 제한될 수 있습니다.</p>
+          </div>
           </div>
         </Section>
 
-        {/* 6. 입장 시 주의 */}
-        <Section title="입장 시 주의사항" icon={MdWarning}>
-          <NoteList items={ENTRY_NOTES} />
-        </Section>
-
         {/* 7. 입장 이후 */}
-        <Section title="입장 이후" icon={MdDoorFront}>
+        <Section title="현장 이용 수칙" icon={MdDoorFront}>
           <NoteList items={AFTER_ENTRY} />
-        </Section>
-
-        {/* 8. 퇴장 */}
-        <Section title="퇴장" icon={MdExitToApp}>
-          <MapPlaceholder />
-          <NoteList items={EXIT_NOTES} />
         </Section>
 
         {/* 9. FAQ */}

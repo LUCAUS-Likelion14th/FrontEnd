@@ -62,11 +62,11 @@ const VIEWING_RULES = [
   { text: "현장 상황에 따라 운영 내용은 일부 변경될 수 있습니다." },
 ];
 
-const PROHIBITED = [
+const PROHIBITED: { label: string; sub?: string; red?: boolean }[] = [
   { label: "뚜껑이 없는 음료, 일반 식음료", sub: "뚜껑이 있는 음료나 텀블러는 허용" },
-  { label: "모든 종류의 주류", red: true },
+  { label: "모든 종류의 주류" },
   { label: "삼각대, 대포카메라 등 전문 촬영 장비" },
-  { label: "유리병 등 위험 물품", red: true },
+  { label: "유리병 등 위험 물품" },
   { label: "타인의 시야 또는 진로를 방해할 수 있는 물품" },
   { label: "기타 안전상의 문제가 발생할 수 있는 물품" },
 ];
@@ -114,7 +114,21 @@ function NoteList({ items }: { items: { text: string; red?: boolean }[] }) {
         <li key={i} className="flex items-start gap-2">
           <span className={`text-[11px] mt-0.5 shrink-0 ${item.red ? "text-[#C0392B]" : "text-primary"}`}>●</span>
           <span className={`text-[13px] leading-5 ${item.red ? "text-[#C0392B] font-medium" : "text-[#3B4A5A]"}`}>
-            {item.text}
+            {item.text.includes('\n') ? (() => {
+              const lines = item.text.split('\n');
+              const colonIdx = lines[0].indexOf(': ');
+              const prefix = colonIdx >= 0 ? lines[0].slice(0, colonIdx + 2) : '';
+              return (
+                <>
+                  <span className="block">{lines[0]}</span>
+                  {lines.slice(1).map((line, j) => (
+                    <span key={j} className="block">
+                      <span className="invisible">{prefix}</span>{line}
+                    </span>
+                  ))}
+                </>
+              );
+            })() : item.text}
           </span>
         </li>
       ))}
@@ -138,7 +152,13 @@ export default function BarrierFreePage() {
       <div className="px-4 pt-4 flex flex-col gap-3">
 
         {/* 1. 운영 안내 */}
-        <Section title="운영 안내" icon={MdAccessTime}>
+        <Section title="위치 및 운영 안내" icon={MdAccessTime}>
+        <div className="w-full h-44 rounded-[12px] bg-[#F2F4F6] flex items-center justify-center mt-3">
+            <p className="text-[13px] text-[#8d97a7]">위치 지도 이미지 추가 예정</p>
+          </div>
+          <p className="text-[13px] text-[#3B4A5A] leading-5 mt-3 mb-6">
+            배리어프리존은 <span className="font-semibold text-primary">잔디광장 내 학생회관 측</span>에 위치합니다.
+          </p>
           <div className="flex flex-col gap-2 mt-3">
             <div className="rounded-[10px] bg-[#F5F8FF] px-4 py-3 flex flex-col gap-1.5">
               <div className="flex items-start gap-2">
@@ -191,6 +211,11 @@ export default function BarrierFreePage() {
           </div>
         </Section>
 
+        {/* 5. 좌석 배정 기준 */}
+        <Section title="좌석 배정 기준" icon={MdEventSeat}>
+          <NoteList items={SEAT_NOTES} />
+        </Section>
+
         {/* 3. 현장 접수 안내 */}
         <Section title="현장 접수 안내" icon={MdPeople}>
           <NoteList items={ON_SITE_NOTES} />
@@ -199,19 +224,6 @@ export default function BarrierFreePage() {
         {/* 4. 동반자 포함 입장 안내 */}
         <Section title="동반자 포함 입장 안내" icon={MdPeople}>
           <NoteList items={COMPANION_NOTES} />
-        </Section>
-
-        {/* 5. 좌석 배정 기준 */}
-        <Section title="좌석 배정 기준" icon={MdEventSeat}>
-          <NoteList items={SEAT_NOTES} />
-        </Section>
-
-        {/* 6. 현장 이용 수칙 */}
-        <Section title="현장 이용 수칙" icon={MdGavel}>
-          <p className="text-[12px] font-semibold text-[#8d97a7] mt-3 mb-1">입장 및 이동</p>
-          <NoteList items={ENTRY_RULES} />
-          <p className="text-[12px] font-semibold text-[#8d97a7] mt-4 mb-1">관람 방식</p>
-          <NoteList items={VIEWING_RULES} />
         </Section>
 
         {/* 7. 반입 금지 물품 */}
@@ -232,14 +244,12 @@ export default function BarrierFreePage() {
           <p className="text-[12px] text-[#8d97a7] mt-3 leading-5">* 위반 시 입장이 제한될 수 있습니다.</p>
         </Section>
 
-        {/* 위치 안내 섹션 */}
-        <Section title="위치 안내" icon={MdLocationOn}>
-          <div className="w-full h-44 rounded-[12px] bg-[#F2F4F6] flex items-center justify-center mt-3">
-            <p className="text-[13px] text-[#8d97a7]">위치 지도 이미지 추가 예정</p>
-          </div>
-          <p className="text-[13px] text-[#3B4A5A] leading-5 mt-3">
-            배리어프리존은 <span className="font-semibold text-primary">잔디광장 내 학생회관 측</span>에 위치합니다.
-          </p>
+        {/* 6. 현장 이용 수칙 */}
+        <Section title="현장 이용 수칙" icon={MdGavel}>
+          <p className="text-[12px] font-semibold text-[#8d97a7] mt-3 mb-1">입장 및 이동</p>
+          <NoteList items={ENTRY_RULES} />
+          <p className="text-[12px] font-semibold text-[#8d97a7] mt-4 mb-1">관람 방식</p>
+          <NoteList items={VIEWING_RULES} />
         </Section>
 
       </div>
