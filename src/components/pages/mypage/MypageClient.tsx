@@ -110,8 +110,29 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
           </div>
 
           <div className="px-4 flex flex-col gap-8">
-            <EmptyBox title="내 좋아요" icon={<FiHeart size={40} />} />
-            <EmptyBox title="도장판" icon={<PiStampLight size={40} />} />
+            {/* 좋아요 */}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[20px] font-semibold">내 좋아요</span>
+                <FiChevronRight size={24} className="text-[#727272]" />
+              </div>
+              <div className="flex flex-col items-center gap-2 py-6 text-text-sub">
+                <FiHeart size={32} className="text-text-sub2" />
+                <span className="text-sm">로그인 후 확인할 수 있어요.</span>
+              </div>
+            </div>
+
+            {/* 도장판 */}
+            <div className="flex flex-col gap-3">
+              <div className="flex items-center justify-between">
+                <span className="text-[20px] font-semibold">도장판</span>
+                <FiChevronRight size={24} className="text-[#727272]" />
+              </div>
+              <div className="flex flex-col items-center gap-2 py-6 text-text-sub">
+                <PiStampLight size={32} className="text-text-sub2" />
+                <span className="text-sm">로그인 후 확인할 수 있어요.</span>
+              </div>
+            </div>
           </div>
         </div>
       ) : (
@@ -225,14 +246,3 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
   );
 }
 
-function EmptyBox({ title, icon }: { title: string; icon: React.ReactNode }) {
-  return (
-    <div className="bg-white rounded-[10px] shadow-[0_4px_16px_rgba(6,56,125,0.15)] px-4 py-5">
-      <span className="text-[20px] font-semibold">{title}</span>
-      <div className="flex flex-col items-center gap-2 py-10 text-text-sub">
-        <div className="text-text-sub2">{icon}</div>
-        <span className="text-sm">로그인 후 확인할 수 있어요.</span>
-      </div>
-    </div>
-  );
-}
