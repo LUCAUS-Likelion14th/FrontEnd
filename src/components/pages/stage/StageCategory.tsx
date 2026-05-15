@@ -1,5 +1,7 @@
 "use client";
 
+import { motion } from "framer-motion";
+
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
 
 type CategoryProps = {
@@ -64,13 +66,20 @@ export default function StageCategory({
           <button
             key={item}
             onClick={() => onSelect(item)}
-            className={`px-3 py-2 rounded-md text-sm font-medium leading-4.5 shrink-0 transition-colors ${
-              selected === item
-                ? "bg-primary text-white"
-                : "bg-primary-light text-text-sub"
-            }`}
+            className="relative px-3 py-2 rounded-md text-sm font-medium leading-4.5 shrink-0"
           >
-            {item}
+            {selected === item && (
+              <motion.div
+                layoutId="category-pill"
+                className="absolute inset-0 bg-primary rounded-md"
+                transition={{ type: "spring", stiffness: 400, damping: 30 }}
+              />
+            )}
+            <span className={`relative z-10 transition-colors ${
+              selected === item ? "text-white" : "text-text-sub"
+            }`}>
+              {item}
+            </span>
           </button>
         ))}
       </section>

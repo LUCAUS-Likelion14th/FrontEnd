@@ -1,6 +1,9 @@
+"use client";
+
 import StageCard from './StageCard'
 import SectionHeader from '@/components/ui/SectionHeader'
 import type { LiveStage } from "@/types/home";
+import { motion } from "framer-motion";
 
 interface Props {
   stages: LiveStage[];
@@ -32,15 +35,22 @@ export default function StageSection({ stages }: Props) {
           <span className="text-[13px] font-medium text-[#8D97A7]">현재 진행 중인 공연이 없어요</span>
         </div>
       ) : (
-        stages.map((stage) => (
-          <StageCard
+        stages.map((stage, i) => (
+          <motion.div
             key={stage.stage_id}
-            imageUrl={stage.logo}
-            href={`/stage/${stage.stage_id}`}
-            location="잔디광장"
-            name={stage.performer}
-            time={stage.time}
-          />
+            initial={{ opacity: 0, y: 14 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: "-20px" }}
+            transition={{ duration: 0.35, delay: i * 0.08, ease: "easeOut" }}
+          >
+            <StageCard
+              imageUrl={stage.logo}
+              href={`/stage/${stage.stage_id}`}
+              location="잔디광장"
+              name={stage.performer}
+              time={stage.time}
+            />
+          </motion.div>
         ))
       )}
     </section>

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
+import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import {
   BoothLocationFilter,
@@ -170,18 +171,25 @@ function BoothPageContent() {
             </div>
           ) : booths.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-              {booths.map((booth) => (
-                <Card
+              {booths.map((booth, i) => (
+                <motion.div
                   key={booth.booth_id}
-                  id={booth.booth_id}
-                  type="booth"
-                  name={booth.booth_name}
-                  subText={booth.booth_owner}
-                  location={booth.booth_location}
-                  image={booth.booth_image}
-                  isLiked={booth.is_liked}
-                  likeCount={booth.like_count}
-                />
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-20px" }}
+                  transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+                >
+                  <Card
+                    id={booth.booth_id}
+                    type="booth"
+                    name={booth.booth_name}
+                    subText={booth.booth_owner}
+                    location={booth.booth_location}
+                    image={booth.booth_image}
+                    isLiked={booth.is_liked}
+                    likeCount={booth.like_count}
+                  />
+                </motion.div>
               ))}
             </div>
           ) : (
