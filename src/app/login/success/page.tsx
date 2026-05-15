@@ -27,7 +27,11 @@ function LoginSuccessContent() {
 
     const redirect = async () => {
       if (isAdmin === "true") {
-        await fetch("/api/auth/admin", { method: "POST" });
+        try {
+          await fetch("/api/auth/admin", { method: "POST" });
+        } catch {
+          // 쿠키 발급 실패해도 홈으로 이동
+        }
       }
       router.replace("/");
     };

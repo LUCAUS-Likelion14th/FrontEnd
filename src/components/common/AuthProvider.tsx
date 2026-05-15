@@ -8,6 +8,16 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const setInitialized = useAuthStore((s) => s.setInitialized);
 
   useEffect(() => {
+    const params = new URLSearchParams(window.location.search);
+    if (params.get("adminDenied") === "1") {
+      alert("관리자만 접근할 수 있습니다.");
+      const url = new URL(window.location.href);
+      url.searchParams.delete("adminDenied");
+      window.history.replaceState({}, "", url.toString());
+    }
+  }, []);
+
+  useEffect(() => {
     const refreshToken = localStorage.getItem("refreshToken");
 
     if (!refreshToken) {
