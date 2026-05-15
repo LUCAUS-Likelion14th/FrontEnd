@@ -57,6 +57,16 @@ export default function StagePage() {
     }
   }, [searchParams]);
 
+  const availableCategories = selectedDate === "2026-05-22"
+    ? CATEGORY.filter((c) => c !== "무대기획전")
+    : CATEGORY;
+
+  useEffect(() => {
+    if (selectedDate === "2026-05-22" && selected === "무대기획전") {
+      setSelected("학생 공연");
+    }
+  }, [selectedDate, selected]);
+
   const { stage, timelineData, activeId } = useStageData(selectedDate, selected);
 
   const filteredEventData = STAGE_EVENT_DATA.filter(
@@ -69,7 +79,7 @@ export default function StagePage() {
     <main className="px-4 pt-5 pb-25">
       <section className="mb-10">
         <StageCategory
-          categories={CATEGORY}
+          categories={availableCategories}
           selected={selected}
           onSelect={setSelected}
           selectedDate={selectedDate}

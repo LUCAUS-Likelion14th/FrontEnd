@@ -6,6 +6,11 @@ import { useBoothDetail } from "@/hooks/queries/booth";
 import Image from "next/image";
 import { FiImage } from "react-icons/fi";
 
+const DAY_KO: Record<string, string> = {
+  MONDAY: "월", TUESDAY: "화", WEDNESDAY: "수",
+  THURSDAY: "목", FRIDAY: "금", SATURDAY: "토", SUNDAY: "일",
+};
+
 type Props = {
   params: Promise<{ id: string }>;
 };
@@ -14,7 +19,6 @@ export default function BoothDetailPage({ params }: Props) {
   const { id } = use(params);
   const { data: booth, isLoading, isError } = useBoothDetail(id);
   const [boothImgError, setBoothImgError] = useState(false);
-  const [locationImgError, setLocationImgError] = useState(false);
 
   if (isLoading) return null;
 
@@ -65,24 +69,13 @@ export default function BoothDetailPage({ params }: Props) {
         />
 
         <DetailInfo
-          location={booth.location}
-          date={booth.date}
+          location={[...new Set(booth.settings.map((s) => s.location))].join(" · ")}
+          date={booth.settings.map((s) => {
+            const [, m, d] = s.date.split("-");
+            return `${Number(m)}월 ${Number(d)}일(${DAY_KO[s.day] ?? s.day}) ${s.startAt} ~ ${s.endAt}`;
+          })}
           hasBorder={false}
         />
-
-        {booth.location_image && !locationImgError && (
-          <div className="flex flex-col gap-3">
-            <div className="relative w-full h-60 rounded-[10px] overflow-hidden">
-              <Image
-                src={booth.location_image}
-                alt={booth.location}
-                fill
-                className="object-cover"
-                onError={() => setLocationImgError(true)}
-              />
-            </div>
-          </div>
-        )}
       </div>
     </main>
   );
