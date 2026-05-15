@@ -46,7 +46,7 @@ export default async function NoticeDetailPage({
           </p>
         </div>
 
-        <div className="text-[16px] leading-relaxed whitespace-pre-line">
+        <div className="text-[15px] leading-relaxed whitespace-pre-line">
           {notice.content}
         </div>
       </section>
