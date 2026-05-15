@@ -1,7 +1,7 @@
 "use client";
 
 import { use, useState } from "react";
-import { BoothTitle, DetailAction, DetailHeader, DetailInfo, LoadingScreen } from "@/components";
+import { BoothTitle, DetailAction, DetailHeader, DetailInfo } from "@/components";
 import { useBoothDetail } from "@/hooks/queries/booth";
 import Image from "next/image";
 import { FiImage } from "react-icons/fi";
@@ -16,7 +16,7 @@ export default function BoothDetailPage({ params }: Props) {
   const [boothImgError, setBoothImgError] = useState(false);
   const [locationImgError, setLocationImgError] = useState(false);
 
-  if (isLoading) return <LoadingScreen />;
+  if (isLoading) return null;
 
   if (isError || !booth) {
     return (

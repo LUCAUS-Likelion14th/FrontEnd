@@ -1,6 +1,8 @@
 "use client";
 
 import { useState } from "react";
+import Image from "next/image";
+import routeMap from "@/assets/webp/map/route-map.webp";
 import DetailHeader from "@/components/pages/detail/DetailHeader";
 import { FiChevronDown, FiAlertTriangle } from "react-icons/fi";
 import { MdQrCode2, MdAccessTime, MdBadge, MdBlock, MdDoorFront, MdExitToApp, MdHelpOutline } from "react-icons/md";
@@ -85,8 +87,12 @@ function Section({
 
 function MapPlaceholder() {
   return (
-    <div className="w-full h-40 rounded-[12px] bg-[#F2F4F6] flex items-center justify-center mb-4">
-      <p className="text-[13px] text-[#8d97a7]">지도 이미지 추가 예정</p>
+    <div className="relative w-full rounded-[12px] overflow-hidden m-4">
+      <Image
+        src={routeMap}
+        alt="입장 대기 지도"
+        className="w-full h-auto rounded-[10px]"
+      />
     </div>
   );
 }
