@@ -4,6 +4,8 @@ import { FiClock } from "react-icons/fi";
 import { stageApi } from "@/lib/api/stageApi";
 import { DetailHeader } from '@/components'
 
+export const dynamic = "force-dynamic";
+
 export default async function StageDetailPage({
   params,
 }: {
@@ -50,6 +52,17 @@ export default async function StageDetailPage({
             alt={`${stage.performer} 사진`}
             fill
             className="object-cover"
+            style={
+              stage.performer === "도드리" ? { objectPosition: "center -40px" } :
+              stage.performer === "체리필터" ? { objectPosition: "center -150px" } :
+              stage.performer === "빅나티" ? { objectPosition: "center 5px" } :
+              stage.performer === "오드유스" ? { objectPosition: "center -50px" } :
+              stage.performer === "이창섭" ? { objectPosition: "center -50px" } :
+              stage.performer === "로이킴" ? { objectPosition: "center -10px" } :
+              stage.performer === "장기하" ? { objectPosition: "center -5px" } :
+              stage.performer === "실리카겔" ? { objectPosition: "center -10px" } :
+              undefined
+            }
             priority
           />
           {/* 하단 그라데이션 */}
@@ -75,7 +88,7 @@ export default async function StageDetailPage({
         </div>
       </section>
 
-      <div className="px-4 flex flex-col gap-3">
+<div className="px-4 flex flex-col gap-3">
         {/* 공연 일정 */}
         <div className="flex items-center justify-between bg-[#EEF3FB] rounded-[12px] px-4 py-3.5">
           <div className="flex items-center gap-2 text-primary">

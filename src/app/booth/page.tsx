@@ -172,7 +172,7 @@ function BoothPageContent() {
                     type="booth"
                     name={booth.booth_name}
                     subText={booth.booth_owner}
-                    location={booth.booth_location}
+                    location={booth.location}
                     image={booth.booth_image}
                     isLiked={booth.is_liked}
                     likeCount={booth.like_count}

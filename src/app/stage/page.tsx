@@ -28,20 +28,20 @@ const CATEGORY_INFO: Record<
   { title: string; description: string }
 > = {
   "학생 공연": {
-    title: "학생 공연 라인업",
-    description: "학생들이 직접 만드는 공연 어쩌구 저쩌구",
+    title: "학생 공연",
+    description: "중앙대 학생들이 직접 만드는 무대",
   },
   청룡가요제: {
     title: "청룡가요제",
-    description: "숨겨진 노래 고수들을 만나요~!",
+    description: "중앙대 최고의 보컬은 누구?",
   },
   "아티스트 공연": {
     title: "아티스트 공연",
-    description: "아티스트 공연 어쩌구 저쩌구",
+    description: "중앙대를 찾은 아티스트들을 만나보세요",
   },
   무대기획전: {
     title: "무대기획전",
-    description: "무대기획전 어쩌구 저쩌구",
+    description: "관객 참여형 추리 무대 콘텐츠",
   },
 };
 
@@ -57,6 +57,16 @@ export default function StagePage() {
     }
   }, [searchParams]);
 
+  const availableCategories = selectedDate === "2026-05-22"
+    ? CATEGORY.filter((c) => c !== "무대기획전")
+    : CATEGORY;
+
+  useEffect(() => {
+    if (selectedDate === "2026-05-22" && selected === "무대기획전") {
+      setSelected("학생 공연");
+    }
+  }, [selectedDate, selected]);
+
   const { stage, timelineData, activeId } = useStageData(selectedDate, selected);
 
   const filteredEventData = STAGE_EVENT_DATA.filter(
@@ -69,7 +79,7 @@ export default function StagePage() {
     <main className="px-4 pt-5 pb-25">
       <section className="mb-10">
         <StageCategory
-          categories={CATEGORY}
+          categories={availableCategories}
           selected={selected}
           onSelect={setSelected}
           selectedDate={selectedDate}
