@@ -1,6 +1,6 @@
 import Image from "next/image";
-import { AiOutlineYoutube } from "react-icons/ai";
-import { AiOutlineInstagram } from "react-icons/ai";
+import { AiOutlineYoutube, AiOutlineInstagram } from "react-icons/ai";
+import { FiClock } from "react-icons/fi";
 import { stageApi } from "@/lib/api/stageApi";
 import { DetailHeader } from '@/components'
 
@@ -42,73 +42,76 @@ export default async function StageDetailPage({
     <main className="pb-12">
       <DetailHeader title="공연 정보" />
 
-      <div className="px-4">
-        {/* 이미지 영역 */}
-        <section className="flex justify-center mb-6.25">
+      {/* 히어로 이미지 */}
+      <section className="mb-4">
+        <div className="relative w-full h-78 overflow-hidden">
           <Image
             src={stage.performer_image}
             alt={`${stage.performer} 사진`}
-            width={315}
-            height={420}
+            fill
             className="object-cover"
+            priority
           />
-        </section>
-
-        {/* 공연 상세정보 영역 */}
-        <section className="mb-12">
-          <div className="flex justify-between pb-[16.5px] mb-6 border-b border-text-sub2">
-            <h2 className="text-[24px] font-semibold">{stage.performer}</h2>
+          {/* 하단 그라데이션 */}
+          <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+          {/* 공연자 이름 + SNS */}
+          <div className="absolute bottom-0 left-0 right-0 flex items-end justify-between px-4 py-3">
+            <h2 className="text-[22px] font-bold text-white leading-tight">{stage.performer}</h2>
             <div className="flex gap-2">
               {stage.youtube && (
-                <a
-                  href={stage.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <AiOutlineYoutube size={38} />
+                <a href={stage.youtube} target="_blank" rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-black/20 flex items-center justify-center text-white hover:bg-black/40 transition-colors">
+                  <AiOutlineYoutube size={22} />
                 </a>
               )}
               {stage.instagram && (
-                <a
-                  href={stage.instagram}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <AiOutlineInstagram size={38} />
+                <a href={stage.instagram} target="_blank" rel="noopener noreferrer"
+                  className="w-9 h-9 rounded-full bg-black/20 flex items-center justify-center text-white hover:bg-black/40 transition-colors">
+                  <AiOutlineInstagram size={20} />
                 </a>
               )}
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="flex flex-col gap-6">
-            <div className="flex justify-between items-center">
-              <h3 className="text-base font-semibold text-text-sub">
-                공연 일정
-              </h3>
-              <p className="text-base text-right">{stage.time}</p>
-            </div>
-            <div className="flex justify-between items-start">
-              <h3 className="text-base font-semibold text-text-sub">공연 곡</h3>
-              <div className="flex flex-col gap-2 text-base text-right">
-                {stage.songs && stage.songs.length > 0 ? (
-                  stage.songs
-                    .sort((a, b) => a.play_order - b.play_order)
-                    .map((song) => <p key={song.song_id}>{song.title}</p>)
-                ) : (
-                  <p>준비된 곡 정보가 없습니다.</p>
-                )}
-              </div>
-            </div>
-            <div className="flex justify-between items-start">
-              <h3 className="text-base font-semibold text-text-sub shrink-0">소개글</h3>
-              <p className="text-base text-right whitespace-pre-line break-keep w-[232px] leading-relaxed">
-                {stage.stage_info}
-              </p>
+      <div className="px-4 flex flex-col gap-3">
+        {/* 공연 일정 */}
+        <div className="flex items-center justify-between bg-[#EEF3FB] rounded-[12px] px-4 py-3.5">
+          <div className="flex items-center gap-2 text-primary">
+            <FiClock size={14} />
+            <span className="text-[13px] font-semibold">공연 일정</span>
+          </div>
+          <span className="text-[14px] font-semibold text-[#273850]">{stage.time}</span>
+        </div>
+
+        {/* 소개글 */}
+        {stage.stage_info && (
+          <div className="flex items-start justify-between gap-4 px-1">
+            <h3 className="text-[13px] font-semibold text-text-sub shrink-0">소개글</h3>
+            <p className="text-[14px] text-[#3B4A5A] leading-relaxed whitespace-pre-line break-keep text-right line-clamp-2 max-w-[232px]">
+              {stage.stage_info}
+            </p>
+          </div>
+        )}
+
+        {/* 공연 곡 */}
+        {stage.songs && stage.songs.length > 0 && (
+          <div className="flex items-start justify-between gap-4 px-1">
+            <h3 className="text-[13px] font-semibold text-text-sub shrink-0">공연 곡</h3>
+            <div className="flex flex-col items-end gap-1">
+              {stage.songs
+                .sort((a, b) => a.play_order - b.play_order)
+                .map((song) => (
+                  <span key={song.song_id} className="text-[14px] text-[#3B4A5A] text-right break-keep">
+                    {song.title}
+                  </span>
+                ))}
             </div>
           </div>
-        </section>
+        )}
 
-        <small className="block text-xs font-light text-center text-[#888]">
+        <small className="block text-xs font-light text-center text-text-sub mt-6">
           *주최 측의 사정에 따라 일정이 변경될 수 있습니다
         </small>
       </div>

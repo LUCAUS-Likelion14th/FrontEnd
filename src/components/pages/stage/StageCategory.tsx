@@ -45,10 +45,7 @@ export default function StageCategory({
           </button>
         </div>
 
-        {/* 회색 바 (비활성화 상태) */}
         <div className="absolute bottom-0 w-full h-0.5 bg-text-sub2" />
-
-        {/* 파란색 바 (활성화 상태) */}
         <div
           className="absolute bottom-0 h-0.5 bg-primary transition-all duration-300"
           style={{
@@ -64,7 +61,7 @@ export default function StageCategory({
           <button
             key={item}
             onClick={() => onSelect(item)}
-            className={`px-3 py-2 rounded-md text-sm font-medium leading-4.5 shrink-0 transition-colors ${
+            className={`px-3 py-2 rounded-md text-sm font-medium leading-4.5 shrink-0 ${
               selected === item
                 ? "bg-primary text-white"
                 : "bg-primary-light text-text-sub"

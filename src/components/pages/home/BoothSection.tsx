@@ -34,19 +34,26 @@ export function BoothSection() {
             </span>
           </div>
         ) : (
-          booths.map((booth) => (
-            <ListCard
+          booths.map((booth, i) => (
+            <motion.div
               key={booth.booth_id}
-              id={booth.booth_id}
-              type="booth"
-              imageUrl={booth.booth_image}
-              href={`/booth/${booth.booth_id}`}
-              location={booth.location}
-              name={booth.booth_name}
-              isLiked={booth.is_liked}
-              likeCount={booth.like_count}
-              department={booth.owner}
-            />
+              initial={{ opacity: 0, y: 14 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-20px" }}
+              transition={{ duration: 0.35, delay: i * 0.08, ease: "easeOut" }}
+            >
+              <ListCard
+                id={booth.booth_id}
+                type="booth"
+                imageUrl={booth.booth_image}
+                href={`/booth/${booth.booth_id}`}
+                location={booth.location}
+                name={booth.booth_name}
+                isLiked={booth.is_liked}
+                likeCount={booth.like_count}
+                department={booth.owner}
+              />
+            </motion.div>
           ))
         )}
       </div>

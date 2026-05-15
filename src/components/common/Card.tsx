@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { FiImage } from "react-icons/fi";
 import LikeButton from "./Button/LikeButton";
+import { motion } from "framer-motion";
 
 type CardProps = {
   id: number;
@@ -30,6 +31,10 @@ export default function Card({
   const [imgError, setImgError] = useState(false);
 
   return (
+    <motion.div
+      whileHover={{ y: -3, transition: { duration: 0.18 } }}
+      whileTap={{ scale: 0.97, transition: { duration: 0.1 } }}
+    >
     <Link href={`/${type}/${id}`} className="block">
       <article className="w-full rounded-[10px] overflow-hidden flex flex-col shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
         <div className="relative w-full h-[109px] bg-[#D9D9D9] shrink-0">
@@ -76,5 +81,6 @@ export default function Card({
         </div>
       </article>
     </Link>
+    </motion.div>
   );
 }

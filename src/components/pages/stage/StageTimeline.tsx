@@ -12,14 +12,19 @@ type StageTimelineProps = {
 
 export default function StageTimeline({ data, activeId }: StageTimelineProps) {
   const activeRef = useRef<HTMLDivElement>(null);
+  const isMounted = useRef(false);
 
   useEffect(() => {
+    if (!isMounted.current) {
+      isMounted.current = true;
+      return;
+    }
     if (!activeRef.current) return;
     activeRef.current.scrollIntoView({ behavior: "smooth", block: "center" });
-  }, [activeId, data]);
+  }, [activeId]); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
-    <div className="flex flex-col bg-primary-light rounded-[10px] px-3">
+    <div className="flex flex-col bg-primary-light rounded-[10px] px-3 max-h-101 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item, index) => {
         const isActive = item.stage_id === activeId;
         const isFirst = index === 0;

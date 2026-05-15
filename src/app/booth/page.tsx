@@ -1,7 +1,9 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
+import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
+import BoothMap from "@/components/pages/booth/BoothMap";
 import {
   BoothLocationFilter,
   BoothCategoryFilter,
@@ -131,17 +133,7 @@ function BoothPageContent() {
           </div>
         </div>
 
-        <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-          <span className="text-text-sub text-base">지도</span>
-          <div className="absolute right-4 bottom-5 flex flex-col gap-2">
-            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-              +
-            </button>
-            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-              −
-            </button>
-          </div>
-        </div>
+        <BoothMap selectedLocation={selectedLocation} />
       </section>
 
       <section className="flex flex-col">
@@ -170,18 +162,25 @@ function BoothPageContent() {
             </div>
           ) : booths.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-              {booths.map((booth) => (
-                <Card
+              {booths.map((booth, i) => (
+                <motion.div
                   key={booth.booth_id}
-                  id={booth.booth_id}
-                  type="booth"
-                  name={booth.booth_name}
-                  subText={booth.booth_owner}
-                  location={booth.booth_location}
-                  image={booth.booth_image}
-                  isLiked={booth.is_liked}
-                  likeCount={booth.like_count}
-                />
+                  initial={{ opacity: 0, y: 16 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true, margin: "-20px" }}
+                  transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+                >
+                  <Card
+                    id={booth.booth_id}
+                    type="booth"
+                    name={booth.booth_name}
+                    subText={booth.booth_owner}
+                    location={booth.booth_location}
+                    image={booth.booth_image}
+                    isLiked={booth.is_liked}
+                    likeCount={booth.like_count}
+                  />
+                </motion.div>
               ))}
             </div>
           ) : (

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, Suspense } from "react";
+import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useFoodTruckList } from "@/hooks/queries/foodtruck";
 import { Card, Pagination } from "@/components";
@@ -44,18 +45,25 @@ function FoodTruckPageContent() {
           </div>
         ) : pagedTrucks.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-3 gap-y-5">
-            {pagedTrucks.map((truck) => (
-              <Card
+            {pagedTrucks.map((truck, i) => (
+              <motion.div
                 key={truck.id}
-                id={truck.id}
-                type="foodtruck"
-                name={truck.name}
-                subText={truck.bestMenu}
-                location={truck.location}
-                image={truck.image}
-                isLiked={truck.liked}
-                likeCount={truck.likeCount}
-              />
+                initial={{ opacity: 0, y: 16 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+              >
+                <Card
+                  id={truck.id}
+                  type="foodtruck"
+                  name={truck.name}
+                  subText={truck.bestMenu}
+                  location={truck.location}
+                  image={truck.image}
+                  isLiked={truck.liked}
+                  likeCount={truck.likeCount}
+                />
+              </motion.div>
             ))}
           </div>
         ) : (

@@ -1,9 +1,9 @@
 import { fetcher, authFetcher } from "./fetcher";
-import { LostItem } from "@/types/lost";
+import { LostItem, LostListResponse } from "@/types/lost";
 
 export const adminLostApi = {
   getLostItems: (page = 0, size = 10) =>
-    fetcher<LostItem[]>(`/lost?page=${page}&size=${size}`),
+    fetcher<LostListResponse>(`/lost?page=${page}&size=${size}`),
 
   createLostItem: (formData: FormData) =>
     authFetcher<LostItem>("/admin/lost", "POST", formData),
