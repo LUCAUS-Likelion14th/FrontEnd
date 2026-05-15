@@ -26,7 +26,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (token) {
           localStorage.setItem("accessToken", token);
           setAccessToken(token);
-          if (data.data.refreshToken) {
+          if (data.data.refreshToken && data.data.refreshToken !== token) {
             localStorage.setItem("refreshToken", data.data.refreshToken);
           }
         } else {
