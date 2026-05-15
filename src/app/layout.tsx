@@ -1,9 +1,17 @@
+import type { Metadata } from "next";
 import localFont from "next/font/local";
 import Script from "next/script";
 import BottomNav from "@/components/layouts/BottomNav";
 import "./globals.css";
 import Header from "@/components/layouts/Header";
 import Providers from "./providers";
+
+export const metadata: Metadata = {
+  title: "청:ON '26",
+  icons: {
+    icon: "/icon.png",
+  },
+};
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
