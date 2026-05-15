@@ -3,7 +3,7 @@
 import { useState } from "react";
 import DetailHeader from "@/components/pages/detail/DetailHeader";
 import { FiChevronDown, FiAlertTriangle } from "react-icons/fi";
-import { MdQrCode2, MdAccessTime, MdBadge, MdPeople, MdBlock, MdWarning, MdDoorFront, MdExitToApp, MdHelpOutline } from "react-icons/md";
+import { MdQrCode2, MdAccessTime, MdBadge, MdBlock, MdDoorFront, MdExitToApp, MdHelpOutline } from "react-icons/md";
 import { IconType } from "react-icons";
 
 const TICKETS = [
@@ -136,7 +136,7 @@ export default function RoutePage() {
       <div className="mx-4 mt-4 flex items-center gap-2.5 px-4 py-3 rounded-[12px] bg-red-50 border border-red-200">
         <FiAlertTriangle size={15} className="text-[#C0392B] shrink-0" />
         <p className="text-[13px] text-[#C0392B] leading-5 font-medium">
-          QR코드 · 신분증 · 학생증(e-ID) 미리 준비해주세요
+          QR코드 · 신분증 · 학생증(e-ID)을 미리 준비해주세요
         </p>
       </div>
 

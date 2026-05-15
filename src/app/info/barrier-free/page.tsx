@@ -152,7 +152,13 @@ export default function BarrierFreePage() {
       <div className="px-4 pt-4 flex flex-col gap-3">
 
         {/* 1. 운영 안내 */}
-        <Section title="운영 안내" icon={MdAccessTime}>
+        <Section title="위치 및 운영 안내" icon={MdAccessTime}>
+        <div className="w-full h-44 rounded-[12px] bg-[#F2F4F6] flex items-center justify-center mt-3">
+            <p className="text-[13px] text-[#8d97a7]">위치 지도 이미지 추가 예정</p>
+          </div>
+          <p className="text-[13px] text-[#3B4A5A] leading-5 mt-3 mb-6">
+            배리어프리존은 <span className="font-semibold text-primary">잔디광장 내 학생회관 측</span>에 위치합니다.
+          </p>
           <div className="flex flex-col gap-2 mt-3">
             <div className="rounded-[10px] bg-[#F5F8FF] px-4 py-3 flex flex-col gap-1.5">
               <div className="flex items-start gap-2">
@@ -205,6 +211,11 @@ export default function BarrierFreePage() {
           </div>
         </Section>
 
+        {/* 5. 좌석 배정 기준 */}
+        <Section title="좌석 배정 기준" icon={MdEventSeat}>
+          <NoteList items={SEAT_NOTES} />
+        </Section>
+
         {/* 3. 현장 접수 안내 */}
         <Section title="현장 접수 안내" icon={MdPeople}>
           <NoteList items={ON_SITE_NOTES} />
@@ -213,19 +224,6 @@ export default function BarrierFreePage() {
         {/* 4. 동반자 포함 입장 안내 */}
         <Section title="동반자 포함 입장 안내" icon={MdPeople}>
           <NoteList items={COMPANION_NOTES} />
-        </Section>
-
-        {/* 5. 좌석 배정 기준 */}
-        <Section title="좌석 배정 기준" icon={MdEventSeat}>
-          <NoteList items={SEAT_NOTES} />
-        </Section>
-
-        {/* 6. 현장 이용 수칙 */}
-        <Section title="현장 이용 수칙" icon={MdGavel}>
-          <p className="text-[12px] font-semibold text-[#8d97a7] mt-3 mb-1">입장 및 이동</p>
-          <NoteList items={ENTRY_RULES} />
-          <p className="text-[12px] font-semibold text-[#8d97a7] mt-4 mb-1">관람 방식</p>
-          <NoteList items={VIEWING_RULES} />
         </Section>
 
         {/* 7. 반입 금지 물품 */}
@@ -246,14 +244,12 @@ export default function BarrierFreePage() {
           <p className="text-[12px] text-[#8d97a7] mt-3 leading-5">* 위반 시 입장이 제한될 수 있습니다.</p>
         </Section>
 
-        {/* 위치 안내 섹션 */}
-        <Section title="위치 안내" icon={MdLocationOn}>
-          <div className="w-full h-44 rounded-[12px] bg-[#F2F4F6] flex items-center justify-center mt-3">
-            <p className="text-[13px] text-[#8d97a7]">위치 지도 이미지 추가 예정</p>
-          </div>
-          <p className="text-[13px] text-[#3B4A5A] leading-5 mt-3">
-            배리어프리존은 <span className="font-semibold text-primary">잔디광장 내 학생회관 측</span>에 위치합니다.
-          </p>
+        {/* 6. 현장 이용 수칙 */}
+        <Section title="현장 이용 수칙" icon={MdGavel}>
+          <p className="text-[12px] font-semibold text-[#8d97a7] mt-3 mb-1">입장 및 이동</p>
+          <NoteList items={ENTRY_RULES} />
+          <p className="text-[12px] font-semibold text-[#8d97a7] mt-4 mb-1">관람 방식</p>
+          <NoteList items={VIEWING_RULES} />
         </Section>
 
       </div>

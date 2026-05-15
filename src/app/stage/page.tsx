@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 import { useStageData } from "@/hooks/useStageData";
+import Link from 'next/link';
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
 
@@ -98,9 +99,13 @@ export default function StagePage() {
       <section className="flex flex-col gap-4 mb-3">
         <div className="flex justify-between items-center">
           <h2 className="text-[24px] font-semibold">본무대 타임라인</h2>
-          <button className="px-9 py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg">
-            본무대 FAQ
-          </button>
+          <a
+            href="https://festival.cau.ac.kr"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-9 py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg">
+            입장 QR코드
+          </a>
         </div>
 
         <div>
