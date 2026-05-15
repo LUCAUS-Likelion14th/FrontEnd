@@ -30,6 +30,29 @@ function clearAuthAndRedirect() {
   window.location.replace("/login");
 }
 
+async function tryRefreshToken(): Promise<string | null> {
+  const refreshToken = localStorage.getItem("refreshToken");
+  if (!refreshToken) return null;
+  try {
+    const r = await fetch("/api/auth/reissue", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ refreshToken }),
+    });
+    if (!r.ok) return null;
+    const data = await r.json();
+    const newToken = data?.data?.accessToken;
+    if (!newToken) return null;
+    localStorage.setItem("accessToken", newToken);
+    if (data.data.refreshToken && data.data.refreshToken !== newToken) {
+      localStorage.setItem("refreshToken", data.data.refreshToken);
+    }
+    return newToken;
+  } catch {
+    return null;
+  }
+}
+
 export async function mutate(
   endpoint: string,
   method: "POST" | "DELETE",
@@ -83,9 +106,28 @@ export async function fetcher<T>(
 
   if (res.status === 401) {
     if (typeof window !== "undefined") {
-      clearAuthAndRedirect();
+      const newToken = await tryRefreshToken();
+      if (newToken) {
+        const retryInit: RequestInit = {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${newToken}`,
+          },
+          cache: "no-store",
+        };
+        const retryRes = await fetch(url, retryInit);
+        if (retryRes.status === 401) {
+          clearAuthAndRedirect();
+          throw new Error("Unauthorized");
+        }
+        res = retryRes;
+      } else {
+        clearAuthAndRedirect();
+        throw new Error("Unauthorized");
+      }
+    } else {
+      throw new Error("Unauthorized");
     }
-    throw new Error("Unauthorized");
   }
 
   const contentType = res.headers.get("content-type");
