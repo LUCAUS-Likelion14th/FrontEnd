@@ -57,6 +57,7 @@ export default function LostPage() {
           <DateFilter
             selectedDate={selectedDate}
             onSelectDate={handleDateChange}
+            showAll
           />
           <LostTypeFilter
             selectedType={selectedType}

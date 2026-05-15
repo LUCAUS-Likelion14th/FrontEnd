@@ -5,16 +5,19 @@ import { FiCalendar, FiChevronDown, FiChevronUp, FiCheck } from "react-icons/fi"
 import { BOOTH_DATES } from "@/data/boothData";
 import { motion, AnimatePresence } from "framer-motion";
 
+const ALL_OPTION = { value: "all", label: "전체날짜" } as const;
+
 type Props = {
   selectedDate: string;
   onSelectDate: (date: string) => void;
+  showAll?: boolean;
 };
 
-export default function DateFilter({ selectedDate, onSelectDate }: Props) {
+export default function DateFilter({ selectedDate, onSelectDate, showAll = false }: Props) {
   const [isOpen, setIsOpen] = useState(false);
 
-  const currentLabel =
-    BOOTH_DATES.find((d) => d.value === selectedDate)?.label ?? "";
+  const allDates = showAll ? [ALL_OPTION, ...BOOTH_DATES] : BOOTH_DATES;
+  const currentLabel = allDates.find((d) => d.value === selectedDate)?.label ?? "";
 
   return (
     <div className="relative">
@@ -42,7 +45,7 @@ export default function DateFilter({ selectedDate, onSelectDate }: Props) {
             transition={{ duration: 0.15, ease: "easeOut" }}
             className="absolute top-full mt-1 left-0 z-20 bg-white rounded-xl shadow-lg overflow-hidden min-w-[110px]"
           >
-            {BOOTH_DATES.map((d) => {
+            {allDates.map((d) => {
               const isSelected = selectedDate === d.value;
               return (
                 <li key={d.value}>
