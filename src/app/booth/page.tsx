@@ -13,7 +13,7 @@ import {
   Card,
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
-import { BoothLocation, BoothCategory } from "@/data/boothData";
+import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
 import { useBoothList, useBoothStampList } from "@/hooks/queries/booth";
 
 const PAGE_SIZE = 8;
@@ -24,7 +24,7 @@ function BoothPageContent() {
 
   const [isStampMode, setIsStampMode] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
-    () => searchParams.get("date") ?? "all",
+    () => searchParams.get("date") ?? getDefaultDate(),
   );
   const [selectedLocation, setSelectedLocation] =
     useState<BoothLocation | null>(
@@ -45,7 +45,7 @@ function BoothPageContent() {
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (selectedDate !== "all") params.set("date", selectedDate);
+    params.set("date", selectedDate);
     if (selectedLocation) params.set("location", selectedLocation);
     if (selectedCategory !== "전체") params.set("category", selectedCategory);
     if (debouncedSearch) params.set("q", debouncedSearch);
@@ -64,10 +64,7 @@ function BoothPageContent() {
     return () => clearTimeout(t);
   }, [searchQuery]);
 
-  const dateParam =
-    selectedDate === "all"
-      ? undefined
-      : selectedDate.replace(/-/g, "").slice(4);
+  const dateParam = selectedDate.replace(/-/g, "").slice(4);
 
   const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
     {

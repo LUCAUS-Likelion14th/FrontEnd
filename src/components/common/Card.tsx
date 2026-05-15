@@ -11,8 +11,8 @@ type CardProps = {
   id: number;
   type: "booth" | "foodtruck";
   name: string;
-  subText: string; // 단체 이름 or 메인 메뉴
-  location: string;
+  subText?: string;
+  location?: string;
   image: string;
   isLiked: boolean;
   likeCount: number;
@@ -55,15 +55,19 @@ export default function Card({
 
         <div className="flex items-start justify-between p-[10px] pt-[9px] bg-white">
           <div className="flex flex-col gap-[2px] flex-1 min-w-0 mr-2">
-            <span className="text-[12px] leading-normal text-[#8D97A7] truncate">
-              {subText}
-            </span>
+            {subText && (
+              <span className="text-[12px] leading-normal text-[#8D97A7] truncate">
+                {subText}
+              </span>
+            )}
             <span className="text-[16px] font-semibold leading-normal text-black truncate">
               {name}
             </span>
-            <span className="text-[12px] leading-normal text-black truncate">
-              {location}
-            </span>
+            {location && (
+              <span className="text-[12px] leading-normal text-black truncate">
+                {location}
+              </span>
+            )}
           </div>
 
           <div

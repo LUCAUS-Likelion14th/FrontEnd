@@ -22,5 +22,9 @@ export const BOOTH_DATES = [
   { value: "2026-05-20", label: "20일 수" },
   { value: "2026-05-21", label: "21일 목" },
   { value: "2026-05-22", label: "22일 금" },
-  { value: "all", label: "전체날짜" },
 ] as const;
+
+export function getDefaultDate(): string {
+  const today = new Date().toISOString().split("T")[0];
+  return BOOTH_DATES.find((d) => d.value === today)?.value ?? BOOTH_DATES[0].value;
+}
