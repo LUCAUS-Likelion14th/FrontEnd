@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useFoodTruckList } from "@/hooks/queries/foodtruck";
-import { Card, Pagination } from "@/components";
+import { Card, Pagination, LoadingScreen } from "@/components";
 import { FiSearch } from "react-icons/fi";
 
 const PAGE_SIZE = 8;
@@ -24,6 +24,8 @@ function FoodTruckPageContent() {
   }, [currentPage]);
 
   const { data: trucks = [], isLoading } = useFoodTruckList({});
+
+  if (isLoading) return <LoadingScreen />;
 
   const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
   const pagedTrucks = trucks.slice((currentPage - 1) * PAGE_SIZE, currentPage * PAGE_SIZE);

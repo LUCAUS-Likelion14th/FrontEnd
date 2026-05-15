@@ -1,7 +1,7 @@
 "use client";
 
 import { use } from "react";
-import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail, LoadingSpinner } from "@/components";
+import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail, LoadingScreen } from "@/components";
 import { useFoodTruckDetail } from "@/hooks/queries/foodtruck";
 import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
 
@@ -13,14 +13,7 @@ export default function FoodTruckDetailPage({ params }: Props) {
   const { id } = use(params);
   const { data: foodTruck, isLoading, isError } = useFoodTruckDetail(id);
 
-  if (isLoading) {
-    return (
-      <main>
-        <DetailHeader title="푸드트럭 정보" />
-        <LoadingSpinner />
-      </main>
-    );
-  }
+  if (isLoading) return <LoadingScreen />;
 
   if (isError || !foodTruck) {
     return (

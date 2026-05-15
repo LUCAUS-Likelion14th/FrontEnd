@@ -1,51 +1,25 @@
 'use client'
 
-import Image from "next/image";
-
 export default function LoadingScreen() {
   return (
-    <main className="relative flex flex-col items-center justify-center min-h-screen">
-      <div className="absolute inset-0 -z-10">
-        <Image
-          src="/login-bg.png"
-          alt="로그인 배경 이미지"
-          fill
-          className="object-cover"
-          priority
-        />
-      </div>
-
-      <div className="flex flex-col items-center gap-12">
-        <div className="relative animate-pulse">
-          <Image
-            src="/lucaus-logo.png"
-            alt="루카우스 축제 로고"
-            width={243}
-            height={118}
-            className="object-contain drop-shadow-2xl"
+    <main className="flex items-center justify-center min-h-screen">
+      <div className="flex items-center gap-3">
+        {[0, 1, 2].map((i) => (
+          <span
+            key={i}
+            className="w-2 h-2 rounded-full bg-primary"
+            style={{
+              animation: "dot-fade 1.2s ease-in-out infinite",
+              animationDelay: `${i * 0.3}s`,
+            }}
           />
-        </div>
-
-        <div className="flex flex-col items-center gap-4">
-          <div className="w-48 h-1 bg-white/30 rounded-full overflow-hidden">
-            <div className="h-full bg-white/30 animate-[loading_1.5s_infinite_ease-in-out] origin-left" 
-                 style={{
-                   width: '100%',
-                   animationName: 'loading-bar' 
-                 }}
-            />
-          </div>
-          <p className="text-white text-sm font-medium animate-pulse">
-            잠시만 기다려주세요 ..
-          </p>
-        </div>
+        ))}
       </div>
 
-      <style jsx>{`
-        @keyframes loading-bar {
-          0% { transform: scaleX(0); }
-          50% { transform: scaleX(0.5); }
-          100% { transform: scaleX(1); }
+      <style>{`
+        @keyframes dot-fade {
+          0%, 100% { opacity: 0.2; transform: scale(0.8); }
+          50% { opacity: 1; transform: scale(1.2); }
         }
       `}</style>
     </main>
