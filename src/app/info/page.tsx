@@ -1,4 +1,4 @@
-import { infoBarrierFree, infoCredit, infoLost, infoNotice, infoRoute } from '@/assets/webp/info';
+import { infoBarrierFree, infoLost, infoMypage, infoNotice, infoRoute } from '@/assets/webp/info';
 import { InfoCard } from '@/components';
 import Image from 'next/image';
 
@@ -39,9 +39,9 @@ export default function InfoPage() {
           link="info/route"
         />
         <InfoCard
-          imageUrl={infoCredit}
-          title="크레딧"
-          link="info/credit"
+          imageUrl={infoMypage}
+          title="마이페이지"
+          link="/mypage"
         />
       </section>
     </main>
