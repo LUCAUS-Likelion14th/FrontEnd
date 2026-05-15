@@ -141,18 +141,18 @@ export async function authFetcher<T>(
     throw new Error(message);
   }
 
-  const contentType = res.headers.get("content-type");
-  if (!contentType?.includes("application/json")) {
-    const text = await res.text();
-    console.error("Non-JSON response:", text);
-    throw new Error("Invalid response (not JSON)");
-  }
+  const text = await res.text();
 
   if (!res.ok) {
-    throw new Error(`API error: ${res.status} ${endpoint}`);
+    let message = `오류가 발생했습니다. (${res.status})`;
+    try {
+      const errJson = JSON.parse(text);
+      message = errJson.message || errJson.error || message;
+    } catch {}
+    throw new Error(message);
   }
 
-  const json: ApiResponse<T> = await res.json();
+  const json: ApiResponse<T> = JSON.parse(text);
   if (!json.success) throw new Error(json.message);
   return json.data;
 }

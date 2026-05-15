@@ -20,7 +20,14 @@ type NavItem = {
 const NAV_ITEMS: NavItem[] = [
   { label: "마이페이지", href: "/mypage" },
   { label: "홈", href: "/" },
-  { label: "공연", href: "/stage" },
+  {
+    label: "공연",
+    href: "/stage",
+    subItems: [
+      { label: "배리어프리", href: "/info/barrier-free" },
+      { label: "입장 정책", href: "/info/route" },
+    ],
+  },
   {
     label: "부스",
     href: "/booth",
@@ -33,11 +40,9 @@ const NAV_ITEMS: NavItem[] = [
     subItems: [
       { label: "공지", href: "/info/notice" },
       { label: "분실물", href: "/info/lost" },
-      { label: "배리어프리", href: "/info/barrier-free" },
-      { label: "통행 정책", href: "/info/route" },
+      { label: "크레딧", href: "/info/credit" },
     ],
   },
-  { label: "크레딧", href: "/info/credit" },
 ];
 
 export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {

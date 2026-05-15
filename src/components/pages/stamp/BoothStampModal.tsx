@@ -18,22 +18,25 @@ export default function BoothStampModal({
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleStampSubmit = async () => {
     if (!password) {
-      alert("코드를 입력해주세요.");
+      setErrorMsg("코드를 입력해주세요.");
       return;
     }
 
     setIsLoading(true);
+    setErrorMsg("");
 
     try {
       await authFetcher(`/stamp/${boothId}`, "POST", { password });
 
       setIsSuccess(true);
     } catch (error: any) {
-      console.error("도장 찍기 에러: ", error);
+      console.warn("도장 찍기 에러: ", error);
       alert(error.message || "코드 번호가 틀렸거나 오류가 발생했습니다.");
+      setPassword("");
     } finally {
       setIsLoading(false);
     }
@@ -103,11 +106,16 @@ export default function BoothStampModal({
               <input
                 type="text"
                 value={password}
-                onChange={(e) => setPassword(e.target.value)}
+                onChange={(e) => { setPassword(e.target.value); setErrorMsg(""); }}
                 onKeyDown={(e) => e.key === "Enter" && handleStampSubmit()}
                 placeholder="코드를 입력해 주세요"
-                className="bg-white text-[16px] font-medium text-center px-[77px] py-[13px] rounded-[10px] outline-none focus:border-primary"
+                className={`bg-white text-[16px] font-medium text-center px-[77px] py-[13px] rounded-[10px] outline-none focus:border-primary ${errorMsg ? "border-2 border-red-400" : ""}`}
               />
+              {errorMsg && (
+                <span className="text-red-400 text-[13px] font-medium mt-1">
+                  {errorMsg}
+                </span>
+              )}
             </div>
 
             <button
