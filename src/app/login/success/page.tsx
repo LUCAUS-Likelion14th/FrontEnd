@@ -24,6 +24,7 @@ function LoginSuccessContent() {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
     if (nickname) localStorage.setItem("nickname", nickname);
+    sessionStorage.setItem("_freshLogin", String(Date.now()));
 
     const redirect = async () => {
       if (isAdmin === "true") {
