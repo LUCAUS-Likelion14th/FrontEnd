@@ -28,7 +28,7 @@ function BoothPageContent() {
   );
   const [selectedLocation, setSelectedLocation] =
     useState<BoothLocation | null>(
-      () => (searchParams.get("location") as BoothLocation) ?? null,
+      () => (searchParams.get("location") as BoothLocation) ?? "서라벌홀 일대",
     );
   const [selectedCategory, setSelectedCategory] = useState<BoothCategory>(
     () => (searchParams.get("category") as BoothCategory) ?? "전체",
