@@ -229,7 +229,7 @@ export default function BoothMap({ selectedLocation }: Props) {
   return (
     <div
       ref={containerRef}
-      className="relative w-full rounded-[10px] overflow-hidden select-none cursor-grab active:cursor-grabbing shadow-[0px_0px_9.4px_0px_rgba(6,56,125,0.2)]"
+      className="relative w-full rounded-[10px] overflow-hidden select-none cursor-grab active:cursor-grabbing shadow-[0px_0px_9.4px_0px_rgba(6,56,125,0.2)] bg-[#f7fff3]"
       style={{
         touchAction: "none",
         ...(noPan
