@@ -20,7 +20,7 @@ export default function InfoCard({ imageUrl, title, link }: InfoCardProps) {
           src={imageUrl}
           alt={title}
           fill
-          className="object-cover transition-transform duration-500 group-hover:scale-110"
+          className="object-cover"
           priority
         />
       </div>
