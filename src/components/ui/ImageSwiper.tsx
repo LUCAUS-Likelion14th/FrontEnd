@@ -18,6 +18,19 @@ export default function NoticeSwiper({ promotions }: Props) {
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const [current, setCurrent] = useState(0);
 
+  const multiple = promotions.length > 1;
+  const n = promotions.length;
+
+  useEffect(() => {
+    if (!multiple || !swiperRef) return;
+    const swiper = swiperRef;
+    const id = window.setInterval(() => {
+      if (swiper.destroyed) return;
+      swiper.slideNext();
+    }, AUTO_SLIDE_INTERVAL);
+    return () => window.clearInterval(id);
+  }, [multiple, swiperRef]);
+
   const handleClick = (instagram?: string) => {
     if (!instagram) return;
     window.open(instagram, "_blank", "noopener,noreferrer");
@@ -32,9 +45,6 @@ export default function NoticeSwiper({ promotions }: Props) {
       </div>
     );
   }
-
-  const multiple = promotions.length > 1;
-  const n = promotions.length;
 
   const slides = multiple
     ? [...promotions, ...promotions, ...promotions]
@@ -51,16 +61,6 @@ export default function NoticeSwiper({ promotions }: Props) {
       setTimeout(() => swiper.slideTo(idx - n, 0, false), 0);
     }
   };
-
-  useEffect(() => {
-    if (!multiple || !swiperRef) return;
-    const swiper = swiperRef;
-    const id = window.setInterval(() => {
-      if (swiper.destroyed) return;
-      swiper.slideNext();
-    }, AUTO_SLIDE_INTERVAL);
-    return () => window.clearInterval(id);
-  }, [multiple, swiperRef]);
 
   return (
     <div className="w-full min-w-0">
