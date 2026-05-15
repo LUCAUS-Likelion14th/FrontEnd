@@ -62,7 +62,7 @@ const VIEWING_RULES = [
   { text: "현장 상황에 따라 운영 내용은 일부 변경될 수 있습니다." },
 ];
 
-const PROHIBITED = [
+const PROHIBITED: { label: string; sub?: string; red?: boolean }[] = [
   { label: "뚜껑이 없는 음료, 일반 식음료", sub: "뚜껑이 있는 음료나 텀블러는 허용" },
   { label: "모든 종류의 주류" },
   { label: "삼각대, 대포카메라 등 전문 촬영 장비" },
