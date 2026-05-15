@@ -107,6 +107,7 @@ export default function BottomNav() {
             <li key={item.href} className="flex-1">
               <Link
                 href={item.href}
+                onClick={() => window.scrollTo(0, 0)}
                 className={`flex flex-col items-center text-xs gap-2 transition-colors ${
                   isLogin
                     ? isActive

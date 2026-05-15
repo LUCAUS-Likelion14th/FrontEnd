@@ -30,9 +30,11 @@ export default function BoothMap({ selectedLocation }: Props) {
   const containerRef = useRef<HTMLDivElement>(null);
   const [scale, setScale] = useState(1);
   const [pos, setPos] = useState({ x: 0, y: 0 });
+  const [coverSize, setCoverSize] = useState({ w: 0, h: 0 });
 
   const scaleRef = useRef(1);
   const posRef = useRef({ x: 0, y: 0 });
+  const coverSizeRef = useRef({ w: 0, h: 0 });
 
   const sync = useCallback((s: number, p: { x: number; y: number }) => {
     scaleRef.current = s;
@@ -41,31 +43,59 @@ export default function BoothMap({ selectedLocation }: Props) {
     setPos(p);
   }, []);
 
+  // Compute "cover" dimensions so the image always fills the container
+  // regardless of device width, while preserving aspect ratio
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    const update = () => {
+      const cW = el.clientWidth;
+      const cH = el.clientHeight;
+      const aspect = mapImage.width / mapImage.height;
+
+      let w: number, h: number;
+      if (aspect * cH >= cW) {
+        h = cH;
+        w = aspect * cH;
+      } else {
+        w = cW;
+        h = cW / aspect;
+      }
+
+      coverSizeRef.current = { w, h };
+      setCoverSize({ w, h });
+    };
+
+    update();
+    const ro = new ResizeObserver(update);
+    ro.observe(el);
+    return () => ro.disconnect();
+  }, [mapImage]);
+
   // transformOrigin: left center
-  // x=0 => image left edge at container left (natural start position)
-  // clamp x: left edge ≤ 0, right edge ≥ containerW
-  // clamp y: image must cover containerH vertically
+  // At scale=1, y=0: image is centered vertically (auto-overflow if taller than container)
+  // X clamp: left edge ≤ 0, right edge ≥ containerW
+  // Y clamp: top edge ≤ 0, bottom edge ≥ containerH
   const clampPos = useCallback(
     (x: number, y: number, s: number) => {
       const el = containerRef.current;
       if (!el) return { x, y };
       const cW = el.clientWidth;
       const cH = el.clientHeight;
+      const { w: rW, h: rH } = coverSizeRef.current;
+      if (rW === 0) return { x, y };
 
-      // rendered width at scale=1 (height fills container)
-      const rW = Math.max(cW, cH * (mapImage.width / mapImage.height));
-
-      // X: transformOrigin=left, so left edge = x
       const minX = Math.min(0, cW - rW * s);
       const maxX = 0;
 
-      // Y: transformOrigin=center vertically (cH/2)
-      const maxY = ((s - 1) * cH) / 2;
+      // transformOrigin Y = cH/2; image top at ty + cH/2 - rH*s/2
+      const maxY = (rH * s - cH) / 2;
       const minY = -maxY;
 
       return { x: clamp(x, minX, maxX), y: clamp(y, minY, maxY) };
     },
-    [mapImage]
+    []
   );
 
   // Reset position when map changes
@@ -202,7 +232,12 @@ export default function BoothMap({ selectedLocation }: Props) {
         <img
           src={mapImage.src}
           alt="부스 지도"
-          style={{ height: "100%", width: "auto", maxWidth: "none", display: "block" }}
+          style={{
+            width: coverSize.w > 0 ? `${coverSize.w}px` : "auto",
+            height: coverSize.h > 0 ? `${coverSize.h}px` : "100%",
+            maxWidth: "none",
+            display: "block",
+          }}
           draggable={false}
         />
       </div>
