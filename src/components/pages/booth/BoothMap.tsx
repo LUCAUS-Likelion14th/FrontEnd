@@ -2,13 +2,14 @@
 
 import { useRef, useState, useCallback, useEffect } from "react";
 import { BoothLocation } from "@/data/boothData";
+import { mainMap, groundMap, backMap } from "@/assets/webp/map";
 
 type MapConfig = { src: string; width: number; height: number };
 
 const MAP_CONFIG: Record<string, MapConfig> = {
-  "서라벌홀 일대": { src: "/maps/Seorabeol.svg", width: 389, height: 259 },
-  "대운동장":      { src: "/maps/playground.svg", width: 389, height: 259 },
-  "후문 일대":     { src: "/maps/backdoor.svg", width: 776, height: 259 },
+  "서라벌홀 일대": { src: mainMap.src, width: mainMap.width, height: mainMap.height },
+  "대운동장":      { src: groundMap.src, width: groundMap.width, height: groundMap.height },
+  "후문 일대":     { src: backMap.src, width: backMap.width, height: backMap.height },
 };
 
 const DEFAULT_MAP = MAP_CONFIG["서라벌홀 일대"];
