@@ -51,7 +51,7 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
     <>
       <div className="absolute inset-0 -z-10">
         <Image
-          src="/stamp-bg.png"
+          src="/stamp-register-bg.png"
           alt="도장판 인적사항 입력 배경 이미지"
           fill
           priority
@@ -82,7 +82,6 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
               <label className="text-[16px] font-normal">학번</label>
               <input
                 type="text"
-                inputMode="numeric"
                 value={studentId}
                 onChange={(e) => setStudentId(e.target.value)}
                 placeholder="학번을 입력해 주세요"

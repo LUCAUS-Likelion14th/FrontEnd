@@ -1,3 +1,5 @@
+"use client";
+
 import { fetcher } from "@/lib/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
@@ -37,8 +39,8 @@ function StampBoardSkeleton() {
       <div className="flex justify-center mb-8">
         <div className="w-40 h-16 rounded-lg bg-white/20 animate-pulse" />
       </div>
-      <div className="px-6 grid grid-cols-3 gap-y-8">
-        {Array.from({ length: 9 }).map((_, i) => (
+      <div className="px-6 grid grid-cols-2 gap-y-12">
+        {Array.from({ length: 6 }).map((_, i) => (
           <div key={i} className="flex flex-col items-center gap-2">
             <div className="w-20 h-20 rounded-full bg-white/20 animate-pulse" />
             <div className="w-14 h-4 rounded bg-white/20 animate-pulse" />
@@ -75,37 +77,6 @@ export default function StampBoard() {
 
   const progressPercentage = (data.stamp_count / data.stamp_all) * 100;
 
-  // const renderBooth = (booth: Booth | undefined) => {
-  //   if (!booth) return <div className="w-[80px]" />;
-  //   return (
-  //     <div key={booth.booth_id} className="flex flex-col items-center gap-2">
-  //       <div
-  //         onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
-  //         className={`relative w-[80px] h-[80px] flex justify-center items-center ${
-  //           booth.is_stamped ? "cursor-default" : "cursor-pointer"
-  //         }`}
-  //       >
-  //         <Image
-  //           src={booth.is_stamped ? "/stamp-on.png" : "/stamp-off.png"}
-  //           alt={booth.name}
-  //           width={80}
-  //           height={80}
-  //           className={`object-contain ${
-  //             booth.is_stamped ? "opacity-100" : "opacity-50"
-  //           }`}
-  //         />
-  //       </div>
-
-  //       <span
-  //         onClick={() => router.push(`/booth/${booth.booth_id}`)}
-  //         className="text-text-sub text-[14px] font-medium text-center underline break-keep cursor-pointer"
-  //       >
-  //         {booth.name}
-  //       </span>
-  //     </div>
-  //   );
-  // };
-
   const renderBooth = (booth: Booth | undefined) => {
     if (!booth) return <div className="w-[80px]" />;
     return (
@@ -115,32 +86,23 @@ export default function StampBoard() {
       >
         <div
           onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
-          className={`relative w-[80px] h-[80px] flex justify-center items-center perspective-500 ${
+          className={`relative w-[80px] h-[80px] flex justify-center items-center transition-transform active:scale-95 z-10 ${
             booth.is_stamped ? "cursor-default" : "cursor-pointer"
           }`}
         >
-          {/* 0. 스타일 백색광 효과 (is_stamped가 true일 때만 확실하게 켜지도록 조건 수정) */}
-          <div
-            className={`absolute w-[80px] h-[80px] rounded-full z-0 pointer-events-none transition-opacity duration-1000 ease-out filter blur-2xl ${
-              booth.is_stamped
-                ? "opacity-80 bg-white/60 shadow-[0_0_50px_20px_rgba(255,255,255,0.6)] animate-glow-gentle"
-                : "opacity-0"
-            }`}
-          />
-
-          {/* 1. 비활성화 스탬프 (z-10 뒤에 공백 추가, 가독성을 위해 opacity를 60으로 약간 상향) */}
           <Image
             src={booth.is_stamped ? "/star-on.png" : "/star-off.png"}
             alt={booth.name}
             width={70}
             height={70}
+            className="drop-shadow-lg"
           />
         </div>
 
-        <div className="absolute top-[80px] w-[100px] flex justify-center">
+        <div className="absolute top-[84px] w-[150px] flex justify-center">
           <span
             onClick={() => router.push(`/booth/${booth.booth_id}`)}
-            className="text-text-sub text-[14px] font-medium text-center underline break-keep leading-tight cursor-pointer"
+            className="max-w-[100px] text-text-sub text-[14px] font-medium text-center underline underline-offset-2 break-keep leading-tight cursor-pointer"
           >
             {booth.name}
           </span>
@@ -150,7 +112,7 @@ export default function StampBoard() {
   };
 
   return (
-    <>
+    <div className="relative min-h-screen pb-20">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
@@ -176,14 +138,14 @@ export default function StampBoard() {
       </div>
 
       <div className="relative flex flex-col justify-center items-center mb-[18px]">
-        {/* <Image
+        <Image
           src="/stamp-light.png"
           alt="빛 그라데이션"
           width={152}
           height={72}
           className="z-0"
-        /> */}
-        <div className="absolute flex flex-col text-white text-[20px] font-semibold text-center z-10">
+        />
+        <div className="absolute flex flex-col text-[20px] font-semibold text-center z-10">
           <span>부스를 돌며</span>
           <span>별빛을 밝혀 주세요!</span>
         </div>
@@ -191,7 +153,7 @@ export default function StampBoard() {
 
       <div className="flex flex-col justify-center items-center mb-9 w-full px-4 relative z-10">
         <div className="w-full flex justify-end items-baseline gap-0.5 mb-2">
-          <span className="text-[20px] font-medium text-white leading-none">
+          <span className="text-[20px] font-medium leading-none">
             {data.stamp_count}
           </span>
           <span className="text-[16px] text-text-sub font-medium leading-none">
@@ -209,7 +171,7 @@ export default function StampBoard() {
         </span>
       </div>
 
-      <section className="grid grid-cols-2 justify-center items-center gap-y-2 px-11">
+      <section className="grid grid-cols-2 gap-y-4 px-10 pb-32 relative z-10">
         <div className="col-span-2 justify-self-center">
           {renderBooth(data.booths[0])}
         </div>
@@ -237,6 +199,6 @@ export default function StampBoard() {
           }}
         />
       )}
-    </>
+    </div>
   );
 }
