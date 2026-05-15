@@ -9,12 +9,10 @@ import Link from 'next/link';
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
 
-const CATEGORY: CategoryType[] = [
-  "학생 공연",
-  "청룡가요제",
-  "아티스트 공연",
-  "무대기획전",
-];
+const CATEGORIES_BY_DATE: Record<string, CategoryType[]> = {
+  "2026-05-21": ["청룡가요제", "무대기획전", "아티스트 공연"],
+  "2026-05-22": ["학생 공연", "아티스트 공연"],
+};
 
 const TYPE_MAP: Record<string, CategoryType> = {
   student: "학생 공연",
@@ -48,7 +46,9 @@ const CATEGORY_INFO: Record<
 export default function StagePage() {
   const searchParams = useSearchParams();
   const [selectedDate, setSelectedDate] = useState("2026-05-21");
-  const [selected, setSelected] = useState<CategoryType>("학생 공연");
+  const [selected, setSelected] = useState<CategoryType>("청룡가요제");
+
+  const availableCategories = CATEGORIES_BY_DATE[selectedDate] ?? [];
 
   useEffect(() => {
     const type = searchParams.get("type");
@@ -57,15 +57,11 @@ export default function StagePage() {
     }
   }, [searchParams]);
 
-  const availableCategories = selectedDate === "2026-05-22"
-    ? CATEGORY.filter((c) => c !== "무대기획전")
-    : CATEGORY;
-
   useEffect(() => {
-    if (selectedDate === "2026-05-22" && selected === "무대기획전") {
-      setSelected("학생 공연");
+    if (!availableCategories.includes(selected)) {
+      setSelected(availableCategories[0]);
     }
-  }, [selectedDate, selected]);
+  }, [selectedDate]);
 
   const { stage, timelineData, activeId } = useStageData(selectedDate, selected);
 
