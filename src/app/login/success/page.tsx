@@ -25,11 +25,14 @@ function LoginSuccessContent() {
     localStorage.setItem("refreshToken", refreshToken);
     if (nickname) localStorage.setItem("nickname", nickname);
 
-    if (isAdmin === "true") {
-      await fetch("/api/auth/admin", { method: "POST" });
-    }
+    const redirect = async () => {
+      if (isAdmin === "true") {
+        await fetch("/api/auth/admin", { method: "POST" });
+      }
+      router.replace("/");
+    };
 
-    router.replace("/");
+    redirect();
   }, [searchParams, router]);
 
   return <LoadingScreen />;
