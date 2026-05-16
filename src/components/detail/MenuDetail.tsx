@@ -35,10 +35,10 @@ export default function MenuDetail({ menuList }: { menuList: MenuItem[] }) {
       {menuList.map((menu, index) => (
         <div key={index}>
           <div className="w-full h-px bg-text-sub2" />
-          <div className="flex justify-between items-center px-3 py-3">
+          <div className="flex justify-between items-center px-2 py-3">
             <div className="flex flex-col gap-1.5">
-              <h3 className="text-xl font-semibold">{menu.name}</h3>
-              <span className="text-[16px] font-medium text-primary">
+              <h3 className="text-[19px] font-semibold">{menu.name}</h3>
+              <span className="text-[15px] font-medium text-primary">
                 {menu.price.toLocaleString()}원
               </span>
             </div>

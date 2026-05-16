@@ -20,7 +20,7 @@ export default function FoodTruckTitle({
   info,
 }: Props) {
   return (
-    <div className="flex flex-col gap-3 mt-2.5">
+    <div className="flex flex-col gap-2 mt-2.5">
       <div className="flex items-center justify-between">
         <span className="text-[22px] font-semibold">{name}</span>
         <LikeButton

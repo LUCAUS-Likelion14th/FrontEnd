@@ -27,7 +27,7 @@ export default function SectionHeader({
 
       <div className="flex flex-col gap-[2px] w-full">
         <Link href={href} className="flex items-center justify-between">
-          <h2 className="font-bold text-xl">{title}</h2>
+          <h2 className="font-bold text-[22px]">{title}</h2>
           <FiChevronRight
             size={20}
             className="text-[#727272]"
