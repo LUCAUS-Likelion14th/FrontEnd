@@ -30,7 +30,10 @@ function clearAuthAndRedirect() {
   window.location.replace("/login");
 }
 
-async function tryRefreshToken(): Promise<string | null> {
+// 동시에 여러 401이 발생해도 refresh 요청은 한 번만 보내도록 singleton 관리
+let refreshPromise: Promise<string | null> | null = null;
+
+async function _doRefresh(): Promise<string | null> {
   const refreshToken = localStorage.getItem("refreshToken");
   if (!refreshToken) return null;
   try {
@@ -53,6 +56,14 @@ async function tryRefreshToken(): Promise<string | null> {
   }
 }
 
+async function tryRefreshToken(): Promise<string | null> {
+  if (refreshPromise) return refreshPromise;
+  refreshPromise = _doRefresh().finally(() => {
+    refreshPromise = null;
+  });
+  return refreshPromise;
+}
+
 export async function mutate(
   endpoint: string,
   method: "POST" | "DELETE",
@@ -68,7 +79,27 @@ export async function mutate(
   });
 
   if (res.status === 401) {
-    throw new Error("Unauthorized");
+    const newToken = await tryRefreshToken();
+    if (newToken) {
+      const retryRes = await fetch(`/api${endpoint}`, {
+        method,
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${newToken}`,
+        },
+      });
+      if (retryRes.status === 401) {
+        clearAuthAndRedirect();
+        throw new Error("Unauthorized");
+      }
+      if (!retryRes.ok) {
+        throw new Error(`API error: ${retryRes.status} ${endpoint}`);
+      }
+      return;
+    } else {
+      clearAuthAndRedirect();
+      throw new Error("Unauthorized");
+    }
   }
 
   if (!res.ok) {
