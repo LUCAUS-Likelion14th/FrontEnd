@@ -17,11 +17,11 @@ const categoryMap = {
   },
   notice: {
     label: "공지",
-    style: "rounded-[8px] bg-[#EEF3FB] text-primary",
+    style: "rounded-[8px] bg-primary-light text-primary",
   },
   event: {
     label: "이벤트",
-    style: "rounded-[8px] bg-[#EEF3FB] text-primary",
+    style: "rounded-[8px] bg-primary-light text-primary",
   },
 };
 
@@ -31,7 +31,7 @@ export default function NoticeItem({ id, category, title, date }: NoticeItemProp
   return (
     <Link
       href={`/info/notice/${id}`}
-      className="flex items-center justify-between py-3 border-b border-[#DCE2E9] active:bg-gray-50"
+      className="flex items-center justify-between py-3 border-b border-text-sub2 active:bg-gray-50"
     >
       <div className="flex items-center gap-4 min-w-0">
         <span className={`flex items-center justify-center shrink-0 h-7.75 p-2.5 text-[14px] font-semibold ${style}`}>

@@ -2,17 +2,28 @@
 
 import { use, useState, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
-import { BoothTitle, DetailAction, DetailHeader, DetailInfo } from "@/components";
+import {
+  BoothTitle,
+  DetailAction,
+  DetailHeader,
+  DetailInfo,
+  LoadingScreen,
+  ErrorFallback,
+} from "@/components";
 import { useBoothDetail } from "@/hooks/booth";
 import BoothMapWithMarker from "@/components/detail/BoothMapWithMarker";
 import Image from "next/image";
 import { FiImage } from "react-icons/fi";
 
 const DAY_KO: Record<string, string> = {
-  MONDAY: "월", TUESDAY: "화", WEDNESDAY: "수",
-  THURSDAY: "목", FRIDAY: "금", SATURDAY: "토", SUNDAY: "일",
+  MONDAY: "월",
+  TUESDAY: "화",
+  WEDNESDAY: "수",
+  THURSDAY: "목",
+  FRIDAY: "금",
+  SATURDAY: "토",
+  SUNDAY: "일",
 };
-
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -24,15 +35,13 @@ function BoothDetailContent({ params }: Props) {
   const { data: booth, isLoading, isError } = useBoothDetail(id);
   const [boothImgError, setBoothImgError] = useState(false);
 
-  if (isLoading) return null;
+  if (isLoading) return <LoadingScreen />;
 
   if (isError || !booth) {
     return (
       <main>
         <DetailHeader title="부스 정보" />
-        <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          부스 정보를 불러오는 중 오류가 발생했습니다.
-        </div>
+        <ErrorFallback title="부스 정보를 불러올 수 없어요" onReset={() => window.location.reload()} />
       </main>
     );
   }
@@ -41,7 +50,8 @@ function BoothDetailContent({ params }: Props) {
   const filteredSettings = selectedDate
     ? booth.settings.filter((s) => s.date === selectedDate)
     : booth.settings;
-  const activeSettings = filteredSettings.length > 0 ? filteredSettings : booth.settings;
+  const activeSettings =
+    filteredSettings.length > 0 ? filteredSettings : booth.settings;
 
   const uniqueLocations = [...new Set(activeSettings.map((s) => s.location))];
 
@@ -79,7 +89,7 @@ function BoothDetailContent({ params }: Props) {
         )}
       </div>
 
-      <div className="flex flex-col px-4 gap-6">
+      <div className="flex flex-col px-4 gap-5">
         <BoothTitle
           name={booth.booth_name}
           categories={booth.booth_category}
@@ -112,7 +122,7 @@ function BoothDetailContent({ params }: Props) {
 
 export default function BoothDetailPage({ params }: Props) {
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingScreen />}>
       <BoothDetailContent params={params} />
     </Suspense>
   );

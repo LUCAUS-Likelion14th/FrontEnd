@@ -22,7 +22,7 @@ interface StampData {
 
 function StampBoardSkeleton() {
   return (
-    <div className="relative min-h-[calc(100vh-56px)]">
+    <div className="relative isolate min-h-[calc(100vh-56px)]">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
@@ -128,7 +128,7 @@ export default function StampBoard() {
   };
 
   return (
-    <div className="relative min-h-screen pb-20">
+    <div className="relative isolate min-h-screen pb-20">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
@@ -188,21 +188,17 @@ export default function StampBoard() {
       </div>
 
       <section className="grid grid-cols-2 gap-y-4 px-10 pb-32 relative z-10">
-        <div className="col-span-2 justify-self-center">
-          {renderBooth(data.booths[0])}
-        </div>
+        <div className="justify-self-startr">{renderBooth(data.booths[0])}</div>
 
-        <div className="justify-self-start">{renderBooth(data.booths[1])}</div>
-
-        <div className="justify-self-end">{renderBooth(data.booths[2])}</div>
+        <div className="justify-self-end">{renderBooth(data.booths[1])}</div>
 
         <div className="col-span-2 justify-self-center">
-          {renderBooth(data.booths[3])}
+          {renderBooth(data.booths[2])}
         </div>
 
-        <div className="justify-self-start">{renderBooth(data.booths[4])}</div>
+        <div className="justify-self-start">{renderBooth(data.booths[3])}</div>
 
-        <div className="justify-self-end">{renderBooth(data.booths[5])}</div>
+        <div className="justify-self-end">{renderBooth(data.booths[4])}</div>
       </section>
 
       {selectedBooth && (

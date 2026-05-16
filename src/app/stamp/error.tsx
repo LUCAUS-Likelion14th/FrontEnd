@@ -3,7 +3,7 @@
 import { useEffect } from "react";
 import ErrorFallback from "@/components/ui/ErrorFallback";
 
-export default function GlobalError({
+export default function StampError({
   error,
   reset,
 }: {

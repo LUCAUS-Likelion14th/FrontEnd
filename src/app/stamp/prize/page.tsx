@@ -1,7 +1,7 @@
 "use client";
 
 import PrizeApplyForm from "@/components/stamp/PrizeApplyForm";
-import { BackButton } from "@/components/ui";
+import { BackButton, LoadingScreen } from "@/components/ui";
 import { fetcher } from "@/api/fetcher";
 import { useEffect, useState } from "react";
 
@@ -39,15 +39,7 @@ export default function PrizePage() {
       </main>
     );
 
-  if (!data)
-    return (
-      <main>
-        <BackButton />
-        <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          로딩 중...
-        </div>
-      </main>
-    );
+  if (!data) return <LoadingScreen />;
 
   return (
     <PrizeApplyForm

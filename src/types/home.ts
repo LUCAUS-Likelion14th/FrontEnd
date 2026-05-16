@@ -24,7 +24,7 @@ export interface Promotion {
   export interface LiveStage {
     stage_id: number
     performer: string
-    logo: string
+    logoImage: string
     time: string
   }
   

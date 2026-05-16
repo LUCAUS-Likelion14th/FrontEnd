@@ -19,6 +19,7 @@
   --color-text-main: black;
   --color-text-sub: #8d97a7;
   --color-text-sub2: #dce2e9;
+  --color-text-title: #3b4a5a;
 }
 
 body {
@@ -29,6 +30,7 @@ body {
     -apple-system,
     BlinkMacSystemFont,
     sans-serif;
+  word-break: keep-all;
 }
 
 a,
@@ -161,6 +163,14 @@ button {
   }
 }
 
+/* iOS 오버스크롤 시 상단에 헤더 배경 이미지 표시 */
+html {
+  background-image: url('/header-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
 /* 전체 스크롤 숨김 */
 html,
 body {
@@ -172,6 +182,7 @@ html::-webkit-scrollbar,
 body::-webkit-scrollbar {
   display: none; /* Chrome, Safari */
 }
+
 
 /* 1. 도장 이미지가 위에서 쾅! 찍히는 모션 (기존 유지) */
 @keyframes stamp-bam {

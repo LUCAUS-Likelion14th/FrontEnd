@@ -1,20 +1,20 @@
 "use client";
 
 import { Suspense, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { LoadingScreen } from "@/components";
 
 
 
 function LoginSuccessContent() {
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    const accessToken = searchParams.get("accessToken");
-    const refreshToken = searchParams.get("refreshToken");
-    const nickname = searchParams.get("nickname");
-    const isAdmin = searchParams.get("isAdmin");
+    const params = new URLSearchParams(window.location.search);
+    const accessToken = params.get("accessToken");
+    const refreshToken = params.get("refreshToken");
+    const nickname = params.get("nickname");
+    const isAdmin = params.get("isAdmin");
 
     if (!accessToken || !refreshToken) {
       router.replace("/login");
@@ -38,7 +38,7 @@ function LoginSuccessContent() {
     };
 
     redirect();
-  }, [searchParams, router]);
+  }, [router]);
 
   return <LoadingScreen />;
 }

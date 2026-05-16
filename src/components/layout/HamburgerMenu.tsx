@@ -24,8 +24,8 @@ const NAV_ITEMS: NavItem[] = [
     label: "공연",
     href: "/stage",
     subItems: [
-      { label: "배리어프리", href: "/info/barrier-free" },
       { label: "입장 정책", href: "/info/route" },
+      { label: "배리어프리", href: "/info/barrier-free" },
     ],
   },
   {
@@ -97,7 +97,7 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
             transition={{ type: "spring", stiffness: 320, damping: 35 }}
             className="fixed left-0 z-50"
             style={{
-              top: "57px",       /* 헤더(56px) 바로 아래 */
+              top: "57px" /* 헤더(56px) 바로 아래 */,
               bottom: 0,
               width: "246px",
               backgroundColor: "rgba(6, 56, 125, 0.25)",
@@ -154,13 +154,15 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                 animate="visible"
                 variants={{
                   hidden: {},
-                  visible: { transition: { staggerChildren: 0.07, delayChildren: 0.15 } },
+                  visible: {
+                    transition: { staggerChildren: 0.07, delayChildren: 0.15 },
+                  },
                 }}
                 style={{
                   display: "flex",
                   flexDirection: "column",
                   alignSelf: "stretch",
-                  gap: "32px",
+                  gap: "28px",
                 }}
               >
                 {NAV_ITEMS.map((item) =>
@@ -170,13 +172,17 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                       key={item.href + item.label}
                       variants={{
                         hidden: { opacity: 0, x: -18 },
-                        visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
+                        visible: {
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 0.3, ease: "easeOut" },
+                        },
                       }}
                       style={{
                         display: "flex",
                         flexDirection: "column",
                         alignItems: "stretch",
-                        gap: "12px",
+                        gap: "10px",
                       }}
                     >
                       {/* 메인 항목 — style_3CB3O9: SemiBold 24 */}
@@ -187,7 +193,7 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                           fontFamily:
                             "var(--font-pretendard, Pretendard, sans-serif)",
                           fontWeight: 600,
-                          fontSize: "24px",
+                          fontSize: "22px",
                           lineHeight: 1.2,
                           color: "#FFFFFF",
                           textDecoration: "none",
@@ -221,7 +227,11 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                       key={item.href + item.label}
                       variants={{
                         hidden: { opacity: 0, x: -18 },
-                        visible: { opacity: 1, x: 0, transition: { duration: 0.3, ease: "easeOut" } },
+                        visible: {
+                          opacity: 1,
+                          x: 0,
+                          transition: { duration: 0.3, ease: "easeOut" },
+                        },
                       }}
                     >
                       <Link
@@ -231,7 +241,7 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                           fontFamily:
                             "var(--font-pretendard, Pretendard, sans-serif)",
                           fontWeight: 600,
-                          fontSize: "24px",
+                          fontSize: "22px",
                           lineHeight: 1.2,
                           color: "#FFFFFF",
                           textDecoration: "none",
@@ -240,7 +250,7 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                         {item.label}
                       </Link>
                     </motion.div>
-                  )
+                  ),
                 )}
               </motion.nav>
             </div>

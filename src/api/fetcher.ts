@@ -47,7 +47,7 @@ async function _doRefresh(): Promise<string | null> {
     const newToken = data?.data?.accessToken;
     if (!newToken) return null;
     localStorage.setItem("accessToken", newToken);
-    if (data.data.refreshToken && data.data.refreshToken !== newToken) {
+    if (data.data.refreshToken) {
       localStorage.setItem("refreshToken", data.data.refreshToken);
     }
     return newToken;

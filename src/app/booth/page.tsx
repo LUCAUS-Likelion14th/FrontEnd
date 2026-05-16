@@ -11,6 +11,8 @@ import {
   DateFilter,
   Pagination,
   Card,
+  LoadingScreen,
+  ErrorFallback,
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
@@ -67,7 +69,12 @@ function BoothPageContent() {
 
   const dateParam = selectedDate.replace(/-/g, "").slice(4);
 
-  const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
+  const {
+    data: normalBoothsData,
+    isLoading: normalLoading,
+    isError: normalError,
+    refetch: refetchNormal,
+  } = useBoothList(
     {
       page: currentPage - 1,
       size: PAGE_SIZE,
@@ -79,7 +86,12 @@ function BoothPageContent() {
     { enabled: !isStampMode },
   );
 
-  const { data: stampBoothsData, isLoading: stampLoading } = useBoothStampList({
+  const {
+    data: stampBoothsData,
+    isLoading: stampLoading,
+    isError: stampError,
+    refetch: refetchStamp,
+  } = useBoothStampList({
     enabled: isStampMode,
   });
 
@@ -88,6 +100,8 @@ function BoothPageContent() {
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
+  const isError = isStampMode ? stampError : normalError;
+  const refetch = isStampMode ? refetchStamp : refetchNormal;
 
   const totalPages = isStampMode ? 1 : (normalBoothsData?.totalPages ?? 1);
 
@@ -154,10 +168,12 @@ function BoothPageContent() {
               {Array.from({ length: PAGE_SIZE }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse"
+                  className="w-full h-[195px] rounded-[10px] bg-gray-200 animate-pulse"
                 />
               ))}
             </div>
+          ) : isError ? (
+            <ErrorFallback onReset={refetch} />
           ) : booths.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
               {booths.map((booth, i) => (
@@ -166,7 +182,11 @@ function BoothPageContent() {
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20px" }}
-                  transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+                  transition={{
+                    duration: 0.3,
+                    delay: i * 0.05,
+                    ease: "easeOut",
+                  }}
                 >
                   <Card
                     id={booth.booth_id}
@@ -185,11 +205,11 @@ function BoothPageContent() {
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full gap-3 py-16">
-              <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
-                <FiSearch size={28} className="text-[#06387D]" />
+              <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
+                <FiSearch size={28} className="text-primary" />
               </div>
               <div className="flex flex-col items-center gap-1">
-                <p className="text-[15px] font-semibold text-[#3B4A5A]">
+                <p className="text-[15px] font-semibold text-title">
                   부스를 찾을 수 없어요
                 </p>
                 <p className="text-[13px] text-text-sub">
@@ -214,7 +234,7 @@ function BoothPageContent() {
 
 export default function BoothPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingScreen />}>
       <BoothPageContent />
     </Suspense>
   );

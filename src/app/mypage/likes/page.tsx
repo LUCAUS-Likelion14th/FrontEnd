@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { mypageApi } from "@/api";
-import { DetailHeader, Card } from "@/components";
+import { DetailHeader, Card, ErrorFallback } from "@/components";
 
 export default function LikesPage() {
   const [tab, setTab] = useState<"booth" | "food">("booth");
@@ -28,8 +28,8 @@ export default function LikesPage() {
     queryFn: mypageApi.getLikedFoodTrucks,
   });
 
-  const isLoading = boothLoading || truckLoading;
-  const isError = boothError || truckError;
+  const currentLoading = tab === "booth" ? boothLoading : truckLoading;
+  const currentError = tab === "booth" ? boothError : truckError;
 
 
 
@@ -69,22 +69,16 @@ export default function LikesPage() {
       </div>
 
       <div className="pt-32 px-4 pb-12">
-        {isLoading ? (
+        {currentLoading ? (
           <div className="grid grid-cols-2 gap-4">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse" />
+              <div key={i} className="w-full h-[195px] rounded-[10px] bg-gray-200 animate-pulse" />
             ))}
           </div>
-        ) : isError ? (
-          <div className="flex flex-col items-center justify-center py-20 gap-4">
-            <p className="text-text-sub text-base">불러오는 중 오류가 발생했습니다.</p>
-            <button
-              onClick={() => { refetchBooths(); refetchTrucks(); }}
-              className="px-6 py-2 rounded-[28px] border border-primary text-primary text-base font-semibold active:scale-95 transition-transform"
-            >
-              다시 시도
-            </button>
-          </div>
+        ) : currentError ? (
+          <ErrorFallback
+            onReset={() => tab === "booth" ? refetchBooths() : refetchTrucks()}
+          />
         ) : (
           <>
             <div className="grid grid-cols-2 gap-4">

@@ -15,13 +15,16 @@ export const mypageApi = {
   },
 
   getMyPage: async (): Promise<MyPageData> => {
-    const [booths, trucks] = await Promise.all([
+    const [boothResult, truckResult] = await Promise.allSettled([
       fetcher<MyBoothLikes[]>("/mypage/booth"),
       fetcher<MyFoodTruckLikes[]>("/mypage/foodtruck"),
     ]);
 
+    const booths = boothResult.status === "fulfilled" ? boothResult.value : [];
+    const trucks = truckResult.status === "fulfilled" ? truckResult.value : [];
+
     return {
-      name: "사용자", 
+      name: "사용자",
       like_count: booths.length + trucks.length,
 
       booth_like_list: booths.map((b) => ({
@@ -37,7 +40,7 @@ export const mypageApi = {
         image: t.image,
       })),
 
-      stamp_count: 0, 
+      stamp_count: 0,
     };
   },
 };

@@ -57,11 +57,15 @@ export default function ListCard({
           </div>
 
           <div className="flex flex-col gap-1 flex-1 min-w-0">
-            <span className="text-base text-black pr-14 truncate">{location}</span>
+            <span className="text-[14px] text-black pr-14 truncate">
+              {location}
+            </span>
             <div className="flex items-end justify-between gap-2">
-              <strong className="text-xl font-semibold truncate">{name}</strong>
+              <strong className="text-[18px] font-semibold truncate">
+                {name}
+              </strong>
               {department && (
-                <span className="text-base text-text-sub text-right shrink-0 max-w-[84px] truncate">
+                <span className="text-[14px] text-text-sub text-right shrink-0 max-w-[84px] truncate">
                   {department}
                 </span>
               )}
@@ -71,7 +75,10 @@ export default function ListCard({
 
         <div
           className="absolute top-[16px] right-[16px]"
-          onClick={(e) => { e.preventDefault(); e.stopPropagation(); }}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+          }}
         >
           <LikeButton
             id={id}

@@ -13,7 +13,7 @@ interface CheckResponse {
 
 function StampSkeleton() {
   return (
-    <div className="relative min-h-[calc(100vh-56px)]">
+    <div className="relative isolate min-h-[calc(100vh-56px)]">
       <div className="absolute inset-0 -z-10">
         <Image
           src={"/stamp-bg.png"}
@@ -87,7 +87,7 @@ export default function StampPage() {
   }
 
   return (
-    <div className="relative min-h-[calc(100vh-56px)]">
+    <div className="relative isolate min-h-[calc(100vh-56px)]">
       {!isRegistered ? (
         <UserInfoForm onComplete={() => setIsRegistered(true)} />
       ) : (

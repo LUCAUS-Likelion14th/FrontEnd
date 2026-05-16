@@ -1,6 +1,6 @@
 function SkeletonCard() {
   return (
-    <div className="ml-[30px] flex items-center gap-[13px] p-2.5 rounded-[10px] bg-white border border-[#dce2e9]">
+    <div className="ml-[30px] flex items-center gap-[13px] p-2.5 rounded-[10px] bg-white border border-text-sub2">
       <div className="w-[76px] h-[76px] rounded-[10px] bg-gray-200 animate-pulse shrink-0" />
       <div className="flex flex-col gap-3 flex-1 min-w-0">
         <div className="h-4 w-20 bg-gray-200 rounded animate-pulse" />
