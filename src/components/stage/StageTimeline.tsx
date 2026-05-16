@@ -7,7 +7,7 @@ import { formatDate } from "@/utils/date";
 
 type StageTimelineProps = {
   data: TimeTable[];
-  activeId?: number;
+  activeId?: string;
 };
 
 export default function StageTimeline({ data, activeId }: StageTimelineProps) {
@@ -26,7 +26,7 @@ export default function StageTimeline({ data, activeId }: StageTimelineProps) {
   return (
     <div className="flex flex-col bg-primary-light rounded-[10px] px-3 max-h-101 overflow-y-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
       {data.map((item, index) => {
-        const isActive = item.stage_id === activeId;
+        const isActive = item.start_at === activeId;
         const isFirst = index === 0;
         const isLast = index === data.length - 1;
 
