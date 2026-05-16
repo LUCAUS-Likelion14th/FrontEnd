@@ -5,7 +5,7 @@ import Image from "next/image";
 import { preload } from "react-dom";
 import { useEffect, useMemo, useState } from "react";
 import { MyPageData } from "@/types/mypage";
-import { FiChevronRight, FiImage, FiHeart } from "react-icons/fi";
+import { FiChevronRight, FiImage, FiHeart, FiLogOut, FiLogIn } from "react-icons/fi";
 import { PiStampLight } from "react-icons/pi";
 import { fetcher } from "@/api/fetcher";
 
@@ -95,6 +95,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               priority
               className="object-cover object-center"
             />
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
             <div className="relative z-10 flex flex-col items-end gap-2.5">
               <div className="flex flex-col text-base font-medium text-white text-right">
                 <span>로그인 후</span>
@@ -102,8 +103,9 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               </div>
               <Link
                 href="/login"
-                className="bg-white w-[106px] text-primary text-base font-semibold rounded-[28px] p-2.5 text-center"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/50 text-white text-xs active:scale-95 transition-transform"
               >
+                <FiLogIn size={12} />
                 로그인
               </Link>
             </div>
@@ -145,14 +147,16 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               priority
               className="object-cover object-center"
             />
-            <div className="relative z-10 flex flex-col items-end gap-3">
-              <span className="text-base font-medium text-white text-right">
+            <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
+            <div className="relative z-10 flex flex-col items-end gap-2.5">
+              <span className="text-base font-semibold text-white drop-shadow-sm">
                 환영합니다!
               </span>
               <button
                 onClick={handleLogout}
-                className="bg-white text-primary text-base font-semibold w-[106px] rounded-[28px] p-2.5"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/50 text-white text-xs active:scale-95 transition-transform"
               >
+                <FiLogOut size={12} />
                 로그아웃
               </button>
             </div>
@@ -240,6 +244,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
               )}
             </Link>
           </div>
+
         </div>
       )}
     </main>
