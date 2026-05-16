@@ -132,7 +132,7 @@ export default function PrizeApplyForm({
             disabled={isLoading}
             className="bg-primary px-[33px] py-[15px] text-[20px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98] disabled:opacity-50"
           >
-            {isLoading ? "응모 중..." : "경품 응모하기"}
+            경품 응모하기
           </button>
         </section>
       </div>
