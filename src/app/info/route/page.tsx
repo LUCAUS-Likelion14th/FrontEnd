@@ -149,7 +149,7 @@ export default function RoutePage() {
       <div className="px-4 pt-4 flex flex-col gap-3">
 
         {/* 1. 온라인 티켓팅 */}
-        <Section title="온라인 티켓팅" icon={MdQrCode2}>
+        <Section title="입장 시간" icon={MdQrCode2}>
           <div className="grid grid-cols-2 gap-2 mt-3">
             {TICKETS.map((t) => (
               <div key={t.id} className="flex items-center gap-2.5 bg-[#F5F8FF] rounded-[10px] px-3 py-2.5">
