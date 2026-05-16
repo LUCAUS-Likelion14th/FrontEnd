@@ -10,7 +10,7 @@ const CREDITS = [
   { role: "FRONTEND", members: ["강지혜", "김유겸", "이은지"] },
   { role: "BACKEND", members: ["김윤형", "이채연", "최서영"] },
   {
-    role: "Special Thanks to",
+    role: "SUPPORT",
     members: ["2026 LUCAUS 축제기획단", "멋쟁이사자처럼 중앙대학교 14기 운영진"],
   },
 ];
