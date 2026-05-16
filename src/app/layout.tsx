@@ -2,7 +2,7 @@ import type { Metadata, Viewport } from "next";
 
 export const viewport: Viewport = {
   viewportFit: "cover",
-  themeColor: "#05061A",
+  themeColor: "transparent",
 };
 import localFont from "next/font/local";
 import Script from "next/script";
@@ -15,6 +15,9 @@ export const metadata: Metadata = {
   title: "청:ON '26",
   icons: {
     icon: "/icon.png",
+  },
+  other: {
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
 };
 
