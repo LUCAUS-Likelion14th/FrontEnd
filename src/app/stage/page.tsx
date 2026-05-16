@@ -6,6 +6,7 @@ import {
   ArtistSection,
   StageTimeline,
 } from "@/components";
+import { LuLink } from "react-icons/lu";
 import { useRouter, useSearchParams } from "next/navigation";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 import { useStageData } from "@/hooks/stage";
@@ -129,9 +130,10 @@ export default function StagePage() {
             href="https://festival.cau.ac.kr"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-9 py-2.5 bg-primary text-base leading-4.5 text-white rounded-lg"
+            className="flex items-center gap-1.5 px-4 py-2 bg-primary text-sm text-white rounded-lg"
           >
-            입장 QR코드
+            <LuLink size={16} />
+            축제 티켓팅 사이트
           </a>
         </div>
 

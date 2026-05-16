@@ -9,7 +9,10 @@ const CREDITS = [
   { role: "DESIGN", members: ["서예진"] },
   { role: "FRONTEND", members: ["강지혜", "김유겸", "이은지"] },
   { role: "BACKEND", members: ["김윤형", "이채연", "최서영"] },
-  { role: "Special Thanks to", members: ["윤리현 정건"] },
+  {
+    role: "Special Thanks to",
+    members: ["2026 LUCAUS 축제기획단", "멋쟁이사자처럼 중앙대학교 14기 운영진"],
+  },
 ];
 
 export default function CreditPage() {
@@ -39,9 +42,19 @@ export default function CreditPage() {
           {CREDITS.map(({ role, members }) => (
             <div key={role} className="flex flex-col items-center gap-2.5">
               <span className="text-text-sub text-[16px]">{role}</span>
-              <span className="text-[#273850] text-[16px] font-semibold text-center">
-                {members.join("  ")}
-              </span>
+              {role === "Special Thanks to" ? (
+                <div className="flex flex-col items-center gap-1">
+                  {members.map((member) => (
+                    <span key={member} className="text-[#273850] text-[16px] font-semibold text-center">
+                      {member}
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <span className="text-[#273850] text-[16px] font-semibold text-center">
+                  {members.join("  ")}
+                </span>
+              )}
             </div>
           ))}
         </div>
