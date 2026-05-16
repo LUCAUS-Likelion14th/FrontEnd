@@ -41,6 +41,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
+    const existingToken = localStorage.getItem("accessToken");
+
     fetch("/api/auth/reissue", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -52,11 +54,14 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         if (token) {
           localStorage.setItem("accessToken", token);
           setAccessToken(token);
-          if (data.data.refreshToken && data.data.refreshToken !== token) {
+          if (data.data.refreshToken) {
             localStorage.setItem("refreshToken", data.data.refreshToken);
           }
+        } else if (existingToken) {
+          // reissue 실패했지만 기존 accessToken이 있으면 그대로 사용
+          // 실제 만료 여부는 API 요청 시 401로 판단
+          setAccessToken(existingToken);
         } else {
-          localStorage.removeItem("accessToken");
           localStorage.removeItem("refreshToken");
           localStorage.removeItem("nickname");
           fetch("/api/auth/admin", { method: "DELETE" });
@@ -66,12 +71,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
         }
       })
       .catch(() => {
-        localStorage.removeItem("accessToken");
-        localStorage.removeItem("refreshToken");
-        localStorage.removeItem("nickname");
-        fetch("/api/auth/admin", { method: "DELETE" });
-        if (window.location.pathname !== "/login") {
-          window.location.replace("/login");
+        // 네트워크 오류 등으로 reissue 실패 - 기존 토큰 유지
+        if (existingToken) {
+          setAccessToken(existingToken);
         }
       })
       .finally(() => {
