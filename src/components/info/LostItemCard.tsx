@@ -32,7 +32,7 @@ export default function LostItemCard({ item }: Props) {
 
       <div className="flex items-start justify-between p-[10px] pt-[9px] bg-white">
         <div className="flex flex-col gap-[2px] flex-1 min-w-0">
-          <span className="text-[12px] leading-normal text-[#8D97A7] truncate">
+          <span className="text-[12px] leading-normal text-text-sub truncate">
             {item.date}
           </span>
 

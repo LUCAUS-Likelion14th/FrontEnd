@@ -34,7 +34,7 @@ export default function LostTypeFilter({ selectedType, onSelectType }: Props) {
         className={`flex items-center gap-2 px-3 h-9 rounded-full transition-colors ${
           selectedType !== "all"
             ? "bg-primary text-white"
-            : "bg-[#EEF3FB] text-[#8D97A7]"
+            : "bg-primary-light text-text-sub"
         }`}
       >
         <FiList size={15} />
@@ -62,8 +62,8 @@ export default function LostTypeFilter({ selectedType, onSelectType }: Props) {
                     }}
                     className={`flex items-center justify-between w-full px-3.5 h-10 text-sm whitespace-nowrap transition-colors ${
                       isSelected
-                        ? "text-primary font-semibold bg-[#EEF3FB]"
-                        : "text-[#3B4A5A] hover:bg-gray-50"
+                        ? "text-primary font-semibold bg-primary-light"
+                        : "text-title hover:bg-gray-50"
                     }`}
                   >
                     <span>{t.label}</span>

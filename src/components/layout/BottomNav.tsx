@@ -111,7 +111,7 @@ export default function BottomNav() {
                 className={`flex flex-col items-center text-xs gap-2 transition-colors ${
                   isLogin
                     ? isActive
-                      ? "text-[#06387D]"
+                      ? "text-primary"
                       : "text-[#AEB9CD]"
                     : isActive
                       ? "text-primary"

@@ -25,7 +25,7 @@ export default function DateFilter({ selectedDate, onSelectDate, showAll = false
         onClick={() => setIsOpen((prev) => !prev)}
         className={`flex items-center gap-2 px-3 h-9 rounded-[20px] transition-colors ${
           selectedDate === "all"
-            ? "bg-[#EEF3FB] text-[#8d97a7]"
+            ? "bg-primary-light text-text-sub"
             : "bg-primary text-white"
         }`}
       >
@@ -56,8 +56,8 @@ export default function DateFilter({ selectedDate, onSelectDate, showAll = false
                     }}
                     className={`flex items-center gap-2.5 w-full px-3.5 h-10 text-sm whitespace-nowrap transition-colors ${
                       isSelected
-                        ? "text-primary font-semibold bg-[#EEF3FB]"
-                        : "text-[#3B4A5A] hover:bg-gray-50"
+                        ? "text-primary font-semibold bg-primary-light"
+                        : "text-title hover:bg-gray-50"
                     }`}
                   >
                     <FiCalendar size={15} className="shrink-0" />

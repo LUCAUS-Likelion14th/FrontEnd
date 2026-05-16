@@ -91,7 +91,7 @@ export default async function StageDetailPage({
 
 <div className="px-4 flex flex-col gap-3">
         {/* 공연 일정 */}
-        <div className="flex items-center justify-between bg-[#EEF3FB] rounded-[12px] px-4 py-3.5">
+        <div className="flex items-center justify-between bg-primary-light rounded-[12px] px-4 py-3.5">
           <div className="flex items-center gap-2 text-primary">
             <FiClock size={14} />
             <span className="text-[13px] font-semibold">공연 일정</span>
@@ -105,7 +105,7 @@ export default async function StageDetailPage({
         {stage.stage_info && (
           <div className="flex flex-col gap-2 px-1">
             <span className="text-[13px] font-semibold text-text-sub">소개글</span>
-            <p className="text-[14px] text-[#3B4A5A] leading-relaxed whitespace-pre-line break-keep">
+            <p className="text-[14px] text-title leading-relaxed whitespace-pre-line break-keep">
               {stage.stage_info}
             </p>
           </div>
@@ -121,7 +121,7 @@ export default async function StageDetailPage({
                 .map((song, index) => (
                   <div key={song.song_id} className="flex items-center gap-3 py-2.5 border-b border-[#E5EAF0] last:border-b-0">
                     <span className="text-[13px] font-semibold text-primary w-5 text-center shrink-0">{index + 1}</span>
-                    <span className="text-[14px] text-[#3B4A5A] break-keep">{song.title}</span>
+                    <span className="text-[14px] text-title break-keep">{song.title}</span>
                   </div>
                 ))}
             </div>
