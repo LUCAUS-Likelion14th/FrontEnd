@@ -17,13 +17,13 @@ export function useStageData(selectedDate: string, selected: string) {
     queryKey: ["stage", selectedDate, selected],
     queryFn: () => stageApi.getStage(selectedDate, CATEGORY_MAP[selected]),
     enabled: selected !== "무대기획전",
-    staleTime: 60_000,
+    staleTime: 5 * 60_000,
   });
 
   const { data: timeTable = [] } = useQuery({
     queryKey: ["stage", "timetable", selectedDate],
     queryFn: () => stageApi.getTimeTable(selectedDate),
-    staleTime: 60_000,
+    staleTime: 5 * 60_000,
   });
 
   const timelineData = useMemo(() => {

@@ -12,7 +12,7 @@ export function useFoodTruckList(params?: FoodTruckListParams) {
   return useQuery({
     queryKey: ["foodtruck", "list", params],
     queryFn: () => foodTruckApi.getList(params),
-    staleTime: 30_000,
+    staleTime: 5 * 60_000,
   });
 }
 
@@ -21,6 +21,6 @@ export function useFoodTruckDetail(id: string) {
     queryKey: ["foodtruck", "detail", id],
     queryFn: () => foodTruckApi.getDetail(id),
     enabled: !!id,
-    staleTime: 30_000,
+    staleTime: 5 * 60_000,
   });
 }
