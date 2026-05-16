@@ -5,7 +5,7 @@ import logo from "@/assets/likelion-icon.svg";
 
 export default function Footer() {
   return (
-    <footer className="relative flex flex-col items-center gap-1 px-8 pt-6 pb-20 text-white text-center overflow-hidden">
+    <footer className="relative isolate flex flex-col items-center gap-1 px-8 pt-6 pb-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/footer-bg.png"
