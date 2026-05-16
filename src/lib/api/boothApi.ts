@@ -1,9 +1,9 @@
 import { fetcher, authFetcher } from "./fetcher";
 import type {
   BoothDetail,
+  BoothListItem,
   BoothListParams,
   BoothListResponse,
-  StampListResponse,
 } from "@/types/booth";
 
 export const BoothApi = {
@@ -20,7 +20,8 @@ export const BoothApi = {
     const qs = query.toString().replace(/\+/g, "%20");
     return fetcher<BoothListResponse>(`/booth${qs ? `?${qs}` : ""}`);
   },
-  getStampList: () => fetcher<StampListResponse>(`/booth/stamp`),
+  getStampList: (page?: number) =>
+    fetcher<BoothListItem[]>(`/booth/stamp${page !== undefined ? `?page=${page}` : ""}`),
   getDetail: (boothId: string) => fetcher<BoothDetail>(`/booth/${boothId}`),
   likeBooth: (boothId: number | string) =>
     authFetcher<null>(`/booth/${boothId}/like`, "POST"),

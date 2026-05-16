@@ -19,7 +19,7 @@ export function useBoothList(
 export function useBoothStampList(options?: { enabled?: boolean }) {
   return useQuery({
     queryKey: ["booth", "stamp"],
-    queryFn: BoothApi.getStampList,
+    queryFn: () => BoothApi.getStampList(),
     enabled: options?.enabled ?? true,
     staleTime: 5 * 60_000,
   });

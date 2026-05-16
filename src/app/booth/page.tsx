@@ -83,7 +83,7 @@ function BoothPageContent() {
   });
 
   const normalBooths = normalBoothsData?.content ?? [];
-  const stampBooths = stampBoothsData?.data ?? [];
+  const stampBooths = stampBoothsData ?? [];
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;

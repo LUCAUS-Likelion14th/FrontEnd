@@ -11,7 +11,7 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 flex items-center h-14 px-4 z-20 overflow-hidden">
+      <header className="fixed top-0 left-0 right-0 flex items-center h-14 px-4 z-30 overflow-hidden">
         <div className="absolute -inset-px -z-10">
           <Image
             src={headerBg}
