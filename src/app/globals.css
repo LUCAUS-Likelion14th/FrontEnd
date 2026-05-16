@@ -163,6 +163,14 @@ button {
   }
 }
 
+/* iOS 오버스크롤 시 상단에 헤더 배경 이미지 표시 */
+html {
+  background-image: url('/header-bg.png');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: top center;
+}
+
 /* 전체 스크롤 숨김 */
 html,
 body {
