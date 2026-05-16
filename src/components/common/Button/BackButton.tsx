@@ -7,10 +7,11 @@ export default function BackButton() {
   const router = useRouter();
 
   return (
-    <FiChevronLeft
-      size={24}
-      className="cursor-pointer"
+    <button
       onClick={() => router.back()}
-    />
+      className="transition-opacity active:opacity-50"
+    >
+      <FiChevronLeft size={24} />
+    </button>
   );
 }
