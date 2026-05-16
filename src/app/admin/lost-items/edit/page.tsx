@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { adminLostApi } from "@/lib/api/adminLostApi";
+import { adminLostApi } from "@/api/adminLostApi";
 import { LostItem } from "@/types/lost";
 
 const PAGE_SIZE = 10;
@@ -19,8 +19,8 @@ export default function LostItemEditPage() {
     adminLostApi
       .getLostItems(page, PAGE_SIZE)
       .then((res) => {
-        setItems(res);
-        setHasMore(res.length === PAGE_SIZE);
+        setItems(res.content);
+        setHasMore(!res.totalPages || page < res.totalPages - 1);
       })
       .catch(console.error)
       .finally(() => setLoading(false));

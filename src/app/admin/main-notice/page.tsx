@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { adminNoticeApi } from "@/lib/api/adminNoticeApi";
+import { adminNoticeApi } from "@/api/adminNoticeApi";
 import { Notice } from "@/types/notice";
 
 export default function MainNoticeAdminPage() {

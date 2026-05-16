@@ -2,12 +2,20 @@
 
 import { Pagination, DetailHeader, NoticeItem } from "@/components";
 import { FiBell } from "react-icons/fi";
-import { formatDate } from "@/lib/utils/date";
-import { useState } from "react";
-import { useNotices } from "@/hooks/queries/notice";
+import { formatDate } from "@/utils/date";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useNotices } from "@/hooks/notice";
 
 export default function NoticePage() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page") ?? "1");
+
+  function handlePageChange(page: number) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(page));
+    router.replace(`?${params.toString()}`);
+  }
 
   const { data, isLoading } = useNotices({
     page: currentPage - 1,
@@ -23,7 +31,7 @@ export default function NoticePage() {
       <DetailHeader title="축제기획단 공지" />
 
       <div className="px-4">
-        <div className="flex items-center h-12 px-[11.5px] mb-7 bg-[#EEF3FB] rounded-[10px] gap-2">
+        <div className="flex items-center h-12 px-[11.5px] mb-7 bg-[#EEF3FB] rounded-[10px] gap-2 border border-primary/30">
           <FiBell size={18} className="text-primary shrink-0" />
           <span className="text-[14px] text-primary leading-4.5">
             축제기획단의 공지사항을 확인하세요.
@@ -68,7 +76,7 @@ export default function NoticePage() {
           <Pagination
             page={currentPage}
             totalPages={totalPages}
-            onChange={setCurrentPage}
+            onChange={handlePageChange}
           />
         )}
       </div>

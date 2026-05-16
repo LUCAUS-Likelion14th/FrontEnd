@@ -4,7 +4,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { FiImage } from "react-icons/fi";
-import LikeButton from "../common/Button/LikeButton";
+import LikeButton from "@/components/ui/Button/LikeButton";
 import { motion } from "framer-motion";
 
 type ListCardProps = {

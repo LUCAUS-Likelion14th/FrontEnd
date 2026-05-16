@@ -1,11 +1,11 @@
-import { infoBarrierFree, infoCredit, infoLost, infoNotice, infoRoute } from '@/assets/webp/info';
+import { infoBarrierFree, infoLost, infoMypage, infoNotice, infoRoute } from '@/assets/webp/info';
 import { InfoCard } from '@/components';
 import Image from 'next/image';
 
 export default function InfoPage() {
   return (
     <main className="px-4 pt-5 pb-25">
-      <div className="flex items-center h-12 px-[15px] mb-5 border border-primary rounded-[10px] gap-2">
+      <div className="flex items-center h-12 px-[15px] mb-5 bg-[#EEF3FB] border border-primary/30 rounded-[10px] gap-2">
         <Image
           src={"/icons/highlight.png"}
           alt={"하이라이트 아이콘"}
@@ -35,13 +35,13 @@ export default function InfoPage() {
         />
         <InfoCard
           imageUrl={infoRoute}
-          title="통행 정책"
+          title="입장 정책"
           link="info/route"
         />
         <InfoCard
-          imageUrl={infoCredit}
-          title="크레딧"
-          link="info/credit"
+          imageUrl={infoMypage}
+          title="마이페이지"
+          link="/mypage"
         />
       </section>
     </main>

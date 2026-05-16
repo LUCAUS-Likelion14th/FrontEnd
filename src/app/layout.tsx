@@ -1,9 +1,22 @@
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  themeColor: "#05061A",
+};
 import localFont from "next/font/local";
 import Script from "next/script";
-import BottomNav from "@/components/layouts/BottomNav";
+import BottomNav from "@/components/layout/BottomNav";
 import "./globals.css";
-import Header from "@/components/layouts/Header";
+import Header from "@/components/layout/Header";
 import Providers from "./providers";
+
+export const metadata: Metadata = {
+  title: "청:ON '26",
+  icons: {
+    icon: "/icon.png",
+  },
+};
 
 const pretendard = localFont({
   src: "./fonts/PretendardVariable.woff2",
@@ -40,7 +53,7 @@ export default function RootLayout({
         )}
         <Providers>
           <Header />
-          <main className="min-h-screen mt-14">{children}</main>
+          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)" }}>{children}</main>
           <BottomNav />
         </Providers>
       </body>

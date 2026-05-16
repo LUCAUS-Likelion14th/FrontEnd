@@ -14,6 +14,7 @@ function LoginSuccessContent() {
     const accessToken = searchParams.get("accessToken");
     const refreshToken = searchParams.get("refreshToken");
     const nickname = searchParams.get("nickname");
+    const isAdmin = searchParams.get("isAdmin");
 
     if (!accessToken || !refreshToken) {
       router.replace("/login");
@@ -23,8 +24,20 @@ function LoginSuccessContent() {
     localStorage.setItem("accessToken", accessToken);
     localStorage.setItem("refreshToken", refreshToken);
     if (nickname) localStorage.setItem("nickname", nickname);
+    sessionStorage.setItem("_freshLogin", String(Date.now()));
 
-    router.replace("/");
+    const redirect = async () => {
+      if (isAdmin === "true") {
+        try {
+          await fetch("/api/auth/admin", { method: "POST" });
+        } catch {
+          // 쿠키 발급 실패해도 홈으로 이동
+        }
+      }
+      router.replace("/");
+    };
+
+    redirect();
   }, [searchParams, router]);
 
   return <LoadingScreen />;

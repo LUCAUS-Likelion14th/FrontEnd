@@ -1,0 +1,6 @@
+export { default as routeMap } from './route-map.webp'
+export { default as barrierFreeMap } from './barrier-free-map.webp'
+export { default as foodtruckMap } from './foodtruck-map.webp'
+export { default as mainMap } from './map1.webp'
+export { default as groundMap } from './groundMap.webp'
+export { default as backMap } from './map3.webp'

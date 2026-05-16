@@ -3,7 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
 import { FiChevronDown, FiImage } from "react-icons/fi";
-import { adminLostApi } from "@/lib/api/adminLostApi";
+import { adminLostApi } from "@/api/adminLostApi";
 import { LostItem } from "@/types/lost";
 
 const dates = [
@@ -35,7 +35,7 @@ export default function LostItemEditDetailPage() {
     adminLostApi
       .getLostItems(0, 100)
       .then((res) => {
-        const found = res.find((i) => i.lost_id === lostId);
+        const found = res.content.find((i) => i.lost_id === lostId);
         if (found) {
           setItem(found);
           setName(found.name);

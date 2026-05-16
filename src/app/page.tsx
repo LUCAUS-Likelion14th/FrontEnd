@@ -1,7 +1,7 @@
 import { NoticeBanner, StageSection, StampShortcutButton, BoothSection, FoodSection, SplashScreen} from "@/components";
 import ImageSwiper from "@/components/ui/ImageSwiper";
-import Footer from "@/components/layouts/Footer";
-import { homeApi } from "@/lib/api/homeApi";
+import Footer from "@/components/layout/Footer";
+import { homeApi } from "@/api/homeApi";
 
 export default async function Home() {
   const [promotions, liveStages, activeNotice] =
@@ -25,9 +25,9 @@ export default async function Home() {
         </div>
 
         <section className="flex flex-col px-4 gap-8">
-          <StageSection stages={liveStages} />
-          <BoothSection />
-          <FoodSection />
+          <div id="live-stage"><StageSection stages={liveStages} /></div>
+          <div id="top-booth"><BoothSection /></div>
+          <div id="hot-food"><FoodSection /></div>
         </section>
       </main>
 

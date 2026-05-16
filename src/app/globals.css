@@ -2,6 +2,7 @@
 @tailwind utilities;
 
 :root {
+  color-scheme: light;
   --background: #ffffff;
   --foreground: #171717;
 }
@@ -12,19 +13,22 @@
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 
-  --color-primary: #06387d; 
+  --color-primary: #06387d;
   --color-primary-light: #eef3fb;
   --color-primary-hover: ;
-  --color-text-main: black; 
-  --color-text-sub: #8d97a7; 
+  --color-text-main: black;
+  --color-text-sub: #8d97a7;
   --color-text-sub2: #dce2e9;
 }
-
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: var(--font-pretendard), -apple-system, BlinkMacSystemFont, sans-serif;
+  font-family:
+    var(--font-pretendard),
+    -apple-system,
+    BlinkMacSystemFont,
+    sans-serif;
 }
 
 a,
@@ -263,4 +267,61 @@ body::-webkit-scrollbar {
 }
 .line-7 {
   --rot: 315deg;
+}
+
+.perspective-500 {
+  perspective: 500px;
+}
+
+@keyframes coinFlipIn {
+  0% {
+    transform: rotateY(0deg) scale(0.8);
+    opacity: 0;
+    filter: blur(1px);
+  }
+  30% {
+    opacity: 0.4;
+  }
+  100% {
+    transform: rotateY(720deg) scale(1);
+    opacity: 1;
+    filter: blur(0);
+  }
+}
+
+@keyframes coinFlipOut {
+  0% {
+    transform: rotateY(0deg) scale(1);
+    opacity: 0.6;
+  }
+  100% {
+    transform: rotateY(-180deg) scale(0.8);
+    opacity: 0;
+  }
+}
+
+.animate-coin-in {
+  animation: coinFlipIn 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+.animate-coin-out {
+  animation: coinFlipOut 1s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+}
+
+/* 은은하게 광원이 깜빡거리는 애니메이션 */
+@keyframes glowGentle {
+  0%,
+  100% {
+    opacity: 0.6; /* 가장 흐릴 때 */
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8; /* 가장 밝을 때 */
+    transform: scale(1.03); /* 아주 미세하게 커져서 생동감 부여 */
+  }
+}
+
+/* 클래스로 매핑 (3초 동안 실행, 아주 부드럽게 무한 반복) */
+.animate-glow-gentle {
+  animation: glowGentle 3s ease-in-out infinite;
 }

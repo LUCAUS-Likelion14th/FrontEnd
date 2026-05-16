@@ -3,8 +3,9 @@
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useFoodTruckList } from "@/hooks/queries/foodtruck";
+import { useFoodTruckList } from "@/hooks/foodtruck";
 import { Card, Pagination } from "@/components";
+import FoodTruckMap from "@/components/foodtruck/FoodTruckMap";
 import { FiSearch } from "react-icons/fi";
 
 const PAGE_SIZE = 8;
@@ -30,10 +31,8 @@ function FoodTruckPageContent() {
 
   return (
     <main className="px-4 pt-5 pb-25">
-      <section className="flex flex-col gap-5 pb-10 border-b border-b-text-sub2 mb-5">
-        <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-          <span className="text-text-sub text-base">지도</span>
-        </div>
+      <section className="flex flex-col pb-10 border-b border-b-text-sub2 mb-5">
+        <FoodTruckMap />
       </section>
 
       <section className="flex flex-col">
@@ -57,8 +56,7 @@ function FoodTruckPageContent() {
                   id={truck.id}
                   type="foodtruck"
                   name={truck.name}
-                  subText={truck.bestMenu}
-                  location={truck.location}
+                  location={truck.bestMenu}
                   image={truck.image}
                   isLiked={truck.liked}
                   likeCount={truck.likeCount}

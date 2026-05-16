@@ -3,6 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
+import BoothMap from "@/components/booth/BoothMap";
 import {
   BoothLocationFilter,
   BoothCategoryFilter,
@@ -12,8 +13,8 @@ import {
   Card,
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
-import { BoothLocation, BoothCategory } from "@/data/boothData";
-import { useBoothList, useBoothStampList } from "@/hooks/queries/booth";
+import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
+import { useBoothList, useBoothStampList } from "@/hooks/booth";
 
 const PAGE_SIZE = 8;
 
@@ -23,11 +24,11 @@ function BoothPageContent() {
 
   const [isStampMode, setIsStampMode] = useState(false);
   const [selectedDate, setSelectedDate] = useState<string>(
-    () => searchParams.get("date") ?? "all",
+    () => searchParams.get("date") ?? getDefaultDate(),
   );
   const [selectedLocation, setSelectedLocation] =
     useState<BoothLocation | null>(
-      () => (searchParams.get("location") as BoothLocation) ?? null,
+      () => (searchParams.get("location") as BoothLocation) ?? "서라벌홀 일대",
     );
   const [selectedCategory, setSelectedCategory] = useState<BoothCategory>(
     () => (searchParams.get("category") as BoothCategory) ?? "전체",
@@ -38,13 +39,14 @@ function BoothPageContent() {
   const [debouncedSearch, setDebouncedSearch] = useState(
     () => searchParams.get("q") ?? "",
   );
-  const [currentPage, setCurrentPage] = useState(() =>
-    Number(searchParams.get("page") ?? 1),
-  );
+  const [currentPage, setCurrentPage] = useState(() => {
+    const raw = Number(searchParams.get("page") ?? 1);
+    return Number.isInteger(raw) && raw >= 1 ? raw : 1;
+  });
 
   useEffect(() => {
     const params = new URLSearchParams();
-    if (selectedDate !== "all") params.set("date", selectedDate);
+    params.set("date", selectedDate);
     if (selectedLocation) params.set("location", selectedLocation);
     if (selectedCategory !== "전체") params.set("category", selectedCategory);
     if (debouncedSearch) params.set("q", debouncedSearch);
@@ -63,10 +65,7 @@ function BoothPageContent() {
     return () => clearTimeout(t);
   }, [searchQuery]);
 
-  const dateParam =
-    selectedDate === "all"
-      ? undefined
-      : selectedDate.replace(/-/g, "").slice(4);
+  const dateParam = selectedDate.replace(/-/g, "").slice(4);
 
   const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
     {
@@ -85,7 +84,7 @@ function BoothPageContent() {
   });
 
   const normalBooths = normalBoothsData?.content ?? [];
-  const stampBooths = stampBoothsData?.data ?? [];
+  const stampBooths = stampBoothsData ?? [];
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
@@ -132,17 +131,7 @@ function BoothPageContent() {
           </div>
         </div>
 
-        <div className="relative w-full h-[240px] bg-[#D9D9D9] rounded-[10px] flex items-center justify-center">
-          <span className="text-text-sub text-base">지도</span>
-          <div className="absolute right-4 bottom-5 flex flex-col gap-2">
-            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-              +
-            </button>
-            <button className="w-7 h-7 bg-white rounded-full shadow-[0px_3px_1.5px_rgba(0,0,0,0.25)] flex items-center justify-center text-lg leading-none">
-              −
-            </button>
-          </div>
-        </div>
+        <BoothMap selectedLocation={selectedLocation} />
       </section>
 
       <section className="flex flex-col">
@@ -184,10 +173,12 @@ function BoothPageContent() {
                     type="booth"
                     name={booth.booth_name}
                     subText={booth.booth_owner}
-                    location={booth.booth_location}
+                    location={booth.location}
+                    locationId={booth.location_id}
                     image={booth.booth_image}
                     isLiked={booth.is_liked}
                     likeCount={booth.like_count}
+                    date={selectedDate}
                   />
                 </motion.div>
               ))}
