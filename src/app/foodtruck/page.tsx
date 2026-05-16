@@ -4,7 +4,7 @@ import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useFoodTruckList } from "@/hooks/foodtruck";
-import { Card, LoadingScreen, Pagination } from "@/components";
+import { Card, LoadingScreen, Pagination, ErrorFallback } from "@/components";
 import FoodTruckMap from "@/components/foodtruck/FoodTruckMap";
 import { FiSearch } from "react-icons/fi";
 
@@ -24,7 +24,7 @@ function FoodTruckPageContent() {
     router.replace(`?${params.toString()}`, { scroll: false });
   }, [currentPage]);
 
-  const { data: trucks = [], isLoading } = useFoodTruckList({});
+  const { data: trucks = [], isLoading, isError, refetch } = useFoodTruckList({});
 
   const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
   const pagedTrucks = trucks.slice(
@@ -48,6 +48,8 @@ function FoodTruckPageContent() {
               />
             ))}
           </div>
+        ) : isError ? (
+          <ErrorFallback onReset={refetch} />
         ) : pagedTrucks.length > 0 ? (
           <div className="grid grid-cols-2 gap-x-3 gap-y-5">
             {pagedTrucks.map((truck, i) => (

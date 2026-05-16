@@ -6,6 +6,7 @@ import {
   LostTypeFilter,
   DetailHeader,
   DateFilter,
+  ErrorFallback,
 } from "@/components";
 import { useState } from "react";
 import { useLostItems } from "@/hooks/lost";
@@ -17,7 +18,7 @@ export default function LostPage() {
   const [selectedType, setSelectedType] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: response, isLoading } = useLostItems({
+  const { data: response, isLoading, isError, refetch } = useLostItems({
     category: selectedType === "all" ? undefined : selectedType,
     date: selectedDate === "all" ? undefined : selectedDate,
     page: currentPage - 1,
@@ -96,6 +97,8 @@ export default function LostPage() {
               />
             ))}
           </div>
+        ) : isError ? (
+          <ErrorFallback onReset={refetch} />
         ) : (
           <div className="grid grid-cols-2 gap-5">
             {lostData.length > 0 ? (

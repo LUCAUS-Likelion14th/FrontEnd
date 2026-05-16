@@ -1,6 +1,6 @@
 "use client";
 
-import { Pagination, DetailHeader, NoticeItem } from "@/components";
+import { Pagination, DetailHeader, NoticeItem, ErrorFallback } from "@/components";
 import { FiBell } from "react-icons/fi";
 import { formatDate } from "@/utils/date";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -17,7 +17,7 @@ export default function NoticePage() {
     router.replace(`?${params.toString()}`);
   }
 
-  const { data, isLoading } = useNotices({
+  const { data, isLoading, isError, refetch } = useNotices({
     page: currentPage - 1,
     size: 10,
     sort: ["important,desc", "createdAt,desc"],
@@ -49,6 +49,8 @@ export default function NoticePage() {
                 <div className="w-16 h-5 rounded bg-gray-200 animate-pulse" />
               </div>
             ))
+          ) : isError ? (
+            <ErrorFallback onReset={refetch} />
           ) : noticeData.length > 0 ? (
             noticeData.map((notice) => (
               <NoticeItem

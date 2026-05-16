@@ -12,6 +12,7 @@ import {
   Pagination,
   Card,
   LoadingScreen,
+  ErrorFallback,
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
@@ -68,7 +69,12 @@ function BoothPageContent() {
 
   const dateParam = selectedDate.replace(/-/g, "").slice(4);
 
-  const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
+  const {
+    data: normalBoothsData,
+    isLoading: normalLoading,
+    isError: normalError,
+    refetch: refetchNormal,
+  } = useBoothList(
     {
       page: currentPage - 1,
       size: PAGE_SIZE,
@@ -80,7 +86,12 @@ function BoothPageContent() {
     { enabled: !isStampMode },
   );
 
-  const { data: stampBoothsData, isLoading: stampLoading } = useBoothStampList({
+  const {
+    data: stampBoothsData,
+    isLoading: stampLoading,
+    isError: stampError,
+    refetch: refetchStamp,
+  } = useBoothStampList({
     enabled: isStampMode,
   });
 
@@ -89,6 +100,8 @@ function BoothPageContent() {
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
+  const isError = isStampMode ? stampError : normalError;
+  const refetch = isStampMode ? refetchStamp : refetchNormal;
 
   const totalPages = isStampMode ? 1 : (normalBoothsData?.totalPages ?? 1);
 
@@ -159,6 +172,8 @@ function BoothPageContent() {
                 />
               ))}
             </div>
+          ) : isError ? (
+            <ErrorFallback onReset={refetch} />
           ) : booths.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
               {booths.map((booth, i) => (
