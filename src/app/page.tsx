@@ -1,18 +1,28 @@
-import { NoticeBanner, StageSection, StampShortcutButton, BoothSection, FoodSection, SplashScreen} from "@/components";
+import {
+  NoticeBanner,
+  StageSection,
+  StampShortcutButton,
+  BoothSection,
+  FoodSection,
+  SplashScreen,
+} from "@/components";
 import ImageSwiper from "@/components/ui/ImageSwiper";
 import Footer from "@/components/layout/Footer";
 import { homeApi } from "@/api/homeApi";
 
 export default async function Home() {
-  const [rawPromotions, rawStages, activeNotice] =
-    await Promise.all([
-      homeApi.getPromotion().catch(() => []),
-      homeApi.getLiveStage().catch(() => []),
-      homeApi.getActiveNotice().catch(() => null),
-    ]);
+  const [rawPromotions, rawStages, activeNotice] = await Promise.all([
+    homeApi.getPromotion().catch(() => []),
+    homeApi.getLiveStage().catch(() => []),
+    homeApi.getActiveNotice().catch(() => null),
+  ]);
 
   const promotions = Array.isArray(rawPromotions) ? rawPromotions : [];
-  const liveStages = Array.isArray(rawStages) ? rawStages : rawStages ? [rawStages] : [];
+  const liveStages = Array.isArray(rawStages)
+    ? rawStages
+    : rawStages
+      ? [rawStages]
+      : [];
 
   return (
     <>
@@ -28,9 +38,15 @@ export default async function Home() {
         </div>
 
         <section className="flex flex-col px-4 gap-8">
-          <div id="live-stage"><StageSection stages={liveStages} /></div>
-          <div id="top-booth"><BoothSection /></div>
-          <div id="hot-food"><FoodSection /></div>
+          <div id="live-stage">
+            <StageSection stages={liveStages} />
+          </div>
+          <div id="top-booth">
+            <BoothSection />
+          </div>
+          <div id="hot-food">
+            <FoodSection />
+          </div>
         </section>
       </main>
 
