@@ -56,15 +56,19 @@ export function useStageData(selectedDate: string, selected: string) {
   }, [timeTable]);
 
   const activeId = useMemo(() => {
-    const nowTime = currentTime.getHours() * 60 + currentTime.getMinutes();
+    const now = currentTime;
+    const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")}`;
+    if (selectedDate !== todayStr) return undefined;
+
+    const nowTime = now.getHours() * 60 + now.getMinutes();
     return timelineData.find((item) => {
       const start = new Date(item.start_at);
       const end = new Date(item.end_at);
       const startTime = start.getHours() * 60 + start.getMinutes();
       const endTime = end.getHours() * 60 + end.getMinutes();
       return nowTime >= startTime && nowTime < endTime;
-    })?.stage_id;
-  }, [timelineData, currentTime]);
+    })?.start_at;
+  }, [timelineData, currentTime, selectedDate]);
 
   useEffect(() => {
     const now = new Date();
