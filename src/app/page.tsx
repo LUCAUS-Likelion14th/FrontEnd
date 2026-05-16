@@ -4,12 +4,15 @@ import Footer from "@/components/layout/Footer";
 import { homeApi } from "@/api/homeApi";
 
 export default async function Home() {
-  const [promotions, liveStages, activeNotice] =
+  const [rawPromotions, rawStages, activeNotice] =
     await Promise.all([
       homeApi.getPromotion().catch(() => []),
       homeApi.getLiveStage().catch(() => []),
       homeApi.getActiveNotice().catch(() => null),
     ]);
+
+  const promotions = Array.isArray(rawPromotions) ? rawPromotions : [];
+  const liveStages = Array.isArray(rawStages) ? rawStages : rawStages ? [rawStages] : [];
 
   return (
     <>

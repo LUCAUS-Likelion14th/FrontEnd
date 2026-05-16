@@ -18,8 +18,9 @@ export default function NoticeSwiper({ promotions }: Props) {
   const [swiperRef, setSwiperRef] = useState<SwiperType | null>(null);
   const [current, setCurrent] = useState(0);
 
-  const multiple = promotions.length > 1;
-  const n = promotions.length;
+  const safePromotions = Array.isArray(promotions) ? promotions : [];
+  const multiple = safePromotions.length > 1;
+  const n = safePromotions.length;
 
   useEffect(() => {
     if (!multiple || !swiperRef) return;
@@ -36,7 +37,7 @@ export default function NoticeSwiper({ promotions }: Props) {
     window.open(instagram, "_blank", "noopener,noreferrer");
   };
 
-  if (promotions.length === 0) {
+  if (safePromotions.length === 0) {
     return (
       <div className="px-[8.33%]">
         <div className="aspect-[4/5] w-full rounded-[10px] bg-gray-100 flex items-center justify-center text-text-sub text-base">
@@ -47,8 +48,8 @@ export default function NoticeSwiper({ promotions }: Props) {
   }
 
   const slides = multiple
-    ? [...promotions, ...promotions, ...promotions]
-    : promotions;
+    ? [...safePromotions, ...safePromotions, ...safePromotions]
+    : safePromotions;
 
   const initialSlide = multiple ? n : 0;
 
@@ -98,7 +99,7 @@ export default function NoticeSwiper({ promotions }: Props) {
       </Swiper>
 
       <div className="flex justify-center items-center gap-1.5 mt-2">
-        {promotions.map((_, i) => (
+        {safePromotions.map((_, i) => (
           <button
             key={i}
             type="button"
