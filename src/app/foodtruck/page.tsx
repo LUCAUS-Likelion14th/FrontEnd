@@ -3,9 +3,9 @@
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
-import { useFoodTruckList } from "@/hooks/queries/foodtruck";
+import { useFoodTruckList } from "@/hooks/foodtruck";
 import { Card, Pagination } from "@/components";
-import FoodTruckMap from "@/components/pages/foodtruck/FoodTruckMap";
+import FoodTruckMap from "@/components/foodtruck/FoodTruckMap";
 import { FiSearch } from "react-icons/fi";
 
 const PAGE_SIZE = 8;

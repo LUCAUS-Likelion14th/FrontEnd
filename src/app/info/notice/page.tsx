@@ -2,12 +2,20 @@
 
 import { Pagination, DetailHeader, NoticeItem } from "@/components";
 import { FiBell } from "react-icons/fi";
-import { formatDate } from "@/lib/utils/date";
-import { useState } from "react";
-import { useNotices } from "@/hooks/queries/notice";
+import { formatDate } from "@/utils/date";
+import { useRouter, useSearchParams } from "next/navigation";
+import { useNotices } from "@/hooks/notice";
 
 export default function NoticePage() {
-  const [currentPage, setCurrentPage] = useState(1);
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const currentPage = Number(searchParams.get("page") ?? "1");
+
+  function handlePageChange(page: number) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("page", String(page));
+    router.replace(`?${params.toString()}`);
+  }
 
   const { data, isLoading } = useNotices({
     page: currentPage - 1,
@@ -68,7 +76,7 @@ export default function NoticePage() {
           <Pagination
             page={currentPage}
             totalPages={totalPages}
-            onChange={setCurrentPage}
+            onChange={handlePageChange}
           />
         )}
       </div>

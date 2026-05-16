@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
-import { adminLostApi } from "@/lib/api/adminLostApi";
+import { adminLostApi } from "@/api/adminLostApi";
 import { LostItem } from "@/types/lost";
 
 const PAGE_SIZE = 10;

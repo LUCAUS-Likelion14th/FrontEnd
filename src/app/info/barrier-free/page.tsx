@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import barrierFreeMap from "@/assets/webp/map/barrier-free-map.webp";
-import DetailHeader from "@/components/pages/detail/DetailHeader";
+import DetailHeader from "@/components/detail/DetailHeader";
 import { FiAlertCircle, FiChevronDown } from "react-icons/fi";
 import {
   MdAccessTime,

@@ -1,1 +1,1 @@
-export { default } from "@/components/common/LoadingScreen";
+export { default } from "@/components/ui/LoadingScreen";

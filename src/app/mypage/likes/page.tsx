@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { mypageApi } from "@/lib";
+import { mypageApi } from "@/api";
 import { DetailHeader, Card } from "@/components";
 
 export default function LikesPage() {

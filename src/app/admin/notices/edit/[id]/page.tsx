@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { adminNoticeApi } from "@/lib/api/adminNoticeApi";
+import { adminNoticeApi } from "@/api/adminNoticeApi";
 
 export default function NoticeEditDetailPage() {
   const router = useRouter();
