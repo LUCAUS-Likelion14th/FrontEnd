@@ -39,15 +39,20 @@ export default function LikeButton({
   const [showLoginSheet, setShowLoginSheet] = useState(false);
   const queryClient = useQueryClient();
 
-  useEffect(() => { setIsLiked(initialIsLiked); }, [initialIsLiked]);
-  useEffect(() => { setLikeCount(initialLikeCount); }, [initialLikeCount]);
+  useEffect(() => {
+    setIsLiked(initialIsLiked);
+  }, [initialIsLiked]);
+  useEffect(() => {
+    setLikeCount(initialLikeCount);
+  }, [initialLikeCount]);
 
   const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
 
-    const endpoint = type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
+    const endpoint =
+      type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
     const nextLiked = !isLiked;
 
     setIsLiked(nextLiked);
@@ -57,8 +62,12 @@ export default function LikeButton({
     try {
       await mutate(endpoint, nextLiked ? "POST" : "DELETE");
       queryClient.invalidateQueries({ queryKey: [type] });
-      queryClient.invalidateQueries({ queryKey: [type === "booth" ? "topBooth" : "hotFood"] });
-      queryClient.invalidateQueries({ queryKey: ["mypage", type === "booth" ? "booth" : "foodtruck"] });
+      queryClient.invalidateQueries({
+        queryKey: [type === "booth" ? "topBooth" : "hotFood"],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["mypage", type === "booth" ? "booth" : "foodtruck"],
+      });
     } catch (error) {
       console.error("좋아요 처리 실패:", error);
       setIsLiked(!nextLiked);
@@ -69,76 +78,87 @@ export default function LikeButton({
 
   const containerClass =
     layout === "vertical"
-      ? "flex flex-col items-center gap-1"
+      ? "flex flex-col items-center"
       : "flex items-center gap-[4px]";
 
   return (
     <>
-    <LoginBottomSheet isOpen={showLoginSheet} onClose={() => setShowLoginSheet(false)} />
-    <div
-      onClick={handleLikeClick}
-      className={`${containerClass} shrink-0 cursor-pointer relative`}
-    >
-      {!hideCount && layout === "horizontal" && (
-        <span
-          className={`${size === "sm" ? "text-[16px]" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
+      <LoginBottomSheet
+        isOpen={showLoginSheet}
+        onClose={() => setShowLoginSheet(false)}
+      />
+      <div
+        onClick={handleLikeClick}
+        className={`${containerClass} shrink-0 cursor-pointer relative`}
+      >
+        {!hideCount && layout === "horizontal" && (
+          <span
+            className={`${size === "sm" ? "text-[16px]" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
+          >
+            {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
+          </span>
+        )}
+
+        <div
+          className={`relative flex items-center justify-center ${size === "sm" ? "w-6 h-6" : "w-[38px] h-[38px]"}`}
         >
-          {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
-        </span>
-      )}
+          <AnimatePresence mode="wait">
+            {isLiked ? (
+              <motion.div
+                key="liked"
+                initial={{ scale: 0 }}
+                animate={{ scale: [1, 1.2, 1] }}
+                exit={{ scale: 0 }}
+                transition={{ duration: 0.1, ease: "easeOut" }}
+              >
+                <FaHeart
+                  size={size === "sm" ? 24 : 30}
+                  className="text-[#E93885]"
+                />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="unliked"
+                initial={{ scale: 0 }}
+                animate={{ scale: 1 }}
+                exit={{ scale: 0 }}
+                transition={{ duration: 0.2 }}
+              >
+                <FiHeart
+                  size={size === "sm" ? 24 : 30}
+                  className={outlineColor}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
 
-      <div className={`relative flex items-center justify-center ${size === "sm" ? "w-6 h-6" : "w-[38px] h-[38px]"}`}>
-        <AnimatePresence mode="wait">
-          {isLiked ? (
-            <motion.div
-              key="liked"
-              initial={{ scale: 0 }}
-              animate={{ scale: [1, 1.2, 1] }}
-              exit={{ scale: 0 }}
-              transition={{ duration: 0.1, ease: "easeOut" }}
-            >
-              <FaHeart size={size === "sm" ? 24 : 30} className="text-[#E93885]" />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="unliked"
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-              exit={{ scale: 0 }}
-              transition={{ duration: 0.2 }}
-            >
-              <FiHeart size={size === "sm" ? 24 : 30} className={outlineColor} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+          <AnimatePresence>
+            {animateKey > 0 && isLiked && (
+              <motion.div
+                key={animateKey}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                className="absolute inset-0 pointer-events-none"
+              >
+                <div className="heart-burst">
+                  {[...Array(8)].map((_, i) => (
+                    <span key={i} className={`burst-line line-${i}`} />
+                  ))}
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
 
-        <AnimatePresence>
-          {animateKey > 0 && isLiked && (
-            <motion.div
-              key={animateKey}
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              className="absolute inset-0 pointer-events-none"
-            >
-              <div className="heart-burst">
-                {[...Array(8)].map((_, i) => (
-                  <span key={i} className={`burst-line line-${i}`} />
-                ))}
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {!hideCount && layout !== "horizontal" && (
+          <span
+            className={`${size === "sm" ? "text-[14px]" : layout === "vertical" ? "text-sm" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
+          >
+            {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
+          </span>
+        )}
       </div>
-
-      {!hideCount && layout !== "horizontal" && (
-        <span
-          className={`${size === "sm" ? "text-[14px]" : layout === "vertical" ? "text-sm" : "text-base"} ${countColor ?? "text-text-sub"} z-10 relative`}
-        >
-          {countSuffix ? `${likeCount}${countSuffix}` : likeCount}
-        </span>
-      )}
-    </div>
     </>
   );
 }
