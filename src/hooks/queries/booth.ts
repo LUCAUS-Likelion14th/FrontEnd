@@ -12,7 +12,7 @@ export function useBoothList(
     queryKey: ["booth", "list", params],
     queryFn: () => BoothApi.getList(params),
     enabled: options?.enabled ?? true,
-    staleTime: 30_000,
+    staleTime: 5 * 60_000,
   });
 }
 
@@ -21,7 +21,7 @@ export function useBoothStampList(options?: { enabled?: boolean }) {
     queryKey: ["booth", "stamp"],
     queryFn: BoothApi.getStampList,
     enabled: options?.enabled ?? true,
-    staleTime: 30_000,
+    staleTime: 5 * 60_000,
   });
 }
 
@@ -30,6 +30,6 @@ export function useBoothDetail(id: string) {
     queryKey: ["booth", "detail", id],
     queryFn: () => BoothApi.getDetail(id),
     enabled: !!id,
-    staleTime: 30_000,
+    staleTime: 5 * 60_000,
   });
 }
