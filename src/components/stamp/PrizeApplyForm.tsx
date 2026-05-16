@@ -70,65 +70,56 @@ export default function PrizeApplyForm({
           </div>
         </div>
 
-        <section className="flex-1 flex flex-col items-center justify-center">
-          <div className="w-full mb-[80px] flex flex-col items-center gap-4">
-            <div className="w-[245px] h-[175px] rounded-[14px] overflow-hidden">
-              <Image
-                src={lucausText}
-                alt="LUCAUS 로고"
-                width={245}
-                height={175}
-                className="w-full h-full object-contain"
-              />
+        <section className="flex-1 flex flex-col items-center gap-6">
+
+          {/* 경품 안내 */}
+          <div className="w-full flex flex-col items-center gap-3 py-4">
+
+            <Image
+              src={lucausText}
+              alt="LUCAUS 로고"
+              width={160}
+              height={52}
+              className="object-contain"
+            />
+            <div className="flex items-center gap-3 w-full">
+              <div className="flex-1 h-px bg-text-sub2" />
+              <span className="text-text-sub2 text-xs">✦</span>
+              <div className="flex-1 h-px bg-text-sub2" />
             </div>
             <div className="flex flex-col items-center gap-1 text-center">
-              <p className="text-[15px] font-semibold text-title">DAY1, DAY2 입장티켓 추첨</p>
-              <p className="text-[13px] text-text-sub">당첨된 분께는 5월 21일 오전에 문자 발송 예정입니다</p>
+              <p className="text-[18px] font-bold text-title">DAY1, DAY2 입장티켓 추첨</p>
+              <p className="text-[13px] text-text-sub leading-5">당첨된 분께는 5월 21일 오전에 문자 발송 예정입니다</p>
             </div>
           </div>
 
-          <div className="w-full relative mb-[77px] px-2">
+          {/* 스탬프 진행도 */}
+          <div className="w-full relative px-2 mt-4 mb-10">
             <div className="w-full h-5 bg-text-sub2 rounded-[10px] overflow-hidden">
               <div
                 className="bg-primary h-full transition-all duration-700"
                 style={{ width: `${progressPercentage}%` }}
               />
             </div>
-
             <div
               className="absolute -top-2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2"
-              style={{
-                left: `clamp(35px, ${progressPercentage}%, calc(100% - 20px))`,
-              }}
+              style={{ left: `clamp(35px, ${progressPercentage}%, calc(100% - 20px))` }}
             >
               <div className="relative z-10 mb-2">
                 <div className="bg-primary text-white px-3 py-1 rounded-lg text-[16px] font-semibold flex items-center justify-center shadow-md whitespace-nowrap">
                   {stampCount === stampAll ? "완성!" : `${stampCount}개`}
                 </div>
-
-                <div
-                  className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 
-                  border-l-[6px] border-l-transparent 
-                  border-r-[6px] border-r-transparent 
-                  border-t-[8px] border-t-[#06387D]"
-                />
+                <div className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 border-l-[6px] border-l-transparent border-r-[6px] border-r-transparent border-t-[8px] border-t-[#06387D]" />
               </div>
-
-              <Image
-                src="/star-on.png"
-                alt="별"
-                width={70}
-                height={70}
-                className="-mt-2 relative z-0"
-              />
+              <Image src="/star-on.png" alt="별" width={70} height={70} className="-mt-2 relative z-0" />
             </div>
           </div>
 
-          <div className="w-full flex flex-col items-center justify-center gap-2 mb-10 px-2">
-            <span className="text-[16px] font-medium">
+          {/* 코드 입력 */}
+          <div className="w-full flex flex-col gap-3">
+            <p className="text-[14px] font-semibold text-title text-center">
               STAFF에게 해당 화면을 보여 주세요!
-            </span>
-
+            </p>
             <input
               type="text"
               value={password}
@@ -141,9 +132,9 @@ export default function PrizeApplyForm({
           <button
             onClick={handlePrizeApply}
             disabled={isLoading}
-            className="bg-primary px-[33px] py-[15px] text-[20px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98] disabled:opacity-50"
+            className="w-full bg-primary py-[15px] text-[18px] font-semibold text-white rounded-[16px] transition-all active:scale-[0.98] disabled:opacity-50"
           >
-            경품 응모하기
+            푸앙패스 응모하기
           </button>
         </section>
       </div>
