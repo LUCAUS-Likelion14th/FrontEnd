@@ -30,7 +30,7 @@ export default function BoothCategoryFilter({
               className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-all active:scale-95 ${
                 isActive
                   ? "bg-primary text-white active:opacity-80"
-                  : "bg-[#EEF3FB] text-[#8D97A7]"
+                  : "bg-primary-light text-text-sub"
               }`}
             >
               {cat}
@@ -41,7 +41,7 @@ export default function BoothCategoryFilter({
                 className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-all ${
                   isStampActive
                     ? "bg-primary text-white cursor-default active:opacity-80"
-                    : "bg-[#EEF3FB] text-[#8D97A7] active:scale-95"
+                    : "bg-primary-light text-text-sub active:scale-95"
                 }`}
               >
                 도장판

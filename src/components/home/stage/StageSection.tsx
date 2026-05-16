@@ -23,7 +23,7 @@ export default function StageSection({ stages }: Props) {
             {[0.4, 0.75, 1, 0.6, 0.85, 0.5, 0.9].map((h, i) => (
               <span
                 key={i}
-                className="w-[3px] rounded-full bg-[#06387d]/35 animate-bounce"
+                className="w-[3px] rounded-full bg-primary/35 animate-bounce"
                 style={{
                   height: `${h * 100}%`,
                   animationDelay: `${i * 0.1}s`,
@@ -32,7 +32,7 @@ export default function StageSection({ stages }: Props) {
               />
             ))}
           </div>
-          <span className="text-[13px] font-medium text-[#8D97A7]">현재 진행 중인 공연이 없어요</span>
+          <span className="text-[13px] font-medium text-text-sub">현재 진행 중인 공연이 없어요</span>
         </div>
       ) : (
         stages.map((stage, i) => (

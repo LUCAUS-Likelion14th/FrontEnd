@@ -5,7 +5,7 @@ import Image from 'next/image';
 export default function InfoPage() {
   return (
     <main className="px-4 pt-5 pb-25">
-      <div className="flex items-center h-12 px-[15px] mb-5 bg-[#EEF3FB] border border-primary/30 rounded-[10px] gap-2">
+      <div className="flex items-center h-12 px-[15px] mb-5 bg-primary-light border border-primary/30 rounded-[10px] gap-2">
         <Image
           src={"/icons/highlight.png"}
           alt={"하이라이트 아이콘"}
