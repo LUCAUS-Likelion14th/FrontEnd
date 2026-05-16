@@ -1,5 +1,5 @@
 export * from "./boothApi";
-export * from "./foodTruckApi";
+export * from "./foodtruckApi";
 export * from "./homeApi";
 export * from "./lostApi";
 export * from "./mypageApi";
