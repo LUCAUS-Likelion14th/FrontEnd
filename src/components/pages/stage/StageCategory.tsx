@@ -24,7 +24,7 @@ export default function StageCategory({
         <div className="flex pb-2">
           <button
             onClick={() => onSelectDate("2026-05-21")}
-            className={`w-1/2 text-center ${
+            className={`w-1/2 text-center transition-opacity active:opacity-50 ${
               selectedDate === "2026-05-21"
                 ? "text-black font-semibold"
                 : "text-text-sub"
@@ -35,7 +35,7 @@ export default function StageCategory({
 
           <button
             onClick={() => onSelectDate("2026-05-22")}
-            className={`w-1/2 text-center ${
+            className={`w-1/2 text-center transition-opacity active:opacity-50 ${
               selectedDate === "2026-05-22"
                 ? "text-black font-semibold"
                 : "text-text-sub"
@@ -61,9 +61,9 @@ export default function StageCategory({
           <button
             key={item}
             onClick={() => onSelect(item)}
-            className={`flex-1 py-2 rounded-md text-sm font-medium leading-4.5 ${
+            className={`flex-1 py-2 rounded-md text-sm font-medium leading-4.5 transition-all active:scale-95 ${
               selected === item
-                ? "bg-primary text-white"
+                ? "bg-primary text-white active:opacity-80"
                 : "bg-primary-light text-text-sub"
             }`}
           >

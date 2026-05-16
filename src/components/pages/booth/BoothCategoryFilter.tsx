@@ -27,9 +27,9 @@ export default function BoothCategoryFilter({
           <Fragment key={cat}>
             <button
               onClick={() => onSelectCategory(cat)}
-              className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-colors ${
+              className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-all active:scale-95 ${
                 isActive
-                  ? "bg-primary text-white"
+                  ? "bg-primary text-white active:opacity-80"
                   : "bg-[#EEF3FB] text-[#8D97A7]"
               }`}
             >
@@ -38,10 +38,10 @@ export default function BoothCategoryFilter({
             {idx === 0 && showStamp && (
               <button
                 onClick={isStampActive ? undefined : onStampClick}
-                className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-colors ${
+                className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-all ${
                   isStampActive
-                    ? "bg-primary text-white cursor-default"
-                    : "bg-[#EEF3FB] text-[#8D97A7]"
+                    ? "bg-primary text-white cursor-default active:opacity-80"
+                    : "bg-[#EEF3FB] text-[#8D97A7] active:scale-95"
                 }`}
               >
                 도장판

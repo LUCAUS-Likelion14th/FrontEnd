@@ -23,9 +23,9 @@ export default function BoothLocationFilter({
           <button
             key={loc}
             onClick={() => onSelectLocation(isActive ? null : loc)}
-            className={`flex items-center justify-center gap-1.5 h-9 rounded-[6px] text-sm font-medium transition-colors ${
+            className={`flex items-center justify-center gap-1.5 h-9 rounded-[6px] text-sm font-medium transition-all active:scale-95 ${
               isActive
-                ? "bg-primary text-white"
+                ? "bg-primary text-white active:opacity-80"
                 : "bg-[#EEF3FB] text-[#8D97A7]"
             }`}
           >
