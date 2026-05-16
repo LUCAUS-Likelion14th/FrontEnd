@@ -55,9 +55,11 @@ export default function StampBoard() {
   const [data, setData] = useState<StampData | null>(null);
   const [selectedBooth, setSelectedBooth] = useState<Booth | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [isError, setIsError] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
+    setIsError(false);
     const loadData = async () => {
       try {
         const res = await fetcher<StampData>("/stamp");
@@ -67,11 +69,25 @@ export default function StampBoard() {
           router.replace("/login");
           return;
         }
-        console.error("도장판 데이터 로딩 실패:", error);
+        setIsError(true);
       }
     };
     loadData();
   }, [refreshKey]);
+
+  if (isError) {
+    return (
+      <div className="relative min-h-[calc(100vh-56px)] flex flex-col items-center justify-center gap-4">
+        <p className="text-text-sub text-base">데이터를 불러오지 못했습니다.</p>
+        <button
+          onClick={() => setRefreshKey((k) => k + 1)}
+          className="text-primary underline underline-offset-2 text-sm"
+        >
+          다시 시도
+        </button>
+      </div>
+    );
+  }
 
   if (!data) return <StampBoardSkeleton />;
 
