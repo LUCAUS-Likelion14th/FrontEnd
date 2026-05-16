@@ -2,12 +2,8 @@
 
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
-<<<<<<< HEAD:src/hooks/queries/useStageData.ts
-import { stageApi } from "@/lib/api/stageApi";
-import { TimeTable } from "@/types/stage";
-=======
 import { stageApi } from "@/api/stageApi";
->>>>>>> origin/main:src/hooks/stage.ts
+import { TimeTable } from "@/types/stage";
 
 const CATEGORY_MAP: Record<string, string> = {
   "학생 공연": "STUDENT_PERFORMANCE",
