@@ -19,6 +19,7 @@ export interface Song {
 export interface StageDetail {
   stage_id: number;
   time: string;
+  date?: string;
   stage_info: string;
   performer: string;
   performer_image: string;

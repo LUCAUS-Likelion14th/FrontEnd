@@ -1,10 +1,9 @@
 "use client";
 
 import { StageEventSection, StageCategory, ArtistSection, StageTimeline } from '@/components';
-import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
-import { useStageData } from "@/hooks/queries/useStageData";
+import { useStageData } from "@/hooks/stage";
 import Link from 'next/link';
 
 type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
@@ -19,6 +18,13 @@ const TYPE_MAP: Record<string, CategoryType> = {
   festival: "청룡가요제",
   artist: "아티스트 공연",
   special: "무대기획전",
+};
+
+const REVERSE_TYPE_MAP: Record<CategoryType, string> = {
+  "학생 공연": "student",
+  청룡가요제: "festival",
+  "아티스트 공연": "artist",
+  무대기획전: "special",
 };
 
 const CATEGORY_INFO: Record<
@@ -44,24 +50,31 @@ const CATEGORY_INFO: Record<
 };
 
 export default function StagePage() {
+  const router = useRouter();
   const searchParams = useSearchParams();
-  const [selectedDate, setSelectedDate] = useState("2026-05-21");
-  const [selected, setSelected] = useState<CategoryType>("청룡가요제");
 
+  const selectedDate = searchParams.get("date") ?? "2026-05-21";
   const availableCategories = CATEGORIES_BY_DATE[selectedDate] ?? [];
 
-  useEffect(() => {
-    const type = searchParams.get("type");
-    if (type && TYPE_MAP[type]) {
-      setSelected(TYPE_MAP[type]);
-    }
-  }, [searchParams]);
+  const typeParam = searchParams.get("type");
+  const selectedFromParam = typeParam ? TYPE_MAP[typeParam] : null;
+  const selected: CategoryType =
+    selectedFromParam && availableCategories.includes(selectedFromParam)
+      ? selectedFromParam
+      : availableCategories[0];
 
-  useEffect(() => {
-    if (!availableCategories.includes(selected)) {
-      setSelected(availableCategories[0]);
-    }
-  }, [selectedDate]);
+  function handleSelectDate(date: string) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("date", date);
+    params.delete("type");
+    router.replace(`?${params.toString()}`);
+  }
+
+  function handleSelectCategory(category: CategoryType) {
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("type", REVERSE_TYPE_MAP[category]);
+    router.replace(`?${params.toString()}`);
+  }
 
   const { stage, timelineData, activeId } = useStageData(selectedDate, selected);
 
@@ -77,9 +90,9 @@ export default function StagePage() {
         <StageCategory
           categories={availableCategories}
           selected={selected}
-          onSelect={setSelected}
+          onSelect={handleSelectCategory}
           selectedDate={selectedDate}
-          onSelectDate={setSelectedDate}
+          onSelectDate={handleSelectDate}
         />
       </section>
 

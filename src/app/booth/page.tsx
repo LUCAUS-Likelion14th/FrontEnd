@@ -3,7 +3,7 @@
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
-import BoothMap from "@/components/pages/booth/BoothMap";
+import BoothMap from "@/components/booth/BoothMap";
 import {
   BoothLocationFilter,
   BoothCategoryFilter,
@@ -15,7 +15,7 @@ import {
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
-import { useBoothList, useBoothStampList } from "@/hooks/queries/booth";
+import { useBoothList, useBoothStampList } from "@/hooks/booth";
 
 const PAGE_SIZE = 8;
 
@@ -40,9 +40,10 @@ function BoothPageContent() {
   const [debouncedSearch, setDebouncedSearch] = useState(
     () => searchParams.get("q") ?? "",
   );
-  const [currentPage, setCurrentPage] = useState(() =>
-    Number(searchParams.get("page") ?? 1),
-  );
+  const [currentPage, setCurrentPage] = useState(() => {
+    const raw = Number(searchParams.get("page") ?? 1);
+    return Number.isInteger(raw) && raw >= 1 ? raw : 1;
+  });
 
   useEffect(() => {
     const params = new URLSearchParams();
@@ -84,7 +85,7 @@ function BoothPageContent() {
   });
 
   const normalBooths = normalBoothsData?.content ?? [];
-  const stampBooths = stampBoothsData?.data ?? [];
+  const stampBooths = stampBoothsData ?? [];
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;

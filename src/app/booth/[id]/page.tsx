@@ -9,8 +9,8 @@ import {
   DetailInfo,
   LoadingScreen,
 } from "@/components";
-import { useBoothDetail } from "@/hooks/queries/booth";
-import BoothMapWithMarker from "@/components/pages/detail/BoothMapWithMarker";
+import { useBoothDetail } from "@/hooks/booth";
+import BoothMapWithMarker from "@/components/detail/BoothMapWithMarker";
 import Image from "next/image";
 import { FiImage } from "react-icons/fi";
 

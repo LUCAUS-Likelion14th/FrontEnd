@@ -1,7 +1,7 @@
 import { NoticeBanner, StageSection, StampShortcutButton, BoothSection, FoodSection, SplashScreen} from "@/components";
-import ImageSwiper from "@/components/common/ImageSwiper";
-import Footer from "@/components/layouts/Footer";
-import { homeApi } from "@/lib/api/homeApi";
+import ImageSwiper from "@/components/ui/ImageSwiper";
+import Footer from "@/components/layout/Footer";
+import { homeApi } from "@/api/homeApi";
 
 export default async function Home() {
   const [promotions, liveStages, activeNotice] =

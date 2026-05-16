@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { MypageClient } from "@/components";
-import { useMyPage } from "@/hooks/queries/mypage";
+import { useMyPage } from "@/hooks/mypage";
 
 function MypageSkeleton() {
   return (

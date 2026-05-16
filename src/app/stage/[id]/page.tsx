@@ -1,10 +1,12 @@
 import Image from "next/image";
 import { AiOutlineYoutube, AiOutlineInstagram } from "react-icons/ai";
 import { FiClock } from "react-icons/fi";
-import { stageApi } from "@/lib/api/stageApi";
+import { stageApi } from "@/api/stageApi";
 import { DetailHeader } from '@/components'
 
 export const dynamic = "force-dynamic";
+
+import { formatDateLabel } from "@/utils/date";
 
 export default async function StageDetailPage({
   params,
@@ -94,7 +96,9 @@ export default async function StageDetailPage({
             <FiClock size={14} />
             <span className="text-[13px] font-semibold">공연 일정</span>
           </div>
-          <span className="text-[14px] font-semibold text-[#273850]">{stage.time}</span>
+          <span className="text-[14px] font-semibold text-[#273850]">
+            {stage.date ? `${formatDateLabel(stage.date)} ` : ""}{stage.time}
+          </span>
         </div>
 
         {/* 소개글 */}
@@ -109,15 +113,16 @@ export default async function StageDetailPage({
 
         {/* 공연 곡 */}
         {stage.songs && stage.songs.length > 0 && (
-          <div className="flex items-start justify-between gap-4 px-1">
-            <h3 className="text-[13px] font-semibold text-text-sub shrink-0">공연 곡</h3>
-            <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-col gap-2 px-1">
+            <span className="text-[13px] font-semibold text-text-sub">공연 곡</span>
+            <div className="flex flex-col">
               {stage.songs
                 .sort((a, b) => a.play_order - b.play_order)
-                .map((song) => (
-                  <span key={song.song_id} className="text-[14px] text-[#3B4A5A] text-right break-keep">
-                    {song.title}
-                  </span>
+                .map((song, index) => (
+                  <div key={song.song_id} className="flex items-center gap-3 py-2.5 border-b border-[#E5EAF0] last:border-b-0">
+                    <span className="text-[13px] font-semibold text-primary w-5 text-center shrink-0">{index + 1}</span>
+                    <span className="text-[14px] text-[#3B4A5A] break-keep">{song.title}</span>
+                  </div>
                 ))}
             </div>
           </div>

@@ -1,8 +1,8 @@
 "use client";
 
-import PrizeApplyForm from "@/components/pages/stamp/PrizeApplyForm";
-import { BackButton, LoadingScreen } from "@/components/common";
-import { fetcher } from "@/lib/api/fetcher";
+import PrizeApplyForm from "@/components/stamp/PrizeApplyForm";
+import { BackButton, LoadingScreen } from "@/components/ui";
+import { fetcher } from "@/api/fetcher";
 import { useEffect, useState } from "react";
 
 interface StampData {

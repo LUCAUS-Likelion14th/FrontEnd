@@ -8,8 +8,8 @@ import {
   MenuDetail,
   LoadingScreen,
 } from "@/components";
-import { useFoodTruckDetail } from "@/hooks/queries/foodtruck";
-import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
+import { useFoodTruckDetail } from "@/hooks/foodtruck";
+import DetailHeroImage from "@/components/detail/DetailHeroImage";
 
 type Props = {
   params: Promise<{ id: string }>;
