@@ -105,7 +105,7 @@ export default function StagePage() {
 
       <section className="mb-13">
         <div className="flex flex-col gap-0.5 mb-4">
-          <h2 className="text-[24px] font-semibold">{currentCategory.title}</h2>
+          <h2 className="text-[22px] font-semibold">{currentCategory.title}</h2>
           <p className="text-base font-normal text-text-sub">
             {currentCategory.description}
           </p>
@@ -124,7 +124,7 @@ export default function StagePage() {
 
       <section className="flex flex-col gap-4 mb-3">
         <div className="flex justify-between items-center">
-          <h2 className="text-[24px] font-semibold">본무대 타임라인</h2>
+          <h2 className="text-[22px] font-semibold">본무대 타임라인</h2>
           <a
             href="https://festival.cau.ac.kr"
             target="_blank"

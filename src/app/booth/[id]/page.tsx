@@ -90,7 +90,7 @@ function BoothDetailContent({ params }: Props) {
         )}
       </div>
 
-      <div className="flex flex-col px-4 gap-6">
+      <div className="flex flex-col px-4 gap-5">
         <BoothTitle
           name={booth.booth_name}
           categories={booth.booth_category}
