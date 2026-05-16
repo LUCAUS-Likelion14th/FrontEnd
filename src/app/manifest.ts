@@ -1,0 +1,31 @@
+import type { MetadataRoute } from "next";
+
+export default function manifest(): MetadataRoute.Manifest {
+  return {
+    name: "LUCAUS",
+    short_name: "LUCAUS",
+    description: "LUCAUS 축제 앱",
+    start_url: "/",
+    display: "standalone",
+    background_color: "#000000",
+    theme_color: "#000000",
+    orientation: "portrait",
+    icons: [
+      {
+        src: "/icon.png",
+        sizes: "192x192",
+        type: "image/png",
+      },
+      {
+        src: "/icon.png",
+        sizes: "512x512",
+        type: "image/png",
+      },
+      {
+        src: "/icon.png",
+        sizes: "1024x1024",
+        type: "image/png",
+      },
+    ],
+  };
+}
