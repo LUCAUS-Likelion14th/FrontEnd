@@ -33,11 +33,9 @@ export default function TimelineCard({
         />
       </div>
 
-      <div
-        className={`flex flex-col w-full ${isLongText ? "gap-2" : "gap-2.5"}`}
-      >
+      <div className="flex flex-col w-full gap-1.5">
         <p
-          className={`text-[11px] font-normal leading-3.5 ${
+          className={`text-[12px] font-normal leading-3.5 ${
             isActive ? "text-primary" : "text-text-sub"
           }`}
         >
@@ -47,7 +45,7 @@ export default function TimelineCard({
           className={`font-semibold break-keep ${
             isActive ? "text-primary" : "text-black"
           }
-            ${isLongText ? "text-[13px] leading-tight" : "text-[15px] leading-5"}`}
+            ${isLongText ? "text-[14px] leading-tight" : "text-[15px] leading-5"}`}
         >
           {artist}
         </p>

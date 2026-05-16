@@ -12,7 +12,13 @@ type StageCardProps = {
   time: string;
 };
 
-export default function StageCard({ imageUrl, href, location, name, time }: StageCardProps) {
+export default function StageCard({
+  imageUrl,
+  href,
+  location,
+  name,
+  time,
+}: StageCardProps) {
   return (
     <div className="ml-7.5">
       <motion.article
@@ -29,10 +35,12 @@ export default function StageCard({ imageUrl, href, location, name, time }: Stag
             className="rounded-[8px] object-cover shrink-0"
           />
           <div className="flex flex-col gap-1 flex-1 min-w-0">
-            <span className="text-base text-black truncate">{location}</span>
+            <span className="text-[14px] text-black truncate">{location}</span>
             <div className="flex items-end justify-between gap-2">
-              <strong className="text-xl font-semibold truncate">{name}</strong>
-              <time className="text-base text-text-sub shrink-0">{time}</time>
+              <strong className="text-[18px] font-semibold truncate">
+                {name}
+              </strong>
+              <time className="text-[14px] text-text-sub shrink-0">{time}</time>
             </div>
           </div>
         </Link>

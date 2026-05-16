@@ -27,14 +27,14 @@ export default function SectionHeader({
 
       <div className="flex flex-col gap-[2px] w-full">
         <Link href={href} className="flex items-center justify-between">
-          <h2 className="font-bold text-2xl">{title}</h2>
+          <h2 className="font-bold text-xl">{title}</h2>
           <FiChevronRight
             size={20}
             className="text-[#727272]"
             aria-hidden="true"
           />
         </Link>
-        <p className="text-base text-text-sub">{description}</p>
+        <p className="text-[14px] text-text-sub">{description}</p>
       </div>
     </header>
   );

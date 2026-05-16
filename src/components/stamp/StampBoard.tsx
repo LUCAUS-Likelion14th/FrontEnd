@@ -188,21 +188,17 @@ export default function StampBoard() {
       </div>
 
       <section className="grid grid-cols-2 gap-y-4 px-10 pb-32 relative z-10">
-        <div className="col-span-2 justify-self-center">
-          {renderBooth(data.booths[0])}
-        </div>
+        <div className="justify-self-startr">{renderBooth(data.booths[0])}</div>
 
-        <div className="justify-self-start">{renderBooth(data.booths[1])}</div>
-
-        <div className="justify-self-end">{renderBooth(data.booths[2])}</div>
+        <div className="justify-self-end">{renderBooth(data.booths[1])}</div>
 
         <div className="col-span-2 justify-self-center">
-          {renderBooth(data.booths[3])}
+          {renderBooth(data.booths[2])}
         </div>
 
-        <div className="justify-self-start">{renderBooth(data.booths[4])}</div>
+        <div className="justify-self-start">{renderBooth(data.booths[3])}</div>
 
-        <div className="justify-self-end">{renderBooth(data.booths[5])}</div>
+        <div className="justify-self-end">{renderBooth(data.booths[4])}</div>
       </section>
 
       {selectedBooth && (
