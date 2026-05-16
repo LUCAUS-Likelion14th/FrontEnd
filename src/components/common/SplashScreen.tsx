@@ -50,14 +50,14 @@ export default function SplashScreen() {
 
           <motion.div
             className="relative z-10 w-[259px] h-[118px]"
-            initial={{ opacity: 0, filter: "blur(16px) drop-shadow(0 0 20px rgba(255,255,255,0.45))" }}
-            animate={{ opacity: 1, filter: "blur(0px) drop-shadow(0 0 20px rgba(255,255,255,0.45))" }}
-            transition={{ duration: 1, ease: "easeOut", delay: 0.2 }}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.3 }}
           >
             <motion.div
               className="w-full h-full"
               animate={{ scale: [1, 1.04, 1] }}
-              transition={{ duration: 1.8, ease: "easeInOut", repeat: Infinity, delay: 1 }}
+              transition={{ duration: 2, ease: "easeInOut", repeat: Infinity, delay: 1.2 }}
             >
               <Image
                 src="/lucaus-logo.png"
