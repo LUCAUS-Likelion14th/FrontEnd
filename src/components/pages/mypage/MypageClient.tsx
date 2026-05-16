@@ -147,7 +147,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             />
             <div className="relative z-10 flex flex-col items-end gap-3">
               <span className="text-base font-medium text-white text-right">
-                {data.name}님, 환영합니다!
+                환영합니다!
               </span>
               <button
                 onClick={handleLogout}
