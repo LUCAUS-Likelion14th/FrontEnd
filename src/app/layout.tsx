@@ -1,4 +1,8 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+};
 import localFont from "next/font/local";
 import Script from "next/script";
 import BottomNav from "@/components/layouts/BottomNav";
@@ -48,7 +52,7 @@ export default function RootLayout({
         )}
         <Providers>
           <Header />
-          <main className="min-h-screen mt-14">{children}</main>
+          <main className="min-h-screen" style={{ marginTop: "calc(3.5rem + env(safe-area-inset-top))" }}>{children}</main>
           <BottomNav />
         </Providers>
       </body>
