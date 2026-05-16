@@ -13,7 +13,7 @@ export default function ArtistButton({ id, image, artist }: ArtistButtonProps) {
       href={`/stage/${id}`}
       className="flex flex-col items-center gap-1 cursor-pointer"
     >
-      <div className="w-19.5 h-19.5 rounded-full overflow-hidden">
+      <div className="w-19.5 h-19.5 rounded-full overflow-hidden shadow-md active:scale-95">
         <Image
           src={image}
           alt={`${artist} 사진`}

@@ -101,15 +101,16 @@ export default async function StageExhibitionPage() {
 
         {/* 공연 곡 */}
         {stage.songs && stage.songs.length > 0 && (
-          <div className="flex items-start justify-between gap-4 px-1">
-            <h3 className="text-[13px] font-semibold text-text-sub shrink-0">프로그램</h3>
-            <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-col gap-2 px-1">
+            <span className="text-[13px] font-semibold text-text-sub">프로그램</span>
+            <div className="flex flex-col">
               {stage.songs
                 .sort((a, b) => a.play_order - b.play_order)
-                .map((song) => (
-                  <span key={song.song_id} className="text-[14px] text-[#3B4A5A] text-right break-keep">
-                    {song.title}
-                  </span>
+                .map((song, index) => (
+                  <div key={song.song_id} className="flex items-center gap-3 py-2.5 border-b border-[#E5EAF0] last:border-b-0">
+                    <span className="text-[13px] font-semibold text-primary w-5 text-center shrink-0">{index + 1}</span>
+                    <span className="text-[14px] text-[#3B4A5A] break-keep">{song.title}</span>
+                  </div>
                 ))}
             </div>
           </div>
