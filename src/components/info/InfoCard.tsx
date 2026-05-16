@@ -15,7 +15,7 @@ export default function InfoCard({ imageUrl, title, link }: InfoCardProps) {
       href={link}
       className="group relative flex items-center justify-between w-full h-[90px] px-8 overflow-hidden rounded-[20px] active:scale-[0.98] transition-transform"
     >
-      <div className="absolute inset-0 -z-10">
+      <div className="absolute inset-0">
         <Image
           src={imageUrl}
           alt={title}
