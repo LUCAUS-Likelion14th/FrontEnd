@@ -8,6 +8,7 @@ import {
   DetailHeader,
   DetailInfo,
   LoadingScreen,
+  ErrorFallback,
 } from "@/components";
 import { useBoothDetail } from "@/hooks/booth";
 import BoothMapWithMarker from "@/components/detail/BoothMapWithMarker";
@@ -40,9 +41,7 @@ function BoothDetailContent({ params }: Props) {
     return (
       <main>
         <DetailHeader title="부스 정보" />
-        <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          부스 정보를 불러오는 중 오류가 발생했습니다.
-        </div>
+        <ErrorFallback title="부스 정보를 불러올 수 없어요" onReset={() => window.location.reload()} />
       </main>
     );
   }
