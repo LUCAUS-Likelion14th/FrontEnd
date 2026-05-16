@@ -1,3 +1,11 @@
+const DAYS = ['일', '월', '화', '수', '목', '금', '토'];
+
+export function formatDateLabel(dateStr: string): string {
+  const [, , dayStr] = dateStr.split('-');
+  const date = new Date(`${dateStr}T12:00:00Z`);
+  return `${parseInt(dayStr)}일(${DAYS[date.getUTCDay()]})`;
+}
+
 export const formatDate = (
   dateStr: string | undefined | null,
   type: "time" | "date" | "detail" | "notice" | "dot",

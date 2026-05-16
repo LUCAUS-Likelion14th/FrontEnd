@@ -6,6 +6,8 @@ import { DetailHeader } from '@/components'
 
 export const dynamic = "force-dynamic";
 
+import { formatDateLabel } from "@/lib/utils/date";
+
 export default async function StageDetailPage({
   params,
 }: {
@@ -94,7 +96,9 @@ export default async function StageDetailPage({
             <FiClock size={14} />
             <span className="text-[13px] font-semibold">공연 일정</span>
           </div>
-          <span className="text-[14px] font-semibold text-[#273850]">{stage.time}</span>
+          <span className="text-[14px] font-semibold text-[#273850]">
+            {stage.date ? `${formatDateLabel(stage.date)} ` : ""}{stage.time}
+          </span>
         </div>
 
         {/* 소개글 */}
