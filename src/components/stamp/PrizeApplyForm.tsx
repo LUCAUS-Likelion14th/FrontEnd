@@ -3,6 +3,7 @@
 import { BackButton } from "@/components/ui";
 import { authFetcher } from "@/api/fetcher";
 import Image from "next/image";
+import { lucausText } from "@/assets/webp";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
@@ -70,10 +71,20 @@ export default function PrizeApplyForm({
         </div>
 
         <section className="flex-1 flex flex-col items-center justify-center">
-          <div className="w-[245px] h-[175px] bg-gray-200 flex items-center justify-center text-center mb-[80px] rounded-lg text-sm text-gray-600">
-            축기단 경품 안내 카드뉴스
-            <br />
-            이미지가 들어갈 자리입니다.
+          <div className="w-full mb-[80px] flex flex-col items-center gap-4">
+            <div className="w-[245px] h-[175px] rounded-[14px] overflow-hidden">
+              <Image
+                src={lucausText}
+                alt="LUCAUS 로고"
+                width={245}
+                height={175}
+                className="w-full h-full object-contain"
+              />
+            </div>
+            <div className="flex flex-col items-center gap-1 text-center">
+              <p className="text-[15px] font-semibold text-title">DAY1, DAY2 입장티켓 추첨</p>
+              <p className="text-[13px] text-text-sub">당첨된 분께는 5월 21일 오전에 문자 발송 예정입니다</p>
+            </div>
           </div>
 
           <div className="w-full relative mb-[77px] px-2">
