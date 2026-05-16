@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { FiImage, FiTrash2 } from "react-icons/fi";
-import { adminPromotionApi } from "@/lib/api/adminPromotionApi";
+import { adminPromotionApi } from "@/api/adminPromotionApi";
 import { Promotion } from "@/types/home";
 
 export default function BannersAdminPage() {

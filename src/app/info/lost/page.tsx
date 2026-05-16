@@ -8,7 +8,7 @@ import {
   DateFilter,
 } from "@/components";
 import { useState } from "react";
-import { useLostItems } from "@/hooks/queries/lost";
+import { useLostItems } from "@/hooks/lost";
 import Image from "next/image";
 import { FiSearch } from "react-icons/fi";
 

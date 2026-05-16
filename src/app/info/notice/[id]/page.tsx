@@ -1,6 +1,6 @@
 import { DetailHeader } from "@/components";
-import { noticeApi } from "@/lib/api/noticeApi";
-import { formatDate } from "@/lib/utils/date";
+import { noticeApi } from "@/api/noticeApi";
+import { formatDate } from "@/utils/date";
 
 const categoryMap = {
   important: {

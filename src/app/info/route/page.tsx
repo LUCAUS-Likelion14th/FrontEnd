@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import routeMap from "@/assets/webp/map/route-map.webp";
-import DetailHeader from "@/components/pages/detail/DetailHeader";
+import DetailHeader from "@/components/detail/DetailHeader";
 import { FiChevronDown, FiAlertTriangle } from "react-icons/fi";
 import { MdQrCode2, MdAccessTime, MdBadge, MdBlock, MdDoorFront, MdExitToApp, MdHelpOutline } from "react-icons/md";
 import { IconType } from "react-icons";

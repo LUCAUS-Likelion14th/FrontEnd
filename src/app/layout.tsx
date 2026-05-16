@@ -6,9 +6,9 @@ export const viewport: Viewport = {
 };
 import localFont from "next/font/local";
 import Script from "next/script";
-import BottomNav from "@/components/layouts/BottomNav";
+import BottomNav from "@/components/layout/BottomNav";
 import "./globals.css";
-import Header from "@/components/layouts/Header";
+import Header from "@/components/layout/Header";
 import Providers from "./providers";
 
 export const metadata: Metadata = {

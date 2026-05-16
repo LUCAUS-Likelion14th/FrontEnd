@@ -1,12 +1,12 @@
 import Image from "next/image";
 import { AiOutlineYoutube, AiOutlineInstagram } from "react-icons/ai";
 import { FiClock } from "react-icons/fi";
-import { stageApi } from "@/lib/api/stageApi";
+import { stageApi } from "@/api/stageApi";
 import { DetailHeader } from '@/components'
 
 export const dynamic = "force-dynamic";
 
-import { formatDateLabel } from "@/lib/utils/date";
+import { formatDateLabel } from "@/utils/date";
 
 export default async function StageDetailPage({
   params,

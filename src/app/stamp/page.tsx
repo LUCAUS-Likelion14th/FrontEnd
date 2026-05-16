@@ -1,8 +1,8 @@
 "use client";
 
-import StampBoard from "@/components/pages/stamp/StampBoard";
-import UserInfoForm from "@/components/pages/stamp/UserInfoForm";
-import { fetcher } from "@/lib/api/fetcher";
+import StampBoard from "@/components/stamp/StampBoard";
+import UserInfoForm from "@/components/stamp/UserInfoForm";
+import { fetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
