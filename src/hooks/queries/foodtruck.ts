@@ -1,7 +1,7 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { foodTruckApi } from "@/lib/api/foodTruckApi";
+import { foodTruckApi } from "@/lib/api/foodtruckApi";
 
 type FoodTruckListParams = {
   date?: string;
