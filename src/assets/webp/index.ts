@@ -5,4 +5,5 @@ export { default as creditBg } from './credit-bg.webp';
 export { default as likelionLogo } from './likelion-logo.webp';
 export { default as puangBg } from './puang-bg.webp'
 export { default as headerBg } from './header-bg.webp'
+export { default as lucausText } from './lucaus.webp'
 export * from './map'
