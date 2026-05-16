@@ -9,8 +9,8 @@ import type {
 export const BoothApi = {
   getList: (params?: BoothListParams) => {
     const query = new URLSearchParams();
-    if (params?.page !== undefined) query.set("page", String(params.page));
-    if (params?.size !== undefined) query.set("size", String(params.size));
+    if (params?.page !== undefined && Number.isFinite(params.page)) query.set("page", String(Math.floor(params.page)));
+    if (params?.size !== undefined && Number.isFinite(params.size)) query.set("size", String(Math.floor(params.size)));
 
     if (params?.date) query.set("date", params.date);
     if (params?.location) query.set("location", params.location);

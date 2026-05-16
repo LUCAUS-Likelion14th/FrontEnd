@@ -39,9 +39,10 @@ function BoothPageContent() {
   const [debouncedSearch, setDebouncedSearch] = useState(
     () => searchParams.get("q") ?? "",
   );
-  const [currentPage, setCurrentPage] = useState(() =>
-    Number(searchParams.get("page") ?? 1),
-  );
+  const [currentPage, setCurrentPage] = useState(() => {
+    const raw = Number(searchParams.get("page") ?? 1);
+    return Number.isInteger(raw) && raw >= 1 ? raw : 1;
+  });
 
   useEffect(() => {
     const params = new URLSearchParams();
