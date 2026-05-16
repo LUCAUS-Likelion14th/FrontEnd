@@ -11,6 +11,7 @@ import {
   DateFilter,
   Pagination,
   Card,
+  LoadingScreen,
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
@@ -166,7 +167,11 @@ function BoothPageContent() {
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20px" }}
-                  transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+                  transition={{
+                    duration: 0.3,
+                    delay: i * 0.05,
+                    ease: "easeOut",
+                  }}
                 >
                   <Card
                     id={booth.booth_id}
@@ -214,7 +219,7 @@ function BoothPageContent() {
 
 export default function BoothPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingScreen />}>
       <BoothPageContent />
     </Suspense>
   );

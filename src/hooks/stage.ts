@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { stageApi } from "@/api/stageApi";
+import { TimeTable } from "@/types/stage";
 
 const CATEGORY_MAP: Record<string, string> = {
   "학생 공연": "STUDENT_PERFORMANCE",
@@ -27,9 +28,31 @@ export function useStageData(selectedDate: string, selected: string) {
   });
 
   const timelineData = useMemo(() => {
-    return [...timeTable].sort(
+    const sorted = [...timeTable].sort(
       (a, b) => new Date(a.start_at).getTime() - new Date(b.start_at).getTime(),
     );
+
+    return sorted.reduce<TimeTable[]>((acc, curr) => {
+      const isArtist =
+        curr.category === "아티스트 공연" ||
+        curr.category === "ARTIST_PERFORMANCE";
+      const lastItem = acc[acc.length - 1];
+      const isLastArtist =
+        lastItem &&
+        (lastItem.category === "아티스트 공연" ||
+          lastItem.category === "ARTIST_PERFORMANCE");
+
+      if (isArtist && isLastArtist) {
+        lastItem.end_at = curr.end_at;
+      } else {
+        acc.push({
+          ...curr,
+          performer: isArtist ? "아티스트" : curr.performer,
+        });
+      }
+
+      return acc;
+    }, []);
   }, [timeTable]);
 
   const activeId = useMemo(() => {
@@ -53,7 +76,10 @@ export function useStageData(selectedDate: string, selected: string) {
     if (futureTimes.length === 0) return;
 
     const nextTime = new Date(Math.min(...futureTimes.map((t) => t.getTime())));
-    const timeout = setTimeout(() => setCurrentTime(new Date()), nextTime.getTime() - now.getTime());
+    const timeout = setTimeout(
+      () => setCurrentTime(new Date()),
+      nextTime.getTime() - now.getTime(),
+    );
     return () => clearTimeout(timeout);
   }, [selected, timelineData]);
 
