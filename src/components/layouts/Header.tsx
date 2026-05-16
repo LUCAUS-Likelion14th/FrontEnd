@@ -11,7 +11,10 @@ export default function Header() {
 
   return (
     <>
-      <header className="fixed top-0 left-0 right-0 flex items-end h-[calc(3.5rem+env(safe-area-inset-top))] px-4 pb-3 z-30 overflow-hidden">
+      <header
+        className="fixed top-0 left-0 right-0 flex items-end px-4 pb-3 z-30 overflow-hidden"
+        style={{ height: "calc(3.5rem + env(safe-area-inset-top))" }}
+      >
         <div className="absolute -inset-px -z-10">
           <Image
             src={headerBg}

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 
 export const viewport: Viewport = {
   viewportFit: "cover",
+  themeColor: "#05061A",
 };
 import localFont from "next/font/local";
 import Script from "next/script";
@@ -52,7 +53,7 @@ export default function RootLayout({
         )}
         <Providers>
           <Header />
-          <main className="min-h-screen" style={{ marginTop: "calc(3.5rem + env(safe-area-inset-top))" }}>{children}</main>
+          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)" }}>{children}</main>
           <BottomNav />
         </Providers>
       </body>
