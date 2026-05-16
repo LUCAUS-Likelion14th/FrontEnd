@@ -22,7 +22,7 @@ interface StampData {
 
 function StampBoardSkeleton() {
   return (
-    <div className="relative min-h-[calc(100vh-56px)]">
+    <div className="relative isolate min-h-[calc(100vh-56px)]">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
@@ -128,7 +128,7 @@ export default function StampBoard() {
   };
 
   return (
-    <div className="relative min-h-screen pb-20">
+    <div className="relative isolate min-h-screen pb-20">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
