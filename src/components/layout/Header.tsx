@@ -15,17 +15,14 @@ export default function Header() {
         className="fixed top-0 left-0 right-0 flex items-end px-4 pb-3 z-50"
         style={{ height: "calc(3.5rem + env(safe-area-inset-top))" }}
       >
-        {/* 오버스크롤 시 위쪽 빈 공간까지 배경이 덮이도록 위로 확장 */}
-        <div className="absolute left-0 right-0 bottom-0 overflow-hidden" style={{ top: "-100dvh" }}>
-          <div className="absolute left-0 right-0 bottom-0" style={{ height: "calc(100dvh + 3.5rem + env(safe-area-inset-top))" }}>
-            <Image
-              src={headerBg}
-              alt="헤더 배경"
-              fill
-              priority
-              className="object-cover object-bottom"
-            />
-          </div>
+        <div className="absolute -inset-px overflow-hidden">
+          <Image
+            src={headerBg}
+            alt="헤더 배경"
+            fill
+            priority
+            className="object-cover"
+          />
         </div>
         <button
           className="relative z-10"
