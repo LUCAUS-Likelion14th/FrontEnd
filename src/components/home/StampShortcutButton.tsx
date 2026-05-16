@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { LoginBottomSheet } from '@/components'
+import { LoginBottomSheet } from "@/components";
 import puangBg from "@/assets/webp/puang-bg.webp";
 import { FiChevronRight } from "react-icons/fi";
 
@@ -17,12 +17,12 @@ export function StampShortcutButton() {
     return false;
   };
 
-   const handleClick = () => {
+  const handleClick = () => {
     if (!getIsLoggedIn()) {
       setShowLogin(true);
       return;
     }
-    router.push("/stamp"); 
+    router.push("/stamp");
   };
 
   return (
@@ -30,7 +30,7 @@ export function StampShortcutButton() {
       className="flex items-end justify-end min-h-[106px] pl-[18px] pr-[14px] rounded-[10px] bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${puangBg.src})` }}
     >
-<div className="flex flex-col pt-[18px] pb-3 items-end gap-[9px]">
+      <div className="flex flex-col pt-[18px] pb-3 items-end gap-[9px]">
         <div className="flex flex-col pr-[9px] text-base font-medium text-white text-right leading-[1.3]">
           <span>도장판 완성하고</span>
           <span>푸짐한 경품 받아가세요!</span>
@@ -38,7 +38,7 @@ export function StampShortcutButton() {
 
         <button
           onClick={handleClick}
-          className="flex gap-1.5 justify-center items-center pl-[16.5px] pr-[9.5px] py-[7.5px] rounded-[23px] bg-white/19 text-white text-[16px] font-semibold leading-4.5 border border-white/30 shadow-lg active:scale-95 transition-all"
+          className="flex gap-1.5 justify-center items-center pl-[16.5px] pr-[7.5px] py-[6.5px] rounded-[23px] bg-white/19 text-white text-[14px] font-semibold leading-4.5 border border-white/30 shadow-lg active:scale-95 transition-all"
         >
           도장판 바로가기
           <FiChevronRight size={24} />

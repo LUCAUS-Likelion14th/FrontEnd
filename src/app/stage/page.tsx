@@ -94,7 +94,7 @@ export default function StagePage() {
 
   return (
     <main className="px-4 pt-5 pb-25">
-      <section className="mb-10">
+      <section className="mb-7">
         <StageCategory
           categories={availableCategories}
           selected={selected}
