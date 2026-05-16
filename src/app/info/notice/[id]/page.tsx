@@ -9,7 +9,7 @@ const categoryMap = {
   },
   notice: {
     label: "공지",
-    style: "bg-[#EEF3FB] text-primary",
+    style: "bg-primary-light text-primary",
   },
 };
 

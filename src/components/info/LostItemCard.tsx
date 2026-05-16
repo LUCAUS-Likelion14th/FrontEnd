@@ -13,7 +13,7 @@ export default function LostItemCard({ item }: Props) {
   const [imgError, setImgError] = useState(false);
 
   return (
-    <article className="w-full rounded-[10px] overflow-hidden flex flex-col shadow-[0_2px_8px_rgba(0,0,0,0.08)]">
+    <article className="w-full rounded-[10px] overflow-hidden flex flex-col border border-[#E8ECF2]">
       <div className="relative w-full h-[109px] bg-[#D9D9D9] shrink-0">
         {imgError || !item.image ? (
           <div className="w-full h-full flex items-center justify-center bg-gray-100">
@@ -32,7 +32,7 @@ export default function LostItemCard({ item }: Props) {
 
       <div className="flex items-start justify-between p-[10px] pt-[9px] bg-white">
         <div className="flex flex-col gap-[2px] flex-1 min-w-0">
-          <span className="text-[12px] leading-normal text-[#8D97A7] truncate">
+          <span className="text-[12px] leading-normal text-text-sub truncate">
             {item.date}
           </span>
 

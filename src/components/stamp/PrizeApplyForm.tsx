@@ -91,7 +91,7 @@ export default function PrizeApplyForm({
               }}
             >
               <div className="relative z-10 mb-2">
-                <div className="bg-[#06387D] text-white px-3 py-1 rounded-lg text-[16px] font-semibold flex items-center justify-center shadow-md whitespace-nowrap">
+                <div className="bg-primary text-white px-3 py-1 rounded-lg text-[16px] font-semibold flex items-center justify-center shadow-md whitespace-nowrap">
                   {stampCount === stampAll ? "완성!" : `${stampCount}개`}
                 </div>
 

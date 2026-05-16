@@ -38,7 +38,7 @@ export default function CreditPage() {
         <div className="flex flex-col items-center gap-10">
           {CREDITS.map(({ role, members }) => (
             <div key={role} className="flex flex-col items-center gap-2.5">
-              <span className="text-[#8d97a7] text-[16px]">{role}</span>
+              <span className="text-text-sub text-[16px]">{role}</span>
               <span className="text-[#273850] text-[16px] font-semibold text-center">
                 {members.join("  ")}
               </span>

@@ -103,7 +103,7 @@ function NoteList({ items }: { items: { text: string; red?: boolean }[] }) {
       {items.map((item, i) => (
         <li key={i} className="flex items-start gap-2">
           <span className={`text-[11px] mt-0.5 shrink-0 ${item.red ? "text-[#C0392B]" : "text-primary"}`}>●</span>
-          <span className={`text-[13px] leading-5 ${item.red ? "text-[#C0392B] font-medium" : "text-[#3B4A5A]"}`}>
+          <span className={`text-[13px] leading-5 ${item.red ? "text-[#C0392B] font-medium" : "text-title"}`}>
             {item.text}
           </span>
         </li>
@@ -123,7 +123,7 @@ function FaqItem({ q, a }: { q: string; a: string }) {
         <span className="text-[13px] font-medium text-[#1a2840] leading-5">Q. {q}</span>
         <FiChevronDown
           size={15}
-          className={`text-[#8d97a7] shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
+          className={`text-text-sub shrink-0 transition-transform duration-200 ${open ? "rotate-180" : ""}`}
         />
       </button>
       {open && (
@@ -149,14 +149,14 @@ export default function RoutePage() {
       <div className="px-4 pt-4 flex flex-col gap-3">
 
         {/* 1. 온라인 티켓팅 */}
-        <Section title="온라인 티켓팅" icon={MdQrCode2}>
+        <Section title="입장 시간" icon={MdQrCode2}>
           <div className="grid grid-cols-2 gap-2 mt-3">
             {TICKETS.map((t) => (
               <div key={t.id} className="flex items-center gap-2.5 bg-[#F5F8FF] rounded-[10px] px-3 py-2.5">
                 <span className="w-6 h-6 flex items-center justify-center rounded-full bg-primary text-white text-[11px] font-bold shrink-0">
                   {t.id}
                 </span>
-                <span className="text-[12px] text-[#3B4A5A] font-medium">{t.time}</span>
+                <span className="text-[12px] text-title font-medium">{t.time}</span>
               </div>
             ))}
           </div>
@@ -179,7 +179,7 @@ export default function RoutePage() {
                     {item.time}
                   </span>
                   {item.desc.split("\n").map((line, j) => (
-                    <p key={j} className="text-[13px] text-[#3B4A5A] leading-5">{line}</p>
+                    <p key={j} className="text-[13px] text-title leading-5">{line}</p>
                   ))}
                 </div>
               </div>
@@ -208,12 +208,12 @@ export default function RoutePage() {
                 </span>
                 <div>
                   <p className={`text-[13px] font-medium ${item.red ? "text-[#C0392B]" : "text-[#1a2840]"}`}>{item.label}</p>
-                  {item.sub && <p className="text-[12px] text-[#8d97a7] leading-5 mt-0.5">{item.sub}</p>}
+                  {item.sub && <p className="text-[12px] text-text-sub leading-5 mt-0.5">{item.sub}</p>}
                 </div>
               </div>
             ))}
             <div className="px-3 flex flex-col">
-            <p className="text-[12px] text-[#8d97a7] leading-5">* 위반 시 입장이 제한될 수 있습니다.</p>
+            <p className="text-[12px] text-text-sub leading-5">* 위반 시 입장이 제한될 수 있습니다.</p>
           </div>
           </div>
         </Section>

@@ -3,15 +3,9 @@
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
-<<<<<<< HEAD
-import { useFoodTruckList } from "@/hooks/queries/foodtruck";
-import { Card, LoadingScreen, Pagination } from "@/components";
-import FoodTruckMap from "@/components/pages/foodtruck/FoodTruckMap";
-=======
 import { useFoodTruckList } from "@/hooks/foodtruck";
-import { Card, Pagination } from "@/components";
+import { Card, LoadingScreen, Pagination } from "@/components";
 import FoodTruckMap from "@/components/foodtruck/FoodTruckMap";
->>>>>>> origin/main
 import { FiSearch } from "react-icons/fi";
 
 const PAGE_SIZE = 8;
@@ -50,7 +44,7 @@ function FoodTruckPageContent() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse"
+                className="w-full h-[195px] rounded-[10px] bg-gray-200 animate-pulse"
               />
             ))}
           </div>
@@ -78,11 +72,11 @@ function FoodTruckPageContent() {
           </div>
         ) : (
           <div className="flex flex-col items-center justify-center gap-3 py-16">
-            <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
-              <FiSearch size={28} className="text-[#06387D]" />
+            <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
+              <FiSearch size={28} className="text-primary" />
             </div>
             <div className="flex flex-col items-center gap-1">
-              <p className="text-[15px] font-semibold text-[#3B4A5A]">
+              <p className="text-[15px] font-semibold text-title">
                 푸드트럭을 찾을 수 없어요
               </p>
               <p className="text-[13px] text-text-sub">

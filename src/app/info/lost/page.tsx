@@ -41,7 +41,7 @@ export default function LostPage() {
       <DetailHeader title="분실물 찾기" />
 
       <div className="px-4">
-        <div className="flex items-center h-12 px-[11.5px] mb-3 bg-[#EEF3FB] rounded-[10px] gap-2 border border-primary/30">
+        <div className="flex items-center h-12 px-[11.5px] mb-3 bg-primary-light rounded-[10px] gap-2 border border-primary/30">
           <Image
             src={"/icons/highlight.png"}
             alt={"하이라이트 아이콘"}
@@ -59,7 +59,7 @@ export default function LostPage() {
           rel="noopener noreferrer"
           className="flex items-center gap-3 mb-7 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
         >
-          <div className="w-9 h-9 rounded-[10px] bg-[#EEF3FB] flex items-center justify-center flex-shrink-0">
+          <div className="w-9 h-9 rounded-[10px] bg-primary-light flex items-center justify-center flex-shrink-0">
             <FiMessageCircle size={17} className="text-primary" />
           </div>
           <div className="flex-1 min-w-0">
@@ -92,7 +92,7 @@ export default function LostPage() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse"
+                className="w-full h-[195px] rounded-[10px] bg-gray-200 animate-pulse"
               />
             ))}
           </div>
@@ -104,11 +104,11 @@ export default function LostPage() {
               ))
             ) : (
               <div className="col-span-2 flex flex-col items-center justify-center gap-3 py-16">
-                <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
-                  <FiSearch size={28} className="text-[#06387D]" />
+                <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
+                  <FiSearch size={28} className="text-primary" />
                 </div>
                 <div className="flex flex-col items-center gap-1">
-                  <p className="text-[15px] font-semibold text-[#3B4A5A]">
+                  <p className="text-[15px] font-semibold text-title">
                     해당 조건의 분실물이 없어요
                   </p>
                   <p className="text-[13px] text-text-sub">
