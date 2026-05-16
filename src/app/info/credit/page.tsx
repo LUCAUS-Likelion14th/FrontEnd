@@ -42,7 +42,7 @@ export default function CreditPage() {
           {CREDITS.map(({ role, members }) => (
             <div key={role} className="flex flex-col items-center gap-2.5">
               <span className="text-text-sub text-[16px]">{role}</span>
-              {role === "Special Thanks to" ? (
+              {members.length > 1 && role === "SUPPORT" ? (
                 <div className="flex flex-col items-center gap-1">
                   {members.map((member) => (
                     <span key={member} className="text-[#273850] text-[16px] font-semibold text-center">

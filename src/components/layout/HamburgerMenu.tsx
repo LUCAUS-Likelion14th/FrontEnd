@@ -24,8 +24,8 @@ const NAV_ITEMS: NavItem[] = [
     label: "공연",
     href: "/stage",
     subItems: [
-      { label: "배리어프리", href: "/info/barrier-free" },
       { label: "입장 정책", href: "/info/route" },
+      { label: "배리어프리", href: "/info/barrier-free" },
     ],
   },
   {
