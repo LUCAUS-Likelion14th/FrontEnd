@@ -142,7 +142,7 @@ function BoothPageContent() {
             부스를 찾고 계신가요?
           </p>
           <p className="text-[11px] text-text-sub leading-4">
-            검색으로 원하는 부스를 빠르게 찾아보세요
+            원하는 부스를 빠르게 찾아보세요
           </p>
         </div>
         <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
