@@ -1,10 +1,12 @@
 "use client";
 
+import { Suspense } from "react";
 import {
   StageEventSection,
   StageCategory,
   ArtistSection,
   StageTimeline,
+  LoadingScreen,
 } from "@/components";
 import { LuLink } from "react-icons/lu";
 import { useRouter, useSearchParams } from "next/navigation";
@@ -54,7 +56,7 @@ const CATEGORY_INFO: Record<
   },
 };
 
-export default function StagePage() {
+function StagePageContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
 
@@ -146,5 +148,13 @@ export default function StagePage() {
         *주최 측의 사정에 따라 일정이 변경될 수 있습니다
       </small>
     </main>
+  );
+}
+
+export default function StagePage() {
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      <StagePageContent />
+    </Suspense>
   );
 }
