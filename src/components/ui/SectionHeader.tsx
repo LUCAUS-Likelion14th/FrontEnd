@@ -15,7 +15,7 @@ export default function SectionHeader({
 }: SectionHeaderProps) {
   return (
     <header className="flex gap-2">
-      <div className="relative w-[25px] h-[25px] shrink-0">
+      <div className="relative w-[25px] h-[25px] shrink-0 pt-1">
         <Image
           src={"/icons/highlight.png"}
           alt={"하이라이트 아이콘"}
