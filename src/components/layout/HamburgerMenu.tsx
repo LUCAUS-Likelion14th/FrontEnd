@@ -119,7 +119,7 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-end",
-                gap: "38px",
+                gap: "35px",
                 width: "188px",
               }}
             >
@@ -162,7 +162,7 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                   display: "flex",
                   flexDirection: "column",
                   alignSelf: "stretch",
-                  gap: "28px",
+                  gap: "38px",
                 }}
               >
                 {NAV_ITEMS.map((item) =>

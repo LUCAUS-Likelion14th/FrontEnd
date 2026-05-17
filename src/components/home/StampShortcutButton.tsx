@@ -33,7 +33,7 @@ export function StampShortcutButton() {
       <div className="flex flex-col pt-[18px] pb-3 items-end gap-[9px]">
         <div className="flex flex-col pr-[9px] text-base font-medium text-white text-right leading-[1.3]">
           <span>도장판 완성하고</span>
-          <span>푸짐한 경품 받아가세요!</span>
+          <span>본무대 입장권에 응모하세요!</span>
         </div>
 
         <button

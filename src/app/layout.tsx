@@ -14,12 +14,16 @@ import Providers from "./providers";
 import RouteTracker from "@/components/analytics/RouteTracker";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lucaus.com"),
   title: "청:ON '26",
   icons: {
     icon: "/icon.png",
   },
   other: {
     "apple-mobile-web-app-status-bar-style": "black-translucent",
+  },
+  openGraph: {
+    images: [{ url: "https://lucaus.com/open-graph.webp", width: 1200, height: 630 }],
   },
 };
 
@@ -59,7 +63,7 @@ export default function RootLayout({
         <Providers>
           <RouteTracker />
           <Header />
-          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)" }}>
+          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "calc(1.1rem + env(safe-area-inset-bottom))" }}>
             <PageTransition>{children}</PageTransition>
           </main>
           <BottomNav />

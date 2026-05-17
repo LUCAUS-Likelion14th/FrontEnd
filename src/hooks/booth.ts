@@ -42,6 +42,6 @@ export function useBoothDetail(id: string) {
     queryKey: ["booth", "detail", id],
     queryFn: () => BoothApi.getDetail(id),
     enabled: !!id,
-    staleTime: 5 * 60_000,
+    staleTime: 0,
   });
 }

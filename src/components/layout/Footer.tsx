@@ -5,7 +5,7 @@ import logo from "@/assets/likelion-icon.svg";
 
 export default function Footer() {
   return (
-    <footer className="relative isolate flex flex-col items-center gap-1 px-8 pt-6 pb-30 text-white text-center overflow-hidden">
+    <footer className="relative isolate flex flex-col items-center gap-1 px-8 pt-6 pb-20 text-white text-center overflow-hidden">
       <div className="absolute inset-0 -z-10">
         <Image
           src="/footer-bg.png"
@@ -23,7 +23,7 @@ export default function Footer() {
             height={14}
             className="object-contain"
           />
-          LIKELION CAU × 축제기획단
+          LIKELION CAU × 2026 LUCAUS 축제기획단
         </p>
         <small className="text-[10px] font-light text-white/60">
           Copyright © 2026 Likelion CAU

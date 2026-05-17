@@ -4,7 +4,7 @@ import Image from 'next/image';
 
 export default function InfoPage() {
   return (
-    <main className="px-4 pt-5 pb-25">
+    <main className="px-4 pt-5 overflow-hidden">
       <div className="flex items-center h-12 px-[15px] mb-5 bg-primary-light rounded-[10px] gap-2 shadow-[0_2px_12px_rgba(6,56,125,0.2)]">
         <Image
           src={"/icons/highlight.png"}
@@ -29,14 +29,14 @@ export default function InfoPage() {
           link="info/lost"
         />
         <InfoCard
-          imageUrl={infoBarrierFree}
-          title="배리어프리"
-          link="info/barrier-free"
-        />
-        <InfoCard
           imageUrl={infoRoute}
           title="입장 정책"
           link="info/route"
+        />
+        <InfoCard
+          imageUrl={infoBarrierFree}
+          title="배리어프리"
+          link="info/barrier-free"
         />
         <InfoCard
           imageUrl={infoMypage}

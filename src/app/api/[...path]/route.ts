@@ -49,7 +49,7 @@ async function proxyRequest(request: NextRequest, path: string[]) {
     if (authorization) {
       responseHeaders["Cache-Control"] = "private, no-store";
     } else {
-      responseHeaders["Cache-Control"] = "public, s-maxage=30, stale-while-revalidate=60";
+      responseHeaders["Cache-Control"] = "no-store";
     }
   }
 
