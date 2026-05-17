@@ -14,6 +14,7 @@ import {
   MdExitToApp,
   MdHelpOutline,
 } from "react-icons/md";
+import { LuLink } from "react-icons/lu";
 import { IconType } from "react-icons";
 
 const TICKETS = [
@@ -184,7 +185,31 @@ export default function RoutePage() {
         </p>
       </div>
 
-      <div className="px-4 pt-4 flex flex-col gap-3">
+      <div className="px-4 pt-4">
+        <a
+          href="https://festival.cau.ac.kr"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center gap-3 mb-4 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
+        >
+          <div className="w-9 h-9 rounded-[10px] bg-primary-light flex items-center justify-center flex-shrink-0">
+            <LuLink size={17} className="text-primary" />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-[13px] font-semibold text-[#1A2536] leading-5">
+              본무대 입장 QR이 필요하다면?
+            </p>
+            <p className="text-[11px] text-text-sub leading-4">
+              festival.cau.ac.kr
+            </p>
+          </div>
+          <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
+            바로가기
+          </span>
+        </a>
+      </div>
+
+      <div className="px-4 flex flex-col gap-3">
         {/* 1. 온라인 티켓팅 */}
         <Section title="입장 시간" icon={MdQrCode2}>
           <div className="grid grid-cols-2 gap-2 mt-3">
