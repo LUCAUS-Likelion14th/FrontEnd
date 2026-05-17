@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 type StageCardProps = {
   imageUrl: string;
   href: string;
-  location: string;
+  category: string;
   name: string;
   time: string;
 };
@@ -15,7 +15,7 @@ type StageCardProps = {
 export default function StageCard({
   imageUrl,
   href,
-  location,
+  category,
   name,
   time,
 }: StageCardProps) {
@@ -35,7 +35,7 @@ export default function StageCard({
             className="rounded-[8px] object-cover shrink-0"
           />
           <div className="flex flex-col gap-1 flex-1 min-w-0">
-            <span className="text-[14px] text-black truncate">{location}</span>
+            <span className="text-[14px] text-black truncate">{category}</span>
             <div className="flex items-end justify-between gap-2">
               <strong className="text-[18px] font-semibold truncate">
                 {name}

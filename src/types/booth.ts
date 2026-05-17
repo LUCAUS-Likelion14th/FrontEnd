@@ -67,6 +67,7 @@ export type BoothDetail = {
   booth_name: string;
   booth_category: string[];
   booth_info: string;
+  booth_owner: string;
   owner_insta: string;
   is_liked: boolean;
   like_count: number;
