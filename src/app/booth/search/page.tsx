@@ -67,7 +67,7 @@ function BoothSearchContent() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="부스 이름으로 검색해보세요"
+            placeholder="부스 이름이나 운영 단체를 검색해보세요"
             className="flex-1 text-[15px] outline-none bg-transparent placeholder:text-text-sub"
           />
           {searchQuery && (

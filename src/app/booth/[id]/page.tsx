@@ -13,7 +13,7 @@ import {
 import { useBoothDetail } from "@/hooks/booth";
 import BoothMapWithMarker from "@/components/detail/BoothMapWithMarker";
 import Image from "next/image";
-import { FiImage } from "react-icons/fi";
+import { FiImage, FiUser } from "react-icons/fi";
 
 const DAY_KO: Record<string, string> = {
   MONDAY: "월",
@@ -109,6 +109,18 @@ function BoothDetailContent({ params }: Props) {
           ownerInsta={booth.owner_insta}
           likeCount={booth.like_count}
         />
+
+{booth.booth_owner && (
+          <div className="bg-[#f8f9fb] rounded-2xl px-4 py-3.5 flex items-center gap-3">
+            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
+              <FiUser size={16} className="text-primary" />
+            </div>
+            <div className="flex flex-col gap-0.5">
+              <span className="text-xs font-semibold text-text-sub">운영 단체</span>
+              <span className="text-sm font-medium">{booth.booth_owner}</span>
+            </div>
+          </div>
+        )}
 
         <div className="flex flex-col gap-4">
           {locationGroups.map((group) => (

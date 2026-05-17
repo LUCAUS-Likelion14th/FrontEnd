@@ -25,7 +25,7 @@ export default function DetailAction({
         className="flex-1 flex flex-col items-center justify-center gap-2 border-r border-text-sub2"
       >
         <AiOutlineInstagram size={38} />
-        <span className="text-[14px]">주최자 인스타 바로 가기</span>
+        <span className="text-[14px] cursor-pointer">운영 단체 인스타 바로 가기</span>
       </button>
 
       <div className="flex-1 flex flex-col items-center justify-center gap-2">
