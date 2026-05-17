@@ -27,7 +27,6 @@ export default function PrizeApplyForm({
     null,
   );
   const [errorMsg, setErrorMsg] = useState("");
-
   const router = useRouter();
 
   const progressPercentage = stampAll > 0 ? (stampCount / stampAll) * 100 : 0;
@@ -45,7 +44,13 @@ export default function PrizeApplyForm({
       await authFetcher("/stamp/prize", "PATCH", { password });
       setModalStatus("success");
     } catch (error: any) {
-      if (error.message.includes("409")) {
+      console.warn("경품 응모 에러: ", error);
+
+      if (
+        error.status === 409 ||
+        error.message?.includes("409") ||
+        error.message?.includes("Conflict")
+      ) {
         setModalStatus("already");
       } else {
         setErrorMsg("잘못된 코드입니다.");
