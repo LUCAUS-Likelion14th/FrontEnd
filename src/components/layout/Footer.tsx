@@ -23,7 +23,7 @@ export default function Footer() {
             height={14}
             className="object-contain"
           />
-          LIKELION CAU × 축제기획단
+          LIKELION CAU × 2026 LUCAUS 축제기획단
         </p>
         <small className="text-[10px] font-light text-white/60">
           Copyright © 2026 Likelion CAU

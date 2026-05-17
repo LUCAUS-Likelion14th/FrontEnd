@@ -145,7 +145,7 @@ export default function StampBoard() {
         <div className="absolute top-[90px] w-[150px] flex justify-center">
           <span
             onClick={() => router.push(`/booth/${booth.booth_id}`)}
-            className="max-w-[100px] text-text-sub text-[16px] font-medium text-center underline underline-offset-2 break-keep leading-tight cursor-pointer"
+            className="max-w-[100px] text-text-sub text-[14px] font-medium text-center underline underline-offset-2 break-keep leading-tight cursor-pointer"
           >
             {booth.name}
           </span>
@@ -156,7 +156,7 @@ export default function StampBoard() {
 
   return (
     <div className="relative min-h-screen pb-20">
-      <div className="absolute inset-0 z-0">
+      <div className="fixed inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
           alt="도장판 배경 이미지"
@@ -215,7 +215,7 @@ export default function StampBoard() {
           </span>
         </div>
 
-        <section className="grid grid-cols-2 gap-y-10 px-12 pb-32">
+        <section className="grid grid-cols-2 gap-y-10 px-12">
           <div className="justify-self-start">
             {renderBooth(data.booths[0])}
           </div>

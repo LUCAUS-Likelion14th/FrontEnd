@@ -61,7 +61,7 @@ export default async function NoticeDetailPage({
               {label}
             </span>
 
-            <span className="flex-1 h-[31px] items-center text-[20px] font-bold">
+            <span className="flex-1 text-[20px] font-bold leading-snug">
               {notice.title}
             </span>
           </div>
