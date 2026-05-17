@@ -51,6 +51,11 @@ export default function LikeButton({
     e.stopPropagation();
     e.nativeEvent.stopImmediatePropagation();
 
+    if (!localStorage.getItem("accessToken")) {
+      setShowLoginSheet(true);
+      return;
+    }
+
     const endpoint =
       type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
     const nextLiked = !isLiked;
