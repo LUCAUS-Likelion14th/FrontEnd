@@ -3,6 +3,7 @@
 import { authFetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useState } from "react";
+import StampModalLayout from "./StampModalLayout";
 
 interface BoothStampModalProps {
   boothId: number;
@@ -27,7 +28,6 @@ export default function BoothStampModal({
       setErrorMsg("코드를 입력해주세요.");
       return;
     }
-
     setIsLoading(true);
     setErrorMsg("");
 
@@ -38,7 +38,6 @@ export default function BoothStampModal({
         navigator.vibrate([80, 50, 120]);
       }
     } catch (error: any) {
-      console.warn("도장 찍기 에러: ", error);
       alert(error.message || "코드 번호가 틀렸거나 오류가 발생했습니다.");
       setPassword("");
     } finally {
@@ -46,99 +45,38 @@ export default function BoothStampModal({
     }
   };
 
-  const handleCloseAttempt = () => {
-    if (isSuccess) {
-      handleFinalClose();
-    } else {
-      onClose();
-    }
-  };
-
   const handleFinalClose = () => {
     onClose();
-    setTimeout(() => {
-      onSuccess();
-    }, 100);
+    setTimeout(() => onSuccess(), 100);
   };
 
   return (
-    <div className="fixed inset-0 z-15 flex items-center justify-center bg-black/51">
-      <section className="relative w-full max-w-[365px] min-h-[445px] rounded-[20px] bg-[rgba(6,56,125,0.35)] p-7.5 pt-[57px] backdrop-blur-xs flex flex-col items-center">
-        <button
-          onClick={handleCloseAttempt}
-          className="absolute top-5 right-6 z-10 flex items-center justify-center"
-          aria-label="닫기"
-          style={{ width: "24px", height: "24px", flexShrink: 0 }}
-        >
-          <Image
-            src="/icons/hamburger-close.svg"
-            alt="닫기"
-            width={24}
-            height={24}
-            style={{ filter: "brightness(0) invert(1)" }}
-            onError={(e) => {
-              const t = e.currentTarget as HTMLImageElement;
-              t.style.display = "none";
-              const p = t.parentElement;
-              if (p) {
-                p.textContent = "✕";
-                (p as HTMLElement).style.color = "#fff";
-                (p as HTMLElement).style.fontSize = "18px";
-                (p as HTMLElement).style.fontWeight = "normal";
-              }
-            }}
-          />
-        </button>
-
-        <p className="text-[20px] font-semibold text-white text-center mb-[22px]">
-          {boothId}번 부스
-          <br /> &lsquo;{boothName}&rsquo; <br />
+    <StampModalLayout onClose={isSuccess ? handleFinalClose : onClose}>
+      <p className="text-[20px] font-semibold text-white text-center leading-relaxed mb-4">
+        {boothId}번 부스 &lsquo;{boothName}&rsquo;
+        <br />
+        <span className="text-secondary-light">
           {isSuccess ? "별빛을 밝혔어요!" : "별빛 밝히기!"}
-        </p>
+        </span>
+      </p>
 
-        <div className="relative flex justify-center items-center perspective-500 mb-[35px]">
-          <Image
-            src="/star-off.png"
-            alt="도장 찍기 전"
-            width={111}
-            height={111}
-            className={`object-contain z-10 ${
-              isSuccess
-                ? "absolute animate-coin-out pointer-events-none"
-                : "relative opacity-100"
-            }`}
-          />
+      <div className="relative flex justify-center items-center min-h-[150px] mb-4">
+        <Image
+          src={isSuccess ? "/star-on.png" : "/star-off.png"}
+          alt="스탬프 상태"
+          width={isSuccess ? 149 : 111}
+          height={isSuccess ? 149 : 111}
+          className="object-contain animate-fade-in"
+        />
+      </div>
 
-          <Image
-            src="/star-on.png"
-            alt="도장 찍기 성공"
-            width={149}
-            height={149}
-            className={`object-contain z-10 ${
-              isSuccess
-                ? "relative animate-coin-in my-3"
-                : "absolute opacity-0 pointer-events-none"
-            }`}
-          />
-        </div>
-
-        {isSuccess ? (
-          <button
-            onClick={handleFinalClose}
-            className="px-[58px] py-3 text-[16px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98]"
-            style={{
-              background: "rgba(6, 56, 125, 0.50)",
-            }}
-          >
-            완료
-          </button>
-        ) : (
+      <div className="w-full flex flex-col items-center gap-5 mt-auto">
+        {!isSuccess ? (
           <>
-            <div className="flex flex-col justify-center items-center gap-2 mb-[25px]">
-              <span className="text-[16px] font-medium text-white">
+            <div className="flex flex-col items-center gap-2 w-full">
+              <span className="text-[14px] font-medium text-white/80">
                 STAFF에게 해당 화면을 보여주세요!
               </span>
-
               <input
                 type="text"
                 value={password}
@@ -149,30 +87,32 @@ export default function BoothStampModal({
                 onKeyDown={(e) => e.key === "Enter" && handleStampSubmit()}
                 placeholder="코드를 입력해 주세요"
                 disabled={isLoading}
-                className={`bg-white/30 text-[14px] text-white font-medium text-center px-[33px] py-[13px] rounded-[10px] outline-none focus:border-primary placeholder:text-white ${
-                  errorMsg ? "border-2 border-red-400" : ""
+                className={`w-full max-w-[240px] bg-white/20 text-[14px] text-white font-medium text-center py-3 rounded-[10px] outline-none border ${
+                  errorMsg ? "border-red-400" : "border-white/10"
                 }`}
               />
               {errorMsg && (
-                <span className="text-red-400 text-[13px] font-medium mt-1">
-                  {errorMsg}
-                </span>
+                <span className="text-red-400 text-[12px]">{errorMsg}</span>
               )}
             </div>
 
             <button
               onClick={handleStampSubmit}
               disabled={isLoading}
-              className="px-10.5 py-3 text-[16px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98]"
-              style={{
-                background: "rgba(6, 56, 125, 0.50)",
-              }}
+              className="w-full max-w-[180px] py-3 text-[16px] font-bold text-white bg-blue-700/60 rounded-[30px] shadow-md active:scale-95 transition-transform"
             >
               도장 찍기
             </button>
           </>
+        ) : (
+          <button
+            onClick={handleFinalClose}
+            className="w-full max-w-[180px] py-3 text-[16px] font-bold text-white bg-blue-900/60 rounded-[30px] shadow-md active:scale-95 transition-transform"
+          >
+            완료
+          </button>
         )}
-      </section>
-    </div>
+      </div>
+    </StampModalLayout>
   );
 }

@@ -11,7 +11,7 @@ const CREDITS = [
   { role: "BACKEND", members: ["김윤형", "이채연", "최서영"] },
   {
     role: "SUPPORT",
-    members: ["2026 LUCAUS 축제기획단", "멋쟁이사자처럼 중앙대학교 14기 운영진"],
+    members: ["2026 LUCAUS 축제기획단"],
   },
 ];
 
@@ -45,7 +45,10 @@ export default function CreditPage() {
               {members.length > 1 && role === "SUPPORT" ? (
                 <div className="flex flex-col items-center gap-1">
                   {members.map((member) => (
-                    <span key={member} className="text-[#273850] text-[16px] font-semibold text-center">
+                    <span
+                      key={member}
+                      className="text-[#273850] text-[16px] font-semibold text-center"
+                    >
                       {member}
                     </span>
                   ))}
