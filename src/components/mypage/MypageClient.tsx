@@ -97,15 +97,15 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
             <div className="relative z-10 flex flex-col items-end gap-2.5">
-              <div className="flex flex-col text-base font-medium text-white text-right">
+              <div className="flex flex-col text-lg font-medium text-white text-right">
                 <span>로그인 후</span>
                 <span>청:ON을 더 즐겨보세요!</span>
               </div>
               <Link
                 href="/login"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/50 text-white text-xs active:scale-95 transition-transform"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/50 text-white text-sm active:scale-95 transition-transform"
               >
-                <FiLogIn size={12} />
+                <FiLogIn size={14} />
                 로그인
               </Link>
             </div>
@@ -149,14 +149,15 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/30 to-transparent" />
             <div className="relative z-10 flex flex-col items-end gap-2.5">
-              <span className="text-base font-semibold text-white drop-shadow-sm">
-                환영합니다!
-              </span>
+              <div className="flex flex-col text-base font-medium text-white text-right">
+                <span>청:ON에 오신 걸</span>
+                <span>환영합니다</span>
+              </div>
               <button
                 onClick={handleLogout}
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-white/15 backdrop-blur-sm border border-white/50 text-white text-xs active:scale-95 transition-transform"
+                className="flex items-center gap-1.5 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/50 text-white text-sm active:scale-95 transition-transform"
               >
-                <FiLogOut size={12} />
+                <FiLogOut size={14} />
                 로그아웃
               </button>
             </div>
