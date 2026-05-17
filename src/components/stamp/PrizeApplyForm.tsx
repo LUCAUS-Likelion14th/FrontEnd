@@ -140,7 +140,7 @@ export default function PrizeApplyForm({
             disabled={isLoading}
             className="bg-primary px-[33px] py-[15px] text-[18px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98] disabled:opacity-50"
           >
-            푸앙패스 응모하기
+            추첨권 응모하기
           </button>
         </section>
       </div>{" "}

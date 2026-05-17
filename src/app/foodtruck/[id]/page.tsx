@@ -26,7 +26,10 @@ export default function FoodTruckDetailPage({ params }: Props) {
     return (
       <main>
         <DetailHeader title="푸드트럭 정보" />
-        <ErrorFallback title="푸드트럭 정보를 불러올 수 없어요" onReset={() => window.location.reload()} />
+        <ErrorFallback
+          title="푸드트럭 정보를 불러올 수 없어요"
+          onReset={() => window.location.reload()}
+        />
       </main>
     );
   }
@@ -49,6 +52,7 @@ export default function FoodTruckDetailPage({ params }: Props) {
           location={foodTruck.location}
           date={foodTruck.date}
           hasBorder={false}
+          hideLocation
         />
         <MenuDetail menuList={foodTruck.menu} />
       </div>
