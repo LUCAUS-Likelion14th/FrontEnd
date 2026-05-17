@@ -11,6 +11,9 @@ import {
 import { FiSearch, FiX, FiChevronLeft } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import { useBoothSearch } from "@/hooks/booth";
+// ─── analytics tracking ───
+import { trackEvent } from "@/lib/api/analytics";
+// ─── /analytics tracking ───
 
 const PAGE_SIZE = 10;
 
@@ -41,6 +44,32 @@ function BoothSearchContent() {
   });
 
   const totalPages = data?.totalPages ?? 1;
+
+  // ─── analytics tracking ───
+  const _searchedKeyRef = useRef<string>("");
+
+  useEffect(() => {
+    const q = debouncedSearch.trim();
+    if (q.length < 2) return;
+    if (isLoading || !data) return;
+    const key = `${q}::${currentPage}`;
+    if (_searchedKeyRef.current === key) return;
+    _searchedKeyRef.current = key;
+
+    trackEvent({
+      eventType: "booth_search_query",
+      payload: {
+        query: q,
+        resultCount: data.totalElements,
+        page: currentPage,
+      },
+    });
+
+    try {
+      sessionStorage.setItem("lastSearchQuery", q);
+    } catch {}
+  }, [debouncedSearch, data, isLoading, currentPage]);
+  // ─── /analytics tracking ───
 
   const booths = (data?.content ?? []).map((b) => ({
     id: b.booth_id,

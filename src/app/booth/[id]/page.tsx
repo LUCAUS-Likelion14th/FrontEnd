@@ -17,7 +17,7 @@ import { FiImage, FiFlag } from "react-icons/fi";
 // ─── analytics tracking ───
 import { useRef } from "react";
 import { trackEvent } from "@/lib/api/analytics";
-import { getReferralFromPrevPath } from "@/lib/api/referral";
+import { getReferralFromPrevPath, getLastSearchQueryIfFromSearch } from "@/lib/api/referral";
 // ─── /analytics tracking ───
 
 const DAY_KO: Record<string, string> = {
@@ -61,6 +61,7 @@ function BoothDetailContent({ params }: Props) {
       payload: {
         boothId: booth.booth_id,
         referral: getReferralFromPrevPath(),
+        searchQuery: getLastSearchQueryIfFromSearch(),
         mainPosition: Number(searchParams.get("main_position")) || null,
         likeCountAtView: booth.like_count,
         isLikedByUser: booth.is_liked,
