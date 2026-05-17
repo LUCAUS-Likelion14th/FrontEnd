@@ -1,9 +1,15 @@
 export const BOOTH_LOCATIONS = [
   "서라벌홀 일대",
-  "대운동장 일대",
+  "대운동장",
   "후문 일대",
 ] as const;
 export type BoothLocation = (typeof BOOTH_LOCATIONS)[number];
+
+export const BOOTH_LOCATION_LABELS: Record<BoothLocation, string> = {
+  "서라벌홀 일대": "서라벌홀 일대",
+  "대운동장": "대운동장 일대",
+  "후문 일대": "후문 일대",
+};
 
 export const BOOTH_CATEGORIES = [
   "전체",

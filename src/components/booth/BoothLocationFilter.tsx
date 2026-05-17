@@ -2,7 +2,7 @@
 
 import { BsGeoFill } from "react-icons/bs";
 import { BsGeo } from "react-icons/bs";
-import { BOOTH_LOCATIONS, BoothLocation } from "@/data/boothData";
+import { BOOTH_LOCATIONS, BOOTH_LOCATION_LABELS, BoothLocation } from "@/data/boothData";
 
 type Props = {
   selectedLocation: BoothLocation | null;
@@ -30,7 +30,7 @@ export default function BoothLocationFilter({
             }`}
           >
             <Icon size={14} />
-            <span className="whitespace-nowrap">{loc}</span>
+            <span className="whitespace-nowrap">{BOOTH_LOCATION_LABELS[loc]}</span>
           </button>
         );
       })}
