@@ -1,7 +1,8 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { FiImage, FiTrash2 } from "react-icons/fi";
+import Link from "next/link";
+import { FiArrowLeft, FiImage, FiTrash2 } from "react-icons/fi";
 import { adminPromotionApi } from "@/api/adminPromotionApi";
 import { Promotion } from "@/types/home";
 
@@ -73,7 +74,12 @@ export default function BannersAdminPage() {
   return (
     <>
       <div className="admin-topbar">
-        <h1 className="admin-topbar__title">배너 등록/수정</h1>
+        <div className="admin-topbar__left">
+          <Link href="/admin" className="admin-topbar__back">
+            <FiArrowLeft /> 뒤로
+          </Link>
+          <h1 className="admin-topbar__title">배너 등록/수정</h1>
+        </div>
       </div>
 
       <div className="admin-main">
