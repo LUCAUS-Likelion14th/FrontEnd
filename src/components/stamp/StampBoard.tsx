@@ -236,6 +236,7 @@ export default function StampBoard() {
         <BoothStampModal
           boothId={selectedBooth.booth_id}
           boothName={selectedBooth.name}
+          stampCount={data.stamp_count} // 백 로그
           onClose={() => setSelectedBooth(null)}
           onSuccess={() => {
             setRefreshKey((prev) => prev + 1);
