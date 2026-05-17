@@ -8,11 +8,11 @@ const getEnv = (key: string) => {
 };
 
 const resolveBaseUrl = () => {
-  const nextPublicUrl = getEnv("NEXT_PUBLIC_API_URL");
   if (typeof window !== "undefined") {
-    return nextPublicUrl || "/api";
+    return "/api";
   }
   const apiUrl = getEnv("API_URL");
+  const nextPublicUrl = getEnv("NEXT_PUBLIC_API_URL");
   return apiUrl || nextPublicUrl || "https://lucaus.o-r.kr";
 };
 const BASE_URL = resolveBaseUrl();
