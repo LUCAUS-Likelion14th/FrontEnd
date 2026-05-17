@@ -9,6 +9,21 @@ type TrackEventParams = {
   payload?: Record<string, any>;
 };
 
+function getUserId() {
+
+  const token = localStorage.getItem("accessToken");
+  if (!token) return null;
+  try {
+    const payload = JSON.parse(
+      atob(token.split(".")[1])
+    );
+    return payload.memberId ?? null;
+
+  } catch {
+    return null;
+  }
+}
+
 export async function trackEvent({
   eventType,
   targetType,
@@ -23,6 +38,8 @@ export async function trackEvent({
     localStorage.setItem("sessionId", sessionId);
   }
 
+  const userId = getUserId();
+
   try {
     await fetch(`${BASE_URL}/api/events`, {
       method: "POST",
@@ -31,6 +48,7 @@ export async function trackEvent({
       },
       body: JSON.stringify({
         eventType,
+        userId,
         sessionId,
         targetType,
         targetId,

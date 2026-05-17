@@ -29,6 +29,7 @@ export default function FoodTruckDetailPage({ params }: Props) {
   useEffect(() => {
     if (!foodTruck || hasTracked.current) return;
     foodtruckIdRef.current = foodTruck.id;
+    startTime.current = Date.now();
     hasTracked.current = true;
     trackEvent({
       eventType: "foodtruck_detail_view",
