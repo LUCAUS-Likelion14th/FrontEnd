@@ -14,7 +14,7 @@ export default function BoothLocationFilter({
   onSelectLocation,
 }: Props) {
   return (
-    <div className="grid grid-cols-[2fr_1.5fr_1.5fr] gap-2 w-full">
+    <div className="grid grid-cols-[2fr_2fr_1.5fr] gap-2 w-full">
       {BOOTH_LOCATIONS.map((loc) => {
         const isActive = selectedLocation === loc;
         const Icon = isActive ? BsGeoFill : BsGeo;
