@@ -23,26 +23,32 @@ export default function PrizeApplyForm({
 }: PrizeEntryFormProps) {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false); // 💡 모달 오픈 제어 상태
+  const [modalStatus, setModalStatus] = useState<"success" | "already" | null>(
+    null,
+  );
+  const [errorMsg, setErrorMsg] = useState("");
+
   const router = useRouter();
 
   const progressPercentage = stampAll > 0 ? (stampCount / stampAll) * 100 : 0;
 
   const handlePrizeApply = async () => {
     if (!password) {
-      alert("코드를 입력해 주세요.");
+      setErrorMsg("코드를 입력해 주세요.");
       return;
     }
+
     setIsLoading(true);
+    setErrorMsg("");
+
     try {
       await authFetcher("/stamp/prize", "PATCH", { password });
-
-      setIsModalOpen(true);
+      setModalStatus("success");
     } catch (error: any) {
       if (error.message.includes("409")) {
-        alert("이미 응모하셨습니다! 결과 발표를 기다려주세요.");
+        setModalStatus("already");
       } else {
-        alert(error.message || "응모 코드가 틀렸거나 오류가 발생했습니다.");
+        setErrorMsg("잘못된 코드입니다.");
       }
     } finally {
       setIsLoading(false);
@@ -50,7 +56,7 @@ export default function PrizeApplyForm({
   };
 
   const handleModalClose = () => {
-    setIsModalOpen(false);
+    setModalStatus(null);
     router.push("/stamp");
   };
 
@@ -133,13 +139,28 @@ export default function PrizeApplyForm({
             <p className="text-[14px] font-semibold text-title text-center">
               STAFF에게 해당 화면을 보여 주세요!
             </p>
+
             <input
               type="text"
               value={password}
-              onChange={(e) => setPassword(e.target.value)}
+              onChange={(e) => {
+                setPassword(e.target.value);
+                setErrorMsg("");
+              }}
+              onKeyDown={(e) => e.key === "Enter" && handlePrizeApply()}
               placeholder="코드를 입력해 주세요"
-              className="w-full bg-white border border-text-sub2 rounded-[10px] py-[13px] text-[16px] font-normal text-center outline-none focus:border-primary"
+              className={`w-full bg-white border rounded-[10px] py-[13px] text-[16px] font-normal text-center outline-none transition-all ${
+                errorMsg
+                  ? "border-red-500 focus:border-red-500"
+                  : "border-text-sub2 focus:border-primary"
+              }`}
             />
+
+            {errorMsg && (
+              <p className="text-red-500 text-[14px] font-medium text-center mt-1 animate-fade-in">
+                {errorMsg}
+              </p>
+            )}
           </div>
 
           <button
@@ -152,7 +173,9 @@ export default function PrizeApplyForm({
         </section>
       </div>
 
-      {isModalOpen && <PrizeApplyModal onClose={handleModalClose} />}
+      {modalStatus && (
+        <PrizeApplyModal status={modalStatus} onClose={handleModalClose} />
+      )}
     </div>
   );
 }
