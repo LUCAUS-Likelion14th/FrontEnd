@@ -53,7 +53,7 @@ export default function BoothStampModal({
   return (
     <StampModalLayout onClose={isSuccess ? handleFinalClose : onClose}>
       <p className="text-[20px] font-semibold text-white text-center leading-relaxed mb-4">
-        {boothId}번 부스 &lsquo;{boothName}&rsquo;
+        {boothName}
         <br />
         <span className="text-secondary-light">
           {isSuccess ? "별빛을 밝혔어요!" : "별빛 밝히기!"}
