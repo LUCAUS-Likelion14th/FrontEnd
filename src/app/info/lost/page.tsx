@@ -47,7 +47,7 @@ export default function LostPage() {
       <DetailHeader title="분실물 찾기" />
 
       <div className="px-4">
-        <div className="flex items-center h-12 px-[11.5px] mb-3 bg-primary-light rounded-[10px] gap-2">
+        <div className="flex items-center h-12 px-[11.5px] mb-3 bg-primary-light rounded-[10px] gap-2 shadow-[0_2px_12px_rgba(6,56,125,0.2)]">
           <Image
             src={"/icons/highlight.png"}
             alt={"하이라이트 아이콘"}
@@ -73,7 +73,7 @@ export default function LostPage() {
               분실물 관련 문의가 있으신가요?
             </p>
             <p className="text-[11px] text-text-sub leading-4">
-              카카오톡 채널로 문의하세요.
+              카카오톡 채널로 직접 문의주세요
             </p>
           </div>
           <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">

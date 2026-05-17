@@ -31,7 +31,7 @@ export default function NoticePage() {
       <DetailHeader title="축제기획단 공지" />
 
       <div className="px-4">
-        <div className="flex items-center h-12 px-[11.5px] mb-7 bg-primary-light rounded-[10px] gap-2">
+        <div className="flex items-center h-12 px-[11.5px] mb-7 bg-primary-light rounded-[10px] gap-2 shadow-[0_2px_12px_rgba(6,56,125,0.2)]">
           <FiBell size={18} className="text-primary shrink-0" />
           <span className="text-[14px] text-primary leading-4.5">
             축제기획단의 공지사항을 확인하세요.
