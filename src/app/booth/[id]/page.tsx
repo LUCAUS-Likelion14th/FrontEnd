@@ -110,7 +110,7 @@ function BoothDetailContent({ params }: Props) {
           likeCount={booth.like_count}
         />
 
-{booth.booth_owner && (
+        {booth.booth_owner && (
           <div className="bg-[#f8f9fb] rounded-2xl px-4 py-3.5 flex items-center gap-3">
             <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0">
               <FiUser size={16} className="text-primary" />
