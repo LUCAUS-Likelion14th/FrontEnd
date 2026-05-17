@@ -101,8 +101,7 @@ export default function LikesPage() {
                       type="foodtruck"
                       image={truck.image}
                       name={truck.name}
-                      subText={truck.bestMenu}
-                      location={truck.location}
+                      location={truck.bestMenu}
                       isLiked={truck.liked}
                       likeCount={truck.likeCount}
                     />
