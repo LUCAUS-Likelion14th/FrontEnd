@@ -112,26 +112,6 @@ function BoothPageContent() {
 
   return (
     <main className="px-4 pt-5 pb-25">
-      <a
-        href="/booth/search"
-        className="flex items-center gap-3 mb-5 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
-      >
-        <div className="w-9 h-9 rounded-[10px] bg-primary-light flex items-center justify-center flex-shrink-0">
-          <FiSearch size={17} className="text-primary" />
-        </div>
-        <div className="flex-1 min-w-0">
-          <p className="text-[13px] font-semibold text-[#1A2536] leading-5">
-            부스를 찾고 계신가요?
-          </p>
-          <p className="text-[11px] text-text-sub leading-4">
-            검색으로 원하는 부스를 빠르게 찾아보세요
-          </p>
-        </div>
-        <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
-          부스 검색하기
-        </span>
-      </a>
-
       <section className="flex flex-col gap-[17px] mb-5">
         <div className="flex flex-col gap-2.5">
           <DateFilter
@@ -150,6 +130,25 @@ function BoothPageContent() {
       </section>
 
       <section className="flex flex-col">
+      <a
+        href="/booth/search"
+        className="flex items-center gap-3 mb-5 mt-3 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
+      >
+        <div className="w-9 h-9 rounded-[10px] bg-primary-light flex items-center justify-center flex-shrink-0">
+          <FiSearch size={17} className="text-primary" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-[13px] font-semibold text-[#1A2536] leading-5">
+            부스를 찾고 계신가요?
+          </p>
+          <p className="text-[11px] text-text-sub leading-4">
+            검색으로 원하는 부스를 빠르게 찾아보세요
+          </p>
+        </div>
+        <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
+          부스 검색하기
+        </span>
+      </a>
         <div className="pt-2 pb-5 overflow-x-auto scrollbar-hide -mx-4 px-4">
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
