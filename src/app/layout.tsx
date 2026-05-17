@@ -13,7 +13,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
-  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "https://lucaus.com"),
+  metadataBase: new URL("https://lucaus.com"),
   title: "청:ON '26",
   icons: {
     icon: "/icon.png",
@@ -22,7 +22,7 @@ export const metadata: Metadata = {
     "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
   openGraph: {
-    images: [{ url: "/open-graph.webp", width: 1200, height: 630 }],
+    images: [{ url: "https://lucaus.com/open-graph.webp", width: 1200, height: 630 }],
   },
 };
 
