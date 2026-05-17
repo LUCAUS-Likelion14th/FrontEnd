@@ -7,6 +7,7 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { mutate } from "@/api/fetcher";
 import LoginBottomSheet from "@/components/ui/LoginBottomSheet";
+import { trackEvent } from "@/lib/api/analytics";
 
 type LikeButtonProps = {
   id: number | string;
@@ -54,6 +55,9 @@ export default function LikeButton({
     const endpoint =
       type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
     const nextLiked = !isLiked;
+    const nextLikeCount = nextLiked
+      ? likeCount + 1
+      : likeCount - 1;
 
     setIsLiked(nextLiked);
     setLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
@@ -61,6 +65,18 @@ export default function LikeButton({
 
     try {
       await mutate(endpoint, nextLiked ? "POST" : "DELETE");
+
+      // 백 로그
+        trackEvent({
+          eventType: `${type}_like_click`,
+          targetType: type.toUpperCase(),
+          targetId: Number(id),
+          payload: {
+            action: nextLiked ? "like" : "unlike",
+            likeCountAfter: nextLikeCount,
+          },
+        });
+
       queryClient.invalidateQueries({ queryKey: [type] });
       queryClient.invalidateQueries({
         queryKey: [type === "booth" ? "topBooth" : "hotFood"],

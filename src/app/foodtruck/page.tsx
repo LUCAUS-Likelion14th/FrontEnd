@@ -1,12 +1,13 @@
 "use client";
 
-import { useState, useEffect, Suspense } from "react";
+import { useState, useEffect, Suspense, useRef } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
 import { useFoodTruckList } from "@/hooks/foodtruck";
 import { Card, LoadingScreen, Pagination, ErrorFallback } from "@/components";
 import FoodTruckMap from "@/components/foodtruck/FoodTruckMap";
 import { FiSearch } from "react-icons/fi";
+import { trackEvent } from "@/lib/api/analytics";
 
 const PAGE_SIZE = 8;
 
@@ -26,11 +27,47 @@ function FoodTruckPageContent() {
 
   const { data: trucks = [], isLoading, isError, refetch } = useFoodTruckList({});
 
-  const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
   const pagedTrucks = trucks.slice(
-    (currentPage - 1) * PAGE_SIZE,
-    currentPage * PAGE_SIZE,
+           (currentPage - 1) * PAGE_SIZE,
+           currentPage * PAGE_SIZE,
   );
+
+  const totalPages = Math.max(1, Math.ceil(trucks.length / PAGE_SIZE));
+
+  // 백 로그
+  const startTime = useRef(Date.now());
+  useEffect(() => {
+    trackEvent({
+      eventType: "foodtruck_list_view",
+      payload: {
+        page: currentPage,
+        visibleFoodtruckIds: pagedTrucks.map((truck) => truck.id),
+      },
+    });
+  }, [currentPage,pagedTrucks]);
+
+  useEffect(() => {
+    startTime.current = Date.now();
+
+    return () => {
+      const durationSec = Math.floor(
+        (Date.now() - startTime.current) / 1000
+      );
+
+      if (durationSec < 3) return;
+
+      trackEvent({
+        eventType: "foodtruck_list_duration",
+        payload: {
+          durationSec,
+          page: currentPage,
+        },
+      });
+    };
+  }, [currentPage]);
+
+
+
 
   return (
     <main className="px-4 pt-5 pb-25">
@@ -63,6 +100,7 @@ function FoodTruckPageContent() {
                 <Card
                   id={truck.id}
                   type="foodtruck"
+                  from="all_list"
                   name={truck.name}
                   location={truck.bestMenu}
                   image={truck.image}

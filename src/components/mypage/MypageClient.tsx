@@ -185,7 +185,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
                   {truckLikes.map((truck) => (
                     <MiniCard
                       key={truck.id}
-                      href={`/foodtruck/${truck.id}`}
+                      href={`/foodtruck/${truck.id}?from=my_page`}
                       src={truck.image}
                       alt={truck.name}
                       name={truck.name}
