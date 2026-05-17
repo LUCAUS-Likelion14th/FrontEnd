@@ -9,6 +9,7 @@ import Script from "next/script";
 import BottomNav from "@/components/layout/BottomNav";
 import "./globals.css";
 import Header from "@/components/layout/Header";
+import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
@@ -56,7 +57,9 @@ export default function RootLayout({
         )}
         <Providers>
           <Header />
-          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)" }}>{children}</main>
+          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)" }}>
+            <PageTransition>{children}</PageTransition>
+          </main>
           <BottomNav />
         </Providers>
       </body>

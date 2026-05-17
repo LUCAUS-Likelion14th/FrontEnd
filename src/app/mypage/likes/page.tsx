@@ -72,7 +72,7 @@ export default function LikesPage() {
         {currentLoading ? (
           <div className="grid grid-cols-2 gap-4">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="w-full h-[195px] rounded-[10px] bg-gray-200 animate-pulse" />
+              <div key={i} className="w-full h-[195px] rounded-[10px] animate-shimmer" />
             ))}
           </div>
         ) : currentError ? (
@@ -90,10 +90,8 @@ export default function LikesPage() {
                       type="booth"
                       image={booth.booth_image}
                       name={booth.booth_name}
-                      subText={booth.booth_owner}
-                      location={booth.booth_location}
-                      isLiked={booth.is_liked}
-                      likeCount={booth.like_count}
+                      isLiked={booth.liked}
+                      likeCount={booth.likeCount}
                     />
                   ))
                 : trucks?.map((truck) => (
@@ -103,8 +101,7 @@ export default function LikesPage() {
                       type="foodtruck"
                       image={truck.image}
                       name={truck.name}
-                      subText={truck.bestMenu}
-                      location={truck.location}
+                      location={truck.bestMenu}
                       isLiked={truck.liked}
                       likeCount={truck.likeCount}
                     />

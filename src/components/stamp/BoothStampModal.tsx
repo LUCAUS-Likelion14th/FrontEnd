@@ -34,6 +34,9 @@ export default function BoothStampModal({
     try {
       await authFetcher(`/stamp/${boothId}`, "POST", { password });
       setIsSuccess(true);
+      if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+        navigator.vibrate([80, 50, 120]);
+      }
     } catch (error: any) {
       console.warn("도장 찍기 에러: ", error);
       alert(error.message || "코드 번호가 틀렸거나 오류가 발생했습니다.");
