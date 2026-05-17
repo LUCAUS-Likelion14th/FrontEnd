@@ -19,7 +19,7 @@ export function getReferralFromPrevPath(): string {
   if (prev === "/booth" || prev.startsWith("/booth?")) return "all_list";
   if (prev === "/booth/search" || prev.startsWith("/booth/search?")) return "search";
   if (prev === "/stamp" || prev.startsWith("/stamp/") || prev.startsWith("/stamp?")) return "stamp";
-  if (prev.startsWith("/mypage/likes")) return "my";
+  if (prev === "/mypage" || prev.startsWith("/mypage/") || prev.startsWith("/mypage?")) return "my";
   return "other";
 }
 
