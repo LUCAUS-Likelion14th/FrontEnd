@@ -1,6 +1,8 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import Link from "next/link";
+import { FiArrowLeft } from "react-icons/fi";
 import { adminNoticeApi } from "@/api/adminNoticeApi";
 import { Notice } from "@/types/notice";
 
@@ -42,7 +44,12 @@ export default function MainNoticeAdminPage() {
   return (
     <>
       <div className="admin-topbar">
-        <h1 className="admin-topbar__title">메인 공지 설정</h1>
+        <div className="admin-topbar__left">
+          <Link href="/admin" className="admin-topbar__back">
+            <FiArrowLeft /> 뒤로
+          </Link>
+          <h1 className="admin-topbar__title">메인 공지 설정</h1>
+        </div>
         <div className="admin-topbar__actions">
           <span style={{ fontSize: 13, color: "#8d97a7" }}>
             메인 화면에 고정할 공지를 선택하세요
