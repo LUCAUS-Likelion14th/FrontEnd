@@ -23,6 +23,7 @@ export default function StageEventSection({
         src={crimesceneImg}
         alt={`${artist} 사진`}
         fill
+        priority
         className="object-cover"
       />
 
