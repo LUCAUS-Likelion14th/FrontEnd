@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState, Suspense } from "react";
+import { use, useState, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   BoothTitle,
@@ -34,6 +34,10 @@ function BoothDetailContent({ params }: Props) {
   const searchParams = useSearchParams();
   const { data: booth, isLoading, isError } = useBoothDetail(id);
   const [boothImgError, setBoothImgError] = useState(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   if (isLoading) return <LoadingScreen />;
 
@@ -73,17 +77,19 @@ function BoothDetailContent({ params }: Props) {
     <main className="pb-16">
       <DetailHeader title="부스 정보" />
 
-      <div className="relative w-full aspect-390/264 bg-gray-100">
+      <div className="w-full bg-gray-100">
         {boothImgError || !booth.booth_image ? (
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="flex items-center justify-center h-[200px]">
             <FiImage size={40} className="text-gray-300" />
           </div>
         ) : (
           <Image
             src={booth.booth_image}
             alt="부스 사진"
-            fill
-            className="object-cover"
+            width={0}
+            height={0}
+            sizes="100vw"
+            className="w-full h-auto"
             onError={() => setBoothImgError(true)}
           />
         )}
