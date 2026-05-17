@@ -109,7 +109,7 @@ export async function mutate(
 
 export async function fetcher<T>(
   endpoint: string,
-  options?: { revalidate?: number }
+  options?: { revalidate?: number },
 ): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const token = getToken();
@@ -183,15 +183,16 @@ export async function authFetcher<T>(
   body?: unknown,
 ): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
-  const token = getToken();
+  let token = getToken(); // 재할당 가능하도록 let으로 변경
 
   const isFormData = body instanceof FormData;
 
-  const res = await fetch(url, {
+  // 재요청 시에도 동일한 설정(헤더, 바디)을 사용하기 위해 함수로 분리
+  const createInit = (currentToken: string | null): RequestInit => ({
     method,
     cache: "no-store",
     headers: {
-      ...(token && { Authorization: `Bearer ${token}` }),
+      ...(currentToken && { Authorization: `Bearer ${currentToken}` }),
       ...(!isFormData && { "Content-Type": "application/json" }),
     },
     ...(body !== undefined && {
@@ -199,14 +200,38 @@ export async function authFetcher<T>(
     }),
   });
 
+  let res = await fetch(url, createInit(token));
+
+  // --- 추가된 부분: 401(토큰 만료) 발생 시 재발급 및 재요청 로직 ---
+  if (res.status === 401) {
+    if (typeof window !== "undefined") {
+      const newToken = await tryRefreshToken();
+      if (newToken) {
+        // 새 토큰으로 재요청 진행
+        const retryRes = await fetch(url, createInit(newToken));
+        if (retryRes.status === 401) {
+          clearAuthAndRedirect();
+          throw new Error("Unauthorized");
+        }
+        res = retryRes; // 성공하면 기존 res를 재요청 결과로 덮어쓰기
+      } else {
+        clearAuthAndRedirect();
+        throw new Error("Unauthorized");
+      }
+    } else {
+      throw new Error("Unauthorized");
+    }
+  }
+  // -----------------------------------------------------------------
+
   if (method === "DELETE" && res.status === 204) {
     return undefined as T;
   }
 
-  // 인증 실패 (401/403) 시 명확한 에러 메시지
-  if (res.status === 401 || res.status === 403) {
+  // 403 에러 처리 (401은 위에서 처리함)
+  if (res.status === 403) {
     const text = await res.text();
-    let message = "로그인이 필요합니다.";
+    let message = "권한이 없습니다.";
     try {
       const json = JSON.parse(text);
       if (json.message) message = json.message;
