@@ -31,7 +31,6 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
     setIsLoading(true);
 
     try {
-      // 1. PATCH /stamp/init API 호출
       await authFetcher("/stamp/init", "PATCH", {
         name: name,
         student_id: studentId,
@@ -48,8 +47,8 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
   };
 
   return (
-    <>
-      <div className="absolute inset-0 -z-10">
+    <div className="relative min-h-[calc(100vh-120px)] flex flex-col">
+      <div className="absolute inset-0 z-0">
         <Image
           src="/stamp-register-bg.png"
           alt="도장판 인적사항 입력 배경 이미지"
@@ -59,7 +58,7 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
         />
       </div>
 
-      <div className="flex flex-col min-h-[calc(100vh-120px)]">
+      <div className="relative z-10 flex-1 flex flex-col w-full h-full">
         <DetailHeader title="인적사항 입력" />
 
         <section className="flex-1 flex flex-col justify-center px-4">
@@ -88,20 +87,19 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
                 className="w-[225px] bg-white border border-text-sub2 rounded-[10px] px-[15px] py-[10px] focus:outline-none focus:border-text-sub2"
               />
             </div>
+
+            <span className="text-[14px] font-normal text-text-sub text-center mt-7 mb-2">
+              입력하신 정보는 광장기획전 참여 상품 응모에 활용됩니다.
+            </span>
+
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="w-full bg-primary text-white text-[16px] font-medium px-[15px] py-[10px] rounded-[10px] active:translate-y-0 active:scale-[0.98] transition-all duration-200"
+            >
+              별자리 완성하기
+            </button>
           </form>
-
-          <span className="text-[14px] font-normal text-text-sub text-center mb-7">
-            입력하신 정보는 광장기획전 참여 상품 응모에 활용됩니다.
-          </span>
-
-          <button
-            onClick={handlePreSubmit}
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-primary text-white text-[16px] font-medium px-[15px] py-[10px] rounded-[10px] active:translate-y-0 active:scale-[0.98] transition-all duration-200"
-          >
-            별자리 완성하기
-          </button>
         </section>
       </div>
 
@@ -114,6 +112,6 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
           onConfirm={handleFinalSubmit}
         />
       )}
-    </>
+    </div>
   );
 }

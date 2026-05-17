@@ -34,6 +34,9 @@ export default function BoothStampModal({
     try {
       await authFetcher(`/stamp/${boothId}`, "POST", { password });
       setIsSuccess(true);
+      if (typeof navigator !== "undefined" && "vibrate" in navigator) {
+        navigator.vibrate([80, 50, 120]);
+      }
     } catch (error: any) {
       console.warn("도장 찍기 에러: ", error);
       alert(error.message || "코드 번호가 틀렸거나 오류가 발생했습니다.");
@@ -63,9 +66,28 @@ export default function BoothStampModal({
       <section className="relative w-full max-w-[365px] min-h-[445px] rounded-[20px] bg-[rgba(6,56,125,0.35)] p-7.5 pt-[57px] backdrop-blur-xs flex flex-col items-center">
         <button
           onClick={handleCloseAttempt}
-          className="absolute top-5 right-6 text-white z-10"
+          className="absolute top-5 right-6 z-10 flex items-center justify-center"
+          aria-label="닫기"
+          style={{ width: "24px", height: "24px", flexShrink: 0 }}
         >
-          X
+          <Image
+            src="/icons/hamburger-close.svg"
+            alt="닫기"
+            width={24}
+            height={24}
+            style={{ filter: "brightness(0) invert(1)" }}
+            onError={(e) => {
+              const t = e.currentTarget as HTMLImageElement;
+              t.style.display = "none";
+              const p = t.parentElement;
+              if (p) {
+                p.textContent = "✕";
+                (p as HTMLElement).style.color = "#fff";
+                (p as HTMLElement).style.fontSize = "18px";
+                (p as HTMLElement).style.fontWeight = "normal";
+              }
+            }}
+          />
         </button>
 
         <p className="text-[20px] font-semibold text-white text-center mb-[22px]">

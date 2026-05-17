@@ -26,6 +26,22 @@ export type StampListResponse = {
   message: string | null;
 };
 
+export type BoothSearchItem = {
+  booth_id: number;
+  booth_image: string;
+  booth_name: string;
+  likeCount: number;
+  liked: boolean;
+};
+
+export type BoothSearchResponse = {
+  content: BoothSearchItem[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+};
+
 // API 요청 파라미터 타입
 export type BoothListParams = {
   page?: number;
@@ -51,6 +67,7 @@ export type BoothDetail = {
   booth_name: string;
   booth_category: string[];
   booth_info: string;
+  booth_owner: string;
   owner_insta: string;
   is_liked: boolean;
   like_count: number;

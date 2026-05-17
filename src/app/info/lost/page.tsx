@@ -42,7 +42,7 @@ export default function LostPage() {
       <DetailHeader title="분실물 찾기" />
 
       <div className="px-4">
-        <div className="flex items-center h-12 px-[11.5px] mb-3 bg-primary-light rounded-[10px] gap-2 border border-primary/30">
+        <div className="flex items-center h-12 px-[11.5px] mb-3 bg-primary-light rounded-[10px] gap-2">
           <Image
             src={"/icons/highlight.png"}
             alt={"하이라이트 아이콘"}
@@ -93,7 +93,7 @@ export default function LostPage() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="w-full h-[195px] rounded-[10px] bg-gray-200 animate-pulse"
+                className="w-full h-[195px] rounded-[10px] animate-shimmer"
               />
             ))}
           </div>
