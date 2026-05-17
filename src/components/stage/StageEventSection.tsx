@@ -1,7 +1,7 @@
 import { formatDate } from "@/utils/date";
 import Image from "next/image";
 import Link from "next/link";
-import crimesceneImg from "@/assets/crimescene.png";
+import crimesceneImg from "@/assets/webp/crimescene-bg.webp";
 
 type StageEventProps = {
   description: string;
