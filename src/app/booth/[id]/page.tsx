@@ -127,7 +127,7 @@ function BoothDetailContent({ params }: Props) {
 
         <div className="flex flex-col gap-4">
           {locationGroups.map((group) => (
-            <div key={group.location} className="flex flex-col gap-4">
+            <div key={`${group.location}__${group.locationId}`} className="flex flex-col gap-4">
               <DetailInfo locationGroups={[group]} hasBorder={false} />
               <BoothMapWithMarker
                 location={group.location}
