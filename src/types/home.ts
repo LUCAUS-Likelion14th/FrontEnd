@@ -23,6 +23,7 @@ export interface Promotion {
   
   export interface LiveStage {
     stage_id: number
+    category: string
     performer: string
     logoImage: string
     time: string
