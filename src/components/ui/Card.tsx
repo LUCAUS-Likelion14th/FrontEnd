@@ -18,6 +18,7 @@ type CardProps = {
   isLiked: boolean;
   likeCount: number;
   date?: string;
+  from?: string;
 };
 
 export default function Card({
@@ -31,10 +32,18 @@ export default function Card({
   isLiked,
   likeCount,
   date,
+  from,
 }: CardProps) {
   const [imgError, setImgError] = useState(false);
 
-  const href = date ? `/${type}/${id}?date=${date}` : `/${type}/${id}`;
+  const href =
+    date && from
+      ? `/${type}/${id}?date=${date}&from=${from}`
+      : date
+        ? `/${type}/${id}?date=${date}`
+        : from
+          ? `/${type}/${id}?from=${from}`
+          : `/${type}/${id}`;
 
   return (
     <motion.div

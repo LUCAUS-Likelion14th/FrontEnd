@@ -46,7 +46,7 @@ export function FoodSection() {
                 id={food.id}
                 type="foodtruck"
                 imageUrl={food.image}
-                href={`/foodtruck/${food.id}`}
+                href={`/foodtruck/${food.id}?from=home_top3`}
                 location={food.bestMenu}
                 name={food.name}
                 isLiked={food.liked}

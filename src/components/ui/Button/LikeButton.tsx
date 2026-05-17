@@ -57,6 +57,9 @@ export default function LikeButton({
     const endpoint =
       type === "booth" ? `/booth/${id}/like` : `/foodtruck/${id}/like`;
     const nextLiked = !isLiked;
+    const nextLikeCount = nextLiked
+      ? likeCount + 1
+      : likeCount - 1;
 
     setIsLiked(nextLiked);
     setLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
@@ -64,19 +67,18 @@ export default function LikeButton({
 
     try {
       await mutate(endpoint, nextLiked ? "POST" : "DELETE");
-      // 백엔드 로그 ─── analytics tracking ───
-      trackEvent({
-        eventType: "content_like_click",
-        targetType: type,
-        targetId: typeof id === "string" ? Number(id) : id,
-        payload: {
-          contentType: type,
-          contentId: typeof id === "string" ? Number(id) : id,
-          action: nextLiked ? "like" : "unlike",
-          likeCountAfter: nextLiked ? likeCount + 1 : likeCount - 1,
-        },
-      });
-      // 백엔드 로그 ─── /analytics tracking ───
+
+      // 백 로그
+        trackEvent({
+          eventType: `${type}_like_click`,
+          targetType: type.toUpperCase(),
+          targetId: Number(id),
+          payload: {
+            action: nextLiked ? "like" : "unlike",
+            likeCountAfter: nextLikeCount,
+          },
+        });
+
       queryClient.invalidateQueries({ queryKey: [type] });
       queryClient.invalidateQueries({
         queryKey: [type === "booth" ? "topBooth" : "hotFood"],
