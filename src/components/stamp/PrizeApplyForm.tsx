@@ -44,12 +44,14 @@ export default function PrizeApplyForm({
       await authFetcher("/stamp/prize", "PATCH", { password });
       setModalStatus("success");
     } catch (error: any) {
-      console.warn("경품 응모 에러: ", error);
+      console.warn("경품 응모 에러 상세 정보:", error);
+
+      const errorText = error.message || "";
 
       if (
-        error.status === 409 ||
-        error.message?.includes("409") ||
-        error.message?.includes("Conflict")
+        errorText.includes("이미 응모") ||
+        errorText.includes("409") ||
+        errorText.includes("Conflict")
       ) {
         setModalStatus("already");
       } else {
