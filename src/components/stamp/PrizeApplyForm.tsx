@@ -3,10 +3,10 @@
 import { BackButton } from "@/components/ui";
 import { authFetcher } from "@/api/fetcher";
 import Image from "next/image";
-import { lucausText } from "@/assets/webp";
+import { lucausText, whiteLogo } from "@/assets/webp";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
-import PrizeApplyModal from "./PrizeApplyModal";
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface PrizeEntryFormProps {
   name: string;
@@ -23,11 +23,15 @@ export default function PrizeApplyForm({
 }: PrizeEntryFormProps) {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [modalStatus, setModalStatus] = useState<"success" | "already" | null>(
-    null,
-  );
+  const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const router = useRouter();
+
+  useEffect(() => {
+    if (!isSuccess) return;
+    const timer = setTimeout(() => router.push("/stamp"), 2800);
+    return () => clearTimeout(timer);
+  }, [isSuccess, router]);
 
   const progressPercentage = stampAll > 0 ? (stampCount / stampAll) * 100 : 0;
 
@@ -42,7 +46,7 @@ export default function PrizeApplyForm({
 
     try {
       await authFetcher("/stamp/prize", "PATCH", { password });
-      setModalStatus("success");
+      setIsSuccess(true);
     } catch (error: any) {
       console.warn("경품 응모 에러 상세 정보:", error);
 
@@ -62,10 +66,17 @@ export default function PrizeApplyForm({
     }
   };
 
-  const handleModalClose = () => {
-    setModalStatus(null);
-    router.push("/stamp");
-  };
+  const DOTS = Array.from({ length: 18 }, (_, i) => {
+    const angle = (i / 18) * 360 + i * 4;
+    const dist = 90 + (i % 4) * 45;
+    return {
+      id: i,
+      x: Math.cos((angle * Math.PI) / 180) * dist,
+      y: Math.sin((angle * Math.PI) / 180) * dist,
+      size: 4 + (i % 4) * 3,
+      delay: i * 0.035,
+    };
+  });
 
   return (
     <div className="relative min-h-screen">
@@ -180,9 +191,87 @@ export default function PrizeApplyForm({
         </section>
       </div>
 
-      {modalStatus && (
-        <PrizeApplyModal status={modalStatus} onClose={handleModalClose} />
-      )}
+      {/* 임시 테스트 버튼 */}
+      <button
+        onClick={() => setIsSuccess(true)}
+        className="fixed bottom-6 right-6 z-40 bg-black/60 text-white text-xs px-3 py-2 rounded-full"
+      >
+        테스트
+      </button>
+
+      <AnimatePresence>
+        {isSuccess && (
+          <motion.div
+            key="celebration"
+            className="fixed inset-0 z-50 flex flex-col items-center justify-center gap-10"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.4 }}
+          >
+            {/* 배경 */}
+            <div className="absolute inset-0 z-0">
+              <Image src="/stamp-bg.png" alt="" fill priority className="object-cover object-top" />
+              <div className="absolute inset-0 bg-black/30" />
+            </div>
+
+            {/* 로고 + 파티클 */}
+            <div className="relative z-10 flex items-center justify-center" style={{ width: 320, height: 320 }}>
+              {/* ripple 링 */}
+              {[0, 1, 2].map((i) => (
+                <motion.div
+                  key={i}
+                  className="absolute rounded-full"
+                  style={{ border: "1.5px solid rgba(180,210,255,0.5)", width: 140, height: 140 }}
+                  initial={{ scale: 0.8, opacity: 0.7 }}
+                  animate={{ scale: 3.2, opacity: 0 }}
+                  transition={{ duration: 1.6, delay: i * 0.28, ease: "easeOut" }}
+                />
+              ))}
+
+              {/* 빛나는 파티클 도트 */}
+              {DOTS.map((d) => (
+                <motion.div
+                  key={d.id}
+                  className="absolute rounded-full"
+                  style={{
+                    width: d.size,
+                    height: d.size,
+                    background: "radial-gradient(circle, #e8f0ff 0%, #a8c4ff 60%, transparent 100%)",
+                    boxShadow: `0 0 ${d.size * 2.5}px rgba(160,200,255,0.9)`,
+                  }}
+                  initial={{ x: 0, y: 0, opacity: 0, scale: 0 }}
+                  animate={{ x: d.x, y: d.y, opacity: [0, 1, 0.9, 0], scale: [0, 1.4, 1, 0.2] }}
+                  transition={{ duration: 1.8, delay: d.delay, ease: [0.16, 1, 0.3, 1] }}
+                />
+              ))}
+
+              {/* 로고 */}
+              <motion.div
+                initial={{ scale: 0, opacity: 0 }}
+                animate={{ scale: [0, 1.25, 1], opacity: 1 }}
+                transition={{ duration: 0.65, ease: [0.34, 1.56, 0.64, 1] }}
+                style={{ filter: "drop-shadow(0 0 24px rgba(140,190,255,0.8))" }}
+              >
+                <Image src={whiteLogo} alt="LUCAUS" width={120} height={120} className="object-contain" />
+              </motion.div>
+            </div>
+
+            {/* 텍스트 */}
+            <motion.div
+              className="relative z-10 flex flex-col items-center gap-2"
+              initial={{ opacity: 0, y: 18 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <p className="text-white/80 text-[20px] font-medium tracking-wide text-center">
+                응모가 완료되었습니다!
+              </p>
+              <p className="text-white/45 text-[13px] font-normal">잠시 후 이동합니다</p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   );
 }
