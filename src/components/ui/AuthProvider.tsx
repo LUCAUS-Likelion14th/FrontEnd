@@ -60,12 +60,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     })
       .then((r) => (r.ok ? r.json() : null))
       .then((data) => {
-        const token = data?.data?.accessToken;
+        const token = data?.accessToken;
         if (token) {
           localStorage.setItem("accessToken", token);
           setAccessToken(token);
-          if (data.data.refreshToken) {
-            localStorage.setItem("refreshToken", data.data.refreshToken);
+          if (data.refreshToken) {
+            localStorage.setItem("refreshToken", data.refreshToken);
           }
         } else if (existingToken) {
           setAccessToken(existingToken);

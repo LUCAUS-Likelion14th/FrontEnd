@@ -44,11 +44,11 @@ async function _doRefresh(): Promise<string | null> {
     });
     if (!r.ok) return null;
     const data = await r.json();
-    const newToken = data?.data?.accessToken;
+    const newToken = data?.accessToken;
     if (!newToken) return null;
     localStorage.setItem("accessToken", newToken);
-    if (data.data.refreshToken) {
-      localStorage.setItem("refreshToken", data.data.refreshToken);
+    if (data.refreshToken) {
+      localStorage.setItem("refreshToken", data.refreshToken);
     }
     return newToken;
   } catch {
@@ -207,13 +207,12 @@ export async function authFetcher<T>(
     if (typeof window !== "undefined") {
       const newToken = await tryRefreshToken();
       if (newToken) {
-        // 새 토큰으로 재요청 진행
         const retryRes = await fetch(url, createInit(newToken));
         if (retryRes.status === 401) {
           clearAuthAndRedirect();
           throw new Error("Unauthorized");
         }
-        res = retryRes; // 성공하면 기존 res를 재요청 결과로 덮어쓰기
+        res = retryRes;
       } else {
         clearAuthAndRedirect();
         throw new Error("Unauthorized");
