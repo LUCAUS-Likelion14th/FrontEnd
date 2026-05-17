@@ -3,7 +3,7 @@
 import { fetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef,useState } from "react";
 import BoothStampModal from "./BoothStampModal";
 import {trackEvent} from "@/lib/api/analytics"; // 백 로그
 
@@ -60,6 +60,20 @@ export default function StampBoard() {
   const [refreshKey, setRefreshKey] = useState(0);
   const [isError, setIsError] = useState(false);
   const router = useRouter();
+
+  // 백 로그 시작
+  const startTime = useRef(Date.now());
+  useEffect(() => {
+    return () => {
+      const durationSec = Math.floor((Date.now() - startTime.current) / 1000);
+      if (durationSec < 3) return;
+      trackEvent({
+        eventType: "stay_duration_stamp_list",
+        targetType: "STAMP",
+        payload: { duration_sec: durationSec },
+      });
+    };
+  }, []); // 백 로그 끝
 
   useEffect(() => {
     setIsError(false);

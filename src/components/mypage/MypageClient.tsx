@@ -8,6 +8,7 @@ import { MyPageData } from "@/types/mypage";
 import { FiChevronRight, FiImage, FiHeart, FiLogOut, FiLogIn } from "react-icons/fi";
 import { PiStampLight } from "react-icons/pi";
 import { fetcher } from "@/api/fetcher";
+import {trackEvent} from "@/lib/api/analytics";
 
 interface MypageClientProps {
   isLoggedIn: boolean;
@@ -201,7 +202,17 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
 
             {/* 도장판 */}
-            <Link href="/stamp" className="flex flex-col gap-3">
+            <Link
+                href="/stamp"
+                className="flex flex-col gap-3"
+                onClick={() => // 백 로그 시작
+                    trackEvent({
+                      eventType: "stamp_list_click",
+                      targetType: "STAMP",
+                      payload: { referral: "my" },
+                    })
+                } // 백 로그 끝
+            >
               <div className="flex items-center justify-between">
                 <span className="text-[20px] font-semibold">도장판</span>
                 <FiChevronRight size={24} className="text-[#727272]" />

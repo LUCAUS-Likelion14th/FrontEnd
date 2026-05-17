@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { LoginBottomSheet } from "@/components";
 import puangBg from "@/assets/webp/puang-bg.webp";
 import { FiChevronRight } from "react-icons/fi";
+import {trackEvent} from "@/lib/api/analytics";
 
 export function StampShortcutButton() {
   const [showLogin, setShowLogin] = useState(false);
@@ -22,6 +23,11 @@ export function StampShortcutButton() {
       setShowLogin(true);
       return;
     }
+    trackEvent({ // 백 로그
+      eventType: "stamp_list_click",
+      targetType: "STAMP",
+      payload: { referral: "home" },
+    }); // 백 로그 끝
     router.push("/stamp");
   };
 
