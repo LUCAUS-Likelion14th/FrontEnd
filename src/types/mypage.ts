@@ -1,6 +1,5 @@
 export type BoothLike = {
   booth_id: number;
-  location_id: number;
   booth_image: string;
   booth_name: string;
 };
