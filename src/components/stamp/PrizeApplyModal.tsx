@@ -24,7 +24,7 @@ export default function PrizeApplyModal({
         {!isAlready && (
           <div className="relative flex justify-center items-center min-h-[160px] mt-6">
             <Image
-              src="/images/stamp/puang-pass-stamp.png"
+              src="/stamp-short-btn-img.png"
               alt="응모 완료 도장"
               width={150}
               height={150}
