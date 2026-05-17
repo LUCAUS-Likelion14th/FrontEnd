@@ -3,9 +3,10 @@
 import { fetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useRef,useState } from "react";
 import BoothStampModal from "./BoothStampModal";
+import {trackEvent} from "@/lib/api/analytics"; // 백 로그
 
 interface Booth {
   booth_id: number;
@@ -62,6 +63,20 @@ export default function StampBoard() {
   const [isError, setIsError] = useState(false);
   const router = useRouter();
 
+  // 백 로그 시작
+  const startTime = useRef(Date.now());
+  useEffect(() => {
+    return () => {
+      const durationSec = Math.floor((Date.now() - startTime.current) / 1000);
+      if (durationSec < 3) return;
+      trackEvent({
+        eventType: "stay_duration_stamp_list",
+        targetType: "STAMP",
+        payload: { duration_sec: durationSec },
+      });
+    };
+  }, []); // 백 로그 끝
+
   useEffect(() => {
     setIsError(false);
     const loadData = async () => {
@@ -109,12 +124,24 @@ export default function StampBoard() {
         className="relative flex flex-col items-center w-[80px]"
       >
         <div
-          onClick={() => !showBlue && setSelectedBooth(booth)}
+          onClick={() => {
+            if (showBlue) return;
+            trackEvent({
+              eventType: "stamp_detail_click",
+              targetType: "STAMP",
+              targetId: booth.booth_id,
+              payload: {
+                stamp_booth_id: booth.booth_id,
+              },
+            });
+            setSelectedBooth(booth);
+          }}
           className={`relative w-[80px] h-[80px] flex justify-center items-center z-10 ${
             showBlue ? "cursor-default" : "cursor-pointer active:scale-95 transition-transform"
           }`}
           style={{ perspective: "300px" }}
         >
+
           <AnimatePresence initial={false} mode="wait">
             {!showBlue ? (
               <motion.div
@@ -234,6 +261,7 @@ export default function StampBoard() {
         <BoothStampModal
           boothId={selectedBooth.booth_id}
           boothName={selectedBooth.name}
+          stampCount={data.stamp_count} // 백 로그
           onClose={() => setSelectedBooth(null)}
           onSuccess={() => {
             setNewlyStampedId(selectedBooth.booth_id);

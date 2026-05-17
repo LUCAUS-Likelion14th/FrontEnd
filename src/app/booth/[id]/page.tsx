@@ -14,6 +14,11 @@ import { useBoothDetail } from "@/hooks/booth";
 import BoothMapWithMarker from "@/components/detail/BoothMapWithMarker";
 import Image from "next/image";
 import { FiImage, FiFlag } from "react-icons/fi";
+// ─── analytics tracking ───
+import { useRef } from "react";
+import { trackEvent } from "@/lib/api/analytics";
+import { getReferralFromPrevPath, getLastSearchQueryIfFromSearch } from "@/lib/api/referral";
+// ─── /analytics tracking ───
 
 const DAY_KO: Record<string, string> = {
   MONDAY: "월",
@@ -38,6 +43,51 @@ function BoothDetailContent({ params }: Props) {
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
+
+  // 백엔드 로그 ─── analytics tracking ───
+  const _analyticsHasTracked = useRef(false);
+  const _analyticsStartTime = useRef(Date.now());
+  const _analyticsBoothIdRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    if (!booth || _analyticsHasTracked.current) return;
+    _analyticsBoothIdRef.current = booth.booth_id;
+    _analyticsStartTime.current = Date.now();
+    _analyticsHasTracked.current = true;
+    trackEvent({
+      eventType: "booth_detail_view",
+      targetType: "BOOTH",
+      targetId: booth.booth_id,
+      payload: {
+        boothId: booth.booth_id,
+        referral: getReferralFromPrevPath(),
+        searchQuery: getLastSearchQueryIfFromSearch(),
+        mainPosition: Number(searchParams.get("main_position")) || null,
+        likeCountAtView: booth.like_count,
+        isLikedByUser: booth.is_liked,
+      },
+    });
+  }, [booth]);
+
+  useEffect(() => {
+    return () => {
+      if (!_analyticsBoothIdRef.current) return;
+      const durationSec = Math.floor(
+        (Date.now() - _analyticsStartTime.current) / 1000,
+      );
+      if (durationSec < 3) return;
+      trackEvent({
+        eventType: "stay_duration_booth_detail",
+        targetType: "BOOTH",
+        targetId: _analyticsBoothIdRef.current,
+        payload: {
+          boothId: _analyticsBoothIdRef.current,
+          durationSec,
+        },
+      });
+    };
+  }, []);
+  // 백엔드 로그 ─── /analytics tracking ───
 
   if (isLoading) return <LoadingScreen />;
 

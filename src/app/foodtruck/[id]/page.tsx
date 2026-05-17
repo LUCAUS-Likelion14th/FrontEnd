@@ -1,6 +1,7 @@
 "use client";
 
 import { use, useEffect, useRef } from "react";
+import { useSearchParams } from "next/navigation";
 import {
   DetailHeader,
   FoodTruckTitle,
@@ -25,23 +26,26 @@ export default function FoodTruckDetailPage({ params }: Props) {
   const hasTracked = useRef(false);
   const startTime = useRef(Date.now());
   const foodtruckIdRef = useRef<number | null>(null);
+  const searchParams = useSearchParams();
+  const from = searchParams.get("from");
     //foodtruck_detail_view
   useEffect(() => {
     if (!foodTruck || hasTracked.current) return;
     foodtruckIdRef.current = foodTruck.id;
+    startTime.current = Date.now();
     hasTracked.current = true;
     trackEvent({
       eventType: "foodtruck_detail_view",
       targetType: "FOODTRUCK",
       targetId: foodTruck.id,
       payload: {
-        referral: "home_top3",
+        referral: from ?? "unknown",
         mainPosition: 1,
         likeCountAtView: foodTruck.likeCount,
         isLikedByUser: foodTruck.liked,
       },
     });
-  }, [foodTruck]);
+  }, [foodTruck, from]);
     //foodtruck_detail_duration
   useEffect(() => {
     return () => {

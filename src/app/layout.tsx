@@ -11,6 +11,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
+import RouteTracker from "@/components/analytics/RouteTracker";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://lucaus.com"),
@@ -60,6 +61,7 @@ export default function RootLayout({
           </>
         )}
         <Providers>
+          <RouteTracker />
           <Header />
           <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "calc(1.1rem + env(safe-area-inset-bottom))" }}>
             <PageTransition>{children}</PageTransition>
