@@ -177,7 +177,7 @@ export default function StampBoard() {
             onClick={() => router.push(`/stamp/prize`)}
             className="bg-primary px-[37.5px] py-2.5 text-base text-white font-semibold rounded-lg"
           >
-            경품 응모하기
+            추첨권 응모하기
           </button>
         </div>
 

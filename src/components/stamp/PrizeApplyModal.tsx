@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { whiteLogo } from "@/assets/webp";
 import StampModalLayout from "./StampModalLayout";
 
 interface PrizeApplyModalProps {
@@ -24,8 +25,8 @@ export default function PrizeApplyModal({
         {!isAlready && (
           <div className="relative flex justify-center items-center min-h-[160px] mt-6">
             <Image
-              src="/stamp-short-btn-img.png"
-              alt="응모 완료 도장"
+              src={whiteLogo}
+              alt="응모 완료"
               width={150}
               height={150}
               className="object-contain animate-fade-in"

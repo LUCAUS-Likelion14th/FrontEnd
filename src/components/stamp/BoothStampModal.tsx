@@ -39,7 +39,7 @@ export default function BoothStampModal({
         navigator.vibrate([80, 50, 120]);
       }
     } catch (error: any) {
-      alert(error.message || "코드 번호가 틀렸거나 오류가 발생했습니다.");
+      setErrorMsg("잘못된 코드입니다.");
       setPassword("");
     } finally {
       setIsLoading(false);
@@ -97,7 +97,7 @@ export default function BoothStampModal({
                 }`}
               />
               {errorMsg && (
-                <span className="text-red-400 text-[12px]">{errorMsg}</span>
+                <span className="text-red-400 text-[14px]">{errorMsg}</span>
               )}
             </div>
             <button
