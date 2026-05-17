@@ -63,7 +63,7 @@ export default function LikesPage() {
 
   return (
     <main className="pb-25">
-      <div className="fixed top-14 left-0 right-0 bg-white z-10">
+      <div className="fixed top-14 left-0 right-0 bg-white z-40">
         <DetailHeader title="내 좋아요" />
         <TabBar />
       </div>
