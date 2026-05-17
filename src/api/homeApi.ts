@@ -8,9 +8,9 @@ import type {
 } from "@/types/home";
 
 export const homeApi = {
-  getTopBooth: () => fetcher<TopBooth[]>("/top-booth", { revalidate: 60 }),
-  getPromotion: () => fetcher<Promotion[]>("/promotion", { revalidate: 300 }),
-  getLiveStage: () => fetcher<LiveStage[]>("/live-stage", { revalidate: 30 }),
-  getHotFood: () => fetcher<HotFood[]>("/hot-food", { revalidate: 60 }),
-  getActiveNotice: () => fetcher<ActiveNotice>("/active-notice", { revalidate: 60 }),
+  getTopBooth: () => fetcher<TopBooth[]>("/top-booth", { revalidate: 0 }),
+  getPromotion: () => fetcher<Promotion[]>("/promotion", { revalidate: 0 }),
+  getLiveStage: () => fetcher<LiveStage[]>("/live-stage", { revalidate: 0 }),
+  getHotFood: () => fetcher<HotFood[]>("/hot-food", { revalidate: 0 }),
+  getActiveNotice: () => fetcher<ActiveNotice>("/active-notice", { revalidate: 0 }),
 };
