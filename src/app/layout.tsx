@@ -13,6 +13,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lucaus.com"),
   title: "청:ON '26",
   icons: {
     icon: "/icon.png",
@@ -60,7 +61,7 @@ export default function RootLayout({
         )}
         <Providers>
           <Header />
-          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "calc(1rem + env(safe-area-inset-bottom))" }}>
+          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "calc(1.1rem + env(safe-area-inset-bottom))" }}>
             <PageTransition>{children}</PageTransition>
           </main>
           <BottomNav />
