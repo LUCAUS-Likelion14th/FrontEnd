@@ -53,7 +53,7 @@ export default function PrizeApplyForm({
         errorText.includes("409") ||
         errorText.includes("Conflict")
       ) {
-        setModalStatus("already");
+        setErrorMsg("한 계정당 한 번만 응모할 수 있어요.");
       } else {
         setErrorMsg("잘못된 코드입니다.");
       }

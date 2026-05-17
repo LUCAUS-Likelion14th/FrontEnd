@@ -120,8 +120,8 @@ export default function StampBoard() {
               <motion.div
                 key="off"
                 className="absolute inset-0 flex items-center justify-center"
-                exit={{ rotateY: 90 }}
-                transition={{ duration: 0.2, ease: "easeIn" }}
+                exit={{ rotateY: 450 }}
+                transition={{ duration: 0.5, ease: "easeIn" }}
               >
                 <Image src="/star-off.png" alt={booth.name} width={80} height={80} className="drop-shadow-lg" />
               </motion.div>
@@ -131,7 +131,7 @@ export default function StampBoard() {
                 className="absolute inset-0 flex items-center justify-center"
                 initial={{ rotateY: -90 }}
                 animate={{ rotateY: 0 }}
-                transition={{ duration: 0.2, ease: "easeOut" }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
                 onAnimationComplete={() => {
                   if (isNewlyStamped) setNewlyStampedId(null);
                 }}
