@@ -29,7 +29,6 @@ export const mypageApi = {
 
       booth_like_list: booths.map((b) => ({
         booth_id: b.booth_id,
-        location_id: b.location_id,
         booth_image: b.booth_image,
         booth_name: b.booth_name,
       })),
