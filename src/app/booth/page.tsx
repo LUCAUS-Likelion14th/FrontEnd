@@ -7,7 +7,6 @@ import BoothMap from "@/components/booth/BoothMap";
 import {
   BoothLocationFilter,
   BoothCategoryFilter,
-  BoothSearchBar,
   DateFilter,
   Pagination,
   Card,
@@ -35,12 +34,6 @@ function BoothPageContent() {
   const [selectedCategory, setSelectedCategory] = useState<BoothCategory>(
     () => (searchParams.get("category") as BoothCategory) ?? "전체",
   );
-  const [searchQuery, setSearchQuery] = useState(
-    () => searchParams.get("q") ?? "",
-  );
-  const [debouncedSearch, setDebouncedSearch] = useState(
-    () => searchParams.get("q") ?? "",
-  );
   const [currentPage, setCurrentPage] = useState(() => {
     const raw = Number(searchParams.get("page") ?? 1);
     return Number.isInteger(raw) && raw >= 1 ? raw : 1;
@@ -51,21 +44,14 @@ function BoothPageContent() {
     params.set("date", selectedDate);
     if (selectedLocation) params.set("location", selectedLocation);
     if (selectedCategory !== "전체") params.set("category", selectedCategory);
-    if (debouncedSearch) params.set("q", debouncedSearch);
     if (currentPage > 1) params.set("page", String(currentPage));
     router.replace(`?${params.toString()}`, { scroll: false });
   }, [
     selectedDate,
     selectedLocation,
     selectedCategory,
-    debouncedSearch,
     currentPage,
   ]);
-
-  useEffect(() => {
-    const t = setTimeout(() => setDebouncedSearch(searchQuery), 300);
-    return () => clearTimeout(t);
-  }, [searchQuery]);
 
   const dateParam = selectedDate.replace(/-/g, "").slice(4);
 
@@ -81,7 +67,6 @@ function BoothPageContent() {
       date: dateParam,
       location: selectedLocation ?? undefined,
       category: selectedCategory !== "전체" ? selectedCategory : undefined,
-      search: debouncedSearch.trim() || undefined,
     },
     { enabled: !isStampMode },
   );
@@ -119,10 +104,6 @@ function BoothPageContent() {
     setSelectedCategory(cat);
     setCurrentPage(1);
   };
-  const handleSearchChange = (q: string) => {
-    setSearchQuery(q);
-    setCurrentPage(1);
-  };
   const handleStampClick = () => {
     if (isStampMode) return;
     setIsStampMode(true);
@@ -131,6 +112,26 @@ function BoothPageContent() {
 
   return (
     <main className="px-4 pt-5 pb-25">
+      <a
+        href="/booth/search"
+        className="flex items-center gap-3 mb-5 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
+      >
+        <div className="w-9 h-9 rounded-[10px] bg-primary-light flex items-center justify-center flex-shrink-0">
+          <FiSearch size={17} className="text-primary" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-[13px] font-semibold text-[#1A2536] leading-5">
+            부스를 찾고 계신가요?
+          </p>
+          <p className="text-[11px] text-text-sub leading-4">
+            검색으로 원하는 부스를 빠르게 찾아보세요
+          </p>
+        </div>
+        <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
+          부스 검색하기
+        </span>
+      </a>
+
       <section className="flex flex-col gap-[17px] mb-5">
         <div className="flex flex-col gap-2.5">
           <DateFilter
@@ -149,8 +150,7 @@ function BoothPageContent() {
       </section>
 
       <section className="flex flex-col">
-        <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-        <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide -mx-4 px-4">
+        <div className="pt-2 pb-5 overflow-x-auto scrollbar-hide -mx-4 px-4">
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
             onSelectCategory={handleCategoryChange}
