@@ -13,7 +13,7 @@ import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://lucaus.com"),
+  metadataBase: new URL(process.env.NEXT_PUBLIC_BASE_URL ?? "https://lucaus.com"),
   title: "청:ON '26",
   icons: {
     icon: "/icon.png",
