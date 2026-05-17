@@ -50,10 +50,32 @@ type Props = {
 
 function resolveCoordsList(locationId: string): [number, number][] {
   if (BOOTH_COORDS[locationId]) return [BOOTH_COORDS[locationId]];
-  return locationId
-    .split("-")
-    .map((p) => BOOTH_COORDS[p.trim()])
-    .filter(Boolean) as [number, number][];
+
+  const coords: [number, number][] = [];
+
+  for (const segment of locationId.split(",")) {
+    const part = segment.trim();
+    if (BOOTH_COORDS[part]) {
+      coords.push(BOOTH_COORDS[part]);
+      continue;
+    }
+    if (part.includes("-")) {
+      const [a, b] = part.split("-").map((s) => s.trim());
+      const start = Number(a);
+      const end = Number(b);
+      if (Number.isFinite(start) && Number.isFinite(end) && start <= end) {
+        for (let n = start; n <= end; n++) {
+          const c = BOOTH_COORDS[String(n)];
+          if (c) coords.push(c);
+        }
+      } else {
+        if (BOOTH_COORDS[a]) coords.push(BOOTH_COORDS[a]);
+        if (BOOTH_COORDS[b]) coords.push(BOOTH_COORDS[b]);
+      }
+    }
+  }
+
+  return coords;
 }
 
 function PinMarker({ delay }: { delay: number }) {
