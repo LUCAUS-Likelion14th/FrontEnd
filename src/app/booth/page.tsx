@@ -3,18 +3,19 @@
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
 import { useSearchParams, useRouter } from "next/navigation";
-import BoothMap from "@/components/pages/booth/BoothMap";
+import BoothMap from "@/components/booth/BoothMap";
 import {
   BoothLocationFilter,
   BoothCategoryFilter,
-  BoothSearchBar,
   DateFilter,
   Pagination,
   Card,
+  LoadingScreen,
+  ErrorFallback,
 } from "@/components";
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
-import { useBoothList, useBoothStampList } from "@/hooks/queries/booth";
+import { useBoothList, useBoothStampList } from "@/hooks/booth";
 
 const PAGE_SIZE = 8;
 
@@ -33,60 +34,59 @@ function BoothPageContent() {
   const [selectedCategory, setSelectedCategory] = useState<BoothCategory>(
     () => (searchParams.get("category") as BoothCategory) ?? "전체",
   );
-  const [searchQuery, setSearchQuery] = useState(
-    () => searchParams.get("q") ?? "",
-  );
-  const [debouncedSearch, setDebouncedSearch] = useState(
-    () => searchParams.get("q") ?? "",
-  );
-  const [currentPage, setCurrentPage] = useState(() =>
-    Number(searchParams.get("page") ?? 1),
-  );
+  const [currentPage, setCurrentPage] = useState(() => {
+    const raw = Number(searchParams.get("page") ?? 1);
+    return Number.isInteger(raw) && raw >= 1 ? raw : 1;
+  });
 
   useEffect(() => {
     const params = new URLSearchParams();
     params.set("date", selectedDate);
     if (selectedLocation) params.set("location", selectedLocation);
     if (selectedCategory !== "전체") params.set("category", selectedCategory);
-    if (debouncedSearch) params.set("q", debouncedSearch);
     if (currentPage > 1) params.set("page", String(currentPage));
     router.replace(`?${params.toString()}`, { scroll: false });
   }, [
     selectedDate,
     selectedLocation,
     selectedCategory,
-    debouncedSearch,
     currentPage,
   ]);
 
-  useEffect(() => {
-    const t = setTimeout(() => setDebouncedSearch(searchQuery), 300);
-    return () => clearTimeout(t);
-  }, [searchQuery]);
-
   const dateParam = selectedDate.replace(/-/g, "").slice(4);
 
-  const { data: normalBoothsData, isLoading: normalLoading } = useBoothList(
+  const {
+    data: normalBoothsData,
+    isLoading: normalLoading,
+    isError: normalError,
+    refetch: refetchNormal,
+  } = useBoothList(
     {
       page: currentPage - 1,
       size: PAGE_SIZE,
       date: dateParam,
       location: selectedLocation ?? undefined,
       category: selectedCategory !== "전체" ? selectedCategory : undefined,
-      search: debouncedSearch.trim() || undefined,
     },
     { enabled: !isStampMode },
   );
 
-  const { data: stampBoothsData, isLoading: stampLoading } = useBoothStampList({
+  const {
+    data: stampBoothsData,
+    isLoading: stampLoading,
+    isError: stampError,
+    refetch: refetchStamp,
+  } = useBoothStampList({
     enabled: isStampMode,
   });
 
   const normalBooths = normalBoothsData?.content ?? [];
-  const stampBooths = stampBoothsData?.data ?? [];
+  const stampBooths = stampBoothsData ?? [];
 
   const booths = isStampMode ? stampBooths : normalBooths;
   const isLoading = isStampMode ? stampLoading : normalLoading;
+  const isError = isStampMode ? stampError : normalError;
+  const refetch = isStampMode ? refetchStamp : refetchNormal;
 
   const totalPages = isStampMode ? 1 : (normalBoothsData?.totalPages ?? 1);
 
@@ -102,10 +102,6 @@ function BoothPageContent() {
   const handleCategoryChange = (cat: BoothCategory) => {
     setIsStampMode(false);
     setSelectedCategory(cat);
-    setCurrentPage(1);
-  };
-  const handleSearchChange = (q: string) => {
-    setSearchQuery(q);
     setCurrentPage(1);
   };
   const handleStampClick = () => {
@@ -134,8 +130,26 @@ function BoothPageContent() {
       </section>
 
       <section className="flex flex-col">
-        <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-        <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide">
+      <a
+        href="/booth/search"
+        className="flex items-center gap-3 mb-5 mt-3 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
+      >
+        <div className="w-9 h-9 rounded-[10px] bg-primary-light flex items-center justify-center flex-shrink-0">
+          <FiSearch size={17} className="text-primary" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-[13px] font-semibold text-[#1A2536] leading-5">
+            부스를 찾고 계신가요?
+          </p>
+          <p className="text-[11px] text-text-sub leading-4">
+            원하는 부스를 빠르게 찾아보세요
+          </p>
+        </div>
+        <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
+          부스 검색하기
+        </span>
+      </a>
+        <div className="pt-2 pb-5 overflow-x-auto scrollbar-hide -mx-4 px-4">
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
             onSelectCategory={handleCategoryChange}
@@ -153,10 +167,12 @@ function BoothPageContent() {
               {Array.from({ length: PAGE_SIZE }).map((_, i) => (
                 <div
                   key={i}
-                  className="w-full h-[137px] rounded-[10px] bg-gray-200 animate-pulse"
+                  className="w-full h-[195px] rounded-[10px] animate-shimmer"
                 />
               ))}
             </div>
+          ) : isError ? (
+            <ErrorFallback onReset={refetch} />
           ) : booths.length > 0 ? (
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
               {booths.map((booth, i) => (
@@ -165,28 +181,34 @@ function BoothPageContent() {
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20px" }}
-                  transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
+                  transition={{
+                    duration: 0.3,
+                    delay: i * 0.05,
+                    ease: "easeOut",
+                  }}
                 >
                   <Card
                     id={booth.booth_id}
                     type="booth"
                     name={booth.booth_name}
                     subText={booth.booth_owner}
-                    location={booth.booth_location}
+                    location={booth.location}
+                    locationId={booth.location_id}
                     image={booth.booth_image}
                     isLiked={booth.is_liked}
                     likeCount={booth.like_count}
+                    date={selectedDate}
                   />
                 </motion.div>
               ))}
             </div>
           ) : (
             <div className="flex flex-col items-center justify-center h-full gap-3 py-16">
-              <div className="w-16 h-16 rounded-full bg-[#EEF3FB] flex items-center justify-center">
-                <FiSearch size={28} className="text-[#06387D]" />
+              <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
+                <FiSearch size={28} className="text-primary" />
               </div>
               <div className="flex flex-col items-center gap-1">
-                <p className="text-[15px] font-semibold text-[#3B4A5A]">
+                <p className="text-[15px] font-semibold text-title">
                   부스를 찾을 수 없어요
                 </p>
                 <p className="text-[13px] text-text-sub">
@@ -211,7 +233,7 @@ function BoothPageContent() {
 
 export default function BoothPage() {
   return (
-    <Suspense>
+    <Suspense fallback={<LoadingScreen />}>
       <BoothPageContent />
     </Suspense>
   );

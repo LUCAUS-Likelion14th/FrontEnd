@@ -1,11 +1,11 @@
 // 부스 리스트 아이템 (공통)
 export type BoothListItem = {
   booth_id: number;
-  location_id?: number;
+  location_id?: string;
   booth_image: string;
   booth_name: string;
   booth_owner: string;
-  booth_location: string;
+  location: string;
   is_liked: boolean;
   like_count: number;
 };
@@ -26,6 +26,22 @@ export type StampListResponse = {
   message: string | null;
 };
 
+export type BoothSearchItem = {
+  booth_id: number;
+  booth_image: string;
+  booth_name: string;
+  likeCount: number;
+  liked: boolean;
+};
+
+export type BoothSearchResponse = {
+  content: BoothSearchItem[];
+  totalPages: number;
+  totalElements: number;
+  size: number;
+  number: number;
+};
+
 // API 요청 파라미터 타입
 export type BoothListParams = {
   page?: number;
@@ -36,18 +52,24 @@ export type BoothListParams = {
   search?: string;
 };
 
+export type BoothSetting = {
+  locationId: string;
+  location: string;
+  date: string;
+  day: string;
+  startAt: string;
+  endAt: string;
+};
+
 export type BoothDetail = {
   booth_id: number;
-  location_id: number;
-  booth_image: string;
+  booth_image: string | null;
   booth_name: string;
-  booth_owner: string;
   booth_category: string[];
   booth_info: string;
+  booth_owner: string;
   owner_insta: string;
   is_liked: boolean;
   like_count: number;
-  location: string;
-  date: string[];
-  location_image: string;
+  settings: BoothSetting[];
 };

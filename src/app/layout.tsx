@@ -1,15 +1,24 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
+
+export const viewport: Viewport = {
+  viewportFit: "cover",
+  themeColor: "transparent",
+};
 import localFont from "next/font/local";
 import Script from "next/script";
-import BottomNav from "@/components/layouts/BottomNav";
+import BottomNav from "@/components/layout/BottomNav";
 import "./globals.css";
-import Header from "@/components/layouts/Header";
+import Header from "@/components/layout/Header";
+import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
 
 export const metadata: Metadata = {
   title: "청:ON '26",
   icons: {
     icon: "/icon.png",
+  },
+  other: {
+    "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
 };
 
@@ -48,7 +57,9 @@ export default function RootLayout({
         )}
         <Providers>
           <Header />
-          <main className="min-h-screen mt-14">{children}</main>
+          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)" }}>
+            <PageTransition>{children}</PageTransition>
+          </main>
           <BottomNav />
         </Providers>
       </body>

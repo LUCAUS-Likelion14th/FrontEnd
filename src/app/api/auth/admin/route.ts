@@ -6,6 +6,7 @@ export async function POST() {
     httpOnly: true,
     sameSite: "lax",
     path: "/",
+    maxAge: 60 * 60 * 24 * 7,
   });
   return res;
 }

@@ -2,15 +2,15 @@
 
 import { useEffect, useState } from "react";
 import { MypageClient } from "@/components";
-import { useMyPage } from "@/hooks/queries/mypage";
+import { useMyPage } from "@/hooks/mypage";
 
 function MypageSkeleton() {
   return (
     <main className="flex flex-col gap-4 pb-25">
-      <div className="h-[130px] bg-gray-200 animate-pulse" />
+      <div className="h-[130px] animate-shimmer" />
       <div className="flex flex-col px-4 gap-8">
-        <div className="h-48 rounded-[10px] bg-gray-200 animate-pulse" />
-        <div className="h-40 rounded-[10px] bg-gray-200 animate-pulse" />
+        <div className="h-48 rounded-[10px] animate-shimmer" />
+        <div className="h-40 rounded-[10px] animate-shimmer" />
       </div>
     </main>
   );

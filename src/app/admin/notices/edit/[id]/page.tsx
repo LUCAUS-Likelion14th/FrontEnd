@@ -2,7 +2,9 @@
 
 import { useEffect, useState } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { adminNoticeApi } from "@/lib/api/adminNoticeApi";
+import Link from "next/link";
+import { FiArrowLeft } from "react-icons/fi";
+import { adminNoticeApi } from "@/api/adminNoticeApi";
 
 export default function NoticeEditDetailPage() {
   const router = useRouter();
@@ -80,7 +82,12 @@ export default function NoticeEditDetailPage() {
   return (
     <>
       <div className="admin-topbar">
-        <h1 className="admin-topbar__title">공지 수정하기</h1>
+        <div className="admin-topbar__left">
+          <Link href="/admin/notices/edit" className="admin-topbar__back">
+            <FiArrowLeft /> 뒤로
+          </Link>
+          <h1 className="admin-topbar__title">공지 수정하기</h1>
+        </div>
       </div>
 
       <div className="admin-main">

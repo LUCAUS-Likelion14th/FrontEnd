@@ -3,7 +3,7 @@
 import { useState } from "react";
 import Image from "next/image";
 import barrierFreeMap from "@/assets/webp/map/barrier-free-map.webp";
-import DetailHeader from "@/components/pages/detail/DetailHeader";
+import DetailHeader from "@/components/detail/DetailHeader";
 import { FiAlertCircle, FiChevronDown } from "react-icons/fi";
 import {
   MdAccessTime,
@@ -115,7 +115,7 @@ function NoteList({ items }: { items: { text: string; red?: boolean }[] }) {
       {items.map((item, i) => (
         <li key={i} className="flex items-start gap-2">
           <span className={`text-[11px] mt-0.5 shrink-0 ${item.red ? "text-[#C0392B]" : "text-primary"}`}>●</span>
-          <span className={`text-[13px] leading-5 ${item.red ? "text-[#C0392B] font-medium" : "text-[#3B4A5A]"}`}>
+          <span className={`text-[13px] leading-5 ${item.red ? "text-[#C0392B] font-medium" : "text-title"}`}>
             {item.text.includes('\n') ? (() => {
               const lines = item.text.split('\n');
               const colonIdx = lines[0].indexOf(': ');
@@ -144,7 +144,7 @@ export default function BarrierFreePage() {
       <DetailHeader title="배리어프리" />
 
       {/* 상단 안내 배너 */}
-      <div className="mx-4 mt-4 flex items-start gap-2.5 p-3.5 rounded-[12px] bg-[#FFFBF0] border border-[#FFD966]/50">
+      <div className="mx-4 mt-4 flex items-start gap-2.5 p-3.5 rounded-[12px] bg-[#FFFBF0] shadow-[0_2px_12px_rgba(210,194,110,0.35)]">
         <FiAlertCircle size={16} className="text-[#A07800] shrink-0 mt-0.5" />
         <p className="text-[13px] text-[#7A5C00] leading-5">
           장애인 및 거동이 불편한 분들을 위한 배리어프리존을 운영합니다. 불편한 점이 있으시면 담당 스태프에게 문의해 주세요.
@@ -162,18 +162,18 @@ export default function BarrierFreePage() {
               className="w-full h-auto"
             />
           </div>
-          <p className="text-[13px] text-[#3B4A5A] leading-5 mt-3 mb-6">
+          <p className="text-[13px] text-title leading-5 mt-3 mb-6">
             배리어프리존은 <span className="font-semibold text-primary">잔디광장 내 학생회관 측</span>에 위치합니다.
           </p>
           <div className="flex flex-col gap-2 mt-3">
             <div className="rounded-[10px] bg-[#F5F8FF] px-4 py-3 flex flex-col gap-1.5">
               <div className="flex items-start gap-2">
                 <span className="text-[12px] font-bold text-primary shrink-0 mt-0.5">운영</span>
-                <span className="text-[13px] text-[#3B4A5A] leading-5">5월 21일(목), 22일(금) 매일 16:30 ~ 본무대 종료시까지</span>
+                <span className="text-[13px] text-title leading-5">5월 21일(목), 22일(금) 매일 16:30 ~ 본무대 종료시까지</span>
               </div>
               <div className="flex items-start gap-2">
                 <span className="text-[12px] font-bold text-primary shrink-0 mt-0.5">입장</span>
-                <span className="text-[13px] text-[#3B4A5A] leading-5">5월 21일(목), 22일(금) 매일 16:30 ~ 17:30</span>
+                <span className="text-[13px] text-title leading-5">5월 21일(목), 22일(금) 매일 16:30 ~ 17:30</span>
               </div>
             </div>
             <div className="rounded-[10px] bg-red-50 border border-red-100 px-3 py-2.5">
@@ -186,7 +186,7 @@ export default function BarrierFreePage() {
         {/* 2. 신청 가능 대상 */}
         <Section title="신청 가능 대상" icon={MdAssignment}>
           <div className="mt-3">
-            <p className="text-[13px] text-[#3B4A5A] leading-5 mb-3">
+            <p className="text-[13px] text-title leading-5 mb-3">
               다음 두 가지 유형 중 하나에 해당하는 <span className="font-semibold text-primary">중앙대학교 재학생 또는 휴학생</span>
             </p>
             <div className="flex flex-col gap-3">
@@ -199,14 +199,14 @@ export default function BarrierFreePage() {
                     <p className="text-[13px] font-medium text-[#1a2840] leading-5">{item.label}</p>
                   </div>
                   {item.sub && (
-                    <p className="text-[12px] text-[#8d97a7] mt-1.5 ml-7">{item.sub}</p>
+                    <p className="text-[12px] text-text-sub mt-1.5 ml-7">{item.sub}</p>
                   )}
                   {item.details && (
                     <ul className="mt-2 ml-7 flex flex-col gap-1">
                       {item.details.map((d, j) => (
                         <li key={j} className="flex items-start gap-1.5">
                           <span className="text-[10px] text-primary mt-1 shrink-0">▸</span>
-                          <span className="text-[12px] text-[#3B4A5A] leading-5">{d}</span>
+                          <span className="text-[12px] text-title leading-5">{d}</span>
                         </li>
                       ))}
                     </ul>
@@ -242,19 +242,19 @@ export default function BarrierFreePage() {
                 </span>
                 <div>
                   <p className={`text-[13px] font-medium ${item.red ? "text-[#C0392B]" : "text-[#1a2840]"}`}>{item.label}</p>
-                  {item.sub && <p className="text-[12px] text-[#8d97a7] leading-5 mt-0.5">{item.sub}</p>}
+                  {item.sub && <p className="text-[12px] text-text-sub leading-5 mt-0.5">{item.sub}</p>}
                 </div>
               </div>
             ))}
           </div>
-          <p className="text-[12px] text-[#8d97a7] mt-3 leading-5">* 위반 시 입장이 제한될 수 있습니다.</p>
+          <p className="text-[12px] text-text-sub mt-3 leading-5">* 위반 시 입장이 제한될 수 있습니다.</p>
         </Section>
 
         {/* 6. 현장 이용 수칙 */}
         <Section title="현장 이용 수칙" icon={MdGavel}>
-          <p className="text-[12px] font-semibold text-[#8d97a7] mt-3 mb-1">입장 및 이동</p>
+          <p className="text-[12px] font-semibold text-text-sub mt-3 mb-1">입장 및 이동</p>
           <NoteList items={ENTRY_RULES} />
-          <p className="text-[12px] font-semibold text-[#8d97a7] mt-4 mb-1">관람 방식</p>
+          <p className="text-[12px] font-semibold text-text-sub mt-4 mb-1">관람 방식</p>
           <NoteList items={VIEWING_RULES} />
         </Section>
 

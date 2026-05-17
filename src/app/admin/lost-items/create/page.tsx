@@ -2,8 +2,9 @@
 
 import { useState, useRef } from "react";
 import { useRouter } from "next/navigation";
-import { FiChevronDown, FiImage } from "react-icons/fi";
-import { adminLostApi } from "@/lib/api/adminLostApi";
+import Link from "next/link";
+import { FiArrowLeft, FiChevronDown, FiImage } from "react-icons/fi";
+import { adminLostApi } from "@/api/adminLostApi";
 
 export default function LostItemCreatePage() {
   const router = useRouter();
@@ -68,7 +69,12 @@ export default function LostItemCreatePage() {
   return (
     <>
       <div className="admin-topbar">
-        <h1 className="admin-topbar__title">분실물 등록하기</h1>
+        <div className="admin-topbar__left">
+          <Link href="/admin/lost-items" className="admin-topbar__back">
+            <FiArrowLeft /> 뒤로
+          </Link>
+          <h1 className="admin-topbar__title">분실물 등록하기</h1>
+        </div>
       </div>
 
       <div className="admin-main">

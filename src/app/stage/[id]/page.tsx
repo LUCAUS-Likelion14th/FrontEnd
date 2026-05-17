@@ -1,8 +1,12 @@
 import Image from "next/image";
 import { AiOutlineYoutube, AiOutlineInstagram } from "react-icons/ai";
 import { FiClock } from "react-icons/fi";
-import { stageApi } from "@/lib/api/stageApi";
+import { stageApi } from "@/api/stageApi";
 import { DetailHeader } from '@/components'
+
+export const dynamic = "force-dynamic";
+
+import { formatDateLabel } from "@/utils/date";
 
 export default async function StageDetailPage({
   params,
@@ -50,6 +54,16 @@ export default async function StageDetailPage({
             alt={`${stage.performer} 사진`}
             fill
             className="object-cover"
+            style={
+              stage.performer === "도드리" ? { objectPosition: "center -40px" } :
+              stage.performer === "빅나티" ? { objectPosition: "center 5px" } :
+              stage.performer === "프로미스나인" ? { objectPosition: "center -180px" } :
+              stage.performer === "오드유스" ? { objectPosition: "center -50px" } :
+              stage.performer === "로이킴" ? { objectPosition: "center -10px" } :
+              stage.performer === "장기하" ? { objectPosition: "center -5px" } :
+              stage.performer === "실리카겔" ? { objectPosition: "center -10px" } :
+              undefined
+            }
             priority
           />
           {/* 하단 그라데이션 */}
@@ -75,21 +89,23 @@ export default async function StageDetailPage({
         </div>
       </section>
 
-      <div className="px-4 flex flex-col gap-3">
+<div className="px-4 flex flex-col gap-3">
         {/* 공연 일정 */}
-        <div className="flex items-center justify-between bg-[#EEF3FB] rounded-[12px] px-4 py-3.5">
+        <div className="flex items-center justify-between bg-primary-light rounded-[12px] px-4 py-3.5">
           <div className="flex items-center gap-2 text-primary">
             <FiClock size={14} />
             <span className="text-[13px] font-semibold">공연 일정</span>
           </div>
-          <span className="text-[14px] font-semibold text-[#273850]">{stage.time}</span>
+          <span className="text-[14px] font-semibold text-[#273850]">
+            {stage.date ? `${formatDateLabel(stage.date)} ` : ""}{stage.time}
+          </span>
         </div>
 
         {/* 소개글 */}
         {stage.stage_info && (
           <div className="flex flex-col gap-2 px-1">
             <span className="text-[13px] font-semibold text-text-sub">소개글</span>
-            <p className="text-[14px] text-[#3B4A5A] leading-relaxed whitespace-pre-line break-keep">
+            <p className="text-[14px] text-title leading-relaxed whitespace-pre-line break-keep">
               {stage.stage_info}
             </p>
           </div>
@@ -97,15 +113,16 @@ export default async function StageDetailPage({
 
         {/* 공연 곡 */}
         {stage.songs && stage.songs.length > 0 && (
-          <div className="flex items-start justify-between gap-4 px-1">
-            <h3 className="text-[13px] font-semibold text-text-sub shrink-0">공연 곡</h3>
-            <div className="flex flex-col items-end gap-1">
+          <div className="flex flex-col gap-2 px-1">
+            <span className="text-[13px] font-semibold text-text-sub">공연 곡</span>
+            <div className="flex flex-col">
               {stage.songs
                 .sort((a, b) => a.play_order - b.play_order)
-                .map((song) => (
-                  <span key={song.song_id} className="text-[14px] text-[#3B4A5A] text-right break-keep">
-                    {song.title}
-                  </span>
+                .map((song, index) => (
+                  <div key={song.song_id} className="flex items-center gap-3 py-2.5 border-b border-[#E5EAF0] last:border-b-0">
+                    <span className="text-[13px] font-semibold text-primary w-5 text-center shrink-0">{index + 1}</span>
+                    <span className="text-[14px] text-title break-keep">{song.title}</span>
+                  </div>
                 ))}
             </div>
           </div>

@@ -1,5 +1,7 @@
-import { BackButton } from "@/components/common";
-import { authFetcher } from "@/lib/api/fetcher";
+"use client";
+
+import { BackButton } from "@/components/ui";
+import { authFetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -49,7 +51,7 @@ export default function PrizeApplyForm({
       <div className="fixed inset-0 -z-10">
         <Image
           src="/stamp-bg.png"
-          alt="도장판 인적사항 입력 배경 이미지"
+          alt="도장판 배경 이미지"
           fill
           priority
           className="object-cover object-top"
@@ -68,13 +70,13 @@ export default function PrizeApplyForm({
         </div>
 
         <section className="flex-1 flex flex-col items-center justify-center">
-          <div className="w-[245px] h-[175px] bg-gray-200 flex items-center justify-center text-center mb-[66px] rounded-lg text-sm text-gray-600">
+          <div className="w-[245px] h-[175px] bg-gray-200 flex items-center justify-center text-center mb-[80px] rounded-lg text-sm text-gray-600">
             축기단 경품 안내 카드뉴스
             <br />
             이미지가 들어갈 자리입니다.
           </div>
 
-          <div className="w-full relative mb-[91px]">
+          <div className="w-full relative mb-[77px] px-2">
             <div className="w-full h-5 bg-text-sub2 rounded-[10px] overflow-hidden">
               <div
                 className="bg-primary h-full transition-all duration-700"
@@ -83,25 +85,36 @@ export default function PrizeApplyForm({
             </div>
 
             <div
-              className="absolute top-0 -translate-x-1/2 -translate-y-1/4 flex flex-col items-center gap-[3px]"
-              style={{ left: `${progressPercentage}%` }}
+              className="absolute -top-2 -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2"
+              style={{
+                left: `clamp(35px, ${progressPercentage}%, calc(100% - 20px))`,
+              }}
             >
-              <Image src="/prize.png" alt="선물상자" width={62} height={62} />
+              <div className="relative z-10 mb-2">
+                <div className="bg-[#06387D] text-white px-3 py-1 rounded-lg text-[16px] font-semibold flex items-center justify-center shadow-md whitespace-nowrap">
+                  {stampCount === stampAll ? "완성!" : `${stampCount}개`}
+                </div>
 
-              <div className="relative w-[62px] h-[42px] flex items-center justify-center">
-                <Image src="/count-bubble.png" alt="도장 개수 말풍선" fill />
-                <span className="absolute inset-0 flex items-center justify-center text-white text-[16px] font-semibold">
-                  {stampCount}개
-                </span>
+                <div
+                  className="absolute top-full left-1/2 -translate-x-1/2 w-0 h-0 
+                  border-l-[6px] border-l-transparent 
+                  border-r-[6px] border-r-transparent 
+                  border-t-[8px] border-t-[#06387D]"
+                />
               </div>
+
+              <Image
+                src="/star-on.png"
+                alt="별"
+                width={70}
+                height={70}
+                className="-mt-2 relative z-0"
+              />
             </div>
-            <span className="absolute right-0 -bottom-8 text-text-sub text-[16px] font-medium">
-              {stampAll}개
-            </span>
           </div>
 
-          <div className="w-full flex flex-col items-center justify-center gap-2 mb-10">
-            <span className="text-[16px] font-[500]">
+          <div className="w-full flex flex-col items-center justify-center gap-2 mb-10 px-2">
+            <span className="text-[16px] font-medium">
               STAFF에게 해당 화면을 보여 주세요!
             </span>
 
@@ -116,7 +129,8 @@ export default function PrizeApplyForm({
 
           <button
             onClick={handlePrizeApply}
-            className="bg-primary px-[33px] py-[15px] text-[20px] font-semibold text-white rounded-[30px]"
+            disabled={isLoading}
+            className="bg-primary px-[33px] py-[15px] text-[20px] font-semibold text-white rounded-[30px] transition-all active:scale-[0.98] disabled:opacity-50"
           >
             경품 응모하기
           </button>

@@ -1,9 +1,16 @@
 "use client";
 
 import { use, useEffect, useRef } from "react";
-import { DetailHeader, FoodTruckTitle, DetailInfo, MenuDetail } from "@/components";
-import { useFoodTruckDetail } from "@/hooks/queries/foodtruck";
-import DetailHeroImage from "@/components/pages/detail/DetailHeroImage";
+import {
+  DetailHeader,
+  FoodTruckTitle,
+  DetailInfo,
+  MenuDetail,
+  LoadingScreen,
+  ErrorFallback,
+} from "@/components";
+import { useFoodTruckDetail } from "@/hooks/foodtruck";
+import DetailHeroImage from "@/components/detail/DetailHeroImage";
 import { trackEvent } from "@/lib/api/analytics";
 
 type Props = {
@@ -55,15 +62,17 @@ export default function FoodTruckDetailPage({ params }: Props) {
   }, []);
   // 백엔드
 
-  if (isLoading) return null;
+
+  if (isLoading) return <LoadingScreen />;
 
   if (isError || !foodTruck) {
     return (
       <main>
         <DetailHeader title="푸드트럭 정보" />
-        <div className="flex items-center justify-center py-20 text-text-sub text-base">
-          푸드트럭 정보를 불러오는 중 오류가 발생했습니다.
-        </div>
+        <ErrorFallback
+          title="푸드트럭 정보를 불러올 수 없어요"
+          onReset={() => window.location.reload()}
+        />
       </main>
     );
   }
@@ -82,7 +91,12 @@ export default function FoodTruckDetailPage({ params }: Props) {
           likeCount={foodTruck.likeCount}
           info={foodTruck.foodTruckInfo}
         />
-        <DetailInfo location={foodTruck.location} date={foodTruck.date} hasBorder={false} />
+        <DetailInfo
+          location={foodTruck.location}
+          date={foodTruck.date}
+          hasBorder={false}
+          hideLocation
+        />
         <MenuDetail menuList={foodTruck.menu} />
       </div>
     </main>
