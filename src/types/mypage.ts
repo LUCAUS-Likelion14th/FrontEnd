@@ -44,11 +44,8 @@ export type MyBoothResponse = {
 
 export type MyBoothLikes = {
   booth_id: number;
-  location_id: number;
   booth_image: string;
   booth_name: string;
-  booth_owner: string;
-  booth_location: string;
-  like_count: number;
-  is_liked: boolean;
+  likeCount: number;
+  liked: boolean;
 };
