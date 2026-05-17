@@ -17,7 +17,23 @@ export function getReferralFromPrevPath(): string {
 
   if (prev === "/") return "home_top3";
   if (prev === "/booth" || prev.startsWith("/booth?")) return "all_list";
+  if (prev === "/booth/search" || prev.startsWith("/booth/search?")) return "search";
   if (prev === "/stamp" || prev.startsWith("/stamp/") || prev.startsWith("/stamp?")) return "stamp";
   if (prev.startsWith("/mypage/likes")) return "my";
   return "other";
+}
+
+/**
+ * If the user just came from the search page, returns the search term they
+ * were viewing. Returns null otherwise. Used to attach a `searchQuery` field
+ * to `booth_detail_view` events so search → click flows can be correlated
+ * without joining on session/timestamp.
+ */
+export function getLastSearchQueryIfFromSearch(): string | null {
+  if (getReferralFromPrevPath() !== "search") return null;
+  try {
+    return sessionStorage.getItem("lastSearchQuery");
+  } catch {
+    return null;
+  }
 }
