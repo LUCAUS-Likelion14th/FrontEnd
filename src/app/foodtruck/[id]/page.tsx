@@ -1,6 +1,6 @@
 "use client";
 
-import { use } from "react";
+import { use, useEffect, useRef } from "react";
 import {
   DetailHeader,
   FoodTruckTitle,
@@ -11,6 +11,7 @@ import {
 } from "@/components";
 import { useFoodTruckDetail } from "@/hooks/foodtruck";
 import DetailHeroImage from "@/components/detail/DetailHeroImage";
+import { trackEvent } from "@/lib/api/analytics";
 
 type Props = {
   params: Promise<{ id: string }>;
@@ -19,6 +20,48 @@ type Props = {
 export default function FoodTruckDetailPage({ params }: Props) {
   const { id } = use(params);
   const { data: foodTruck, isLoading, isError } = useFoodTruckDetail(id);
+
+  // 백엔드
+  const hasTracked = useRef(false);
+  const startTime = useRef(Date.now());
+  const foodtruckIdRef = useRef<number | null>(null);
+    //foodtruck_detail_view
+  useEffect(() => {
+    if (!foodTruck || hasTracked.current) return;
+    foodtruckIdRef.current = foodTruck.id;
+    hasTracked.current = true;
+    trackEvent({
+      eventType: "foodtruck_detail_view",
+      targetType: "FOODTRUCK",
+      targetId: foodTruck.id,
+      payload: {
+        referral: "home_top3",
+        mainPosition: 1,
+        likeCountAtView: foodTruck.likeCount,
+        isLikedByUser: foodTruck.liked,
+      },
+    });
+  }, [foodTruck]);
+    //foodtruck_detail_duration
+  useEffect(() => {
+    return () => {
+      if (!foodtruckIdRef.current) return;
+      const durationSec = Math.floor(
+        (Date.now() - startTime.current) / 1000
+      );
+      if (durationSec < 3) return;
+      trackEvent({
+        eventType: "foodtruck_detail_duration",
+        targetType: "FOODTRUCK",
+        targetId: foodtruckIdRef.current,
+        payload: {
+          durationSec,
+        },
+      });
+    };
+  }, []);
+  // 백엔드
+
 
   if (isLoading) return <LoadingScreen />;
 
