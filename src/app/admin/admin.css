@@ -166,6 +166,30 @@ body:has(.admin-root) main.min-h-screen {
   gap: 12px;
 }
 
+.admin-topbar__left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.admin-topbar__back {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #8d97a7;
+  text-decoration: none;
+  padding: 6px 10px;
+  border-radius: 6px;
+  transition: background 0.15s, color 0.15s;
+}
+
+.admin-topbar__back:hover {
+  background: #f1f4f8;
+  color: #1a1a2e;
+}
+
 .admin-main {
   flex: 1;
   padding: 32px 40px;

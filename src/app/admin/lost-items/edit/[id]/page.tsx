@@ -2,7 +2,8 @@
 
 import { useEffect, useState, useRef } from "react";
 import { useRouter, useParams } from "next/navigation";
-import { FiChevronDown, FiImage } from "react-icons/fi";
+import Link from "next/link";
+import { FiArrowLeft, FiChevronDown, FiImage } from "react-icons/fi";
 import { adminLostApi } from "@/api/adminLostApi";
 import { LostItem } from "@/types/lost";
 
@@ -108,7 +109,12 @@ export default function LostItemEditDetailPage() {
   return (
     <>
       <div className="admin-topbar">
-        <h1 className="admin-topbar__title">분실물 수정하기</h1>
+        <div className="admin-topbar__left">
+          <Link href="/admin/lost-items/edit" className="admin-topbar__back">
+            <FiArrowLeft /> 뒤로
+          </Link>
+          <h1 className="admin-topbar__title">분실물 수정하기</h1>
+        </div>
       </div>
 
       <div className="admin-main">

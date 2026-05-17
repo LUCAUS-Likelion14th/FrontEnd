@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { FiChevronLeft, FiChevronRight } from "react-icons/fi";
+import { FiArrowLeft, FiChevronLeft, FiChevronRight } from "react-icons/fi";
 import { adminNoticeApi } from "@/api/adminNoticeApi";
 import { Notice } from "@/types/notice";
 
@@ -31,7 +31,12 @@ export default function NoticeEditPage() {
   return (
     <>
       <div className="admin-topbar">
-        <h1 className="admin-topbar__title">공지 수정하기</h1>
+        <div className="admin-topbar__left">
+          <Link href="/admin/notices" className="admin-topbar__back">
+            <FiArrowLeft /> 뒤로
+          </Link>
+          <h1 className="admin-topbar__title">공지 수정하기</h1>
+        </div>
       </div>
 
       <div className="admin-main">
