@@ -43,10 +43,10 @@ export default function NoticePage() {
             Array.from({ length: 5 }).map((_, i) => (
               <div key={i} className="flex items-center justify-between py-3 border-b border-text-sub2">
                 <div className="flex items-center gap-4">
-                  <div className="w-10 h-7.75 rounded-[8px] bg-gray-200 animate-pulse" />
-                  <div className="w-40 h-5 rounded bg-gray-200 animate-pulse" />
+                  <div className="w-10 h-7.75 rounded-[8px] animate-shimmer" />
+                  <div className="w-40 h-5 rounded animate-shimmer" />
                 </div>
-                <div className="w-16 h-5 rounded bg-gray-200 animate-pulse" />
+                <div className="w-16 h-5 rounded animate-shimmer" />
               </div>
             ))
           ) : isError ? (

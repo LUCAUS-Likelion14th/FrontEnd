@@ -93,7 +93,7 @@ export default function LostPage() {
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
-                className="w-full h-[195px] rounded-[10px] bg-gray-200 animate-pulse"
+                className="w-full h-[195px] rounded-[10px] animate-shimmer"
               />
             ))}
           </div>

@@ -19,7 +19,7 @@ export function FoodSection() {
       <div className="flex flex-col gap-2">
         {isLoading ? (
           Array.from({ length: 2 }).map((_, i) => (
-            <div key={i} className="ml-[30px] h-[108px] rounded-[10px] bg-gray-200 animate-pulse" />
+            <div key={i} className="ml-[30px] h-[108px] rounded-[10px] animate-shimmer" />
           ))
         ) : foods.length === 0 ? (
           <div className="ml-7.5 flex flex-col items-center justify-center gap-2.5 h-[110px] rounded-[10px] bg-gradient-to-r from-[#f7f9ff] to-[#e8f2ff]">

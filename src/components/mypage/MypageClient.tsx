@@ -208,11 +208,11 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
 
               {stampData === null ? (
                 <div className="flex items-center gap-4">
-                  <div className="w-14 h-14 rounded-full bg-gray-200 animate-pulse shrink-0" />
+                  <div className="w-14 h-14 rounded-full animate-shimmer shrink-0" />
                   <div className="flex-1 flex flex-col gap-2">
-                    <div className="h-3 w-24 rounded bg-gray-200 animate-pulse" />
-                    <div className="h-2 w-full rounded-full bg-gray-200 animate-pulse" />
-                    <div className="h-3 w-40 rounded bg-gray-200 animate-pulse" />
+                    <div className="h-3 w-24 rounded animate-shimmer" />
+                    <div className="h-2 w-full rounded-full animate-shimmer" />
+                    <div className="h-3 w-40 rounded animate-shimmer" />
                   </div>
                 </div>
               ) : (
