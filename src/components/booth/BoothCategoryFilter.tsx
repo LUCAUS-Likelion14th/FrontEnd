@@ -35,18 +35,6 @@ export default function BoothCategoryFilter({
             >
               {cat}
             </button>
-            {idx === 0 && showStamp && (
-              <button
-                onClick={isStampActive ? undefined : onStampClick}
-                className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-all ${
-                  isStampActive
-                    ? "bg-primary text-white cursor-default active:opacity-80"
-                    : "bg-primary-light text-text-sub active:scale-95"
-                }`}
-              >
-                도장판
-              </button>
-            )}
           </Fragment>
         );
       })}
