@@ -144,7 +144,7 @@ export default function BarrierFreePage() {
       <DetailHeader title="배리어프리" />
 
       {/* 상단 안내 배너 */}
-      <div className="mx-4 mt-4 flex items-start gap-2.5 p-3.5 rounded-[12px] bg-[#FFFBF0] border border-[#FFD966]/50">
+      <div className="mx-4 mt-4 flex items-start gap-2.5 p-3.5 rounded-[12px] bg-[#FFFBF0]">
         <FiAlertCircle size={16} className="text-[#A07800] shrink-0 mt-0.5" />
         <p className="text-[13px] text-[#7A5C00] leading-5">
           장애인 및 거동이 불편한 분들을 위한 배리어프리존을 운영합니다. 불편한 점이 있으시면 담당 스태프에게 문의해 주세요.
