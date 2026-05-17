@@ -99,6 +99,7 @@ export default function LikesPage() {
                       key={truck.id}
                       id={truck.id}
                       type="foodtruck"
+                      from="my"
                       image={truck.image}
                       name={truck.name}
                       location={truck.bestMenu}
