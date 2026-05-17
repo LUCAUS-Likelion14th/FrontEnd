@@ -204,7 +204,41 @@ export async function authFetcher<T>(
   }
 
   // 인증 실패 (401/403) 시 명확한 에러 메시지
-  if (res.status === 401 || res.status === 403) {
+  if (res.status === 401) {
+    const newToken = await tryRefreshToken();
+    if (newToken) {
+      const isFormData = body instanceof FormData;
+      const retryRes = await fetch(url, {
+        method,
+        cache: "no-store",
+        headers: {
+          Authorization: `Bearer ${newToken}`,
+          ...(!isFormData && { "Content-Type": "application/json" }),
+        },
+        ...(body !== undefined && {
+          body: isFormData ? body : JSON.stringify(body),
+        }),
+      });
+      if (retryRes.status === 401 || retryRes.status === 403) {
+        clearAuthAndRedirect();
+        throw new Error("로그인이 필요합니다.");
+      }
+      if (method === "DELETE" && retryRes.status === 204) return undefined as T;
+      const retryText = await retryRes.text();
+      if (!retryRes.ok) {
+        let message = `오류가 발생했습니다. (${retryRes.status})`;
+        try { const j = JSON.parse(retryText); message = j.message || j.error || message; } catch {}
+        throw new Error(message);
+      }
+      const retryJson: ApiResponse<T> = JSON.parse(retryText);
+      if (!retryJson.success) throw new Error(retryJson.message);
+      return retryJson.data;
+    }
+    clearAuthAndRedirect();
+    throw new Error("로그인이 필요합니다.");
+  }
+
+  if (res.status === 403) {
     const text = await res.text();
     let message = "로그인이 필요합니다.";
     try {
