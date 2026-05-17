@@ -6,6 +6,7 @@ import Image from "next/image";
 import { lucausText } from "@/assets/webp";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
+import PrizeApplyModal from "./PrizeApplyModal";
 
 interface PrizeEntryFormProps {
   name: string;
@@ -22,6 +23,7 @@ export default function PrizeApplyForm({
 }: PrizeEntryFormProps) {
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false); // 💡 모달 오픈 제어 상태
   const router = useRouter();
 
   const progressPercentage = stampAll > 0 ? (stampCount / stampAll) * 100 : 0;
@@ -34,8 +36,8 @@ export default function PrizeApplyForm({
     setIsLoading(true);
     try {
       await authFetcher("/stamp/prize", "PATCH", { password });
-      alert("경품 응모가 완료되었습니다!");
-      router.push("/stamp");
+
+      setIsModalOpen(true);
     } catch (error: any) {
       if (error.message.includes("409")) {
         alert("이미 응모하셨습니다! 결과 발표를 기다려주세요.");
@@ -45,6 +47,11 @@ export default function PrizeApplyForm({
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
+    router.push("/stamp");
   };
 
   return (
@@ -143,7 +150,9 @@ export default function PrizeApplyForm({
             추첨권 응모하기
           </button>
         </section>
-      </div>{" "}
+      </div>
+
+      {isModalOpen && <PrizeApplyModal onClose={handleModalClose} />}
     </div>
   );
 }
