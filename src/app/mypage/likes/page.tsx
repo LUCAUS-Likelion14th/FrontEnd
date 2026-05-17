@@ -63,7 +63,7 @@ export default function LikesPage() {
 
   return (
     <main className="pb-25">
-      <div className="fixed top-14 left-0 right-0 bg-white z-40">
+      <div className="fixed left-0 right-0 bg-white z-40" style={{ top: "calc(3.5rem + env(safe-area-inset-top))" }}>
         <DetailHeader title="내 좋아요" />
         <TabBar />
       </div>
