@@ -133,7 +133,7 @@ export default function StagePage() {
             className="flex items-center gap-1.5 px-4 py-2 bg-primary text-sm text-white rounded-lg"
           >
             <LuLink size={16} />
-            축제 티켓팅 사이트
+            QR 바로가기
           </a>
         </div>
 
