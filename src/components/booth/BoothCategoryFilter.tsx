@@ -20,7 +20,7 @@ export default function BoothCategoryFilter({
   isStampActive = false,
 }: Props) {
   return (
-    <div className="flex items-center gap-2 overflow-x-auto scrollbar-hide">
+    <div className="flex items-center gap-2 pr-4">
       {BOOTH_CATEGORIES.map((cat, idx) => {
         const isActive = !isStampActive && selectedCategory === cat;
         return (

@@ -150,7 +150,7 @@ function BoothPageContent() {
 
       <section className="flex flex-col">
         <BoothSearchBar value={searchQuery} onChange={handleSearchChange} />
-        <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide">
+        <div className="pt-2.5 pb-5 overflow-x-auto scrollbar-hide -mx-4 px-4">
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
             onSelectCategory={handleCategoryChange}
