@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   other: {
     "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
+  openGraph: {
+    images: [{ url: "/open-graph.webp", width: 1200, height: 630 }],
+  },
 };
 
 const pretendard = localFont({
