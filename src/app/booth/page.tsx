@@ -16,6 +16,10 @@ import {
 import { FiSearch } from "react-icons/fi";
 import { BoothLocation, BoothCategory, getDefaultDate } from "@/data/boothData";
 import { useBoothList, useBoothStampList } from "@/hooks/booth";
+// ─── analytics tracking ───
+import { useRef } from "react";
+import { trackEvent } from "@/lib/api/analytics";
+// ─── /analytics tracking ───
 
 const PAGE_SIZE = 8;
 
@@ -109,6 +113,36 @@ function BoothPageContent() {
     setIsStampMode(true);
     setCurrentPage(1);
   };
+
+  // 백엔드 로그 ─── analytics tracking ───
+  const _analyticsStartTime = useRef<number | null>(null);
+
+  useEffect(() => {
+    trackEvent({
+      eventType: "booth_list_view",
+      payload: {
+        date: dateParam,
+        location: selectedLocation,
+        category: isStampMode ? "STAMP" : selectedCategory,
+      },
+    });
+  }, [dateParam, selectedLocation, selectedCategory, isStampMode]);
+
+  useEffect(() => {
+    _analyticsStartTime.current = Date.now();
+    return () => {
+      if (!_analyticsStartTime.current) return;
+      const durationSec = Math.floor(
+        (Date.now() - _analyticsStartTime.current) / 1000,
+      );
+      if (durationSec < 3) return;
+      trackEvent({
+        eventType: "stay_duration_booth_list",
+        payload: { durationSec },
+      });
+    };
+  }, []);
+  // 백엔드 로그 ─── /analytics tracking ───
 
   return (
     <main className="px-4 pt-5 pb-25">

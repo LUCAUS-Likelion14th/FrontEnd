@@ -11,6 +11,7 @@ import "./globals.css";
 import Header from "@/components/layout/Header";
 import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
+import RouteTracker from "@/components/analytics/RouteTracker";
 
 export const metadata: Metadata = {
   title: "청:ON '26",
@@ -56,6 +57,7 @@ export default function RootLayout({
           </>
         )}
         <Providers>
+          <RouteTracker />
           <Header />
           <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)" }}>
             <PageTransition>{children}</PageTransition>

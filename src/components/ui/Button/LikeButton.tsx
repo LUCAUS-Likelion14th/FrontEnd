@@ -7,7 +7,9 @@ import { FaHeart } from "react-icons/fa";
 import { FiHeart } from "react-icons/fi";
 import { mutate } from "@/api/fetcher";
 import LoginBottomSheet from "@/components/ui/LoginBottomSheet";
+// ─── analytics tracking ───
 import { trackEvent } from "@/lib/api/analytics";
+// ─── /analytics tracking ───
 
 type LikeButtonProps = {
   id: number | string;
