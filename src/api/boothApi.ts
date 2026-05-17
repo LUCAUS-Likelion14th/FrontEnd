@@ -4,6 +4,7 @@ import type {
   BoothListItem,
   BoothListParams,
   BoothListResponse,
+  BoothSearchResponse,
 } from "@/types/booth";
 
 export const BoothApi = {
@@ -19,6 +20,13 @@ export const BoothApi = {
 
     const qs = query.toString().replace(/\+/g, "%20");
     return fetcher<BoothListResponse>(`/booth${qs ? `?${qs}` : ""}`);
+  },
+  search: (params: { search: string; page?: number; size?: number }) => {
+    const query = new URLSearchParams();
+    query.set("search", params.search);
+    if (params.page !== undefined) query.set("page", String(params.page));
+    if (params.size !== undefined) query.set("size", String(params.size));
+    return fetcher<BoothSearchResponse>(`/booth/search?${query.toString().replace(/\+/g, "%20")}`);
   },
   getStampList: (page?: number) =>
     fetcher<BoothListItem[]>(`/booth/stamp${page !== undefined ? `?page=${page}` : ""}`),

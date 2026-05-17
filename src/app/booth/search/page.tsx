@@ -7,21 +7,19 @@ import {
   Pagination,
   LoadingScreen,
   ErrorFallback,
-  DetailHeader,
-  BoothCategoryFilter,
 } from "@/components";
-import { FiSearch, FiX } from "react-icons/fi";
-import { BoothCategory } from "@/data/boothData";
-import { useBoothList } from "@/hooks/booth";
+import { FiSearch, FiX, FiChevronLeft } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import { useBoothSearch } from "@/hooks/booth";
 
 const PAGE_SIZE = 10;
 
 function BoothSearchContent() {
+  const router = useRouter();
   const inputRef = useRef<HTMLInputElement>(null);
 
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedSearch, setDebouncedSearch] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState<BoothCategory>("전체");
   const [currentPage, setCurrentPage] = useState(1);
 
   useEffect(() => {
@@ -36,35 +34,33 @@ function BoothSearchContent() {
     return () => clearTimeout(t);
   }, [searchQuery]);
 
-  const hasQuery = debouncedSearch.trim().length > 0;
+  const { isLoading, isError, refetch, data } = useBoothSearch({
+    search: debouncedSearch.trim(),
+    page: currentPage - 1,
+    size: PAGE_SIZE,
+  });
 
-  const { data, isLoading, isError, refetch } = useBoothList(
-    {
-      page: currentPage - 1,
-      size: PAGE_SIZE,
-      category: selectedCategory !== "전체" ? selectedCategory : undefined,
-      search: debouncedSearch.trim() || undefined,
-    },
-    { enabled: hasQuery },
-  );
-
-  const booths = data?.content ?? [];
   const totalPages = data?.totalPages ?? 1;
 
-  const handleCategoryChange = (cat: BoothCategory) => {
-    setSelectedCategory(cat);
-    setCurrentPage(1);
-  };
+  const booths = (data?.content ?? []).map((b) => ({
+    id: b.booth_id,
+    name: b.booth_name,
+    image: b.booth_image,
+    isLiked: b.liked,
+    likeCount: b.likeCount,
+  }));
 
   return (
     <main className="pb-25">
-      <DetailHeader title="부스 검색" />
-
-      <div
-        className="sticky z-20 bg-white px-4 pt-3 pb-0"
-        style={{ top: "calc(3.5rem + env(safe-area-inset-top))" }}
-      >
-        <div className="flex items-center gap-2 w-full px-4 py-2 border border-primary/40 rounded-[18px] focus-within:border-primary transition-colors mb-2">
+      <div className="sticky top-14 z-20 bg-white px-4 pt-1 pb-3">
+        <div
+          className="flex items-center gap-1 py-3 cursor-pointer"
+          onClick={() => router.back()}
+        >
+          <FiChevronLeft size={24} />
+          <span className="text-[20px] font-semibold">부스 검색</span>
+        </div>
+        <div className="flex items-center gap-2 w-full px-4 py-2 border border-primary/40 rounded-[18px] focus-within:border-primary transition-colors">
           <FiSearch size={17} className="text-text-sub shrink-0" />
           <input
             ref={inputRef}
@@ -83,17 +79,7 @@ function BoothSearchContent() {
       </div>
 
       <div className="px-4 pt-5">
-        {!hasQuery ? (
-          <div className="flex flex-col items-center justify-center py-24 gap-3">
-            <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
-              <FiSearch size={28} className="text-primary" />
-            </div>
-            <div className="flex flex-col items-center gap-1">
-              <p className="text-[15px] font-semibold text-title">부스를 검색해보세요</p>
-              <p className="text-[13px] text-text-sub">부스 이름으로 검색할 수 있어요</p>
-            </div>
-          </div>
-        ) : isLoading ? (
+        {isLoading ? (
           <div className="grid grid-cols-2 gap-x-3 gap-y-5">
             {Array.from({ length: PAGE_SIZE }).map((_, i) => (
               <div key={i} className="w-full h-[195px] rounded-[10px] animate-shimmer" />
@@ -106,22 +92,19 @@ function BoothSearchContent() {
             <div className="grid grid-cols-2 gap-x-3 gap-y-5">
               {booths.map((booth, i) => (
                 <motion.div
-                  key={booth.booth_id}
+                  key={booth.id}
                   initial={{ opacity: 0, y: 16 }}
                   whileInView={{ opacity: 1, y: 0 }}
                   viewport={{ once: true, margin: "-20px" }}
                   transition={{ duration: 0.3, delay: i * 0.05, ease: "easeOut" }}
                 >
                   <Card
-                    id={booth.booth_id}
+                    id={booth.id}
                     type="booth"
-                    name={booth.booth_name}
-                    subText={booth.booth_owner}
-                    location={booth.location}
-                    locationId={booth.location_id}
-                    image={booth.booth_image}
-                    isLiked={booth.is_liked}
-                    likeCount={booth.like_count}
+                    name={booth.name}
+                    image={booth.image}
+                    isLiked={booth.isLiked}
+                    likeCount={booth.likeCount}
                   />
                 </motion.div>
               ))}
@@ -130,7 +113,7 @@ function BoothSearchContent() {
               <Pagination page={currentPage} totalPages={totalPages} onChange={setCurrentPage} />
             )}
           </>
-        ) : (
+        ) : debouncedSearch.trim().length > 0 ? (
           <div className="flex flex-col items-center justify-center py-24 gap-3">
             <div className="w-16 h-16 rounded-full bg-primary-light flex items-center justify-center">
               <FiSearch size={28} className="text-primary" />
@@ -140,7 +123,7 @@ function BoothSearchContent() {
               <p className="text-[13px] text-text-sub">다른 검색어를 시도해보세요</p>
             </div>
           </div>
-        )}
+        ) : null}
       </div>
     </main>
   );

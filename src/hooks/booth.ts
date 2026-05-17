@@ -4,6 +4,18 @@ import { useQuery } from "@tanstack/react-query";
 import { BoothApi } from "@/api/boothApi";
 import { BoothListParams } from "@/types/booth";
 
+export function useBoothSearch(
+  params: { search: string; page?: number; size?: number },
+  options?: { enabled?: boolean },
+) {
+  return useQuery({
+    queryKey: ["booth", "search", params],
+    queryFn: () => BoothApi.search(params),
+    enabled: options?.enabled ?? true,
+    staleTime: 5 * 60_000,
+  });
+}
+
 export function useBoothList(
   params?: BoothListParams,
   options?: { enabled?: boolean },
