@@ -4,6 +4,7 @@ import { fetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import BoothStampModal from "./BoothStampModal";
 
 interface Booth {
@@ -57,6 +58,7 @@ export default function StampBoard() {
   const [data, setData] = useState<StampData | null>(null);
   const [selectedBooth, setSelectedBooth] = useState<Booth | null>(null);
   const [refreshKey, setRefreshKey] = useState(0);
+  const [newlyStampedId, setNewlyStampedId] = useState<number | null>(null);
   const [isError, setIsError] = useState(false);
   const router = useRouter();
 
@@ -98,24 +100,46 @@ export default function StampBoard() {
 
   const renderBooth = (booth: Booth | undefined) => {
     if (!booth) return <div className="w-[80px]" />;
+    const isNewlyStamped = newlyStampedId === booth.booth_id;
+    const showBlue = booth.is_stamped || isNewlyStamped;
+
     return (
       <div
         key={booth.booth_id}
         className="relative flex flex-col items-center w-[80px]"
       >
         <div
-          onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
-          className={`relative w-[80px] h-[80px] flex justify-center items-center transition-transform active:scale-95 z-10 ${
-            booth.is_stamped ? "cursor-default" : "cursor-pointer"
+          onClick={() => !showBlue && setSelectedBooth(booth)}
+          className={`relative w-[80px] h-[80px] flex justify-center items-center z-10 ${
+            showBlue ? "cursor-default" : "cursor-pointer active:scale-95 transition-transform"
           }`}
+          style={{ perspective: "300px" }}
         >
-          <Image
-            src={booth.is_stamped ? "/star-on.png" : "/star-off.png"}
-            alt={booth.name}
-            width={80}
-            height={80}
-            className="drop-shadow-lg"
-          />
+          <AnimatePresence initial={false} mode="wait">
+            {!showBlue ? (
+              <motion.div
+                key="off"
+                className="absolute inset-0 flex items-center justify-center"
+                exit={{ rotateY: 450 }}
+                transition={{ duration: 0.5, ease: "easeIn" }}
+              >
+                <Image src="/star-off.png" alt={booth.name} width={80} height={80} className="drop-shadow-lg" />
+              </motion.div>
+            ) : (
+              <motion.div
+                key="on"
+                className="absolute inset-0 flex items-center justify-center"
+                initial={{ rotateY: -90 }}
+                animate={{ rotateY: 0 }}
+                transition={{ duration: 0.25, ease: "easeOut" }}
+                onAnimationComplete={() => {
+                  if (isNewlyStamped) setNewlyStampedId(null);
+                }}
+              >
+                <Image src="/star-on.png" alt={booth.name} width={80} height={80} className="drop-shadow-lg" />
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
 
         <div className="absolute top-[90px] w-[150px] flex justify-center">
@@ -212,6 +236,7 @@ export default function StampBoard() {
           boothName={selectedBooth.name}
           onClose={() => setSelectedBooth(null)}
           onSuccess={() => {
+            setNewlyStampedId(selectedBooth.booth_id);
             setRefreshKey((prev) => prev + 1);
           }}
         />
