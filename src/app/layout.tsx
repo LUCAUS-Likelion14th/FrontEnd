@@ -20,6 +20,9 @@ export const metadata: Metadata = {
   other: {
     "apple-mobile-web-app-status-bar-style": "black-translucent",
   },
+  openGraph: {
+    images: [{ url: "/open-graph.webp", width: 1200, height: 630 }],
+  },
 };
 
 const pretendard = localFont({
@@ -57,7 +60,7 @@ export default function RootLayout({
         )}
         <Providers>
           <Header />
-          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "calc(5rem + env(safe-area-inset-bottom))" }}>
+          <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "calc(2.5rem + env(safe-area-inset-bottom))" }}>
             <PageTransition>{children}</PageTransition>
           </main>
           <BottomNav />

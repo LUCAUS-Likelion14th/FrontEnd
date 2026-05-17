@@ -29,14 +29,14 @@ export default function InfoPage() {
           link="info/lost"
         />
         <InfoCard
-          imageUrl={infoBarrierFree}
-          title="배리어프리"
-          link="info/barrier-free"
-        />
-        <InfoCard
           imageUrl={infoRoute}
           title="입장 정책"
           link="info/route"
+        />
+        <InfoCard
+          imageUrl={infoBarrierFree}
+          title="배리어프리"
+          link="info/barrier-free"
         />
         <InfoCard
           imageUrl={infoMypage}
