@@ -4,10 +4,13 @@ import { authFetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useState } from "react";
 import StampModalLayout from "./StampModalLayout";
+import { useEffect, useRef } from "react"; // 백 로그
+import { trackEvent } from "@/lib/api/analytics"; // 백 로그
 
 interface BoothStampModalProps {
   boothId: number;
   boothName: string;
+  stampCount: number; // 백 로그
   onClose: () => void;
   onSuccess: () => void;
 }
@@ -15,6 +18,7 @@ interface BoothStampModalProps {
 export default function BoothStampModal({
   boothId,
   boothName,
+  stampCount,
   onClose,
   onSuccess,
 }: BoothStampModalProps) {
@@ -22,6 +26,24 @@ export default function BoothStampModal({
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // 백 로그 시작
+  const startTime = useRef(Date.now());
+  useEffect(() => {
+    return () => {
+      const durationSec = Math.floor((Date.now() - startTime.current) / 1000);
+      if (durationSec < 3) return;
+      trackEvent({
+        eventType: "stay_duration_stamp_detail",
+        targetType: "STAMP",
+        targetId: boothId,
+        payload: {
+          stamp_booth_id: boothId,
+          durationSec,
+        },
+      });
+    };
+  }, []); // 백 로그 끝
 
   const handleStampSubmit = async () => {
     if (!password) {
@@ -34,6 +56,15 @@ export default function BoothStampModal({
     try {
       await authFetcher(`/stamp/${boothId}`, "POST", { password });
       setIsSuccess(true);
+      trackEvent({ // 백 로그 시작
+        eventType: "post_stamp",
+        targetType: "STAMP",
+        targetId: boothId,
+        payload: {
+          booth_id: boothId,
+          stamp_sequence: stampCount + 1,  // 찍기 전 개수 + 1
+        },
+      }); // 백 로그 끝
       if (typeof navigator !== "undefined" && "vibrate" in navigator) {
         navigator.vibrate([80, 50, 120]);
       }

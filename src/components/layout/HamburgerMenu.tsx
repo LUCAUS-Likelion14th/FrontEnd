@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import {trackEvent} from "@/lib/api/analytics";
 
 type HamburgerMenuProps = {
   isOpen: boolean;
@@ -206,7 +207,16 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
                         <Link
                           key={sub.href + sub.label}
                           href={sub.href}
-                          onClick={onClose}
+                          onClick={() => {  // 백 로그
+                            if (sub.href === "/stamp") {
+                              trackEvent({
+                                eventType: "stamp_list_click",
+                                targetType: "STAMP",
+                                payload: { referral: "hamburger" },
+                              });
+                            }
+                            onClose();
+                          }} // 백 로그 끝
                           style={{
                             fontFamily:
                               "var(--font-pretendard, Pretendard, sans-serif)",
