@@ -57,15 +57,18 @@ function BoothDetailContent({ params }: Props) {
   const activeSettings =
     filteredSettings.length > 0 ? filteredSettings : booth.settings;
 
-  const uniqueLocations = [...new Set(activeSettings.map((s) => s.location))];
+  const uniqueLocationKeys = [
+    ...new Map(
+      activeSettings.map((s) => [`${s.location}__${s.locationId}`, s])
+    ).values(),
+  ];
 
-  const locationGroups = uniqueLocations.map((loc) => {
-    const locSettings = activeSettings.filter((s) => s.location === loc);
+  const locationGroups = uniqueLocationKeys.map(({ location, locationId }) => {
     return {
-      location: loc,
-      locationId: locSettings[0]?.locationId ?? "",
+      location,
+      locationId,
       dates: booth.settings
-        .filter((s) => s.location === loc)
+        .filter((s) => s.location === location && s.locationId === locationId)
         .map((s) => {
           const [, m, d] = s.date.split("-");
           return `${Number(m)}월 ${Number(d)}일(${DAY_KO[s.day] ?? s.day}) ${s.startAt} ~ ${s.endAt}`;
