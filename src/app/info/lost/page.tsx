@@ -18,7 +18,12 @@ export default function LostPage() {
   const [selectedType, setSelectedType] = useState("all");
   const [currentPage, setCurrentPage] = useState(1);
 
-  const { data: response, isLoading, isError, refetch } = useLostItems({
+  const {
+    data: response,
+    isLoading,
+    isError,
+    refetch,
+  } = useLostItems({
     category: selectedType === "all" ? undefined : selectedType,
     date: selectedDate === "all" ? undefined : selectedDate,
     page: currentPage - 1,
@@ -65,10 +70,10 @@ export default function LostPage() {
           </div>
           <div className="flex-1 min-w-0">
             <p className="text-[13px] font-semibold text-[#1A2536] leading-5">
-              분실물을 찾지 못하셨나요?
+              분실물 관련 문의가 있으신가요?
             </p>
             <p className="text-[11px] text-text-sub leading-4">
-              카카오톡 채널로 직접 문의하세요
+              카카오톡 채널로 문의하세요.
             </p>
           </div>
           <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">

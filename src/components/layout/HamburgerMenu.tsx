@@ -18,7 +18,6 @@ type NavItem = {
 };
 
 const NAV_ITEMS: NavItem[] = [
-  { label: "마이페이지", href: "/mypage" },
   { label: "홈", href: "/" },
   {
     label: "공연",
@@ -43,6 +42,7 @@ const NAV_ITEMS: NavItem[] = [
       { label: "크레딧", href: "/info/credit" },
     ],
   },
+  { label: "마이페이지", href: "/mypage" },
 ];
 
 export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
