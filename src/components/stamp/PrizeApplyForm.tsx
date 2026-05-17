@@ -191,15 +191,7 @@ export default function PrizeApplyForm({
         </section>
       </div>
 
-      {/* 임시 테스트 버튼 */}
-      <button
-        onClick={() => setIsSuccess(true)}
-        className="fixed bottom-6 right-6 z-40 bg-black/60 text-white text-xs px-3 py-2 rounded-full"
-      >
-        테스트
-      </button>
-
-      <AnimatePresence>
+<AnimatePresence>
         {isSuccess && (
           <motion.div
             key="celebration"
