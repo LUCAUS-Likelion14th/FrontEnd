@@ -3,6 +3,7 @@
 import { authFetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useState } from "react";
+import { motion } from "framer-motion";
 import StampModalLayout from "./StampModalLayout";
 
 interface BoothStampModalProps {
@@ -52,7 +53,7 @@ export default function BoothStampModal({
 
   return (
     <StampModalLayout onClose={isSuccess ? handleFinalClose : onClose}>
-      <p className="text-[20px] font-semibold text-white text-center leading-relaxed mb-4">
+      <p className="text-[20px] font-semibold text-white text-center leading-relaxed">
         {boothName}
         <br />
         <span className="text-secondary-light">
@@ -60,17 +61,21 @@ export default function BoothStampModal({
         </span>
       </p>
 
-      <div className="relative flex justify-center items-center min-h-[150px] mb-4">
-        <Image
-          src={isSuccess ? "/star-on.png" : "/star-off.png"}
-          alt="스탬프 상태"
-          width={isSuccess ? 149 : 111}
-          height={isSuccess ? 149 : 111}
-          className="object-contain animate-fade-in"
-        />
+      <div className="relative flex justify-center items-center min-h-[150px] mb-4" style={{ perspective: "400px" }}>
+        {isSuccess ? (
+          <motion.div
+            initial={{ rotateY: -90 }}
+            animate={{ rotateY: 720 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <Image src="/star-on.png" alt="스탬프 상태" width={111} height={111} className="object-contain" />
+          </motion.div>
+        ) : (
+          <Image src="/star-off.png" alt="스탬프 상태" width={111} height={111} className="object-contain" />
+        )}
       </div>
 
-      <div className="w-full flex flex-col items-center gap-5 mt-auto">
+      <div className="w-full flex flex-col items-center gap-5">
         {!isSuccess ? (
           <>
             <div className="flex flex-col items-center gap-2 w-full">
@@ -95,7 +100,6 @@ export default function BoothStampModal({
                 <span className="text-red-400 text-[12px]">{errorMsg}</span>
               )}
             </div>
-
             <button
               onClick={handleStampSubmit}
               disabled={isLoading}
