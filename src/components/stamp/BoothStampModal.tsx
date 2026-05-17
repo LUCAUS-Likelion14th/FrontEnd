@@ -4,6 +4,8 @@ import { authFetcher } from "@/api/fetcher";
 import Image from "next/image";
 import { useState } from "react";
 import StampModalLayout from "./StampModalLayout";
+import { useEffect, useRef } from "react"; // 백 로그
+import { trackEvent } from "@/lib/api/analytics"; // 백 로그
 
 interface BoothStampModalProps {
   boothId: number;
@@ -22,6 +24,24 @@ export default function BoothStampModal({
   const [isLoading, setIsLoading] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
+
+  // 백 로그 시작
+  const startTime = useRef(Date.now());
+  useEffect(() => {
+    return () => {
+      const durationSec = Math.floor((Date.now() - startTime.current) / 1000);
+      if (durationSec < 3) return;
+      trackEvent({
+        eventType: "stay_duration_stamp_detail",
+        targetType: "STAMP",
+        targetId: boothId,
+        payload: {
+          stamp_booth_id: boothId,
+          durationSec,
+        },
+      });
+    };
+  }, []); // 백 로그 끝
 
   const handleStampSubmit = async () => {
     if (!password) {

@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import BoothStampModal from "./BoothStampModal";
+import {trackEvent} from "@/lib/api/analytics"; // 백 로그
 
 interface Booth {
   booth_id: number;
@@ -104,7 +105,18 @@ export default function StampBoard() {
         className="relative flex flex-col items-center w-[80px]"
       >
         <div
-          onClick={() => !booth.is_stamped && setSelectedBooth(booth)}
+          onClick={() => { // 백 로그
+            if (booth.is_stamped) return;
+            trackEvent({
+              eventType: "stamp_detail_click",
+              targetType: "STAMP",
+              targetId: booth.booth_id,
+              payload: {
+                stamp_booth_id: booth.booth_id,
+              },
+            });
+            setSelectedBooth(booth);
+          }} // 백 로그 끝
           className={`relative w-[80px] h-[80px] flex justify-center items-center transition-transform active:scale-95 z-10 ${
             booth.is_stamped ? "cursor-default" : "cursor-pointer"
           }`}
