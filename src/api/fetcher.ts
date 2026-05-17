@@ -44,11 +44,11 @@ async function _doRefresh(): Promise<string | null> {
     });
     if (!r.ok) return null;
     const data = await r.json();
-    const newToken = data?.data?.accessToken;
+    const newToken = data?.accessToken;
     if (!newToken) return null;
     localStorage.setItem("accessToken", newToken);
-    if (data.data.refreshToken) {
-      localStorage.setItem("refreshToken", data.data.refreshToken);
+    if (data.refreshToken) {
+      localStorage.setItem("refreshToken", data.refreshToken);
     }
     return newToken;
   } catch {
@@ -79,8 +79,10 @@ export async function mutate(
   });
 
   if (res.status === 401) {
+    console.log("만료되었습니다");
     const newToken = await tryRefreshToken();
     if (newToken) {
+      console.log("다시 요청합니다");
       const retryRes = await fetch(`/api${endpoint}`, {
         method,
         headers: {
@@ -95,6 +97,7 @@ export async function mutate(
       if (!retryRes.ok) {
         throw new Error(`API error: ${retryRes.status} ${endpoint}`);
       }
+      console.log("요청에 성공했습니다");
       return;
     } else {
       clearAuthAndRedirect();
@@ -137,8 +140,10 @@ export async function fetcher<T>(
 
   if (res.status === 401) {
     if (typeof window !== "undefined") {
+      console.log("만료되었습니다");
       const newToken = await tryRefreshToken();
       if (newToken) {
+        console.log("다시 요청합니다");
         const retryInit: RequestInit = {
           headers: {
             "Content-Type": "application/json",
@@ -152,6 +157,7 @@ export async function fetcher<T>(
           throw new Error("Unauthorized");
         }
         res = retryRes;
+        console.log("요청에 성공했습니다");
       } else {
         clearAuthAndRedirect();
         throw new Error("Unauthorized");
@@ -205,15 +211,17 @@ export async function authFetcher<T>(
   // --- 추가된 부분: 401(토큰 만료) 발생 시 재발급 및 재요청 로직 ---
   if (res.status === 401) {
     if (typeof window !== "undefined") {
+      console.log("만료되었습니다");
       const newToken = await tryRefreshToken();
       if (newToken) {
-        // 새 토큰으로 재요청 진행
+        console.log("다시 요청합니다");
         const retryRes = await fetch(url, createInit(newToken));
         if (retryRes.status === 401) {
           clearAuthAndRedirect();
           throw new Error("Unauthorized");
         }
-        res = retryRes; // 성공하면 기존 res를 재요청 결과로 덮어쓰기
+        res = retryRes;
+        console.log("요청에 성공했습니다");
       } else {
         clearAuthAndRedirect();
         throw new Error("Unauthorized");
