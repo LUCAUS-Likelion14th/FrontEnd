@@ -21,7 +21,7 @@ export default function CreditPage() {
   return (
     <div className="relative min-h-[calc(100vh-56px)] overflow-hidden">
       <Image
-        src="/stamp-bg.png"
+        src="/stamp-bg.webp"
         alt=""
         fill
         className="object-cover object-top"
