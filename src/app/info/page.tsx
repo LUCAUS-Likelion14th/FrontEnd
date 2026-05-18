@@ -1,6 +1,7 @@
 import { infoBarrierFree, infoLost, infoMypage, infoNotice, infoRoute } from '@/assets/webp/info';
 import { InfoCard } from '@/components';
 import Image from 'next/image';
+import { FiSend } from 'react-icons/fi';
 
 export default function InfoPage() {
   return (
@@ -17,7 +18,29 @@ export default function InfoPage() {
         </span>
       </div>
 
-      <section className="flex flex-col gap-3">
+      <a
+        href="https://www.instagram.com/likelion_cau/"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center gap-3 mb-5 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
+      >
+        <div className="w-9 h-9 rounded-[10px] bg-primary-light flex items-center justify-center flex-shrink-0">
+          <FiSend size={17} className="text-primary" />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-[13px] font-semibold text-[#1A2536] leading-5">
+            축제 사이트에 대해 궁금한 점이 있다면?
+          </p>
+          <p className="text-[12px] text-text-sub leading-5">
+            @likelion_cau로 문의주세요
+          </p>
+        </div>
+        <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
+          문의하기
+        </span>
+      </a>
+
+      <section className="flex flex-col gap-3 pb-16">
         <InfoCard
           imageUrl={infoNotice}
           title="축제기획단 공지"
