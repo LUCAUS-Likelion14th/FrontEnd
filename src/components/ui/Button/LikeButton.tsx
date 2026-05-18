@@ -52,7 +52,7 @@ export default function LikeButton({
   const updateCache = (liked: boolean, count: number) => {
     queryClient.setQueriesData<any>(
       { queryKey: [type] },
-      (oldData) => {
+      (oldData: any) => {
         if (!oldData?.content) return oldData;
         return {
           ...oldData,
