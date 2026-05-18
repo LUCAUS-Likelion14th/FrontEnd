@@ -20,22 +20,21 @@ export default function BoothCategoryFilter({
   isStampActive = false,
 }: Props) {
   return (
-    <div className="flex items-center gap-2 pr-4">
-      {BOOTH_CATEGORIES.map((cat, idx) => {
+    <div className="inline-flex items-center gap-2 px-4">
+      {BOOTH_CATEGORIES.map((cat) => {
         const isActive = !isStampActive && selectedCategory === cat;
         return (
-          <Fragment key={cat}>
-            <button
-              onClick={() => onSelectCategory(cat)}
-              className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-all active:scale-95 ${
-                isActive
-                  ? "bg-primary text-white active:opacity-80"
-                  : "bg-primary-light text-text-sub"
-              }`}
-            >
-              {cat}
-            </button>
-          </Fragment>
+          <button
+            key={cat}
+            onClick={() => onSelectCategory(cat)}
+            className={`flex shrink-0 items-center justify-center w-[68px] h-9 rounded-[43px] text-sm font-medium transition-all active:scale-95 ${
+              isActive
+                ? "bg-primary text-white active:opacity-80"
+                : "bg-primary-light text-text-sub"
+            }`}
+          >
+            {cat}
+          </button>
         );
       })}
     </div>

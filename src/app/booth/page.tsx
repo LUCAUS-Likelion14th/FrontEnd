@@ -183,7 +183,7 @@ function BoothPageContent() {
           부스 검색하기
         </span>
       </a>
-        <div className="pt-2 pb-5 overflow-x-auto scrollbar-hide -mx-4 px-4">
+        <div className="pt-2 pb-5 overflow-x-auto scrollbar-hide -mx-4">
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
             onSelectCategory={handleCategoryChange}
