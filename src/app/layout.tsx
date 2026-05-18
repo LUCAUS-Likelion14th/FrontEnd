@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from "next";
+import { Analytics } from "@vercel/analytics/next";
 
 export const viewport: Viewport = {
   viewportFit: "cover",
@@ -68,6 +69,7 @@ export default function RootLayout({
           </main>
           <BottomNav />
         </Providers>
+        <Analytics />
       </body>
     </html>
   );
