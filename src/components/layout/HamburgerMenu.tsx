@@ -115,12 +115,17 @@ export default function HamburgerMenu({ isOpen, onClose }: HamburgerMenuProps) {
           >
             {/* 내부 컨테이너 — Figma: layout_Z0DAM0 (col, flex-end, gap 38) */}
             <div
+              className="scrollbar-hide"
               style={{
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "flex-end",
                 gap: "35px",
                 width: "188px",
+                overflowY: "auto",
+                height: "100%",
+                scrollbarWidth: "none",
+                msOverflowStyle: "none",
               }}
             >
               {/* X 닫기 버튼 */}
