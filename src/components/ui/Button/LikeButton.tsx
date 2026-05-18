@@ -11,6 +11,10 @@ import LoginBottomSheet from "@/components/ui/LoginBottomSheet";
 import { trackEvent } from "@/lib/api/analytics";
 // ─── /analytics tracking ───
 
+// 사용자가 직접 누른 좋아요 상태를 세션 동안 유지 (페이지 이동 후 리마운트 시에도 반영)
+const likedOverrides = new Map<string, boolean>();
+const likeCountOverrides = new Map<string, number>();
+
 type LikeButtonProps = {
   id: number | string;
   type: "booth" | "foodtruck";
@@ -36,18 +40,29 @@ export default function LikeButton({
   outlineColor = "text-text-sub",
   countColor,
 }: LikeButtonProps) {
-  const [isLiked, setIsLiked] = useState(initialIsLiked);
-  const [likeCount, setLikeCount] = useState(initialLikeCount);
+  const overrideKey = `${type}-${id}`;
+  const [isLiked, setIsLiked] = useState(
+    likedOverrides.has(overrideKey) ? likedOverrides.get(overrideKey)! : initialIsLiked
+  );
+  const [likeCount, setLikeCount] = useState(
+    likeCountOverrides.has(overrideKey) ? likeCountOverrides.get(overrideKey)! : initialLikeCount
+  );
   const [animateKey, setAnimateKey] = useState(0);
   const [showLoginSheet, setShowLoginSheet] = useState(false);
   const queryClient = useQueryClient();
 
   useEffect(() => {
-    setIsLiked(initialIsLiked);
-  }, [initialIsLiked]);
+    // 사용자가 직접 누른 override가 있으면 서버 데이터로 덮어쓰지 않음
+    if (!likedOverrides.has(overrideKey)) {
+      setIsLiked(initialIsLiked);
+    }
+  }, [initialIsLiked, overrideKey]);
+
   useEffect(() => {
-    setLikeCount(initialLikeCount);
-  }, [initialLikeCount]);
+    if (!likeCountOverrides.has(overrideKey)) {
+      setLikeCount(initialLikeCount);
+    }
+  }, [initialLikeCount, overrideKey]);
 
   const updateCache = (liked: boolean, count: number) => {
     queryClient.setQueriesData<any>(
@@ -90,11 +105,14 @@ export default function LikeButton({
       ? likeCount + 1
       : likeCount - 1;
 
+    // 세션 동안 상태 유지
+    likedOverrides.set(overrideKey, nextLiked);
+    likeCountOverrides.set(overrideKey, nextLikeCount);
+
     setIsLiked(nextLiked);
     setLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
     if (nextLiked) setAnimateKey((prev) => prev + 1);
 
-    // 캐시를 즉시 업데이트해 리렌더/리마운트 시에도 좋아요 상태가 유지되도록 함
     updateCache(nextLiked, nextLikeCount);
 
     try {
@@ -111,8 +129,6 @@ export default function LikeButton({
           },
         });
 
-      // 부스/푸드트럭 목록·검색 쿼리는 setQueriesData로 이미 업데이트되었으므로
-      // invalidate 하지 않음 — 즉시 refetch 시 서버 응답이 낙관적 업데이트를 덮어쓰는 문제 방지
       queryClient.invalidateQueries({
         queryKey: [type === "booth" ? "topBooth" : "hotFood"],
       });
@@ -121,6 +137,9 @@ export default function LikeButton({
       });
     } catch (error) {
       console.error("좋아요 처리 실패:", error);
+      // 실패 시 override 제거 → 서버 상태를 따름
+      likedOverrides.delete(overrideKey);
+      likeCountOverrides.delete(overrideKey);
       setIsLiked(!nextLiked);
       setLikeCount((prev) => (nextLiked ? prev - 1 : prev + 1));
       updateCache(!nextLiked, likeCount);
