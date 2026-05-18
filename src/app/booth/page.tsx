@@ -2,6 +2,7 @@
 
 import { useState, useEffect, Suspense } from "react";
 import { motion } from "framer-motion";
+import Link from "next/link";
 import { useSearchParams, useRouter } from "next/navigation";
 import BoothMap from "@/components/booth/BoothMap";
 import {
@@ -164,7 +165,7 @@ function BoothPageContent() {
       </section>
 
       <section className="flex flex-col">
-      <a
+      <Link
         href="/booth/search"
         className="flex items-center gap-3 mb-5 mt-3 px-4 py-3.5 rounded-[14px] bg-white border border-primary/10 shadow-[0_2px_12px_rgba(6,56,125,0.1)] active:opacity-70 transition-opacity"
       >
@@ -182,7 +183,7 @@ function BoothPageContent() {
         <span className="flex-shrink-0 px-3.5 py-1.5 rounded-full bg-primary text-white text-[12px] font-medium">
           부스 검색하기
         </span>
-      </a>
+      </Link>
         <div className="pt-2 pb-5 overflow-x-auto scrollbar-hide -mx-4">
           <BoothCategoryFilter
             selectedCategory={selectedCategory}
