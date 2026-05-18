@@ -82,7 +82,7 @@ export default function PrizeApplyForm({
     <div className="relative min-h-screen">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/stamp-bg.png"
+          src="/stamp-bg.webp"
           alt="도장판 배경 이미지"
           fill
           priority
@@ -203,7 +203,7 @@ export default function PrizeApplyForm({
           >
             {/* 배경 */}
             <div className="absolute inset-0 z-0">
-              <Image src="/stamp-bg.png" alt="" fill priority className="object-cover object-top" />
+              <Image src="/stamp-bg.webp" alt="" fill priority className="object-cover object-top" />
               <div className="absolute inset-0 bg-black/30" />
             </div>
 

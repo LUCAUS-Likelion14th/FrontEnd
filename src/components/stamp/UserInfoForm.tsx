@@ -50,7 +50,7 @@ export default function UserInfoForm({ onComplete }: UserInfoFormProps) {
     <div className="relative min-h-[calc(100vh-120px)] flex flex-col">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/stamp-register-bg.png"
+          src="/stamp-register-bg.webp"
           alt="도장판 인적사항 입력 배경 이미지"
           fill
           priority

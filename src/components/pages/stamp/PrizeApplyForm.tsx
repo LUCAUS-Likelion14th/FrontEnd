@@ -50,7 +50,7 @@ export default function PrizeApplyForm({
     <>
       <div className="fixed inset-0 -z-10">
         <Image
-          src="/stamp-bg.png"
+          src="/stamp-bg.webp"
           alt="도장판 배경 이미지"
           fill
           priority

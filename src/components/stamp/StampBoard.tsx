@@ -26,7 +26,7 @@ function StampBoardSkeleton() {
     <div className="relative min-h-[calc(100vh-56px)]">
       <div className="absolute inset-0 z-0">
         <Image
-          src="/stamp-bg.png"
+          src="/stamp-bg.webp"
           alt=""
           fill
           priority
@@ -158,7 +158,7 @@ export default function StampBoard() {
     <div className="relative min-h-screen pb-20">
       <div className="fixed inset-0 -z-10">
         <Image
-          src="/stamp-bg.png"
+          src="/stamp-bg.webp"
           alt="도장판 배경 이미지"
           fill
           priority
