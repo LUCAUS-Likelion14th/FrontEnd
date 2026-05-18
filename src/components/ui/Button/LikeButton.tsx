@@ -49,6 +49,30 @@ export default function LikeButton({
     setLikeCount(initialLikeCount);
   }, [initialLikeCount]);
 
+  const updateCache = (liked: boolean, count: number) => {
+    queryClient.setQueriesData<any>(
+      { queryKey: [type] },
+      (oldData) => {
+        if (!oldData?.content) return oldData;
+        return {
+          ...oldData,
+          content: oldData.content.map((item: any) => {
+            if (Number(item.booth_id ?? item.foodtruck_id) === Number(id)) {
+              return {
+                ...item,
+                is_liked: liked,
+                liked: liked,
+                like_count: count,
+                likeCount: count,
+              };
+            }
+            return item;
+          }),
+        };
+      }
+    );
+  };
+
   const handleLikeClick = async (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
@@ -69,6 +93,9 @@ export default function LikeButton({
     setIsLiked(nextLiked);
     setLikeCount((prev) => (nextLiked ? prev + 1 : prev - 1));
     if (nextLiked) setAnimateKey((prev) => prev + 1);
+
+    // 캐시를 즉시 업데이트해 리렌더/리마운트 시에도 좋아요 상태가 유지되도록 함
+    updateCache(nextLiked, nextLikeCount);
 
     try {
       await mutate(endpoint, nextLiked ? "POST" : "DELETE");
@@ -95,6 +122,7 @@ export default function LikeButton({
       console.error("좋아요 처리 실패:", error);
       setIsLiked(!nextLiked);
       setLikeCount((prev) => (nextLiked ? prev - 1 : prev + 1));
+      updateCache(!nextLiked, likeCount);
       setShowLoginSheet(true);
     }
   };
