@@ -111,7 +111,8 @@ export default function LikeButton({
           },
         });
 
-      queryClient.invalidateQueries({ queryKey: [type] });
+      // 부스/푸드트럭 목록·검색 쿼리는 setQueriesData로 이미 업데이트되었으므로
+      // invalidate 하지 않음 — 즉시 refetch 시 서버 응답이 낙관적 업데이트를 덮어쓰는 문제 방지
       queryClient.invalidateQueries({
         queryKey: [type === "booth" ? "topBooth" : "hotFood"],
       });
