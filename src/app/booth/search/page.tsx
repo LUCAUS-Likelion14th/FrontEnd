@@ -110,7 +110,14 @@ function BoothSearchContent() {
               ))}
             </div>
             {totalPages > 1 && (
-              <Pagination page={currentPage} totalPages={totalPages} onChange={setCurrentPage} />
+              <Pagination
+                page={currentPage}
+                totalPages={totalPages}
+                onChange={(page) => {
+                  setCurrentPage(page);
+                  document.documentElement.scrollTop = 0;
+                }}
+              />
             )}
           </>
         ) : debouncedSearch.trim().length > 0 ? (
