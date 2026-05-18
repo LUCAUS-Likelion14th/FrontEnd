@@ -210,9 +210,6 @@ export default function StampBoard() {
               style={{ width: `${progressPercentage}%` }}
             />
           </div>
-          <span className="text-text-sub text-[14px] font-semibold underline underline-offset-4 cursor-pointer">
-            상품은 언제 받을 수 있나요?
-          </span>
         </div>
 
         <section className="grid grid-cols-2 gap-y-10 px-12">
