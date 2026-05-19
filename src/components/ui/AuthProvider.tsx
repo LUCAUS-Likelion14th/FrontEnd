@@ -1,6 +1,7 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
+import { useQueryClient } from "@tanstack/react-query";
 import { useAuthStore } from "@/store/authStore";
 
 function getTokenExpiry(token: string): number | null {
@@ -21,6 +22,16 @@ function isTokenValid(token: string): boolean {
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const setAccessToken = useAuthStore((s) => s.setAccessToken);
   const setInitialized = useAuthStore((s) => s.setInitialized);
+  const accessToken = useAuthStore((s) => s.accessToken);
+  const queryClient = useQueryClient();
+  const prevTokenRef = useRef<string | null>(undefined);
+
+  useEffect(() => {
+    if (prevTokenRef.current !== undefined && prevTokenRef.current !== null && accessToken === null) {
+      queryClient.invalidateQueries();
+    }
+    prevTokenRef.current = accessToken;
+  }, [accessToken, queryClient]);
 
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
