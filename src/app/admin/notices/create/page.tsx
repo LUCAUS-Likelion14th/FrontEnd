@@ -22,7 +22,10 @@ export default function NoticeCreatePage() {
     setIsSubmitting(true);
     try {
       const notice = await adminNoticeApi.createNotice({ title, content });
-      if (isPinned) await adminNoticeApi.setImportant(notice.id);
+      if (isPinned) {
+        await adminNoticeApi.setImportant(notice.id);
+        await adminNoticeApi.setActive(notice.id);
+      }
       alert("공지가 등록되었습니다.");
       router.push("/admin/notices");
     } catch (error: any) {
