@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import { MypageClient } from "@/components";
 import { useMyPage } from "@/hooks/mypage";
+import { useAuthStore } from "@/store/authStore";
 
 function MypageSkeleton() {
   return (
@@ -17,15 +17,15 @@ function MypageSkeleton() {
 }
 
 export default function MyPage() {
-  const [isLoggedIn, setIsLoggedIn] = useState<boolean | null>(null);
+  const { accessToken, isInitialized } = useAuthStore((s) => ({
+    accessToken: s.accessToken,
+    isInitialized: s.isInitialized,
+  }));
+  const isLoggedIn = !!accessToken;
 
-  useEffect(() => {
-    setIsLoggedIn(!!localStorage.getItem("accessToken"));
-  }, []);
+  const { data, isLoading } = useMyPage(isLoggedIn);
 
-  const { data, isLoading } = useMyPage(isLoggedIn === true);
-
-  if (isLoggedIn === null || (isLoggedIn && isLoading)) return <MypageSkeleton />;
+  if (!isInitialized || (isLoggedIn && isLoading)) return <MypageSkeleton />;
 
   return (
     <MypageClient
