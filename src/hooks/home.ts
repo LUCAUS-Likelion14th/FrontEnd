@@ -7,7 +7,7 @@ export function useTopBooth() {
   return useQuery({
     queryKey: ["topBooth"],
     queryFn: homeApi.getTopBooth,
-    staleTime: 60_000,
+    staleTime: 0,
   });
 }
 
@@ -15,6 +15,6 @@ export function useHotFood() {
   return useQuery({
     queryKey: ["hotFood"],
     queryFn: homeApi.getHotFood,
-    staleTime: 60_000,
+    staleTime: 0,
   });
 }

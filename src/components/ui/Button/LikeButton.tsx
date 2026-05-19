@@ -135,15 +135,17 @@ export default function LikeButton({
       queryClient.invalidateQueries({
         queryKey: ["mypage", type === "booth" ? "booth" : "foodtruck"],
       });
-    } catch (error) {
+    } catch (error: any) {
       console.error("좋아요 처리 실패:", error);
-      // 실패 시 override 제거 → 서버 상태를 따름
       likedOverrides.delete(overrideKey);
       likeCountOverrides.delete(overrideKey);
       setIsLiked(!nextLiked);
       setLikeCount((prev) => (nextLiked ? prev - 1 : prev + 1));
       updateCache(!nextLiked, likeCount);
-      setShowLoginSheet(true);
+      // 토큰이 아예 없을 때만 로그인 유도 (만료 시 mutate 내부 refresh가 처리)
+      if (!localStorage.getItem("accessToken")) {
+        setShowLoginSheet(true);
+      }
     }
   };
 
