@@ -32,7 +32,7 @@ LUCAUS는 중앙대학교 축제 정보를 한곳에서 확인할 수 있는 모
 | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/179fac7f-07ca-430c-9471-9734e3fc02b9" width="300" /> <br> 카테고리 필터, 검색, **지도 기반 위치** 및 <br> 부스 상세 정보와 좋아요 기능 | <img src="https://github.com/user-attachments/assets/9325840f-0150-4428-8fca-21cb81278ed4" width="300" /> <br> 축제 현장의 모든 **먹거리 정보**와 <br> 메뉴 및 가격 안내 |
 
-| ⭐ 모바일 도장판 | 🔍 분실물 센터 |
+| ⭐ 모바일 도장판 | 🔍 분실물 안내 |
 | :---: | :---: |
 | <img src="https://github.com/user-attachments/assets/84c9626f-ff6b-49c8-ac0c-2f7f62236284" width="300" /> <br> STAFF 인증 코드를 통한 **별빛 도장** 획득 및 <br> 경품 이벤트 응모 기능 | <img src="https://github.com/user-attachments/assets/92fab55a-4d45-4928-aa21-cf396962b299" width="300" /> <br> 날짜·카테고리별 **분실물 현황** 조회 및 <br> 카카오톡 채널 연동 문의 |
 
