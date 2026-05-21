@@ -9,6 +9,7 @@ import {
 import ImageSwiper from "@/components/ui/ImageSwiper";
 import Footer from "@/components/layout/Footer";
 import { homeApi } from "@/api/homeApi";
+import { RouteShortcutButton } from "@/components/home/RouteShortcutButton";
 
 export default async function Home() {
   const [rawPromotions, rawStages, activeNotice] = await Promise.all([
@@ -33,7 +34,8 @@ export default async function Home() {
           <ImageSwiper promotions={promotions} />
           <div className="flex flex-col px-4 gap-2">
             <NoticeBanner notice={activeNotice} />
-            <StampShortcutButton />
+            {/* <StampShortcutButton /> */}
+            <RouteShortcutButton />
           </div>
         </div>
 
