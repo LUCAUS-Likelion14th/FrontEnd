@@ -20,6 +20,7 @@ export default function StageCard({
   time,
 }: StageCardProps) {
   const isDisableLink = category === "청룡가요제" || category === "행사";
+  const isArtist = category === "아티스트 공연";
 
   // 공통 카드 스타일
   const cardClassName =
@@ -39,7 +40,9 @@ export default function StageCard({
         <span className="text-[14px] text-black truncate">{category}</span>
         <div className="flex items-end justify-between gap-2">
           <strong className="text-[18px] font-semibold truncate">{name}</strong>
-          <time className="text-[14px] text-text-sub shrink-0">{time}</time>
+          {!isArtist && (
+            <time className="text-[14px] text-text-sub shrink-0">{time}</time>
+          )}
         </div>
       </div>
     </>
