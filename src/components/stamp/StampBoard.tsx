@@ -81,10 +81,13 @@ export default function StampBoard() {
     setIsError(false);
     const loadData = async () => {
       try {
-        const res = await fetcher<StampData>("/stamp");
+        const res = await fetcher<StampData>("/stamp", {
+          suppressAuthRedirect: true,
+        });
         setData(res);
       } catch (error: any) {
         if (error.message === "Unauthorized") {
+          sessionStorage.setItem("postLoginRedirect", "/stamp");
           router.replace("/login");
           return;
         }

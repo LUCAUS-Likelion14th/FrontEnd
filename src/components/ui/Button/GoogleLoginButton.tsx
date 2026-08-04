@@ -2,8 +2,13 @@
 
 import Image from "next/image";
 
-export default function GoogleLoginButton() {
+type Props = {
+  onBeforeRedirect?: () => void;
+};
+
+export default function GoogleLoginButton({ onBeforeRedirect }: Props) {
   const handleLogin = () => {
+    onBeforeRedirect?.();
     window.location.href = "https://lucaus.o-r.kr/oauth2/authorization/google";
   };
 
