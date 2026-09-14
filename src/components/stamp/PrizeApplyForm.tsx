@@ -89,7 +89,7 @@ export default function PrizeApplyForm({
           className="object-cover object-top"
         />
       </div>
-      <div className="relative z-10 w-full h-full px-4 pt-5 pb-24 flex flex-col">
+      <div className="relative z-10 w-full h-full px-4 pt-5 pb-24 flex flex-col md:max-w-[540px] md:mx-auto">
         <div className="flex items-center justify-between mb-[53px]">
           <BackButton />
 

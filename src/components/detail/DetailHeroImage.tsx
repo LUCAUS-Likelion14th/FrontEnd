@@ -14,14 +14,14 @@ export default function DetailHeroImage({ src, alt }: Props) {
 
   if (imgError || !src) {
     return (
-      <div className="relative w-full aspect-390/264 bg-gray-100 flex items-center justify-center">
+      <div className="relative w-full aspect-390/264 bg-gray-100 flex items-center justify-center md:mt-6 md:rounded-[16px] md:overflow-hidden">
         <FiImage size={48} className="text-gray-300" />
       </div>
     );
   }
 
   return (
-    <div className="relative w-full aspect-390/264">
+    <div className="relative w-full aspect-390/264 md:mt-6 md:rounded-[16px] md:overflow-hidden">
       <Image
         src={src}
         alt={alt}

@@ -146,7 +146,7 @@ function BoothPageContent() {
   // 백엔드 로그 ─── /analytics tracking ───
 
   return (
-    <main className="px-4 pt-5 pb-25">
+    <main className="px-4 pt-5 pb-25 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
       <section className="flex flex-col gap-[17px] mb-5">
         <div className="flex flex-col gap-2.5">
           <DateFilter
@@ -198,7 +198,7 @@ function BoothPageContent() {
 
         <div className={booths.length > 0 ? "min-h-[596px]" : ""}>
           {isLoading ? (
-            <div className="grid grid-cols-2 gap-x-3 gap-y-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5">
               {Array.from({ length: PAGE_SIZE }).map((_, i) => (
                 <div
                   key={i}
@@ -209,7 +209,7 @@ function BoothPageContent() {
           ) : isError ? (
             <ErrorFallback onReset={refetch} />
           ) : booths.length > 0 ? (
-            <div className="grid grid-cols-2 gap-x-3 gap-y-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5">
               {booths.map((booth, i) => (
                 <motion.div
                   key={booth.booth_id}

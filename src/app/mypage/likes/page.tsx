@@ -68,7 +68,7 @@ export default function LikesPage() {
         <TabBar />
       </div>
 
-      <div className="pt-32 px-4 pb-12">
+      <div className="pt-32 px-4 pb-12 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
         {currentLoading ? (
           <div className="grid grid-cols-2 gap-4">
             {Array.from({ length: 4 }).map((_, i) => (

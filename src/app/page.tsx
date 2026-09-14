@@ -33,16 +33,16 @@ export default async function Home() {
       <SplashScreen />
 
       <main className="flex flex-col gap-12 mb-15">
-        <div className="flex flex-col gap-8">
+        <div className="flex flex-col gap-8 md:w-full md:max-w-[1440px] md:mx-auto md:px-10 lg:px-16">
           <ImageSwiper promotions={promotions} />
-          <div className="flex flex-col px-4 gap-2">
+          <div className="flex flex-col px-4 md:px-0 gap-2">
             <NoticeBanner notice={activeNotice} />
             {/* <StampShortcutButton /> */}
             <RouteShortcutButton />
           </div>
         </div>
 
-        <section className="flex flex-col px-4 gap-8">
+        <section className="flex flex-col px-4 gap-8 md:w-full md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
           <RankingSections stages={liveStages} />
         </section>
       </main>

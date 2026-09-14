@@ -112,7 +112,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
           </div>
 
-          <div className="px-4 flex flex-col gap-8">
+          <div className="px-4 flex flex-col gap-8 md:w-full md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
             {/* 좋아요 */}
             <div className="flex flex-col gap-3">
               <div className="flex items-center justify-between">
@@ -164,7 +164,7 @@ export default function MypageClient({ isLoggedIn, data }: MypageClientProps) {
             </div>
           </div>
 
-          <div className="flex flex-col px-4 gap-8">
+          <div className="flex flex-col px-4 gap-8 md:w-full md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
             {/* 좋아요 */}
             <div className="flex flex-col gap-3">
               <Link href="/mypage/likes" className="flex items-center justify-between">

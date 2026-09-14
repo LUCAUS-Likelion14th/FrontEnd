@@ -46,9 +46,10 @@ export default async function StageDetailPage({
     <main className="pb-12">
       <DetailHeader title="공연 정보" />
 
+      <div className="md:max-w-[960px] md:mx-auto md:px-10">
       {/* 히어로 이미지 */}
       <section className="mb-4">
-        <div className="relative w-full h-78 overflow-hidden">
+        <div className="relative w-full h-78 overflow-hidden md:mt-6 md:rounded-[16px]">
           <Image
             src={stage.performer_image}
             alt={`${stage.performer} 사진`}
@@ -89,7 +90,7 @@ export default async function StageDetailPage({
         </div>
       </section>
 
-<div className="px-4 flex flex-col gap-3">
+<div className="px-4 md:px-0 flex flex-col gap-3">
         {/* 공연 일정 */}
         <div className="flex items-center justify-between bg-primary-light rounded-[12px] px-4 py-3.5">
           <div className="flex items-center gap-2 text-primary">
@@ -131,6 +132,7 @@ export default async function StageDetailPage({
         <small className="block text-xs font-light text-center text-text-sub mt-6">
           *주최 측의 사정에 따라 일정이 변경될 수 있습니다
         </small>
+      </div>
       </div>
     </main>
   );

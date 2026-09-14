@@ -5,7 +5,7 @@ import { FiSend } from 'react-icons/fi';
 
 export default function InfoPage() {
   return (
-    <main className="px-4 pt-5 overflow-hidden">
+    <main className="px-4 pt-5 overflow-hidden md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
       <div className="flex items-center h-12 px-[15px] mb-5 bg-primary-light rounded-[10px] gap-2 shadow-[0_2px_12px_rgba(6,56,125,0.2)]">
         <Image
           src={"/icons/highlight.png"}

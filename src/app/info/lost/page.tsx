@@ -46,7 +46,7 @@ export default function LostPage() {
     <main className="pb-25">
       <DetailHeader title="분실물 찾기" />
 
-      <div className="px-4">
+      <div className="px-4 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
         <div className="flex items-center h-12 px-[11.5px] mb-3 bg-primary-light rounded-[10px] gap-2 shadow-[0_2px_12px_rgba(6,56,125,0.2)]">
           <Image
             src={"/icons/highlight.png"}
