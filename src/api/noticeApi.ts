@@ -1,9 +1,18 @@
 import { fetcher } from "./fetcher";
 import { Notice, NoticeParams, NoticeResponse } from "@/types/notice";
+import { MOCK_NOTICES } from "@/data/noticeData";
+
+function mockNoticeResponse(page: number, size: number): NoticeResponse {
+  const start = page * size;
+  return {
+    content: MOCK_NOTICES.slice(start, start + size),
+    totalPages: Math.max(1, Math.ceil(MOCK_NOTICES.length / size)),
+  };
+}
 
 export const noticeApi = {
   // 공지사항 목록 조회 (페이지네이션 적용)
-  getNotices: ({
+  getNotices: async ({
     page = 0,
     size = 10,
     sort = ["createdAt,desc"],
@@ -17,8 +26,20 @@ export const noticeApi = {
     // sort는 배열일 수 있으므로 반복문으로 추가 (API 규격에 따라 다름)
     sort.forEach((s) => queryString.append("sort", s));
 
-    return fetcher<NoticeResponse>(`/notice?${queryString.toString()}`);
+    try {
+      return await fetcher<NoticeResponse>(`/notice?${queryString.toString()}`);
+    } catch (error) {
+      console.warn("공지 목록 API 연결 실패, 모의 데이터를 반환합니다:", error);
+      return mockNoticeResponse(page, size);
+    }
   },
 
-  getNoticeDetail: (noticeId: number) => fetcher<Notice>(`/notice/${noticeId}`),
+  getNoticeDetail: async (noticeId: number) => {
+    try {
+      return await fetcher<Notice>(`/notice/${noticeId}`);
+    } catch (error) {
+      console.warn("공지 상세 API 연결 실패, 모의 데이터를 반환합니다:", error);
+      return MOCK_NOTICES.find((n) => n.id === noticeId) as Notice;
+    }
+  },
 };

@@ -10,6 +10,7 @@ import Script from "next/script";
 import BottomNav from "@/components/layout/BottomNav";
 import "./globals.css";
 import Header from "@/components/layout/Header";
+import OperationEndedBanner from "@/components/layout/OperationEndedBanner";
 import PageTransition from "@/components/layout/PageTransition";
 import Providers from "./providers";
 import RouteTracker from "@/components/analytics/RouteTracker";
@@ -65,6 +66,7 @@ export default function RootLayout({
           <RouteTracker />
           <Header />
           <main className="min-h-screen mt-14" style={{ paddingTop: "env(safe-area-inset-top)", paddingBottom: "calc(1.1rem + env(safe-area-inset-bottom))" }}>
+            <OperationEndedBanner />
             <PageTransition>{children}</PageTransition>
           </main>
           <BottomNav />

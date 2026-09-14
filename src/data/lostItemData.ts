@@ -1,3 +1,5 @@
+import type { LostItem as ApiLostItem, LostListResponse } from "@/types/lost";
+
 type LostItemType = "electronics" | "wallet" | "cosmetic" | "umbrella" | "etc";
 
 export type LostItem = {
@@ -84,3 +86,24 @@ export const lostItems: LostItem[] = [
     type: "etc",
   },
 ];
+
+// 백엔드 연결이 끊겼을 때 분실물 목록이 비어 보이지 않도록 쓰는 데모용 응답.
+export const MOCK_LOST_ITEMS: ApiLostItem[] = lostItems.map((item) => ({
+  lost_id: item.id,
+  name: item.name,
+  image: "",
+  date: item.date,
+  find_location: item.location,
+}));
+
+export function mockLostListResponse(page = 0, size = 8): LostListResponse {
+  const start = page * size;
+  const content = MOCK_LOST_ITEMS.slice(start, start + size);
+  return {
+    content,
+    totalPages: Math.max(1, Math.ceil(MOCK_LOST_ITEMS.length / size)),
+    totalElements: MOCK_LOST_ITEMS.length,
+    size,
+    number: page,
+  };
+}
