@@ -1,9 +1,7 @@
 import {
   NoticeBanner,
-  StageSection,
   StampShortcutButton,
-  BoothSection,
-  FoodSection,
+  RankingSections,
   SplashScreen,
 } from "@/components";
 import ImageSwiper from "@/components/ui/ImageSwiper";
@@ -40,15 +38,7 @@ export default async function Home() {
         </div>
 
         <section className="flex flex-col px-4 gap-8">
-          <div id="live-stage">
-            <StageSection stages={liveStages} />
-          </div>
-          <div id="top-booth">
-            <BoothSection />
-          </div>
-          <div id="hot-food">
-            <FoodSection />
-          </div>
+          <RankingSections stages={liveStages} />
         </section>
       </main>
 
