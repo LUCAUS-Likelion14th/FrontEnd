@@ -10,8 +10,11 @@ import { FOODTRUCK_DATA } from "./foodtruckData";
 // 상세 페이지도 같은 항목으로 채워진다.
 
 export const mockPromotions: Promotion[] = [
-  { id: -1, instagram: "", image: "/landing-bg.png" },
-  { id: -2, instagram: "", image: "/notice1.png" },
+  { id: -1, instagram: "", image: "/banners/schedule.jpg" },
+  { id: -2, instagram: "", image: "/banners/bluehour-day1.jpg" },
+  { id: -3, instagram: "", image: "/banners/bluehour-day2.jpg" },
+  { id: -4, instagram: "", image: "/banners/puang-pass.jpg" },
+  { id: -5, instagram: "", image: "/banners/ticket-notice.jpg" },
 ];
 
 export const mockLiveStages: LiveStage[] = MOCK_STAGES.slice(0, 2).map((stage) => ({
