@@ -9,7 +9,7 @@ import {
 const CATEGORY_KO: Record<string, string> = {
   STUDENT_PERFORMANCE: "학생 공연",
   CHEONGRYONG_FESTIVAL: "청룡가요제",
-  ARTIST_PERFORMANCE: "아티스트 공연",
+  ARTIST_PERFORMANCE: "아티스트",
 };
 
 export const stageApi = {

@@ -17,7 +17,7 @@ export const STAGE_EVENT_DATA = [
 type MockStage = {
   stage_id: number;
   performer: string;
-  category: "학생 공연" | "청룡가요제" | "아티스트 공연";
+  category: "학생 공연" | "청룡가요제" | "아티스트";
   date: string;
   startAt: string;
   endAt: string;
@@ -30,36 +30,6 @@ type MockStage = {
 };
 
 const MOCK_STAGES: MockStage[] = [
-  {
-    stage_id: 101,
-    performer: "루카우스 댄스크루",
-    category: "청룡가요제",
-    date: "2026-05-21",
-    startAt: "2026-05-21T16:00:00",
-    endAt: "2026-05-21T17:00:00",
-    logoImage: "/lucaus-logo.png",
-    performerImage: "/landing-bg.png",
-    stageInfo:
-      "교내 최대 규모 댄스 동아리가 한 학기 동안 준비한 무대를 선보입니다. 힙합부터 K-POP 커버까지 쉴 틈 없이 이어집니다.",
-    instagram: "",
-    youtube: "",
-    songs: ["Opening Cypher", "K-POP Medley", "Finale Stage"],
-  },
-  {
-    stage_id: 102,
-    performer: "즉흥 밴드",
-    category: "아티스트 공연",
-    date: "2026-05-21",
-    startAt: "2026-05-21T19:00:00",
-    endAt: "2026-05-21T20:30:00",
-    logoImage: "/lucaus-logo.png",
-    performerImage: "/landing-bg.png",
-    stageInfo:
-      "잔디광장을 가득 채울 밴드 사운드. 익숙한 명곡들을 밴드 편곡으로 다시 만나보세요.",
-    instagram: "",
-    youtube: "",
-    songs: ["밤편지", "좋은 날", "너의 의미"],
-  },
   {
     stage_id: 103,
     performer: "중앙대 보컬라인",
@@ -74,6 +44,62 @@ const MOCK_STAGES: MockStage[] = [
     instagram: "",
     youtube: "",
     songs: ["서시", "이 밤의 끝을 잡고", "가로수 그늘 아래 서면"],
+  },
+  {
+    stage_id: 104,
+    performer: "도시의 하루 끝에",
+    category: "청룡가요제",
+    date: "2026-05-21",
+    startAt: "2026-05-21T17:00:00",
+    endAt: "2026-05-21T17:30:00",
+    logoImage: "/lucaus-logo.png",
+    performerImage: "/landing-bg.png",
+    stageInfo: "청룡가요제 본선에 오른 팀의 자작곡 무대입니다.",
+    instagram: "",
+    youtube: "",
+    songs: ["도시의 하루 끝에"],
+  },
+  {
+    stage_id: 105,
+    performer: "숲길",
+    category: "청룡가요제",
+    date: "2026-05-21",
+    startAt: "2026-05-21T17:30:00",
+    endAt: "2026-05-21T18:00:00",
+    logoImage: "/lucaus-logo.png",
+    performerImage: "/landing-bg.png",
+    stageInfo: "청룡가요제 본선에 오른 팀의 자작곡 무대입니다.",
+    instagram: "",
+    youtube: "",
+    songs: ["숲길"],
+  },
+  {
+    stage_id: 106,
+    performer: "청춘스캔들",
+    category: "청룡가요제",
+    date: "2026-05-21",
+    startAt: "2026-05-21T18:00:00",
+    endAt: "2026-05-21T18:30:00",
+    logoImage: "/lucaus-logo.png",
+    performerImage: "/landing-bg.png",
+    stageInfo: "청룡가요제 본선에 오른 팀의 자작곡 무대입니다.",
+    instagram: "",
+    youtube: "",
+    songs: ["청춘스캔들"],
+  },
+  {
+    stage_id: 107,
+    performer: "적운",
+    category: "청룡가요제",
+    date: "2026-05-21",
+    startAt: "2026-05-21T18:30:00",
+    endAt: "2026-05-21T19:00:00",
+    logoImage: "/lucaus-logo.png",
+    performerImage: "/landing-bg.png",
+    stageInfo: "청룡가요제 본선에 오른 팀의 자작곡 무대입니다.",
+    instagram: "",
+    youtube: "",
+    songs: ["적운"],
   },
 ];
 
