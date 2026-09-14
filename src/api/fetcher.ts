@@ -23,10 +23,14 @@ function getToken() {
     : null;
 }
 
-function clearAuthAndRedirect() {
+function clearAuthTokens() {
   localStorage.removeItem("accessToken");
   localStorage.removeItem("refreshToken");
   localStorage.removeItem("nickname");
+}
+
+function clearAuthAndRedirect() {
+  clearAuthTokens();
   window.location.replace("/login");
 }
 
@@ -109,7 +113,8 @@ export async function mutate(
 
 export async function fetcher<T>(
   endpoint: string,
-  options?: { revalidate?: number },
+  // suppressAuthRedirect: 401을 호출부에서 직접 처리하고 싶을 때(예: 로그인 안내 UI를 인라인으로 보여주는 경우) 전역 리다이렉트를 건너뜀
+  options?: { revalidate?: number; suppressAuthRedirect?: boolean },
 ): Promise<T> {
   const url = `${BASE_URL}${endpoint}`;
   const token = getToken();
@@ -148,12 +153,20 @@ export async function fetcher<T>(
         };
         const retryRes = await fetch(url, retryInit);
         if (retryRes.status === 401) {
-          clearAuthAndRedirect();
+          if (options?.suppressAuthRedirect) {
+            clearAuthTokens();
+          } else {
+            clearAuthAndRedirect();
+          }
           throw new Error("Unauthorized");
         }
         res = retryRes;
       } else {
-        clearAuthAndRedirect();
+        if (options?.suppressAuthRedirect) {
+          clearAuthTokens();
+        } else {
+          clearAuthAndRedirect();
+        }
         throw new Error("Unauthorized");
       }
     } else {
