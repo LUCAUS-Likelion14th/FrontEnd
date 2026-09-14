@@ -95,7 +95,7 @@ function StagePageContent() {
   const currentCategory = CATEGORY_INFO[selected];
 
   return (
-    <main className="px-4 pt-5 pb-25">
+    <main className="px-4 pt-5 pb-25 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
       <section className="mb-7">
         <StageCategory
           categories={availableCategories}

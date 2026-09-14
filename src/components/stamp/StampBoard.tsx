@@ -34,7 +34,7 @@ function StampBoardSkeleton() {
           className="object-cover object-top"
         />
       </div>
-      <div className="relative z-10">
+      <div className="relative z-10 md:max-w-[640px] md:mx-auto">
         <div className="px-4 py-5 flex justify-between mb-12">
           <div className="w-32 h-10 rounded-lg bg-white/20 animate-pulse" />
           <div className="w-28 h-10 rounded-lg bg-white/20 animate-pulse" />
@@ -193,7 +193,7 @@ export default function StampBoard() {
         />
       </div>
 
-      <div className="relative z-10 w-full h-full">
+      <div className="relative z-10 w-full h-full md:max-w-[640px] md:mx-auto">
         <div className="flex justify-between px-4 py-5 mb-7">
           <div className="bg-white border border-text-sub px-[14.5px] py-2.5 text-base text-primary font-medium rounded-lg">
             {data.name}

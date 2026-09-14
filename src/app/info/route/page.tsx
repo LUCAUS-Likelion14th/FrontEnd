@@ -178,14 +178,14 @@ export default function RoutePage() {
       <DetailHeader title="입장 정책" />
 
       {/* 상단 주의 배너 */}
-      <div className="mx-4 mt-4 flex items-center gap-2.5 px-4 py-3 rounded-[12px] bg-red-50 shadow-[0_2px_12px_rgba(220,60,60,0.2)]">
+      <div className="mx-4 mt-4 flex items-center gap-2.5 px-4 py-3 rounded-[12px] bg-red-50 shadow-[0_2px_12px_rgba(220,60,60,0.2)] md:mx-auto md:max-w-[1440px] md:px-6">
         <FiAlertTriangle size={15} className="text-[#C0392B] shrink-0" />
         <p className="text-[13px] text-[#C0392B] leading-5 font-medium">
           QR코드 · 신분증 · 학생증(e-ID)을 미리 준비해주세요
         </p>
       </div>
 
-      <div className="px-4 pt-4">
+      <div className="px-4 pt-4 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
         <a
           href="https://festival.cau.ac.kr"
           target="_blank"
@@ -209,7 +209,7 @@ export default function RoutePage() {
         </a>
       </div>
 
-      <div className="px-4 flex flex-col gap-3">
+      <div className="px-4 flex flex-col gap-3 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
         {/* 1. 온라인 티켓팅 */}
         <Section title="입장 시간" icon={MdQrCode2}>
           <div className="grid grid-cols-2 gap-2 mt-3">

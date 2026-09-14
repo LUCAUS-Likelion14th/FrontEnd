@@ -70,14 +70,14 @@ function FoodTruckPageContent() {
 
 
   return (
-    <main className="px-4 pt-5 pb-25">
+    <main className="px-4 pt-5 pb-25 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
       <section className="flex flex-col pb-10 border-b border-b-text-sub2 mb-5">
         <FoodTruckMap />
       </section>
 
       <section className="flex flex-col">
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-x-3 gap-y-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5">
             {Array.from({ length: 4 }).map((_, i) => (
               <div
                 key={i}
@@ -88,7 +88,7 @@ function FoodTruckPageContent() {
         ) : isError ? (
           <ErrorFallback onReset={refetch} />
         ) : pagedTrucks.length > 0 ? (
-          <div className="grid grid-cols-2 gap-x-3 gap-y-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5">
             {pagedTrucks.map((truck, i) => (
               <motion.div
                 key={truck.id}

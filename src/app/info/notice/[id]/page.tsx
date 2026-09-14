@@ -52,7 +52,7 @@ export default async function NoticeDetailPage({
     <main className="pb-12">
       <DetailHeader title="축제기획단 공지" />
 
-      <section className="flex flex-col px-4 gap-5">
+      <section className="flex flex-col px-4 gap-5 md:px-10 md:max-w-[960px] md:mx-auto">
         <div className="flex flex-col gap-3 py-3 border-t border-b border-text-sub2">
           <div className="flex items-start gap-3 w-full">
             <span

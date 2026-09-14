@@ -8,7 +8,7 @@ function MypageSkeleton() {
   return (
     <main className="flex flex-col gap-4 pb-25">
       <div className="h-[130px] animate-shimmer" />
-      <div className="flex flex-col px-4 gap-8">
+      <div className="flex flex-col px-4 gap-8 md:w-full md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
         <div className="h-48 rounded-[10px] animate-shimmer" />
         <div className="h-40 rounded-[10px] animate-shimmer" />
       </div>

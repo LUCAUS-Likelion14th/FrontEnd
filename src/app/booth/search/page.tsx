@@ -81,7 +81,7 @@ function BoothSearchContent() {
 
   return (
     <main className="pb-25">
-      <div className="sticky top-14 z-20 bg-white px-4 pt-1 pb-3">
+      <div className="sticky top-14 z-20 bg-white px-4 pt-1 pb-3 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
         <div
           className="flex items-center gap-1 py-3 cursor-pointer"
           onClick={() => router.back()}
@@ -107,9 +107,9 @@ function BoothSearchContent() {
         </div>
       </div>
 
-      <div className="px-4 pt-5">
+      <div className="px-4 pt-5 md:px-10 lg:px-16 md:max-w-[1440px] md:mx-auto">
         {isLoading ? (
-          <div className="grid grid-cols-2 gap-x-3 gap-y-5">
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5">
             {Array.from({ length: PAGE_SIZE }).map((_, i) => (
               <div key={i} className="w-full h-[195px] rounded-[10px] animate-shimmer" />
             ))}
@@ -118,7 +118,7 @@ function BoothSearchContent() {
           <ErrorFallback onReset={refetch} />
         ) : booths.length > 0 ? (
           <>
-            <div className="grid grid-cols-2 gap-x-3 gap-y-5">
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-x-3 gap-y-5">
               {booths.map((booth, i) => (
                 <motion.div
                   key={booth.id}

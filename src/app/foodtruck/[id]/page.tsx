@@ -84,24 +84,27 @@ export default function FoodTruckDetailPage({ params }: Props) {
   return (
     <main className="pb-12">
       <DetailHeader title="푸드트럭 정보" />
-      <DetailHeroImage src={foodTruck.image} alt="푸드트럭 사진" />
 
-      <div className="flex flex-col px-4 gap-6">
-        <FoodTruckTitle
-          id={foodTruck.id}
-          type="foodtruck"
-          name={foodTruck.name}
-          isLiked={foodTruck.liked}
-          likeCount={foodTruck.likeCount}
-          info={foodTruck.foodTruckInfo}
-        />
-        <DetailInfo
-          location={foodTruck.location}
-          date={foodTruck.date}
-          hasBorder={false}
-          hideLocation
-        />
-        <MenuDetail menuList={foodTruck.menu} />
+      <div className="md:max-w-[960px] md:mx-auto md:px-10">
+        <DetailHeroImage src={foodTruck.image} alt="푸드트럭 사진" />
+
+        <div className="flex flex-col px-4 md:px-0 gap-6">
+          <FoodTruckTitle
+            id={foodTruck.id}
+            type="foodtruck"
+            name={foodTruck.name}
+            isLiked={foodTruck.liked}
+            likeCount={foodTruck.likeCount}
+            info={foodTruck.foodTruckInfo}
+          />
+          <DetailInfo
+            location={foodTruck.location}
+            date={foodTruck.date}
+            hasBorder={false}
+            hideLocation
+          />
+          <MenuDetail menuList={foodTruck.menu} />
+        </div>
       </div>
     </main>
   );
