@@ -1,6 +1,6 @@
 "use client";
 
-import { use, useState, Suspense, useEffect } from "react";
+import { use, Suspense, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import {
   BoothTitle,
@@ -12,8 +12,8 @@ import {
 } from "@/components";
 import { useBoothDetail } from "@/hooks/booth";
 import BoothMapWithMarker from "@/components/detail/BoothMapWithMarker";
-import Image from "next/image";
-import { FiImage, FiFlag } from "react-icons/fi";
+import DetailHeroImage from "@/components/detail/DetailHeroImage";
+import { FiFlag } from "react-icons/fi";
 // ─── analytics tracking ───
 import { useRef } from "react";
 import { trackEvent } from "@/lib/api/analytics";
@@ -38,7 +38,6 @@ function BoothDetailContent({ params }: Props) {
   const { id } = use(params);
   const searchParams = useSearchParams();
   const { data: booth, isLoading, isError } = useBoothDetail(id);
-  const [boothImgError, setBoothImgError] = useState(false);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -130,25 +129,10 @@ function BoothDetailContent({ params }: Props) {
     <main className="pb-16">
       <DetailHeader title="부스 정보" />
 
-      <div className="w-full bg-gray-100">
-        {boothImgError || !booth.booth_image ? (
-          <div className="flex items-center justify-center h-[200px]">
-            <FiImage size={40} className="text-gray-300" />
-          </div>
-        ) : (
-          <Image
-            src={booth.booth_image}
-            alt="부스 사진"
-            width={0}
-            height={0}
-            sizes="100vw"
-            className="w-full h-auto"
-            onError={() => setBoothImgError(true)}
-          />
-        )}
-      </div>
+      <div className="md:max-w-[960px] md:mx-auto md:px-10">
+        <DetailHeroImage src={booth.booth_image ?? ""} alt="부스 사진" />
 
-      <div className="flex flex-col px-4 gap-5">
+        <div className="flex flex-col px-4 md:px-0 gap-5">
         <BoothTitle
           name={booth.booth_name}
           categories={booth.booth_category}
@@ -185,6 +169,7 @@ function BoothDetailContent({ params }: Props) {
               />
             </div>
           ))}
+        </div>
         </div>
       </div>
     </main>

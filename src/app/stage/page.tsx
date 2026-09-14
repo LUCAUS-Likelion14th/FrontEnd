@@ -13,24 +13,24 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { STAGE_EVENT_DATA } from "@/data/stageEventData";
 import { useStageData } from "@/hooks/stage";
 
-type CategoryType = "학생 공연" | "청룡가요제" | "아티스트 공연" | "무대기획전";
+type CategoryType = "학생 공연" | "청룡가요제" | "아티스트" | "무대기획전";
 
 const CATEGORIES_BY_DATE: Record<string, CategoryType[]> = {
-  "2026-05-21": ["청룡가요제", "무대기획전", "아티스트 공연"],
-  "2026-05-22": ["학생 공연", "아티스트 공연"],
+  "2026-05-21": ["청룡가요제", "무대기획전", "아티스트"],
+  "2026-05-22": ["학생 공연", "아티스트"],
 };
 
 const TYPE_MAP: Record<string, CategoryType> = {
   student: "학생 공연",
   festival: "청룡가요제",
-  artist: "아티스트 공연",
+  artist: "아티스트",
   special: "무대기획전",
 };
 
 const REVERSE_TYPE_MAP: Record<CategoryType, string> = {
   "학생 공연": "student",
   청룡가요제: "festival",
-  "아티스트 공연": "artist",
+  아티스트: "artist",
   무대기획전: "special",
 };
 
@@ -46,8 +46,8 @@ const CATEGORY_INFO: Record<
     title: "청룡가요제",
     description: "중앙대 최고의 보컬은 누구?",
   },
-  "아티스트 공연": {
-    title: "아티스트 공연",
+  아티스트: {
+    title: "아티스트",
     description: "중앙대를 찾은 아티스트들을 만나보세요",
   },
   무대기획전: {

@@ -20,7 +20,7 @@ export default function StageCard({
   time,
 }: StageCardProps) {
   const isDisableLink = category === "청룡가요제" || category === "행사";
-  const isArtist = category === "아티스트 공연";
+  const isArtist = category === "아티스트";
 
   // 공통 카드 스타일
   const cardClassName =

@@ -1,21 +1,24 @@
 import {
   NoticeBanner,
-  StageSection,
   StampShortcutButton,
-  BoothSection,
-  FoodSection,
+  RankingSections,
   SplashScreen,
 } from "@/components";
 import ImageSwiper from "@/components/ui/ImageSwiper";
 import Footer from "@/components/layout/Footer";
 import { homeApi } from "@/api/homeApi";
 import { RouteShortcutButton } from "@/components/home/RouteShortcutButton";
+import {
+  mockPromotions,
+  mockLiveStages,
+  mockActiveNotice,
+} from "@/data/mockHome";
 
 export default async function Home() {
   const [rawPromotions, rawStages, activeNotice] = await Promise.all([
-    homeApi.getPromotion().catch(() => []),
-    homeApi.getLiveStage().catch(() => []),
-    homeApi.getActiveNotice().catch(() => null),
+    homeApi.getPromotion().catch(() => mockPromotions),
+    homeApi.getLiveStage().catch(() => mockLiveStages),
+    homeApi.getActiveNotice().catch(() => mockActiveNotice),
   ]);
 
   const promotions = Array.isArray(rawPromotions) ? rawPromotions : [];
@@ -40,15 +43,7 @@ export default async function Home() {
         </div>
 
         <section className="flex flex-col px-4 gap-8">
-          <div id="live-stage">
-            <StageSection stages={liveStages} />
-          </div>
-          <div id="top-booth">
-            <BoothSection />
-          </div>
-          <div id="hot-food">
-            <FoodSection />
-          </div>
+          <RankingSections stages={liveStages} />
         </section>
       </main>
 

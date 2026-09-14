@@ -8,7 +8,7 @@ import { TimeTable } from "@/types/stage";
 const CATEGORY_MAP: Record<string, string> = {
   "학생 공연": "STUDENT_PERFORMANCE",
   청룡가요제: "CHEONGRYONG_FESTIVAL",
-  "아티스트 공연": "ARTIST_PERFORMANCE",
+  아티스트: "ARTIST_PERFORMANCE",
 };
 
 export function useStageData(selectedDate: string, selected: string) {
@@ -34,12 +34,12 @@ export function useStageData(selectedDate: string, selected: string) {
 
     return sorted.reduce<TimeTable[]>((acc, curr) => {
       const isArtist =
-        curr.category === "아티스트 공연" ||
+        curr.category === "아티스트" ||
         curr.category === "ARTIST_PERFORMANCE";
       const lastItem = acc[acc.length - 1];
       const isLastArtist =
         lastItem &&
-        (lastItem.category === "아티스트 공연" ||
+        (lastItem.category === "아티스트" ||
           lastItem.category === "ARTIST_PERFORMANCE");
 
       if (isArtist && isLastArtist) {
