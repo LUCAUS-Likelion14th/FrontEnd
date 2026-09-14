@@ -2,6 +2,7 @@ import type { TopBooth, Promotion, LiveStage, HotFood, ActiveNotice } from "@/ty
 import { MOCK_BOOTHS } from "./boothData";
 import { MOCK_STAGES } from "./stageEventData";
 import { FOODTRUCK_DATA } from "./foodtruckData";
+import { MOCK_NOTICES } from "./noticeData";
 
 // 백엔드 서버가 꺼져 있을 때(포트폴리오 열람 등) 홈 화면이 빈 값 대신
 // 데모용 콘텐츠를 보여주기 위한 목업 데이터. 실제 API 응답이 정상적으로
@@ -46,6 +47,6 @@ export const mockHotFood: HotFood[] = FOODTRUCK_DATA.slice(0, 2).map((truck) => 
 }));
 
 export const mockActiveNotice: ActiveNotice = {
-  id: -1,
-  title: "우천 시 운영 일정이 변경될 수 있으니 공지를 확인해주세요",
+  id: MOCK_NOTICES[0].id,
+  title: MOCK_NOTICES[0].title,
 };

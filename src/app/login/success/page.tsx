@@ -34,7 +34,10 @@ function LoginSuccessContent() {
           // 쿠키 발급 실패해도 홈으로 이동
         }
       }
-      router.replace("/");
+      // 로그인 전에 가려던 목적지가 있으면 그리로 복귀, 없으면 홈으로 이동
+      const postLoginRedirect = sessionStorage.getItem("postLoginRedirect");
+      sessionStorage.removeItem("postLoginRedirect");
+      router.replace(postLoginRedirect || "/");
     };
 
     redirect();
