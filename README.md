@@ -34,7 +34,7 @@ LUCAUS는 중앙대학교 축제 정보를 한곳에서 확인할 수 있는 모
 
 | ⭐ 모바일 도장판 | 🔍 분실물 안내 |
 | :---: | :---: |
-| <img src="https://github.com/user-attachments/assets/84c9626f-ff6b-49c8-ac0c-2f7f62236284" width="300" /> <br> STAFF 인증 코드를 통한 **별빛 도장** 획득 및 <br> 경품 이벤트 응모 기능 | <img src="https://github.com/user-attachments/assets/92fab55a-4d45-4928-aa21-cf396962b299" width="300" /> <br> 날짜·카테고리별 **분실물 현황** 조회 및 <br> 카카오톡 채널 연동 문의 |
+| <img src="https://github.com/user-attachments/assets/92fab55a-4d45-4928-aa21-cf396962b299" width="300" /> <br> STAFF 인증 코드를 통한 **별빛 도장** 획득 및 <br> 경품 이벤트 응모 기능 | <img src="https://github.com/user-attachments/assets/84c9626f-ff6b-49c8-ac0c-2f7f62236284" width="300" /> <br> 날짜·카테고리별 **분실물 현황** 조회 및 <br> 카카오톡 채널 연동 문의 |
 
 | 👤 마이페이지 |
 | :---: |
